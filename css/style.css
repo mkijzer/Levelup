@@ -1,0 +1,21 @@
+/* style.css */
+
+/* Base styles (resets and general styles) */
+@import url("base.css");
+
+/* Layout styles (grid, containers, etc.) */
+@import url("layout.css");
+
+/* Component styles (buttons, cards, nav, etc.) */
+@import url("components.css");
+
+/* Theme-specific styles (light/dark mode) */
+@import url("themes.css");
+
+@font-face {
+  font-family: "TwoFiftySix";
+  src: url("../fonts/256-bytes.twofiftysix-regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Fallback to system font while loading */
+}

@@ -1,0 +1,10 @@
+# Ignore system junk
+.DS_Store
+Thumbs.db
+
+# Ignore node modules or package stuff (if you ever add it later)
+node_modules/
+dist/
+
+# Ignore logs
+*.log

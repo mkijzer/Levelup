@@ -1,0 +1,77 @@
+/* themes.css */
+
+/* Theme Toggle: Styles for the large theme toggle switch */
+.theme-label {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.theme-slider {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100px; /* Large slider track */
+  height: 35px; /* Large height */
+}
+
+.theme-slider input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-slider .slider {
+  position: absolute;
+  width: 100%;
+  height: 100%; /* Match the parent height (35px) */
+  background-color: #808080;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+/* Add sun and moon icons in the background of the slider */
+.theme-slider .slider::before,
+.theme-slider .slider::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.theme-slider .slider::before {
+  content: "☼"; /* Simpler sun icon */
+  left: 10px;
+  color: #000000;
+}
+.theme-slider .slider::after {
+  content: "☽"; /* Simpler moon icon */
+  right: 10px;
+  z-index: 0;
+  color: #ffffff;
+}
+
+/* Theme-slider button */
+.theme-slider .slider .slider-button {
+  position: absolute;
+  width: 50px;
+  height: 31px; /* Slightly smaller than track to fit inside (35px - 2px top - 2px bottom) */
+  background-color: #000000;
+  border-radius: 36px;
+  top: 2px;
+  left: 2px;
+  transition: background-color 0.5s ease;
+  transition: transform 0.5s ease, background-color 0.5s ease;
+  z-index: 2;
+}
+/* Change slider background color when button is on the right (checked) */
+.theme-slider input:checked ~ .slider {
+  background-color: #d3d3d3; /* Light grey when button is on the right */
+}
+/* Change button color when on the right (checked) */
+.theme-slider input:checked ~ .slider .slider-button {
+  background-color: #ffffff; /* White when on the right (checked) */
+}
+/* Move button to the right when checked */
+.theme-slider input:checked ~ .slider .slider-button {
+  transform: translateX(48px);
+}

@@ -1,0 +1,63 @@
+/* base.css */
+
+body {
+  font-family: var(--font-primary);
+  background: var(--background);
+  color: var(--white);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  margin-bottom: var(--spacing-sm);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+}
+
+body,
+p {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  margin-bottom: var(--spacing-md);
+}
+
+h1,
+h2 {
+  font-weight: bold;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+a {
+  transition: color 0.3s ease;
+}
+
+/* For card titles/authors */
+.card-title-huge {
+  font-size: var(--font-size-huge-title);
+}
+
+.card-title-small {
+  font-size: var(--font-size-small-title);
+}
+
+.card-author-huge {
+  font-size: var(--font-size-huge-author);
+}
+
+.card-author-small {
+  font-size: var(--font-size-small-author);
+}

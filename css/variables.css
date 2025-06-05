@@ -1,0 +1,64 @@
+/* variables.css */
+:root {
+  /* Colors */
+  --background: rgb(20, 22, 24);
+  --orange: rgb(255, 98, 0);
+  --white: rgb(255, 255, 255);
+  --glass-bg: rgba(42, 47, 49, 0.3);
+  --glass-border: rgba(255, 98, 0, 0.5);
+
+  /* Category Colors */
+  --wealth-start: rgb(255, 98, 0); /* Orange */
+  --wealth-end: rgb(255, 215, 0); /* Yellow */
+  --strength-start: rgb(255, 0, 0); /* Red */
+  --strength-end: rgb(255, 64, 64); /* Lighter Red */
+  --think-start: rgb(128, 0, 128); /* Purple */
+  --think-end: rgb(199, 21, 133); /* Medium Violet Red */
+  --tools-start: rgb(0, 128, 0); /* Green */
+  --tools-end: rgb(0, 255, 0); /* Lime */
+  --focus-start: rgb(0, 0, 255); /* Blue */
+  --focus-end: rgb(0, 183, 235); /* Sky Blue */
+  --refresh-start: rgb(0, 255, 255); /* Cyan */
+  --refresh-end: rgb(0, 230, 230); /* Lighter Cyan */
+  --surprise-start: rgb(255, 105, 180); /* Hot Pink */
+  --surprise-end: rgb(255, 182, 193); /* Light Pink */
+
+  /* Typography */
+  --font-primary: "Inter", sans-serif;
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 1.5rem; /* Increased for better hierarchy */
+  --font-size-h3: 1.25rem; /* Added for future flexibility */
+  --font-size-body: 1.125rem;
+
+  /* Line Heights */
+  --line-height-h1: 1.2;
+  --line-height-h2: 1.3;
+  --line-height-h3: 1.4; /* Suitable for h3 */
+  /* Other variables unchanged */
+  --line-height-body: 1.6;
+
+  /* Card-Specific Font Sizes */
+  --font-size-huge-title: clamp(1rem, 2.5vw, 1.4rem);
+  --font-size-small-title: clamp(0.875rem, 2vw, 1.125rem);
+  --font-size-huge-author: clamp(1rem, 2vw, 1.25rem);
+  --font-size-small-author: clamp(0.875rem, 1.5vw, 1rem);
+
+  /* Spacing */
+  --spacing-page: 1rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 3rem;
+
+  /* Border Radius */
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+
+  /* Breakpoints */
+  --breakpoint-tablet: 769px; /* Added for maintainability */
+  --breakpoint-desktop: 1025px; /* Added for maintainability */
+
+  /* Hamburger Menu */
+  --hamburger-width: 1.3rem;
+  --hamburger-height: 1rem;
+  --hamburger-bar-height: 1px;
+}

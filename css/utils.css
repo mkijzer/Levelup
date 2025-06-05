@@ -1,0 +1,26 @@
+/* Utility Classes - Use rem for global spacing, px for fixed values like borders */
+
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.p-2 {
+  padding: var(--spacing-md);
+}
+
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+
+.glass {
+  background: rgba(42, 47, 49, 0.2);
+  backdrop-filter: blur(0.9375rem);
+  border: none; /* Remove border */
+
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
