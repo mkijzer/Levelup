@@ -79,17 +79,6 @@
     "date": "2025-04-11"
   },
   {
-    "id": "006",
-    "title": "DIY Home Automation on a Budget",
-    "category": "diy",
-    "author": "The Tinkerer",
-    "image": "assets/images/diy/home-automation.jpg",
-    "slug": "diy-home-automation",
-    "content": "<p>Your home can be smart without breaking the bank. Start with the basics: automate your lights. Get a cheap smart plug—$10 on Amazon—and connect your lamps. Use a free app like Tuya to set schedules. Wake up to light, not an alarm.</p><p>Next, repurpose an old Raspberry Pi if you have one. Install Home Assistant, and now you’ve got a hub to control everything—lights, fans, even your coffee maker if it’s got a plug. No Pi? Use IFTTT to link your devices for free. DIY doesn’t mean hard; it means clever.</p>",
-    "tips": ["Start with a smart plug", "Use a Raspberry Pi"],
-    "date": "2025-04-10"
-  },
-  {
     "id": "007",
     "title": "AI Tools to 10x Your Workflow",
     "category": "ai",
@@ -276,61 +265,7 @@
     "tips": ["Set up email filters", "Check 3x daily max"],
     "date": "2025-03-24"
   },
-  {
-    "id": "024",
-    "title": "Build a $50 Standing Desk",
-    "category": "diy",
-    "author": "The Tinkerer",
-    "image": "https://picsum.photos/800/600",
-    "slug": "diy-standing-desk",
-    "content": "<p>Sitting all day kills you. Stand up. You don’t need a $500 desk. Get a $20 IKEA Lack table and stack it on two $15 storage crates from Target. Adjust height with books if needed.</p><p>Secure it with zip ties for stability. Add a cheap anti-fatigue mat for comfort—$10 on Amazon. Takes 30 minutes to assemble. Now you’ve got a standing desk that saves your back and your wallet.</p>",
-    "tips": ["Use IKEA Lack table", "Add anti-fatigue mat"],
-    "date": "2025-03-23"
-  },
-  {
-    "id": "025",
-    "title": "DIY Solar Phone Charger",
-    "category": "diy",
-    "author": "The Tinkerer",
-    "image": "https://picsum.photos/800/600",
-    "slug": "diy-solar-charger",
-    "content": "<p>Power’s expensive. Make your own. Grab a $15 solar panel kit from Amazon—5W is enough. Connect it to a USB charge controller, about $5. Solder or twist wires to a USB output.</p><p>Mount it in a small wooden box or even a sturdy cardboard one. Seal with duct tape for weatherproofing. Charge your phone in sunlight. It’s not fancy, but it’s yours, and it works off-grid.</p>",
-    "tips": ["Get 5W solar panel", "Seal with duct tape"],
-    "date": "2025-03-22"
-  },
-  {
-    "id": "026",
-    "title": "Custom Wall Art for $20",
-    "category": "diy",
-    "author": "The Tinkerer",
-    "image": "https://picsum.photos/800/600",
-    "slug": "diy-wall-art",
-    "content": "<p>Your walls are boring. Fix them cheap. Buy a $10 canvas from a craft store. Paint it with leftover house paint or $3 acrylics. Use painter’s tape for clean geometric designs—stripes or triangles.</p><p>Want personal? Print a high-res photo at Walgreens for $5, glue it to the canvas, and seal with mod podge. Hang with command strips. Takes 2 hours, looks like you spent $100.</p>",
-    "tips": ["Use painter’s tape", "Seal photo with mod podge"],
-    "date": "2025-03-21"
-  },
-  {
-    "id": "027",
-    "title": "DIY Planter from Scrap Wood",
-    "category": "diy",
-    "author": "The Tinkerer",
-    "image": "https://picsum.photos/800/600",
-    "slug": "diy-planter",
-    "content": "<p>Plants boost mood. Build a home for them. Grab scrap wood—old pallets work great, often free on Craigslist. Cut to size for a 12x12-inch box. Nail or screw together; no glue needed.</p><p>Line with plastic sheeting to prevent leaks—$2 at a hardware store. Fill with soil and plant herbs or succulents. Sand for a polished look or leave it raw. Takes 1 hour, costs under $5.</p>",
-    "tips": ["Use scrap pallets", "Line with plastic"],
-    "date": "2025-03-20"
-  },
-  {
-    "id": "028",
-    "title": "Fix Your Own Bike Flat",
-    "category": "diy",
-    "author": "The Tinkerer",
-    "image": "https://picsum.photos/800/600",
-    "slug": "diy-bike-flat",
-    "content": "<p>A flat tire shouldn’t stop you. Fix it yourself. Get a $10 bike repair kit—includes patches and tire levers. Flip your bike, remove the wheel with a wrench. Pry off the tire, find the hole.</p><p>Patch it like a sticker, inflate with a $5 hand pump. Reassemble. Watch a YouTube tutorial if you’re stuck—takes 15 minutes to learn. Save $20 per flat and ride with confidence.</p>",
-    "tips": ["Get a repair kit", "Watch a tutorial"],
-    "date": "2025-03-19"
-  },
+
   {
     "id": "029",
     "title": "AI-Powered Writing Assistant",

@@ -146,12 +146,17 @@ header {
 /* Nav-container: Navigation bar for categories */
 .nav-container {
   display: flex;
+
   flex-direction: row;
   align-items: center;
   gap: var(--spacing-sm);
   width: 100%;
   font-size: 1rem;
   flex-wrap: nowrap;
+}
+
+.nav-container .desktop-theme-toggle {
+  display: none !important; /* High specificity to ensure hiding on mobile */
 }
 
 /* Categories: Horizontal list of navigation links */
@@ -210,11 +215,6 @@ header {
 .categories li a[href="#hack"].active::after,
 .categories li a[href="#hack"]:hover::after {
   background: linear-gradient(to right, #800080, #4b0082); /* Purple gradient */
-}
-
-.categories li a[href="#diy"].active::after,
-.categories li a[href="#diy"]:hover::after {
-  background: linear-gradient(to right, #ffa500, #ff4500); /* Orange gradient */
 }
 
 .categories li a[href="#ai"].active::after,
@@ -354,13 +354,6 @@ header {
   display: none !important;
 }
 
-/* Theme-toggle: Theme switcher in mobile menu */
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 /* ========================================================================== */
 /* Main Content */
 /* ========================================================================== */
@@ -430,6 +423,8 @@ header {
   background: rgba(42, 47, 49, 0.1);
   backdrop-filter: blur(0.625rem);
   border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 /* Card-inner: Inner content wrapper */
@@ -442,6 +437,7 @@ header {
 /* Article-card huge: Large featured card */
 .article-card.huge {
   aspect-ratio: 3 / 2;
+  position: relative; /* Add this to establish positioning context */
 }
 
 /* Article-card small: Smaller cards */
@@ -476,9 +472,10 @@ header {
   align-items: center;
 }
 
-/* Small-grid side-by-side: Vertical layout */
+/* layout.css: Replace the .small-grid .article-card.small.side-by-side .card-inner rule */
 .small-grid .article-card.small.side-by-side .card-inner {
-  flex-direction: column;
+  flex-direction: column; /* Stack image and content vertically */
+  gap: 8px; /* Space between image and text */
 }
 
 /* Article-image-wrapper: Image container */
@@ -492,21 +489,17 @@ header {
 /* Gradient-overlay: Glassmorphism for huge card's bottom 1/3 */
 .bento-grid .article-card.huge .article-image-wrapper .gradient-overlay {
   position: absolute;
-  bottom: 0;
+  bottom: 0; /* Changed from top: 70% to bottom: 0 */
   left: 0;
   width: 100%;
-  height: 33.33%; /* Bottom 1/3 */
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.1)
-  ); /* Dark to light */
-  -webkit-backdrop-filter: blur(12px); /* Ensure Chrome support */
+  height: 40%; /* Covers bottom 40% */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
-  z-index: 2; /* Above image, below title */
+  z-index: 1; /* Below text but above image */
   opacity: 1;
-  display: block !important; /* Force visibility */
+  display: block !important;
 }
 
 /* Fallback for browsers without backdrop-filter */
@@ -562,29 +555,46 @@ header {
 
 /* Article-content: Text overlay for cards */
 .article-content {
-  position: absolute;
-  bottom: 30%;
+  position: static; /* Change from absolute */
+  bottom: auto; /* Remove bottom positioning */
+  left: auto;
+  right: auto;
+  padding: 1px; /* Adjust padding */
+  color: var(--white);
+  z-index: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Change from flex-end */
+}
+/* Huge card content: Prevent clipping */
+.article-card.huge .article-content {
+  position: absolute; /* Position absolutely within the card */
+  bottom: 0; /* Align to bottom */
   left: 0;
   right: 0;
-  padding: 16px;
+  padding: 24px; /* Adequate padding */
   color: var(--white);
-  z-index: 3;
+  z-index: 2; /* Above the gradient overlay */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  pointer-events: none; /* Allow clicks to pass through to the card */
 }
 
-/* Huge card content: Prevent clipping */
-.article-card.huge .article-content {
-  max-height: 100%;
-  overflow: visible;
-}
-
-/* Small card content: Static positioning */
+/* layout.css: Replace the .article-card.small .article-content rule */
 .article-card.small .article-content {
   position: static;
-  padding: 0;
+  padding-top: 60px;
   color: var(--white);
+  z-index: auto;
+}
+
+/* Add this new rule for proper spacing */
+.article-card.small .card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between image and text */
+  padding: 8px;
 }
 
 /* Small cards: Adjust content width */
@@ -624,9 +634,15 @@ header {
 
 /* Huge card title: Larger size */
 .article-card.huge .article-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--white);
+  line-height: 1.3;
+  max-width: 75ch;
+  letter-spacing: 0.0625rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Add text shadow for better readability */
+  pointer-events: auto; /* Allow clicks on the title */
 }
-
 /* ========================================================================== */
 /* Article View */
 /* ========================================================================== */
@@ -644,11 +660,11 @@ header {
   border-radius: var(--radius-md);
   background: rgba(42, 47, 49, 0.1);
   backdrop-filter: blur(0.625rem);
-  padding: 24px;
+  padding: 16px 24px 24px; /* Reduced top padding from 24px to 16px */
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 40px;
 }
 
 /* Main-article-title: Article title */
@@ -657,13 +673,14 @@ header {
   color: var(--white);
   text-align: center;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  margin-top: -30px; /* Added negative margin to pull title upward */
 }
-
 /* Main-article-image-wrapper: Image container */
 .main-article-image-wrapper {
   width: 100%;
   aspect-ratio: 3 / 2;
   background-color: #333;
+  position: relative; /* Ensure image stays contained */
 }
 
 /* Main-article-image: Article image */
@@ -674,6 +691,7 @@ header {
   border-radius: var(--radius-md);
   opacity: 0;
   transition: opacity 0.3s ease;
+  margin-top: -30px; /* Added negative margin to pull title upward */
 }
 
 /* Fade in loaded images */
@@ -686,6 +704,7 @@ header {
   font-size: 1rem;
   color: var(--white);
   line-height: 1.6;
+  margin-top: 30px; /* Add margin to push text below image */
 }
 
 /* Inline-image: Image within article content */
@@ -722,7 +741,8 @@ header {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-top: -5px;
+  margin-bottom: 5px;
   justify-content: center;
   padding: 0;
 }
@@ -735,7 +755,6 @@ header {
   color: var(--white);
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   text-transform: capitalize;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -747,9 +766,8 @@ header {
 
 /* Tag hover: Glow effect */
 .tag:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(255, 69, 180, 0.8),
-    0 0 8px rgba(255, 255, 255, 0.5);
+  /* transform: translateY(-2px); */
+  box-shadow: 0 1px 16px rgb(255, 215, 0), 0 0 8px;
 }
 
 /* Tag click: Blown up and disappear animation */
@@ -1012,6 +1030,20 @@ header {
 }
 
 /* ========================================================================== */
+/* Media Queries: Tablet (min-width: 769px) */
+/* ========================================================================== */
+
+/* Tablet adjustments */
+@media (min-width: 769px) {
+  .article-card.huge .article-content {
+    padding: 32px;
+  }
+
+  .article-card.huge .article-title {
+    font-size: 1.75rem;
+  }
+}
+/* ========================================================================== */
 /* Media Queries: Desktop (min-width: 1025px) */
 /* ========================================================================== */
 @media (min-width: 1025px) {
@@ -1158,5 +1190,40 @@ header {
   /* Quote-container: More padding */
   .quote-container {
     padding: 24px;
+  }
+  /* layout.css: Add or replace these rules at the end of the file */
+
+  /* Style nav-search-item to hold search and theme toggle */
+  .nav-search-item {
+    display: flex !important;
+    flex-direction: column; /* Stack on mobile */
+    align-items: flex-start;
+  }
+
+  /* Desktop: Show theme toggle inline with search bar */
+  @media (min-width: 769px) {
+    .nav-search-item {
+      flex-direction: row; /* Inline on desktop */
+      align-items: center;
+      gap: 8px; /* Space between search and toggle */
+    }
+    .desktop-theme-toggle {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .nav-container .desktop-theme-toggle {
+    display: flex !important;
+  }
+
+  @media (min-width: 1025px) {
+    .article-card.huge .article-content {
+      padding: 40px;
+    }
+
+    .article-card.huge .article-title {
+      font-size: 2rem;
+    }
   }
 }

@@ -54,7 +54,9 @@
         </button>
       </div>
 
-      <!-- Desktop Navigation -->
+      <!-- Navigation (Single navigation for all screen sizes) -->
+      <!-- index.html: Replace the <div class="nav-container"> section -->
+      <!-- index.html: Replace the <div class="nav-container"> section -->
       <div class="nav-container">
         <ul class="categories">
           <li><a href="#latest">Latest</a></li>
@@ -65,8 +67,6 @@
           <li class="separator-finance">.</li>
           <li><a href="#hack">Hack</a></li>
           <li class="separator-hacks">.</li>
-          <!-- <li><a href="#diy">DIY</a></li>
-          <li class="separator-diy">.</li> -->
           <li><a href="#ai">AI</a></li>
           <li class="separator-ai">.</li>
           <li>
@@ -106,8 +106,7 @@
               </svg>
             </a>
           </li>
-          <!-- <li class="separator-random">.</li> -->
-          <li>
+          <li class="nav-search-item">
             <div class="search-bar-container">
               <input
                 type="text"
@@ -115,42 +114,6 @@
                 placeholder="Search..."
                 class="search-bar"
               />
-              <!-- Desktop Search Icon -->
-              <svg
-                class="search-icon"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.5 11.5L14 14M7 10A3 3 0 1 0 7 4A3 3 0 0 0 7 10Z"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-
-              <!-- Mobile Search Icon -->
-              <!-- Desktop Search Icon -->
-              <svg
-                class="search-icon"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.5 11.5L14 14M7 10A3 3 0 1 0 7 4A3 3 0 0 0 7 10Z"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-
-              <!-- Mobile Search Icon -->
               <svg
                 class="search-icon"
                 width="16"
@@ -167,14 +130,21 @@
                 />
               </svg>
             </div>
+            <div class="theme-toggle desktop-theme-toggle">
+              <label class="theme-slider">
+                <input type="checkbox" id="theme-switch-desktop" />
+                <span class="slider">
+                  <span class="slider-button"></span>
+                </span>
+              </label>
+            </div>
           </li>
         </ul>
       </div>
 
-      <!-- Mobile Navigation Menu -->
+      <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
       <nav class="mobile-menu">
         <div class="theme-toggle">
-          <span class="theme-label">Theme</span>
           <label class="theme-slider">
             <input type="checkbox" id="theme-switch" />
             <span class="slider">
@@ -182,91 +152,8 @@
             </span>
           </label>
         </div>
-        <ul class="categories">
-          <li><a href="#latest">Latest</a></li>
-          <li class="separator-home">.</li>
-          <li><a href="#health">Health</a></li>
-          <li class="separator-lifestyle">.</li>
-          <li><a href="#coins">Coins</a></li>
-          <li class="separator-finance">.</li>
-          <li><a href="#hack">Hack</a></li>
-          <li class="separator-hacks">.</li>
-          <li><a href="#diy">DIY</a></li>
-          <li class="separator-diy">.</li>
-          <li><a href="#ai">AI</a></li>
-          <li class="separator-ai">.</li>
-          <li>
-            <a
-              href="#random"
-              id="mobile-random-link"
-              aria-label="Random Article"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                style="vertical-align: middle"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M3 7h5c3 0 6 3 9 6l2 2"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                />
-                <path
-                  d="M18 5h3v3"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                />
-                <path
-                  d="M3 17h5c3 0 6-3 9-6l2-2"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                />
-                <path
-                  d="M18 19h3v-3"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                />
-              </svg>
-            </a>
-          </li>
-          <li class="separator-random">.</li>
-          <li>
-            <div class="search-bar-container">
-              <input
-                type="text"
-                id="mobile-search-bar"
-                placeholder="Search..."
-                class="search-bar"
-              />
-              <svg
-                class="search-icon"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.5 11.5L14 14M7 10A3 3 0 1 0 7 4A3 3 0 0 0 7 10Z"
-                  stroke="var(--white)"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-          </li>
-        </ul>
       </nav>
     </header>
-    <!-- <div class="divider"></div> -->
 
     <!-- Main Content -->
     <main>
@@ -283,7 +170,13 @@
                 <div class="article-card glass huge" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
-                      <img src="" alt="" class="article-image" />
+                      <img
+                        src=""
+                        alt=""
+                        class="article-image"
+                        loading="eager"
+                        fetchpriority="high"
+                      />
                       <div class="gradient-overlay"></div>
                       <div class="article-content">
                         <h2 class="article-title"></h2>
@@ -293,9 +186,71 @@
                 </div>
                 <div class="small-grid">
                   <!-- Small article cards populated dynamically -->
+                  <div class="article-card glass small" data-article-id="">
+                    <div class="card-inner">
+                      <div class="article-image-wrapper">
+                        <img
+                          src=""
+                          alt=""
+                          class="article-image"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="article-content">
+                        <p class="article-meta"></p>
+                        <h2 class="article-title"></h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="article-card glass small" data-article-id="">
+                    <div class="card-inner">
+                      <div class="article-image-wrapper">
+                        <img
+                          src=""
+                          alt=""
+                          class="article-image"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="article-content">
+                        <p class="article-meta"></p>
+                        <h2 class="article-title"></h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="article-card glass small" data-article-id="">
+                    <div class="card-inner">
+                      <div class="article-image-wrapper">
+                        <img
+                          src=""
+                          alt=""
+                          class="article-image"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="article-content">
+                        <p class="article-meta"></p>
+                        <h2 class="article-title"></h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="article-card glass small" data-article-id="">
+                    <div class="card-inner">
+                      <div class="article-image-wrapper">
+                        <img
+                          src=""
+                          alt=""
+                          class="article-image"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="article-content">
+                        <p class="article-meta"></p>
+                        <h2 class="article-title"></h2>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                <!-- ADVERTISEMENT -->
 
                 <!-- Ad Separator -->
                 <div class="separator-ad">
@@ -321,7 +276,12 @@
                   </button>
                   <h2 class="main-article-title"></h2>
                   <div class="article-image-wrapper">
-                    <img src="" alt="" class="main-article-image" />
+                    <img
+                      src=""
+                      alt=""
+                      class="main-article-image"
+                      loading="lazy"
+                    />
                   </div>
                   <div class="main-article-body"></div>
                   <div class="article-tags"></div>
@@ -332,7 +292,12 @@
                     <div class="article-card small">
                       <div class="card-inner">
                         <div class="article-image-wrapper">
-                          <img src="" alt="" class="article-image" />
+                          <img
+                            src=""
+                            alt=""
+                            class="article-image"
+                            loading="lazy"
+                          />
                         </div>
                         <div class="article-content">
                           <p class="article-meta"></p>
@@ -343,7 +308,12 @@
                     <div class="article-card small">
                       <div class="card-inner">
                         <div class="article-image-wrapper">
-                          <img src="" alt="" class="article-image" />
+                          <img
+                            src=""
+                            alt=""
+                            class="article-image"
+                            loading="lazy"
+                          />
                         </div>
                         <div class="article-content">
                           <p class="article-meta"></p>
@@ -412,17 +382,6 @@
           </div>
           <div class="category-content">
             <div class="category-grid" data-category="hack">
-              <!-- Articles populated dynamically -->
-            </div>
-          </div>
-          <div class="divider"></div>
-
-          <!-- DIY Section -->
-          <div class="category-label">
-            <h2>DIY</h2>
-          </div>
-          <div class="category-content">
-            <div class="category-grid" data-category="diy">
               <!-- Articles populated dynamically -->
             </div>
           </div>

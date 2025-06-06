@@ -100,11 +100,6 @@ html.light-mode .categories a[href="#hack"]:hover::after {
   background: linear-gradient(to right, #00ff00, #008000);
 }
 
-html.light-mode .categories a[href="#diy"].active::after,
-html.light-mode .categories a[href="#diy"]:hover::after {
-  background: linear-gradient(to right, #ffa500, #ff4500);
-}
-
 html.light-mode .categories a[href="#ai"].active::after,
 html.light-mode .categories a[href="#ai"]:hover::after {
   background: linear-gradient(to right, #800080, #4b0082);
@@ -113,4 +108,31 @@ html.light-mode .categories a[href="#ai"]:hover::after {
 html.light-mode .categories a[href="#random"].active::after,
 html.light-mode .categories a[href="#random"]:hover::after {
   background: linear-gradient(to right, #ff69b4, #ff4500);
+}
+
+/* Prevent layout shift during image load */
+.article-image-wrapper {
+  background-color: var(--glass-bg); /* Fallback during load */
+  min-height: 10px; /* Adjust based on design */
+}
+.article-image,
+.main-article-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Ensure images scale nicely */
+}
+
+/* css/components.css: Add styles for close-article button */
+
+/* Close "X" in dark mode */
+.close-article {
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Close "X" in light mode */
+html.light-mode .close-article {
+  color: var(--light-text);
 }
