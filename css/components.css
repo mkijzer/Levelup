@@ -1,0 +1,116 @@
+/* css/components.css */
+
+/* Prevent flash by setting default background */
+html {
+  background: var(--background);
+}
+
+html.light-mode {
+  background: var(--light-background) !important;
+}
+
+html.light-mode body {
+  background: var(--light-background) !important;
+}
+
+html.light-mode header {
+  background: var(--light-background) !important;
+  color: var(
+    --dark-category-text
+  ) !important; /* Ensure header text isn’t white */
+}
+
+html.light-mode .nav-container .categories li a,
+html.light-mode .mobile-menu .categories li a {
+  color: var(--dark-category-text) !important;
+  color: rgb(33, 33, 33) !important; /* Fallback to ensure it’s applied */
+}
+
+html.light-mode .glass,
+html.light-mode .article-card,
+html.light-mode .mobile-menu,
+html.light-mode .search-bar,
+html.light-mode .main-article,
+html.light-mode .separator-quote,
+html.light-mode .ad-container,
+html.light-mode .quote-container {
+  background: var(--light-glass-bg);
+  border: 1px solid var(--light-glass-border);
+  backdrop-filter: blur(10px);
+}
+
+html.light-mode .article-title,
+html.light-mode .article-meta,
+html.light-mode .article-author,
+html.light-mode .main-article-title,
+html.light-mode .main-article-body,
+html.light-mode .main-article-author,
+html.light-mode .quote-text,
+html.light-mode .quote-author,
+html.light-mode .tag {
+  color: var(--light-text);
+}
+
+/* css/components.css: Replace the existing main-title rule */
+html.light-mode .main-title {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3),
+    /* Shadow for contrast */ 0 0 8px rgb(255, 200, 0),
+    /* Softer gold glow */ 0 0 16px rgb(255, 230, 100); /* Lighter gold spread */
+}
+
+/* Keep top article title white in light mode for readability */
+html.light-mode .article-card.huge .article-title {
+  color: var(--white);
+}
+
+/* Hamburger menu visibility in light mode */
+html.light-mode .hamburger-menu span {
+  background: var(--light-text);
+}
+
+/* Search icon in light mode */
+html.light-mode .search-icon path {
+  stroke: var(--light-text);
+}
+
+/* Remove border and match search bar background in light mode */
+html.light-mode .search-bar {
+  border: none;
+  background: var(--light-background);
+}
+
+/* Ensure category gradients remain vibrant */
+html.light-mode .categories a[href="#latest"].active::after,
+html.light-mode .categories a[href="#latest"]:hover::after {
+  background: linear-gradient(to right, #ff4500, #ff0000);
+}
+
+html.light-mode .categories a[href="#health"].active::after,
+html.light-mode .categories a[href="#health"]:hover::after {
+  background: linear-gradient(to right, #00ff00, #008000);
+}
+
+html.light-mode .categories a[href="#coins"].active::after,
+html.light-mode .categories a[href="#coins"]:hover::after {
+  background: linear-gradient(to right, #ffd700, #b8860b);
+}
+
+html.light-mode .categories a[href="#hack"].active::after,
+html.light-mode .categories a[href="#hack"]:hover::after {
+  background: linear-gradient(to right, #00ff00, #008000);
+}
+
+html.light-mode .categories a[href="#diy"].active::after,
+html.light-mode .categories a[href="#diy"]:hover::after {
+  background: linear-gradient(to right, #ffa500, #ff4500);
+}
+
+html.light-mode .categories a[href="#ai"].active::after,
+html.light-mode .categories a[href="#ai"]:hover::after {
+  background: linear-gradient(to right, #800080, #4b0082);
+}
+
+html.light-mode .categories a[href="#random"].active::after,
+html.light-mode .categories a[href="#random"]:hover::after {
+  background: linear-gradient(to right, #ff69b4, #ff4500);
+}

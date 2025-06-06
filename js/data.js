@@ -1,5 +1,6 @@
 const hamburgerMenu = document.querySelector(".hamburger-menu");
 const mobileMenu = document.querySelector(".mobile-menu");
+const categoryBar = document.querySelector(".category-bar"); // Adjust selector if needed
 
 let menuTransitioning = false;
 

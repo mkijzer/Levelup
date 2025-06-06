@@ -1,5 +1,11 @@
 /* base.css */
 
+/* css/base.css: Add at the top of the file */
+/* Prevent flash by setting default background */
+html {
+  background: var(--background);
+}
+
 body {
   font-family: var(--font-primary);
   background: var(--background);

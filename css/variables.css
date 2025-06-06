@@ -1,27 +1,37 @@
 /* variables.css */
 :root {
-  /* Colors */
+  /* Dark Mode Colors */
   --background: rgb(20, 22, 24);
-  --orange: rgb(255, 98, 0);
   --white: rgb(255, 255, 255);
   --glass-bg: rgba(42, 47, 49, 0.3);
   --glass-border: rgba(255, 98, 0, 0.5);
 
-  /* Category Colors */
-  --wealth-start: rgb(255, 98, 0); /* Orange */
-  --wealth-end: rgb(255, 215, 0); /* Yellow */
-  --strength-start: rgb(255, 0, 0); /* Red */
-  --strength-end: rgb(255, 64, 64); /* Lighter Red */
-  --think-start: rgb(128, 0, 128); /* Purple */
-  --think-end: rgb(199, 21, 133); /* Medium Violet Red */
-  --tools-start: rgb(0, 128, 0); /* Green */
-  --tools-end: rgb(0, 255, 0); /* Lime */
-  --focus-start: rgb(0, 0, 255); /* Blue */
-  --focus-end: rgb(0, 183, 235); /* Sky Blue */
-  --refresh-start: rgb(0, 255, 255); /* Cyan */
-  --refresh-end: rgb(0, 230, 230); /* Lighter Cyan */
-  --surprise-start: rgb(255, 105, 180); /* Hot Pink */
-  --surprise-end: rgb(255, 182, 193); /* Light Pink */
+  /* Adjusted Light Mode Colors */
+  --light-background: rgb(220, 220, 220); /* Darker greyish tone */
+  --light-text: rgb(33, 33, 33); /* Dark gray for readability */
+  --light-glass-bg: rgba(255, 255, 255, 0.7); /* Brighter glass effect */
+  --light-glass-border: none 
+  --dark-category-text: rgb(
+    33,
+    33,
+    33
+  ); /* Dark text for categories in light mode */
+
+  /* Category Colors (unchanged, work for both modes) */
+  --wealth-start: rgb(255, 98, 0);
+  --wealth-end: rgb(255, 215, 0);
+  --strength-start: rgb(255, 0, 0);
+  --strength-end: rgb(255, 64, 64);
+  --think-start: rgb(128, 0, 128);
+  --think-end: rgb(199, 21, 133);
+  --tools-start: rgb(0, 128, 0);
+  --tools-end: rgb(0, 255, 0);
+  --focus-start: rgb(0, 0, 255);
+  --focus-end: rgb(0, 183, 235);
+  --refresh-start: rgb(0, 255, 255);
+  --refresh-end: rgb(0, 230, 230);
+  --surprise-start: rgb(255, 105, 180);
+  --surprise-end: rgb(255, 182, 193);
 
   /* Typography */
   --font-primary: "Inter", sans-serif;
