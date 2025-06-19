@@ -1,6 +1,6 @@
 const hamburgerMenu = document.querySelector(".hamburger-menu");
 const mobileMenu = document.querySelector(".mobile-menu");
-const categoryBar = document.querySelector(".category-bar"); // Adjust selector if needed
+const categoryBar = document.querySelector(".category-bar");
 
 let menuTransitioning = false;
 
@@ -24,7 +24,6 @@ hamburgerMenu.addEventListener("click", () => {
   }
 });
 
-// Add click event to close menu on category selection
 document.querySelectorAll(".mobile-menu .categories a").forEach((link) => {
   link.addEventListener("click", () => {
     menuTransitioning = true;
@@ -58,7 +57,7 @@ function preloadImage(url) {
     const img = new Image();
     img.src = url;
     img.onload = () => resolve(url);
-    img.onerror = () => resolve(url);
+    img.onerror = () => resolve("assets/images/falback_image.png");
   });
 }
 
@@ -68,13 +67,13 @@ async function createArticleCard(
   isSideBySide = false
 ) {
   const card = document.createElement("div");
-  card.classList.add("article-card", "glass", type);
+  card.classList.add("article-card", "glass", type, "loading");
   if (isSideBySide) card.classList.add("side-by-side");
   if (type === "huge") {
     card.innerHTML = `
       <div class="card-inner">
         <div class="article-image-wrapper">
-          <img src="" alt="" class="article-image" />
+          <img src="assets/images/placeholder.jpg" alt="" class="article-image" loading="lazy" />
           <div class="gradient-overlay"></div>
           <div class="article-content">
             <h2 class="article-title"></h2>
@@ -86,7 +85,7 @@ async function createArticleCard(
     card.innerHTML = `
       <div class="card-inner">
         <div class="article-image-wrapper">
-          <img src="" alt="" class="article-image" />
+          <img src="assets/images/placeholder.jpg" alt="" class="article-image" loading="lazy" />
         </div>
         <div class="article-content">
           <p class="article-meta"></p>
@@ -100,28 +99,66 @@ async function createArticleCard(
   const img = card.querySelector(".article-image");
   const title = card.querySelector(".article-title");
   const meta = card.querySelector(".article-meta");
-  img.src = await preloadImage(article.image);
+  img.dataset.src = article.image;
   img.alt = article.title || "Article Image";
   title.textContent = article.title || "Untitled Article";
   if (meta)
     meta.textContent = `${formatDate(article.date)} | ${article.category}`;
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.addEventListener("load", () => card.classList.remove("loading"), {
+            once: true,
+          });
+          observer.unobserve(img);
+        }
+      });
+    },
+    { rootMargin: "100px" } // Load images 100px before visible
+  );
+  observer.observe(img);
+
   return card;
 }
 
 async function populateArticleCard(card, article) {
   card.setAttribute("data-article-id", article.id || "");
   card.setAttribute("data-category", normalizeCategory(article.category || ""));
+  card.classList.add("loading");
   const img = card.querySelector(".article-image");
   const title = card.querySelector(".article-title");
   const meta = card.querySelector(".article-meta");
   const author = card.querySelector(".article-author");
 
-  img.src = await preloadImage(article.image);
+  img.src = "assets/images/placeholder.jpg";
+  img.dataset.src = article.image;
   img.alt = article.title || "Article Image";
+  img.setAttribute("loading", "lazy");
   title.textContent = article.title || "Untitled Article";
   if (meta)
     meta.textContent = `${formatDate(article.date)} | ${article.category}`;
   if (author) author.textContent = `By ${article.author || "Unknown Author"}`;
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.addEventListener("load", () => card.classList.remove("loading"), {
+            once: true,
+          });
+          observer.unobserve(img);
+        }
+      });
+    },
+    { rootMargin: "100px" }
+  );
+  observer.observe(img);
 }
 
 async function populateMainArticle(article) {
@@ -138,20 +175,27 @@ async function populateMainArticle(article) {
 
   img.src = await preloadImage(article.image);
   img.alt = article.title || "Article Image";
+  img.setAttribute("loading", "lazy");
   title.textContent = article.title || "Untitled Article";
   author.textContent = `By ${article.author || "Unknown Author"}`;
 
-  // Split content into paragraphs
   const paragraphs = article.content
-    ? article.content.split("</p>").filter((p) => p.trim())
+    ? article.content
+        .split("</p>")
+        .filter((p) => p.trim())
+        .map((p) => p.replace(/style="[^"]*"/g, ""))
     : ["<p>No content available.</p>"];
-  const halfwayIndex = Math.ceil(paragraphs.length / 2);
-  const randomIndex = Math.floor(Math.random() * articlesData.length);
-  const randomArticle = articlesData[randomIndex];
-  const inlineImage = `<img src="${await preloadImage(
-    randomArticle.image
-  )}" alt="Inline image for ${randomArticle.title}" class="inline-image" />`;
-  paragraphs.splice(halfwayIndex, 0, inlineImage);
+
+  if (article.inline_image) {
+    const halfwayIndex = Math.ceil(paragraphs.length / 2);
+    const inlineImage = `<img src="${await preloadImage(
+      article.inline_image
+    )}" alt="Inline image for ${
+      article.title || "Article"
+    }" class="inline-image" loading="lazy" />`;
+    paragraphs.splice(halfwayIndex, 0, inlineImage);
+  }
+
   body.innerHTML = paragraphs.join("");
 
   tagsContainer.innerHTML = "";
@@ -189,7 +233,7 @@ async function showArticleView(articleId) {
 
   await populateMainArticle(article);
 
-  const randomArticles = getRandomArticles(articleId, articlesData).slice(0, 2); // Limit to 2 articles
+  const randomArticles = getRandomArticles(articleId, articlesData).slice(0, 2);
   const randomCards = articleView.querySelectorAll(
     ".random-grid .article-card"
   );
@@ -197,11 +241,11 @@ async function showArticleView(articleId) {
     if (randomArticles[index]) {
       await populateArticleCard(randomCards[index], randomArticles[index]);
     } else {
-      randomCards[index].style.display = "none"; // Hide extra cards if any
+      randomCards[index].style.display = "none";
     }
   }
 
-  const closeBtn = articleView.querySelector(".close-article");
+  const closeBtn = document.querySelector(".close-article");
   if (closeBtn) {
     closeBtn.onclick = () => {
       articleView.classList.add("hidden");
@@ -213,18 +257,25 @@ async function showArticleView(articleId) {
 }
 
 async function loadCategory(category) {
+  // Store sticky state before any DOM changes
+  const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
+  const wasSticky = stickyNav.classList.contains("is-sticky");
+
   const categoryTitle = document.getElementById("category-title");
   const bentoGrid = document.querySelector(".bento-grid");
   const hugeArticleCard = bentoGrid.querySelector(".article-card.huge");
   const smallGrid = bentoGrid.querySelector(".small-grid");
   const articleView = document.querySelector(".article-view");
 
-  // categoryTitle.textContent = category.toUpperCase();
+  // Capitalize category name for display
+  const displayCategory = category.charAt(0).toUpperCase() + category.slice(1);
+  categoryTitle.textContent =
+    category === "latest" ? "Latest" : displayCategory;
 
   smallGrid.innerHTML = "";
   bentoGrid.style.display = "";
   articleView.classList.add("hidden");
-  document.querySelector(".category-label.latest-label").style.display = "";
+  document.querySelector(".category-label.latest-label").style.display = ""; // Always show label
 
   let articles = articlesData;
   if (category !== "latest") {
@@ -257,6 +308,14 @@ async function loadCategory(category) {
     card.removeEventListener("click", handleArticleClick);
     card.addEventListener("click", handleArticleClick);
   });
+
+  // Handle scrolling after content is loaded
+  if (wasSticky) {
+    const navHeight = stickyNav.offsetHeight;
+    window.scrollTo(0, navHeight + 20);
+  } else {
+    window.scrollTo(0, 0);
+  }
 }
 
 async function loadSearchResults(query) {
@@ -266,7 +325,7 @@ async function loadSearchResults(query) {
   const smallGrid = bentoGrid.querySelector(".small-grid");
   const articleView = document.querySelector(".article-view");
 
-  categoryTitle.textContent = `SEARCH: ${query.toUpperCase()}`;
+  categoryTitle.textContent = ` ${query.toUpperCase()}`;
 
   smallGrid.innerHTML = "";
   bentoGrid.style.display = "";
@@ -376,6 +435,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const loadContent = () => {
           let category = window.location.hash.slice(1) || "latest";
+          document.querySelectorAll(".categories a").forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${category}`) {
+              link.classList.add("active");
+            }
+          });
           if (category === "random") {
             loadRandomArticle();
           } else {
@@ -457,6 +522,17 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#quote-text").textContent =
         "Failed to load quote.";
     });
+
+  // Add this to detect sticky state
+  const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
+  let stickyObserver = new IntersectionObserver(
+    ([entry]) => {
+      stickyNav.classList.toggle("is-sticky", !entry.isIntersecting);
+    },
+    { threshold: 1 }
+  );
+
+  stickyObserver.observe(stickyNav);
 });
 
 let lastLatestScrollY = 0;

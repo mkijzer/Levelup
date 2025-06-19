@@ -1,23 +1,37 @@
-/* variables.css */
+/* variables.css: Global CSS custom properties for the LevelUpOrDieTrying website */
+
+/* ========================================================================== */
+/* Colors: Theme-specific colors for dark and light modes */
+/* ========================================================================== */
 :root {
   /* Dark Mode Colors */
   --background: rgb(20, 22, 24);
   --white: rgb(255, 255, 255);
   --glass-bg: rgba(42, 47, 49, 0.3);
-  --glass-border: rgba(255, 98, 0, 0.5);
+  --glass-border: rgba(
+    255,
+    98,
+    0,
+    0.5
+  ); /* Note: Currently unused, consider removing or using in components.css */
 
-  /* Adjusted Light Mode Colors */
+  /* Light Mode Colors */
   --light-background: rgb(220, 220, 220); /* Darker greyish tone */
   --light-text: rgb(33, 33, 33); /* Dark gray for readability */
   --light-glass-bg: rgba(255, 255, 255, 0.7); /* Brighter glass effect */
-  --light-glass-border: none 
+  --light-glass-border: rgba(
+    255,
+    255,
+    255,
+    0
+  ); /* Transparent color; 'none' moved to themes.css */
   --dark-category-text: rgb(
     33,
     33,
     33
   ); /* Dark text for categories in light mode */
 
-  /* Category Colors (unchanged, work for both modes) */
+  /* Category Colors (used for gradients in both modes) */
   --wealth-start: rgb(255, 98, 0);
   --wealth-end: rgb(255, 215, 0);
   --strength-start: rgb(255, 0, 0);
@@ -32,20 +46,20 @@
   --refresh-end: rgb(0, 230, 230);
   --surprise-start: rgb(255, 105, 180);
   --surprise-end: rgb(255, 182, 193);
+}
 
-  /* Typography */
+/* ========================================================================== */
+/* Typography: Font families, sizes, and line heights */
+/* ========================================================================== */
+:root {
+  /* Font Families */
   --font-primary: "Inter", sans-serif;
-  --font-size-h1: 2.5rem;
-  --font-size-h2: 1.5rem; /* Increased for better hierarchy */
-  --font-size-h3: 1.25rem; /* Added for future flexibility */
-  --font-size-body: 1.125rem;
 
-  /* Line Heights */
-  --line-height-h1: 1.2;
-  --line-height-h2: 1.3;
-  --line-height-h3: 1.4; /* Suitable for h3 */
-  /* Other variables unchanged */
-  --line-height-body: 1.6;
+  /* Font Sizes */
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 1.5rem;
+  --font-size-h3: 1.25rem;
+  --font-size-body: 1.125rem;
 
   /* Card-Specific Font Sizes */
   --font-size-huge-title: clamp(1rem, 2.5vw, 1.4rem);
@@ -53,22 +67,80 @@
   --font-size-huge-author: clamp(1rem, 2vw, 1.25rem);
   --font-size-small-author: clamp(0.875rem, 1.5vw, 1rem);
 
-  /* Spacing */
+  /* Line Heights */
+  --line-height-h1: 1.2;
+  --line-height-h2: 1.3;
+  --line-height-h3: 1.4;
+  --line-height-body: 1.6;
+}
+
+/* ========================================================================== */
+/* Spacing: Consistent spacing values for margins, padding, and gaps */
+/* ========================================================================== */
+:root {
   --spacing-page: 1rem;
   --spacing-sm: 0.75rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 3rem;
+}
 
-  /* Border Radius */
+/* ========================================================================== */
+/* Border Radius: Consistent border radius values */
+/* ========================================================================== */
+:root {
   --radius-md: 0.75rem;
   --radius-sm: 0.5rem;
+}
 
-  /* Breakpoints */
-  --breakpoint-tablet: 769px; /* Added for maintainability */
-  --breakpoint-desktop: 1025px; /* Added for maintainability */
+/* ========================================================================== */
+/* Breakpoints: Media query breakpoints for responsive design */
+/* ========================================================================== */
+:root {
+  --breakpoint-tablet: 769px; /* Used in layout.css for tablet media queries */
+  --breakpoint-desktop: 1025px; /* Used in layout.css for desktop media queries */
+}
 
-  /* Hamburger Menu */
-  --hamburger-width: 1.3rem;
-  --hamburger-height: 1rem;
-  --hamburger-bar-height: 1px;
+/* ========================================================================== */
+/* Z-Index: Layering control for overlapping elements */
+/* ========================================================================== */
+:root {
+  --z-index-mobile-menu: 999; /* For mobile-menu */
+  --z-index-hamburger: 1000; /* For hamburger-menu */
+  --z-index-content: 1; /* For quote-container, above background */
+  --z-index-overlay: 2; /* For article-card content above gradient */
+}
+
+/* ========================================================================== */
+/* Transitions: Common transition timings for animations */
+/* ========================================================================== */
+:root {
+  --transition-fast: 0.2s ease; /* For microinteractions like article-card hover */
+  --transition-medium: 0.3s ease; /* For elements like search-icon, theme-slider */
+  --transition-slow: 0.9s cubic-bezier(0.77, 0, 0.18, 1); /* For mobile-menu slide */
+}
+/* Utility Classes - Use rem for global spacing, px for fixed values like borders */
+
+.text-center {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.p-2 {
+  padding: var(--spacing-md);
+}
+
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+
+.glass {
+  background: rgba(42, 47, 49, 0.2);
+  backdrop-filter: blur(0.9375rem);
+  border: none; /* Remove border */
+
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
 }

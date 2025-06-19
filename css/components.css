@@ -1,120 +1,167 @@
-/* css/components.css */
+/* components.css: Styles for reusable UI components */
 
-/* Prevent flash by setting default background */
-html {
-  background: var(--background);
+/* ========================================================================== */
+/* Main Title and Subtitle */
+/* ========================================================================== */
+
+/* Main-title: Bold "Level Up" text */
+.main-title {
+  font-size: 1.75rem; /* Smaller font */
+  font-weight: 700;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  letter-spacing: 0.2rem;
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.7), 0 0 10px rgba(255, 215, 0, 0.5);
+  background: linear-gradient(
+    to top,
+    transparent 0%,
+    transparent 40%,
+    #ffd700 40%,
+    #ffd700 60%,
+    transparent 60%,
+    transparent 100%
+  );
+  -webkit-background-clip: text;
+  animation: pulseGlow 1.5s infinite alternate;
+  margin: 0;
+  margin-right: 2px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px; /* Space between Level Up and Or Die Trying */
 }
 
-html.light-mode {
-  background: var(--light-background) !important;
+/* Subtitle: "Or Die Trying" with neon gradient */
+.subtitle {
+  font-family: "Shadows Into Light", cursive;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #f34343; /* Solid red for clarity */
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.5); /* Subtle shadow for contrast */
+  position: relative;
+  top: 1px;
+  margin: 0;
+  display: inline;
 }
 
-html.light-mode body {
-  background: var(--light-background) !important;
-}
+/* ========================================================================== */
+/* Navigation Components */
+/* ========================================================================== */
 
-html.light-mode header {
-  background: var(--light-background) !important;
-  color: var(
-    --dark-category-text
-  ) !important; /* Ensure header text isn’t white */
-}
-
-html.light-mode .nav-container .categories li a,
-html.light-mode .mobile-menu .categories li a {
-  color: var(--dark-category-text) !important;
-  color: rgb(33, 33, 33) !important; /* Fallback to ensure it’s applied */
-}
-
-html.light-mode .glass,
-html.light-mode .article-card,
-html.light-mode .mobile-menu,
-html.light-mode .search-bar,
-html.light-mode .main-article,
-html.light-mode .separator-quote,
-html.light-mode .ad-container,
-html.light-mode .quote-container {
-  background: var(--light-glass-bg);
-  border: 1px solid var(--light-glass-border);
-  backdrop-filter: blur(10px);
-}
-
-html.light-mode .article-title,
-html.light-mode .article-meta,
-html.light-mode .article-author,
-html.light-mode .main-article-title,
-html.light-mode .main-article-body,
-html.light-mode .main-article-author,
-html.light-mode .quote-text,
-html.light-mode .quote-author,
-html.light-mode .tag {
-  color: var(--light-text);
-}
-
-/* css/components.css: Replace the existing main-title rule */
-html.light-mode .main-title {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3),
-    /* Shadow for contrast */ 0 0 8px rgb(255, 200, 0),
-    /* Softer gold glow */ 0 0 16px rgb(255, 230, 100); /* Lighter gold spread */
-}
-
-/* Keep top article title white in light mode for readability */
-html.light-mode .article-card.huge .article-title {
+/* Search-bar: Input with space for icon */
+.search-bar {
+  font-size: 0.85rem;
+  border: none;
+  width: 100%;
+  border-radius: var(--radius-sm);
   color: var(--white);
 }
 
-/* Hamburger menu visibility in light mode */
-html.light-mode .hamburger-menu span {
-  background: var(--light-text);
+/* Search-icon: Magnifying glass SVG */
+.search-icon {
+  position: absolute;
+  top: 50%;
+  max-width: 100%;
+  max-height: 100%;
+}
+.search-icon path {
+  stroke: var(--white);
 }
 
-/* Search icon in light mode */
-html.light-mode .search-icon path {
-  stroke: var(--light-text);
-}
+/* ========================================================================== */
+/* Hamburger Menu Components */
+/* ========================================================================== */
 
-/* Remove border and match search bar background in light mode */
-html.light-mode .search-bar {
+/* Hamburger-menu: Button for mobile menu */
+.hamburger-menu {
+  /* Scoped variables for hamburger dimensions */
+  --hamburger-width: 0.8rem;
+  --hamburger-height: 0.6rem;
+  --hamburger-bar-height: 0.4px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: var(--hamburger-width); /* Use scoped variable */
+  height: var(--hamburger-height); /* Use scoped variable */
+  background: transparent;
   border: none;
-  background: var(--light-background);
+  cursor: pointer;
+  position: fixed;
+  right: 16px; /* Align with page padding */
+  top: 18px; /* Position at top-left */
+  transform: translateY(0); /* Remove unnecessary transform */
+  z-index: 1500;
 }
 
-/* Ensure category gradients remain vibrant */
-html.light-mode .categories a[href="#latest"].active::after,
-html.light-mode .categories a[href="#latest"]:hover::after {
-  background: linear-gradient(to right, #ff4500, #ff0000);
+.hamburger-menu.open {
+  z-index: 1500; /* Reinforce z-index */
 }
 
-html.light-mode .categories a[href="#health"].active::after,
-html.light-mode .categories a[href="#health"]:hover::after {
-  background: linear-gradient(to right, #00ff00, #008000);
+/* Hamburger-menu bars */
+.hamburger-menu span {
+  height: var(--hamburger-bar-height); /* Use scoped variable */
+  background-color: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
-html.light-mode .categories a[href="#coins"].active::after,
-html.light-mode .categories a[href="#coins"]:hover::after {
-  background: linear-gradient(to right, #ffd700, #b8860b);
+/* Hamburger-menu open: Transform into upward pyramid */
+.hamburger-menu.open span:nth-child(1) {
+  transform-origin: center;
+  transform: translateY(10px); /* Base - centered */
+  width: 15px;
 }
 
-html.light-mode .categories a[href="#hack"].active::after,
-html.light-mode .categories a[href="#hack"]:hover::after {
-  background: linear-gradient(to right, #00ff00, #008000);
+.hamburger-menu.open span:nth-child(2) {
+  transform-origin: left center;
+  transform: translateY(5px) translateX(1px) rotate(-64deg); /* Left side */
+  width: 15px;
 }
 
-html.light-mode .categories a[href="#ai"].active::after,
-html.light-mode .categories a[href="#ai"]:hover::after {
-  background: linear-gradient(to right, #800080, #4b0082);
+.hamburger-menu.open span:nth-child(3) {
+  transform-origin: right center;
+  transform: translateY(0px) translateX(-1px) rotate(64deg); /* Right side */
+  width: 15px;
 }
 
-html.light-mode .categories a[href="#random"].active::after,
-html.light-mode .categories a[href="#random"]:hover::after {
-  background: linear-gradient(to right, #ff69b4, #ff4500);
+/* Mobile-menu: Full-screen menu with neon glass effect */
+.mobile-menu {
+  background: linear-gradient(
+    180deg,
+    rgba(128, 0, 128, 0.6) 0%,
+    /* var(--think-start), semi-transparent dark purple */ rgba(18, 0, 18, 0.5)
+      15%,
+    /* custom #120012 dark purple */ rgba(0, 0, 255, 0.35) 35%,
+    /* var(--focus-start), deep blue */ rgba(0, 0, 48, 0.3) 55%,
+    /* custom #000030 navy-black */ rgba(0, 24, 32, 0.25) 75%,
+    /* custom #001820 cyan-black */ rgba(20, 22, 24, 0.15) 100%
+      /* var(--background), slightly see-through */
+  );
+
+  backdrop-filter: blur(36px) saturate(300%) brightness(1.3) contrast(1.3);
 }
 
-/* Prevent layout shift during image load */
-.article-image-wrapper {
-  background-color: var(--glass-bg); /* Fallback during load */
-  min-height: 10px; /* Adjust based on design */
+/* ========================================================================== */
+/* Category Label */
+/* ========================================================================== */
+
+/* Category-label: Styling for category titles (latest, health, etc.) */
+.category-label {
+  display: inline-block;
+  font-family: Roboto, "Arial Narrow Bold", sans-serif;
+  font-weight: 100;
+  font-size: 0.8rem; /* Smaller size */
+  color: #b0b0b0; /* Lighter grey */
+  letter-spacing: 0.0625rem;
+  margin: 16px 0;
+  margin-left: 25px;
+  margin-bottom: -15px;
 }
+
+/* ========================================================================== */
+/* Article Image */
+/* ========================================================================== */
+
 .article-image,
 .main-article-image {
   display: block;
@@ -123,7 +170,432 @@ html.light-mode .categories a[href="#random"]:hover::after {
   object-fit: cover; /* Ensure images scale nicely */
 }
 
-/* css/components.css: Add styles for close-article button */
+/* ========================================================================== */
+/* Article Cards */
+/* ========================================================================== */
+
+/* Article-card: Base styles for all cards */
+.article-card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-sizing: border-box;
+  background: rgba(42, 47, 49, 0.1);
+  backdrop-filter: blur(0.625rem);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+/* Card-inner: Inner content wrapper */
+.card-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Article-card huge: Large featured card */
+.article-card.huge {
+  aspect-ratio: 3 / 2;
+  position: relative; /* Add this to establish positioning context */
+}
+
+/* Article-card small: Smaller cards */
+.article-card.small {
+  aspect-ratio: auto;
+}
+
+.article-card.loading {
+  background: transparent; /* No glass effect */
+  border: none; /* No outline */
+  backdrop-filter: none; /* No blur */
+}
+.article-card.loading .article-image {
+  opacity: 0.5; /* Subtle placeholder */
+  transition: opacity 0.3s ease;
+}
+.article-card .article-image {
+  opacity: 1;
+}
+
+.article-card.loading .article-image-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-text);
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translate(-50%, -50%);
+}
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Gradient-overlay: Glassmorphism for huge card's bottom 1/3 */
+.bento-grid .article-card.huge .article-image-wrapper .gradient-overlay {
+  position: absolute;
+  bottom: 0; /* Changed from top: 70% to bottom: 0 */
+  left: 0;
+  width: 100%;
+  height: 40%; /* Covers bottom 40% */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  z-index: 1; /* Below text but above image */
+  opacity: 1;
+  display: block !important;
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: blur(12px)) {
+  .bento-grid .article-card.huge .article-image-wrapper .gradient-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+  }
+}
+
+/* Ensure small cards have no overlay */
+.bento-grid .article-card.small .article-image-wrapper .gradient-overlay {
+  display: none;
+}
+
+/* Gradient-overlay: Image overlay for huge cards */
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  border-radius: var(--radius-md);
+  z-index: 0;
+  opacity: 0.8;
+  mix-blend-mode: screen;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.5)
+  );
+}
+
+/* Remove overlay for small cards */
+.article-card.small .gradient-overlay {
+  display: none;
+}
+
+/* Article-image: Card image */
+.article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--radius-md);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Fade in loaded images */
+.article-image[src] {
+  opacity: 1;
+}
+
+/* Article-meta: Date and category text */
+.article-meta {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 4px;
+}
+
+/* Article-title: Card title */
+.article-title {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--white);
+  line-height: 1.3;
+  max-width: 75ch;
+  letter-spacing: 0.0625rem;
+}
+
+/* Small card title: Smaller size */
+.article-card.small .article-title {
+  font-size: 1rem;
+  max-width: none;
+  margin-bottom: 0;
+}
+
+/* Huge card title: Larger size */
+.article-card.huge .article-title {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: var(--white);
+  line-height: 1.3;
+  max-width: 75ch;
+  letter-spacing: 0.0625rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Add text shadow for better readability */
+  pointer-events: auto; /* Allow clicks on the title */
+}
+
+/* Article-content: Text overlay for cards */
+.article-content {
+  position: static; /* Change from absolute */
+  bottom: auto; /* Remove bottom positioning */
+  left: auto;
+  right: auto;
+  padding: 1px; /* Adjust padding */
+  color: var(--white);
+  z-index: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Change from flex-end */
+}
+
+/* Huge card content: Prevent clipping */
+.article-card.huge .article-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  color: var(--white);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center; /* Center text horizontally */
+  pointer-events: none;
+}
+
+/* Small card content: Adjust positioning */
+.article-card.small .article-content {
+  position: static;
+  padding-top: 10px;
+  color: var(--white);
+  z-index: auto;
+}
+
+/* Small card inner: Proper spacing */
+.article-card.small .card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between image and text */
+  padding: 8px;
+}
+
+/* ========================================================================== */
+/* Article View Components */
+/* ========================================================================== */
+
+/* Main-article: Full article container */
+.main-article {
+  border-radius: var(--radius-md);
+  background: rgba(42, 47, 49, 0.1);
+  backdrop-filter: blur(0.625rem);
+  padding: 16px 24px 24px; /* Reduced top padding from 24px to 16px */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Main-article-title: Article title */
+.main-article-title {
+  font-size: 1.75rem;
+  color: var(--white);
+  text-align: center;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  margin-top: -30px; /* Added negative margin to pull title upward */
+}
+
+/* Main-article-image-wrapper: Image container */
+.main-article-image-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background-color: #333;
+  position: relative; /* Ensure image stays contained */
+}
+
+/* Main-article-image: Article image */
+.main-article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin-top: -30px; /* Added negative margin to pull title upward */
+}
+
+/* Fade in loaded images */
+.main-article-image[src] {
+  opacity: 1;
+}
+
+/* Main-article-body: Article content */
+.main-article-body {
+  font-size: 0.5rem !important; /* Reduced from 1rem for smaller text */
+  color: var(--white);
+  line-height: 1.6;
+  margin-top: -35px;
+}
+/* Inline-image: Image within article content */
+.main-article-body .inline-image {
+  width: 100%;
+  max-width: 300px; /* Smaller than main article image */
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  margin: var(--spacing-md) auto; /* Center with spacing */
+  display: block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Fade in loaded inline images */
+.main-article-body .inline-image[src] {
+  opacity: 1;
+}
+
+/* Main-article-author: Author text */
+.main-article-author {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ========================================================================== */
+/* Tags */
+/* ========================================================================== */
+
+/* Article-tags: Wrapping layout for tags */
+.article-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: -5px;
+  margin-bottom: 5px;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Tag: Glassmorphism style for tags */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  color: var(--white);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-sm);
+  text-transform: capitalize;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  text-align: center;
+  min-width: 90px;
+  cursor: pointer;
+}
+
+/* Tag hover: Glow effect */
+.tag:hover {
+  /* transform: translateY(-2px); */
+  box-shadow: 0 1px 16px rgb(255, 215, 0), 0 0 8px;
+}
+
+/* Tag click: Blown up and disappear animation */
+.tag.clicked {
+  animation: blowUpAndFade 0.5s ease forwards;
+}
+
+/* Animation: Scale up and fade out */
+@keyframes blowUpAndFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* ========================================================================== */
+/* Separators and Ads */
+/* ========================================================================== */
+
+/* Separator-quote: Quote between sections */
+.separator-quote {
+  max-width: 600px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(42, 47, 49, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.3);
+  text-align: center;
+  margin: 24px auto;
+}
+
+/* Ad-container: Ad placeholder content */
+.ad-container {
+  max-width: 600px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(42, 47, 49, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.3);
+  margin: 0 auto;
+  color: var(--white);
+  text-align: center;
+}
+
+/* ========================================================================== */
+/* Quote Section Components */
+/* ========================================================================== */
+
+/* Quote-container: Quote content with glass effect */
+.quote-container {
+  max-width: 600px;
+  width: 90%;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(42, 47, 49, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.3);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Quote-text: Quote content */
+.quote-text {
+  font-size: 1.5rem;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* Quote-author: Quote author */
+.quote-author {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+/* ========================================================================== */
+/* Close Button */
+/* ========================================================================== */
 
 /* Close "X" in dark mode */
 .close-article {
@@ -132,7 +604,58 @@ html.light-mode .categories a[href="#random"]:hover::after {
   cursor: pointer;
 }
 
-/* Close "X" in light mode */
-html.light-mode .close-article {
-  color: var(--light-text);
+/* ========================================================================== */
+/* Media Queries: Tablet (min-width: 769px) */
+/* ========================================================================== */
+@media (min-width: 769px) {
+  /* Article-card huge: Adjust padding */
+  .article-card.huge .article-content {
+    padding: 32px;
+  }
+
+  /* Huge card title: Larger size */
+  .article-card.huge .article-title {
+    font-size: 1.75rem;
+  }
+
+  /* Inline-image: Adjust size and spacing */
+  .main-article-body .inline-image {
+    max-width: 350px; /* Slightly larger for tablet */
+    margin: var(--spacing-lg) auto;
+  }
+
+  /* Article-tags: Adjust spacing */
+  .article-tags {
+    gap: 10px;
+    padding: 8px;
+  }
+
+  /* Tag: Adjust width */
+  .tag {
+    min-width: 70px;
+  }
+  .hamburger-menu {
+    display: none;
+  }
+}
+
+/* ========================================================================== */
+/* Media Queries: Desktop (min-width: 1025px) */
+/* ========================================================================== */
+@media (min-width: 1025px) {
+  /* Article-card huge: Adjust padding */
+  .article-card.huge .article-content {
+    padding: 40px;
+  }
+
+  /* Huge card title: Larger size */
+  .article-card.huge .article-title {
+    font-size: 2rem;
+  }
+
+  /* Inline-image: Adjust size and spacing */
+  .main-article-body .inline-image {
+    max-width: 400px; /* Larger for desktop */
+    margin: var(--spacing-lg) auto;
+  }
 }

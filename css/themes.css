@@ -1,11 +1,15 @@
-/* themes.css */
+/* themes.css: Dark/light mode theming and theme toggle styles */
+
+/* ========================================================================== */
+/* Theme Toggle Styles */
+/* ========================================================================== */
 
 /* Theme Toggle: Styles for the large theme toggle switch */
 .theme-label {
   color: #fff;
   font-size: 1rem;
 }
-/* themes.css: Replace .theme-slider and related rules */
+
 .theme-slider {
   display: flex;
   align-items: center;
@@ -38,13 +42,13 @@
 }
 
 .theme-slider .slider::before {
-  content: "☼";
+  content: "☽";
   left: 6px; /* Adjusted for smaller width */
   color: #000000;
 }
 
 .theme-slider .slider::after {
-  content: "☽";
+  content: "☼";
   right: 6px; /* Adjusted for smaller width */
   z-index: 0;
   color: #ffffff;
@@ -69,4 +73,159 @@
 .theme-slider input:checked ~ .slider .slider-button {
   background-color: #ffffff;
   transform: translateX(28px); /* Adjusted for smaller width */
+}
+
+/* ========================================================================== */
+/* Dark Mode (Default) */
+/* ========================================================================== */
+
+/* Default background for dark mode */
+html {
+  background: var(--background);
+}
+
+/* ========================================================================== */
+/* Light Mode Overrides */
+/* ========================================================================== */
+
+/* Light mode background */
+html.light-mode {
+  background: var(--light-background) !important;
+}
+
+html.light-mode body {
+  background: var(--light-background) !important;
+}
+
+/* Header in light mode */
+html.light-mode header {
+  background: rgb(210, 207, 207);
+  color: black !important; /* Ensure header text isn’t white */
+}
+
+/* Navigation categories in light mode */
+html.light-mode .nav-container .categories li a,
+html.light-mode .mobile-menu .categories li a {
+  color: var(--light-text) !important;
+  background: var(--light-background) !important;
+  border-left: none !important;
+  transition: none !important;
+}
+
+html.light-mode .nav-container .categories li a.active::after,
+html.light-mode .nav-container .categories li a:hover::after {
+  background: transparent !important;
+}
+
+html.light-mode .nav-container {
+  background: var(--light-background) !important;
+}
+
+/* Glassmorphism components in light mode */
+html.light-mode .glass,
+html.light-mode .article-card,
+html.light-mode .mobile-menu,
+html.light-mode .search-bar,
+html.light-mode .main-article,
+html.light-mode .separator-quote,
+html.light-mode .ad-container,
+html.light-mode .quote-container {
+  background: var(--light-glass-bg);
+  border: 1px solid var(--light-glass-border);
+  backdrop-filter: blur(10px);
+}
+
+/* Text elements in light mode */
+html.light-mode .article-title,
+html.light-mode .article-meta,
+html.light-mode .article-author,
+html.light-mode .main-article-title,
+html.light-mode .main-article-body,
+html.light-mode .main-article-author,
+html.light-mode .quote-text,
+html.light-mode .quote-author,
+html.light-mode .tag {
+  color: var(--light-text);
+}
+
+/* Main title in light mode */
+html.light-mode .main-title {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3),
+    /* Shadow for contrast */ 0 0 8px rgb(255, 200, 0),
+    /* Softer gold glow */ 0 0 16px rgb(255, 230, 100); /* Lighter gold spread */
+}
+
+/* Keep top article title white in light mode for readability */
+html.light-mode .article-card.huge .article-title {
+  color: var(--white);
+}
+
+/* Hamburger menu visibility in light mode */
+html.light-mode .hamburger-menu span {
+  background: var(--light-text);
+}
+
+/* Search icon in light mode */
+html.light-mode .search-icon path {
+  stroke: var(--light-text);
+}
+
+html.light-mode .search-bar {
+  color: var(--light-text);
+}
+
+/* Remove border and match search bar background in light mode */
+html.light-mode .search-bar {
+  border: none;
+  background: var(--light-background);
+}
+
+/* Close "X" in light mode */
+html.light-mode .close-article {
+  color: var(--light-text);
+}
+
+/* Update under Light Mode Overrides section */
+html.light-mode .glass,
+html.light-mode .article-card,
+html.light-mode .mobile-menu,
+html.light-mode .search-bar,
+html.light-mode .main-article,
+html.light-mode .separator-quote,
+html.light-mode .ad-container,
+html.light-mode .quote-container {
+  background: var(--light-background);
+  border: none;
+  backdrop-filter: none;
+}
+
+/* Ensure category gradients remain vibrant in light mode */
+html.light-mode .categories a[href="#latest"].active::after,
+html.light-mode .categories a[href="#latest"]:hover::after {
+  background: linear-gradient(to right, #ff4500, #ff0000);
+}
+
+html.light-mode .categories a[href="#health"].active::after,
+html.light-mode .categories a[href="#health"]:hover::after {
+  background: linear-gradient(to right, #00ff00, #008000);
+}
+
+html.light-mode .categories a[href="#coins"].active::after,
+html.light-mode .categories a[href="#coins"]:hover::after {
+  background: linear-gradient(to right, #ffd700, #b8860b);
+}
+
+html.light-mode .categories a[href="#hack"].active::after,
+html.light-mode .categories a[href="#hack"]:hover::after {
+  background: linear-gradient(to right, #00ff00, #008000);
+}
+
+html.light-mode .categories a[href="#ai"].active::after,
+html.light-mode .categories a[href="#ai"]:hover::after {
+  background: linear-gradient(to right, #800080, #4b0082);
+}
+
+html.light-mode .categories a[href="#random"].active::after,
+html.light-mode .categories a[href="#random"]:hover::after {
+  background: linear-gradient(to right, #ff69b4, #ff4500);
 }

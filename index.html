@@ -16,13 +16,7 @@
     <link rel="stylesheet" href="css/themes.css" />
 
     <!-- Fonts -->
-    <link
-      rel="preload"
-      href="fonts/256-bytes.twofiftysix-regular.otf"
-      as="font"
-      type="font/otf"
-      crossorigin
-    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,34 +24,50 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <!-- Header Section -->
-    <header>
-      <!-- Header Top: Logo, Title, and Hamburger Menu -->
-      <div class="header-top">
-        <div class="logo-container">
-          <img
-            src="assets/images/logo_NEW.png"
-            alt="LevelUpOrDieTrying Logo"
-            class="logo"
-          />
-        </div>
-        <div class="title-container">
-          <h1 class="main-title">
-            Level Up <span class="subtitle">Or Die Trying</span>
-          </h1>
-        </div>
-        <button class="hamburger-menu" aria-label="Open menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
 
-      <!-- Navigation (Single navigation for all screen sizes) -->
-      <!-- index.html: Replace the <div class="nav-container"> section -->
-      <!-- index.html: Replace the <div class="nav-container"> section -->
-      <div class="nav-container">
+    <header>
+      <div>
+        <!-- Header Top: Logo, Title, and Hamburger Menu -->
+        <div class="header-top">
+          <div class="logo-container">
+            <img
+              src="assets/images/logo_NEW.png"
+              alt="LevelUpOrDieTrying Logo"
+              class="logo"
+            />
+          </div>
+          <div class="title-container">
+            <h1 class="main-title">
+              Level Up <span class="subtitle">Or Die Trying</span>
+            </h1>
+          </div>
+          <button class="hamburger-menu" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+
+        <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
+        <nav class="mobile-menu">
+          <div class="theme-toggle">
+            <label class="theme-slider">
+              <input type="checkbox" id="theme-switch" />
+              <span class="slider">
+                <span class="slider-button"></span>
+              </span>
+            </label>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <div class="sticky-wrapper-navcontainer">
+      <nav class="nav-container">
         <ul class="categories">
           <li><a href="#latest">Latest</a></li>
           <li class="separator-home">.</li>
@@ -78,58 +88,87 @@
                 fill="none"
                 style="vertical-align: middle"
                 xmlns="http://www.w3.org/2000/svg"
+                class="random-icon"
               >
+                <!-- Top curved line - start moved down 0.5px -->
                 <path
-                  d="M3 7h5c3 0 6 3 9 6l2 2"
+                  d="M3 7.5h2c4 0 7 3 7 4.5s3 5 7 5h2"
                   stroke="currentColor"
-                  stroke-width="2"
+                  stroke-width="1.8"
                   fill="none"
+                  stroke-linecap="round"
                 />
+                <!-- Top arrow head -->
                 <path
-                  d="M18 5h3v3"
+                  d="M19 14l3 3-3 3"
                   stroke="currentColor"
-                  stroke-width="2"
+                  stroke-width="1.8"
                   fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
+
+                <!-- Bottom curved line - start moved up 0.5px -->
                 <path
-                  d="M3 17h5c3 0 6-3 9-6l2-2"
+                  d="M3 16.5h2c4 0 7-3 7-4.5s3-5 7-5h2"
                   stroke="currentColor"
-                  stroke-width="2"
+                  stroke-width="1.8"
                   fill="none"
+                  stroke-linecap="round"
                 />
+                <!-- Bottom arrow head -->
                 <path
-                  d="M18 19h3v-3"
+                  d="M19 10l3-3-3-3"
                   stroke="currentColor"
-                  stroke-width="2"
+                  stroke-width="1.8"
                   fill="none"
-                />
-              </svg>
-            </a>
-          </li>
-          <li class="nav-search-item">
-            <div class="search-bar-container">
-              <input
-                type="text"
-                id="search-bar"
-                placeholder="Search..."
-                class="search-bar"
-              />
-              <svg
-                class="search-icon"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.5 11.5L14 14M7 10A3 3 0 1 0 7 4A3 3 0 0 0 7 10Z"
-                  stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
               </svg>
-            </div>
+            </a>
+             <li class="separator-home">.</li>
+          </li>
+          <li class="nav-search-item">
+              <div class="search-bar-container">
+                <svg
+                  version="1.1"
+                  id="search-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 5.333 5.333"
+                  enable-background="new 0 0 5.333 5.333"
+                  xml:space="preserve"
+                  style="width: 16px; height: 16px"
+                >
+                  <circle
+                    fill="none"
+                    stroke="#000000"
+                    stroke-width="0.5"
+                    stroke-miterlimit="10"
+                    cx="2.222"
+                    cy="2.222"
+                    r="1.556"
+                  />
+                  <line
+                    fill="none"
+                    stroke="#000000"
+                    stroke-width="0.5"
+                    stroke-miterlimit="10"
+                    x1="3.556"
+                    y1="3.556"
+                    x2="4.444"
+                    y2="4.444"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  id="search-bar"
+                  placeholder="  Search"
+                  class="search-bar"
+                />
+              </div>
+            
             <div class="theme-toggle desktop-theme-toggle">
               <label class="theme-slider">
                 <input type="checkbox" id="theme-switch-desktop" />
@@ -140,20 +179,8 @@
             </div>
           </li>
         </ul>
-      </div>
-
-      <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
-      <nav class="mobile-menu">
-        <div class="theme-toggle">
-          <label class="theme-slider">
-            <input type="checkbox" id="theme-switch" />
-            <span class="slider">
-              <span class="slider-button"></span>
-            </span>
-          </label>
-        </div>
       </nav>
-    </header>
+    </div>
 
     <!-- Main Content -->
     <main>
@@ -398,7 +425,6 @@
           </div>
         </div>
       </section>
-      <div class="divider"></div>
     </main>
     <div class="divider"></div>
 
