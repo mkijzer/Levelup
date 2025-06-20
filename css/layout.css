@@ -17,6 +17,7 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-y: auto; /* Enable vertical scrolling */
+  padding-bottom: 60px; /* Match nav height to avoid overlap */
 }
 
 /* Wrapper to prevent horizontal overflow */
@@ -102,18 +103,26 @@ header {
 
 /* Navigation bar for categories */
 .nav-container {
-  display: flex;
-  position: sticky;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--spacing-sm);
-  width: 100%;
-  font-size: 1rem;
-  flex-wrap: nowrap;
-  background-color: var(--color-header-bg);
-  z-index: 1100;
+  /* display: flex; */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  /* flex-direction: row; */
+  /* align-items: center; */
+  background-color: rgba(255, 255, 255, 0.05); /* Darker glass effect */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1200;
   padding: var(--spacing-sm) 0;
-  justify-content: center; /* Center the categories */
+  height: auto;
+  min-height: 50px;
+  visibility: visible;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Sticky wrapper for navigation */
@@ -125,29 +134,40 @@ header {
 }
 
 .nav-container .desktop-theme-toggle {
-  display: none !important; /* Hide on mobile */
+  display: none !important;
 }
 
 /* Horizontal list of navigation links */
 .categories {
   list-style: none;
-  padding: 0;
-  margin-top: 0;
-  margin-left: 20px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  gap: 9px;
-  font-size: 0.75rem;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  font-size: 0.6rem;
   align-items: center;
-  overflow-x: auto;
-  scrollbar-width: none; /* Hide scrollbar */
-  scroll-behavior: smooth;
+  /* overflow-x: auto;
+  scrollbar-width: none;
+  scroll-behavior: smooth; */
+  width: 100%; /* Ensure full width */
+  gap: clamp(45px, 4vw, 120px); /* Remove the other gap line */
 }
 
 /* Thin bar under active or hovered category */
 .categories li {
   position: relative;
+  text-align: center;
+}
+
+.categories li[class*="separator"] {
+  display: none;
+}
+
+/* Add this new rule */
+.categories li:empty {
+  display: none;
 }
 
 .categories li a::after {
@@ -229,8 +249,7 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
 
 /* Holds search bar and theme toggle */
 .nav-search-item {
-  display: flex !important;
-  flex-direction: column; /* Stack on mobile */
+  flex-direction: column;
   align-items: flex-start;
 }
 
@@ -508,16 +527,11 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
   .nav-search-item {
     flex-direction: row;
     align-items: center;
-    gap: 8px;
   }
 
   .desktop-theme-toggle {
     display: flex;
     align-items: center;
-  }
-
-  .nav-container .desktop-theme-toggle {
-    display: flex !important;
   }
 
   /* Two-column layout for bento grid */

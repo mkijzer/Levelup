@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="css/themes.css" />
 
     <!-- Fonts -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,140 +26,53 @@
 
   <body>
     <!-- Header Section -->
-
-    <header>
-      <div>
-        <!-- Header Top: Logo, Title, and Hamburger Menu -->
-        <div class="header-top">
-          <div class="logo-container">
-            <img
-              src="assets/images/logo_NEW.png"
-              alt="LevelUpOrDieTrying Logo"
-              class="logo"
-            />
-          </div>
-          <div class="title-container">
-            <h1 class="main-title">
-              Level Up <span class="subtitle">Or Die Trying</span>
-            </h1>
-          </div>
-          <button class="hamburger-menu" aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-
-
-        <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
-        <nav class="mobile-menu">
-          <div class="theme-toggle">
-            <label class="theme-slider">
-              <input type="checkbox" id="theme-switch" />
-              <span class="slider">
-                <span class="slider-button"></span>
-              </span>
-            </label>
-          </div>
-        </nav>
-      </div>
-    </header>
-
     <div class="sticky-wrapper-navcontainer">
-      <nav class="nav-container">
-        <ul class="categories">
-          <li><a href="#latest">Latest</a></li>
-          <li class="separator-home">.</li>
-          <li><a href="#health">Health</a></li>
-          <li class="separator-lifestyle">.</li>
-          <li><a href="#coins">Coins</a></li>
-          <li class="separator-finance">.</li>
-          <li><a href="#hack">Hack</a></li>
-          <li class="separator-hacks">.</li>
-          <li><a href="#ai">AI</a></li>
-          <li class="separator-ai">.</li>
-          <li>
-            <a href="#random" id="random-link" aria-label="Random Article">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                style="vertical-align: middle"
-                xmlns="http://www.w3.org/2000/svg"
-                class="random-icon"
-              >
-                <!-- Top curved line - start moved down 0.5px -->
-                <path
-                  d="M3 7.5h2c4 0 7 3 7 4.5s3 5 7 5h2"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  fill="none"
-                  stroke-linecap="round"
-                />
-                <!-- Top arrow head -->
-                <path
-                  d="M19 14l3 3-3 3"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-
-                <!-- Bottom curved line - start moved up 0.5px -->
-                <path
-                  d="M3 16.5h2c4 0 7-3 7-4.5s3-5 7-5h2"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  fill="none"
-                  stroke-linecap="round"
-                />
-                <!-- Bottom arrow head -->
-                <path
-                  d="M19 10l3-3-3-3"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </a>
-             <li class="separator-home">.</li>
-          </li>
-          <li class="nav-search-item">
-              <div class="search-bar-container">
-                <svg
-                  version="1.1"
-                  id="search-icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  viewBox="0 0 5.333 5.333"
-                  enable-background="new 0 0 5.333 5.333"
-                  xml:space="preserve"
-                  style="width: 16px; height: 16px"
-                >
-                  <circle
-                    fill="none"
-                    stroke="#000000"
-                    stroke-width="0.5"
-                    stroke-miterlimit="10"
-                    cx="2.222"
-                    cy="2.222"
-                    r="1.556"
-                  />
-                  <line
-                    fill="none"
-                    stroke="#000000"
-                    stroke-width="0.5"
-                    stroke-miterlimit="10"
-                    x1="3.556"
-                    y1="3.556"
-                    x2="4.444"
-                    y2="4.444"
-                  />
-                </svg>
+      <header>
+        <div>
+          <!-- Header Top: Logo, Title, and Hamburger Menu -->
+          <div class="header-top">
+            <div class="logo-container">
+              <img
+                src="assets/images/logo_NEW.png"
+                alt="LevelUpOrDieTrying Logo"
+                class="logo"
+              />
+            </div>
+            <div class="title-container">
+              <h1 class="main-title">
+                Level Up <span class="subtitle">Or Die Trying</span>
+              </h1>
+            </div>
+            <div class="search-bar-container">
+              <div class="search-wrapper">
+                <div class="search-icon">
+                  <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 5.333 5.333"
+                    style="width: 16px; height: 16px"
+                  >
+                    <circle
+                      fill="none"
+                      stroke="#000000"
+                      stroke-width="0.5"
+                      stroke-miterlimit="10"
+                      cx="2.222"
+                      cy="2.222"
+                      r="1.556"
+                    />
+                    <line
+                      fill="none"
+                      stroke="#000000"
+                      stroke-width="0.5"
+                      stroke-miterlimit="10"
+                      x1="3.556"
+                      y1="3.556"
+                      x2="4.444"
+                      y2="4.444"
+                    />
+                  </svg>
+                </div>
                 <input
                   type="text"
                   id="search-bar"
@@ -168,18 +80,21 @@
                   class="search-bar"
                 />
               </div>
-            
-            <div class="theme-toggle desktop-theme-toggle">
+            </div>
+          </div>
+          <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
+          <nav class="mobile-menu">
+            <div class="theme-toggle">
               <label class="theme-slider">
-                <input type="checkbox" id="theme-switch-desktop" />
+                <input type="checkbox" id="theme-switch" />
                 <span class="slider">
                   <span class="slider-button"></span>
                 </span>
               </label>
             </div>
-          </li>
-        </ul>
-      </nav>
+          </nav>
+        </div>
+      </header>
     </div>
 
     <!-- Main Content -->
@@ -428,8 +343,95 @@
     </main>
     <div class="divider"></div>
 
-    <!-- Footer -->
-    <footer>Copyright: LevelUpOrDieTrying</footer>
+    <!-- Navigation wrapper with modal inside -->
+    <div class="nav-wrapper">
+      <nav class="nav-container">
+        <ul class="categories">
+          <li>
+            <div class="nav-item">
+              <img
+                src="assets/icons/latest.svg"
+                alt="Latest Icon"
+                class="nav-icon"
+              />
+              <a href="#latest">Latest</a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <img
+                src="assets/icons/list.svg"
+                alt="list Icon"
+                class="nav-icon"
+              />
+              <a href="#ai">Category</a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <img
+                src="assets/icons/random.svg"
+                alt="Random Icon"
+                class="nav-icon"
+              />
+              <a href="#random" id="random-link" aria-label="Random Article"
+                >Spin</a
+              >
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <img
+                src="assets/icons/cogwheel.svg"
+                alt="More Icon"
+                class="nav-icon"
+              />
+              <a href="#more" id="more-link" aria-label="More">Tools</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Modal for category button -->
+      <div class="category-modal hidden" id="category-modal">
+        <div class="modal-content glass">
+          <ul class="modal-categories">
+            <li class="modal-category-item">
+              <img
+                src="assets/icons/health.svg"
+                alt="Health Icon"
+                class="modal-nav-icon"
+              />
+              <a href="#health">Health</a>
+            </li>
+            <li class="modal-category-item">
+              <img
+                src="assets/icons/coins.svg"
+                alt="Coins Icon"
+                class="modal-nav-icon"
+              />
+              <a href="#coins">Coins</a>
+            </li>
+            <li class="modal-category-item">
+              <img
+                src="assets/icons/hack.svg"
+                alt="Hack Icon"
+                class="modal-nav-icon"
+              />
+              <a href="#hack">Hack</a>
+            </li>
+            <li class="modal-category-item">
+              <img
+                src="assets/icons/ai.svg"
+                alt="AI Icon"
+                class="modal-nav-icon"
+              />
+              <a href="#ai">AI</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <!-- Scripts -->
     <script type="module" src="js/data.js"></script>

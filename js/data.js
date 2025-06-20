@@ -1,49 +1,251 @@
-const hamburgerMenu = document.querySelector(".hamburger-menu");
+/**
+ * @file data.js
+ * @description Handles data loading, article card creation, and interactive functionality for the SPA.
+ * @version 1.0
+ * @author [Your Name]
+ */
+
+/* ========================================================================== */
+/* Global Variables and Constants */
+/* ========================================================================== */
+
+/**
+ * Mobile menu element for toggling visibility.
+ * @type {HTMLElement|null}
+ */
 const mobileMenu = document.querySelector(".mobile-menu");
-const categoryBar = document.querySelector(".category-bar");
 
-let menuTransitioning = false;
+let menuTransitioning = false; // Flag to prevent multiple menu transitions
+let articlesData = []; // Array to store fetched article data
+let randomArticleHistory = []; // Track viewed random articles
+let lastLatestScrollY = 0; // Store scroll position for latest view
 
-hamburgerMenu.addEventListener("click", () => {
-  if (menuTransitioning) return;
+/* ========================================================================== */
+/* Event Listeners and Initialization */
+/* ========================================================================== */
 
-  if (!mobileMenu.classList.contains("open")) {
-    mobileMenu.style.display = "flex";
-    requestAnimationFrame(() => {
-      hamburgerMenu.classList.add("open");
-      mobileMenu.classList.add("open");
+/**
+ * Initializes the application on DOM content load.
+ * Fetches articles and quotes, sets up event listeners.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+  // Fetch articles data
+  fetch("data/articles.json")
+    .then((response) => {
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.json();
+    })
+    .then((data) => {
+      if (data.length === 0) {
+        console.warn("Cool articles coming soon!");
+        return;
+      }
+      articlesData = data;
+
+      const articlesContainer = document.querySelector(".container");
+      const categoryGrids =
+        articlesContainer.querySelectorAll(".category-grid");
+      const usedArticleIds = new Set();
+
+      (async () => {
+        for (const grid of categoryGrids) {
+          const category = normalizeCategory(
+            grid.getAttribute("data-category") || ""
+          );
+          const categoryArticles = articlesData
+            .filter(
+              (article) =>
+                normalizeCategory(article.category || "") === category &&
+                !usedArticleIds.has(article.id)
+            )
+            .slice(0, 3);
+          for (const article of categoryArticles) {
+            const card = await createArticleCard(article, "small");
+            grid.appendChild(card);
+            usedArticleIds.add(article.id);
+          }
+        }
+
+        const loadContent = () => {
+          let category = window.location.hash.slice(1) || "latest";
+          document.querySelectorAll(".categories a").forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${category}`) {
+              link.classList.add("active");
+            }
+          });
+          if (category === "random") {
+            loadRandomArticle();
+          } else if (category !== "more") {
+            loadCategory(category);
+          }
+        };
+
+        loadContent();
+
+        window.addEventListener("hashchange", loadContent);
+
+        const randomLink = document.getElementById("random-link");
+        if (randomLink) {
+          randomLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            loadRandomArticle();
+          });
+        }
+
+        const mobileRandomLink = document.getElementById("mobile-random-link");
+        if (mobileRandomLink) {
+          mobileRandomLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            loadRandomArticle();
+          });
+        }
+
+        const searchBar = document.getElementById("search-bar");
+        const mobileSearchBar = document.getElementById("mobile-search-bar");
+        const handleSearch = (e) => {
+          const query = e.target.value;
+          if (query.length > 0) {
+            loadSearchResults(query);
+          } else {
+            loadCategory("latest");
+          }
+        };
+
+        if (searchBar) {
+          searchBar.addEventListener("input", handleSearch);
+        }
+        if (mobileSearchBar) {
+          mobileSearchBar.addEventListener("input", handleSearch);
+        }
+      })();
+    })
+    .catch((error) => console.error("Error loading articles:", error));
+
+  // Fetch quotes data
+  fetch("data/quotes.json")
+    .then((response) => {
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.json();
+    })
+    .then((data) => {
+      if (data.length === 0) {
+        console.warn("No quotes available!");
+        return;
+      }
+      const separatorQuote = document.querySelector(".separator-quote");
+      const quoteText = separatorQuote.querySelector(".quote-text");
+      const quoteAuthor = separatorQuote.querySelector(".quote-author");
+      const randomIndex1 = Math.floor(Math.random() * data.length);
+      quoteText.textContent = `"${data[randomIndex1].text}"`;
+      quoteAuthor.textContent = `- ${data[randomIndex1].author}`;
+
+      const bottomQuoteText = document.querySelector("#quote-text");
+      const bottomQuoteAuthor = document.querySelector("#quote-author");
+      let randomIndex2 = Math.floor(Math.random() * data.length);
+      while (randomIndex2 === randomIndex1) {
+        randomIndex2 = Math.floor(Math.random() * data.length);
+      }
+      bottomQuoteText.textContent = `"${data[randomIndex2].text}"`;
+      bottomQuoteAuthor.textContent = `- ${data[randomIndex2].author}`;
+    })
+    .catch((error) => {
+      console.error("Error loading quotes:", error);
+      document.querySelector(".separator-quote .quote-text").textContent =
+        "Failed to load quote.";
+      document.querySelector("#quote-text").textContent =
+        "Failed to load quote.";
     });
-  } else {
-    menuTransitioning = true;
-    hamburgerMenu.classList.remove("open");
-    mobileMenu.classList.remove("open");
-    setTimeout(() => {
-      mobileMenu.style.display = "none";
-      menuTransitioning = false;
-    }, 900);
-  }
-});
 
-document.querySelectorAll(".mobile-menu .categories a").forEach((link) => {
-  link.addEventListener("click", () => {
-    menuTransitioning = true;
-    hamburgerMenu.classList.remove("open");
-    mobileMenu.classList.remove("open");
-    setTimeout(() => {
-      mobileMenu.style.display = "none";
-      menuTransitioning = false;
-    }, 900);
-  });
+  // Sticky navigation observer
+  const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
+  let stickyObserver = new IntersectionObserver(
+    ([entry]) => {
+      stickyNav.classList.toggle("is-sticky", !entry.isIntersecting);
+    },
+    { threshold: 1 }
+  );
+  stickyObserver.observe(stickyNav);
 });
+// Category modal toggle with dynamic positioning
+const categoryLink = document.querySelector('.categories a[href="#ai"]');
+const categoryModal = document.getElementById("category-modal");
+
+if (categoryLink) {
+  categoryLink.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Get the category button's position
+    const categoryButton = categoryLink.closest(".nav-item");
+    const buttonRect = categoryButton.getBoundingClientRect();
+    const modalContent = categoryModal.querySelector(".modal-content");
+
+    // Calculate center position of the button
+    const buttonCenter = buttonRect.left + buttonRect.width / 2;
+
+    // Set modal position to align with button center
+    modalContent.style.left = `${buttonCenter}px`;
+    modalContent.style.transform = "translateX(-50%) translateY(20px)";
+
+    categoryModal.classList.toggle("hidden");
+  });
+}
+
+// Close modal when clicking outside
+if (categoryModal) {
+  categoryModal.addEventListener("click", (e) => {
+    if (e.target === categoryModal) {
+      categoryModal.classList.add("hidden");
+    }
+  });
+}
+
+/**
+ * Toggles mobile menu on "more" link click.
+ */
+const moreLink = document.getElementById("more-link");
+if (moreLink) {
+  moreLink.addEventListener("click", () => {
+    if (menuTransitioning) return;
+
+    if (!mobileMenu.classList.contains("open")) {
+      mobileMenu.style.display = "flex";
+      requestAnimationFrame(() => {
+        mobileMenu.classList.add("open");
+      });
+    } else {
+      menuTransitioning = true;
+      mobileMenu.classList.remove("open");
+      setTimeout(() => {
+        mobileMenu.style.display = "none";
+        menuTransitioning = false;
+      }, 900);
+    }
+  });
+}
 
 if (!mobileMenu.classList.contains("open")) {
   mobileMenu.style.display = "none";
 }
 
+/* ========================================================================== */
+/* Utility Functions */
+/* ========================================================================== */
+
+/**
+ * Normalizes a category string to lowercase and trimmed format.
+ * @param {string} category - The category to normalize
+ * @returns {string} Normalized category
+ */
 function normalizeCategory(category) {
   return category.toLowerCase().trim();
 }
 
+/**
+ * Formats a date string into a readable format.
+ * @param {string} dateStr - The date string to format
+ * @returns {string} Formatted date
+ */
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("en-US", {
     month: "short",
@@ -52,15 +254,31 @@ function formatDate(dateStr) {
   });
 }
 
+/**
+ * Preloads an image and provides a fallback on error.
+ * @param {string} url - The image URL to preload
+ * @returns {Promise<string>} Resolved URL or fallback
+ */
 function preloadImage(url) {
   return new Promise((resolve) => {
     const img = new Image();
     img.src = url;
     img.onload = () => resolve(url);
-    img.onerror = () => resolve("assets/images/falback_image.png");
+    img.onerror = () => resolve("assets/images/fallback_image.png");
   });
 }
 
+/* ========================================================================== */
+/* Article Card Management */
+/* ========================================================================== */
+
+/**
+ * Creates an article card element with loading state.
+ * @param {Object} article - Article data
+ * @param {string} type - Card type (small/huge)
+ * @param {boolean} isSideBySide - Whether to display side by side
+ * @returns {HTMLElement} Created card element
+ */
 async function createArticleCard(
   article,
   type = "small",
@@ -118,13 +336,18 @@ async function createArticleCard(
         }
       });
     },
-    { rootMargin: "100px" } // Load images 100px before visible
+    { rootMargin: "100px" }
   );
   observer.observe(img);
 
   return card;
 }
 
+/**
+ * Populates an existing article card with data.
+ * @param {HTMLElement} card - The card element to populate
+ * @param {Object} article - Article data
+ */
 async function populateArticleCard(card, article) {
   card.setAttribute("data-article-id", article.id || "");
   card.setAttribute("data-category", normalizeCategory(article.category || ""));
@@ -161,6 +384,10 @@ async function populateArticleCard(card, article) {
   observer.observe(img);
 }
 
+/**
+ * Populates the main article view with data.
+ * @param {Object} article - Article data
+ */
 async function populateMainArticle(article) {
   const mainArticle = document.querySelector(".main-article");
   mainArticle.setAttribute(
@@ -209,6 +436,16 @@ async function populateMainArticle(article) {
   });
 }
 
+/* ========================================================================== */
+/* Article View and Navigation */
+/* ========================================================================== */
+
+/**
+ * Gets random articles excluding a specific ID.
+ * @param {string} excludeArticleId - ID to exclude
+ * @param {Array} allArticles - All available articles
+ * @returns {Array} Random articles
+ */
 function getRandomArticles(excludeArticleId, allArticles) {
   const filteredArticles = allArticles.filter(
     (article) => article.id !== excludeArticleId
@@ -217,6 +454,10 @@ function getRandomArticles(excludeArticleId, allArticles) {
   return shuffled.slice(0, 3);
 }
 
+/**
+ * Displays the full article view.
+ * @param {string} articleId - ID of the article to show
+ */
 async function showArticleView(articleId) {
   lastLatestScrollY = window.scrollY;
   window.scrollTo(0, 0);
@@ -256,8 +497,11 @@ async function showArticleView(articleId) {
   }
 }
 
+/**
+ * Loads articles for a specific category.
+ * @param {string} category - Category to load
+ */
 async function loadCategory(category) {
-  // Store sticky state before any DOM changes
   const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
   const wasSticky = stickyNav.classList.contains("is-sticky");
 
@@ -267,7 +511,6 @@ async function loadCategory(category) {
   const smallGrid = bentoGrid.querySelector(".small-grid");
   const articleView = document.querySelector(".article-view");
 
-  // Capitalize category name for display
   const displayCategory = category.charAt(0).toUpperCase() + category.slice(1);
   categoryTitle.textContent =
     category === "latest" ? "Latest" : displayCategory;
@@ -275,12 +518,12 @@ async function loadCategory(category) {
   smallGrid.innerHTML = "";
   bentoGrid.style.display = "";
   articleView.classList.add("hidden");
-  document.querySelector(".category-label.latest-label").style.display = ""; // Always show label
+  document.querySelector(".category-label.latest-label").style.display = "";
 
   let articles = articlesData;
   if (category !== "latest") {
     articles = articlesData.filter(
-      (article) => normalizeCategory(article.category) === category
+      (article) => normalizeCategory(article.category || "") === category
     );
   }
   articles = articles
@@ -309,7 +552,6 @@ async function loadCategory(category) {
     card.addEventListener("click", handleArticleClick);
   });
 
-  // Handle scrolling after content is loaded
   if (wasSticky) {
     const navHeight = stickyNav.offsetHeight;
     window.scrollTo(0, navHeight + 20);
@@ -318,6 +560,10 @@ async function loadCategory(category) {
   }
 }
 
+/**
+ * Loads search results based on query.
+ * @param {string} query - Search query
+ */
 async function loadSearchResults(query) {
   const categoryTitle = document.getElementById("category-title");
   const bentoGrid = document.querySelector(".bento-grid");
@@ -369,14 +615,19 @@ async function loadSearchResults(query) {
   });
 }
 
+/**
+ * Handles click events on article cards.
+ * @param {Event} e - Click event
+ */
 function handleArticleClick(e) {
   e.preventDefault();
   const articleId = e.currentTarget.getAttribute("data-article-id");
   if (articleId) showArticleView(articleId);
 }
 
-let randomArticleHistory = [];
-
+/**
+ * Loads a random article.
+ */
 async function loadRandomArticle() {
   const availableArticles = articlesData.filter(
     (article) => !randomArticleHistory.includes(article.id)
@@ -393,146 +644,3 @@ async function loadRandomArticle() {
 
   showArticleView(randomArticle.id);
 }
-
-let articlesData = [];
-
-document.addEventListener("DOMContentLoaded", () => {
-  fetch("data/articles.json")
-    .then((response) => {
-      if (!response.ok) throw new Error("Network response was not ok");
-      return response.json();
-    })
-    .then((data) => {
-      if (data.length === 0) {
-        console.warn("Cool articles coming soon!");
-        return;
-      }
-      articlesData = data;
-
-      const articlesContainer = document.querySelector(".container");
-      const categoryGrids =
-        articlesContainer.querySelectorAll(".category-grid");
-      const usedArticleIds = new Set();
-
-      (async () => {
-        for (const grid of categoryGrids) {
-          const category = normalizeCategory(
-            grid.getAttribute("data-category") || ""
-          );
-          const categoryArticles = articlesData
-            .filter(
-              (article) =>
-                normalizeCategory(article.category || "") === category &&
-                !usedArticleIds.has(article.id)
-            )
-            .slice(0, 3);
-          for (const article of categoryArticles) {
-            const card = await createArticleCard(article, "small");
-            grid.appendChild(card);
-            usedArticleIds.add(article.id);
-          }
-        }
-
-        const loadContent = () => {
-          let category = window.location.hash.slice(1) || "latest";
-          document.querySelectorAll(".categories a").forEach((link) => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${category}`) {
-              link.classList.add("active");
-            }
-          });
-          if (category === "random") {
-            loadRandomArticle();
-          } else {
-            loadCategory(category);
-          }
-        };
-
-        loadContent();
-
-        window.addEventListener("hashchange", loadContent);
-
-        const randomLink = document.getElementById("random-link");
-        if (randomLink) {
-          randomLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            loadRandomArticle();
-          });
-        }
-
-        const mobileRandomLink = document.getElementById("mobile-random-link");
-        if (mobileRandomLink) {
-          mobileRandomLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            loadRandomArticle();
-          });
-        }
-
-        const searchBar = document.getElementById("search-bar");
-        const mobileSearchBar = document.getElementById("mobile-search-bar");
-        const handleSearch = (e) => {
-          const query = e.target.value;
-          if (query.length > 0) {
-            loadSearchResults(query);
-          } else {
-            loadCategory("latest");
-          }
-        };
-
-        if (searchBar) {
-          searchBar.addEventListener("input", handleSearch);
-        }
-        if (mobileSearchBar) {
-          mobileSearchBar.addEventListener("input", handleSearch);
-        }
-      })();
-    })
-    .catch((error) => console.error("Error loading articles:", error));
-
-  fetch("data/quotes.json")
-    .then((response) => {
-      if (!response.ok) throw new Error("Network response was not ok");
-      return response.json();
-    })
-    .then((data) => {
-      if (data.length === 0) {
-        console.warn("No quotes available!");
-        return;
-      }
-      const separatorQuote = document.querySelector(".separator-quote");
-      const quoteText = separatorQuote.querySelector(".quote-text");
-      const quoteAuthor = separatorQuote.querySelector(".quote-author");
-      const randomIndex1 = Math.floor(Math.random() * data.length);
-      quoteText.textContent = `"${data[randomIndex1].text}"`;
-      quoteAuthor.textContent = `- ${data[randomIndex1].author}`;
-
-      const bottomQuoteText = document.querySelector("#quote-text");
-      const bottomQuoteAuthor = document.querySelector("#quote-author");
-      let randomIndex2 = Math.floor(Math.random() * data.length);
-      while (randomIndex2 === randomIndex1) {
-        randomIndex2 = Math.floor(Math.random() * data.length);
-      }
-      bottomQuoteText.textContent = `"${data[randomIndex2].text}"`;
-      bottomQuoteAuthor.textContent = `- ${data[randomIndex2].author}`;
-    })
-    .catch((error) => {
-      console.error("Error loading quotes:", error);
-      document.querySelector(".separator-quote .quote-text").textContent =
-        "Failed to load quote.";
-      document.querySelector("#quote-text").textContent =
-        "Failed to load quote.";
-    });
-
-  // Add this to detect sticky state
-  const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
-  let stickyObserver = new IntersectionObserver(
-    ([entry]) => {
-      stickyNav.classList.toggle("is-sticky", !entry.isIntersecting);
-    },
-    { threshold: 1 }
-  );
-
-  stickyObserver.observe(stickyNav);
-});
-
-let lastLatestScrollY = 0;
