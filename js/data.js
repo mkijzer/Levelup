@@ -1,13 +1,15 @@
-/**
- * @file data.js
- * @description Handles data loading, article card creation, and interactive functionality for the SPA.
- * @version 1.0
- * @author [Your Name]
- */
+// ============================================================================
+// data.js
+// ============================================================================
+// Description: Core logic for the SPA, handling data fetching, article card
+//              creation, and user interactions like navigation and search.
+// Version: 1.0
+// Author: [Mike]
+// ============================================================================
 
-/* ========================================================================== */
-/* Global Variables and Constants */
-/* ========================================================================== */
+// ============================================================================
+// Global Variables and Constants
+// ============================================================================
 
 /**
  * Mobile menu element for toggling visibility.
@@ -15,21 +17,40 @@
  */
 const mobileMenu = document.querySelector(".mobile-menu");
 
-let menuTransitioning = false; // Flag to prevent multiple menu transitions
-let articlesData = []; // Array to store fetched article data
-let randomArticleHistory = []; // Track viewed random articles
-let lastLatestScrollY = 0; // Store scroll position for latest view
+/**
+ * Flag to prevent multiple simultaneous menu transitions.
+ * @type {boolean}
+ */
+let menuTransitioning = false;
 
-/* ========================================================================== */
-/* Event Listeners and Initialization */
-/* ========================================================================== */
+/**
+ * Array to store fetched article data from articles.json.
+ * @type {Array}
+ */
+let articlesData = [];
+
+/**
+ * Array to track viewed random article IDs to avoid repetition.
+ * @type {Array}
+ */
+let randomArticleHistory = [];
+
+/**
+ * Stores scroll position for the 'latest' view to restore on navigation.
+ * @type {number}
+ */
+let lastLatestScrollY = 0;
+
+// ============================================================================
+// Initialization and Event Listeners
+// ============================================================================
 
 /**
  * Initializes the application on DOM content load.
- * Fetches articles and quotes, sets up event listeners.
+ * Fetches articles and quotes, sets up navigation and interaction listeners.
  */
 document.addEventListener("DOMContentLoaded", () => {
-  // Fetch articles data
+  // Fetch articles from articles.json
   fetch("data/articles.json")
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok");
@@ -42,12 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       articlesData = data;
 
+      // Populate category grids with articles
       const articlesContainer = document.querySelector(".container");
       const categoryGrids =
         articlesContainer.querySelectorAll(".category-grid");
       const usedArticleIds = new Set();
 
       (async () => {
+        // Populate each category grid with up to 3 unique articles
         for (const grid of categoryGrids) {
           const category = normalizeCategory(
             grid.getAttribute("data-category") || ""
@@ -66,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
 
+        // Handle content loading based on URL hash
         const loadContent = () => {
           let category = window.location.hash.slice(1) || "latest";
           document.querySelectorAll(".categories a").forEach((link) => {
@@ -81,18 +105,47 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         };
 
+        // Initial content load
         loadContent();
 
+        // Update content on hash change
         window.addEventListener("hashchange", loadContent);
 
-        const randomLink = document.getElementById("random-link");
-        if (randomLink) {
-          randomLink.addEventListener("click", (e) => {
+        // Add click listeners to nav items including icons
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.addEventListener("click", (e) => {
             e.preventDefault();
-            loadRandomArticle();
+            const link = item.querySelector("a");
+            if (link) window.location.hash = link.getAttribute("href");
           });
-        }
+        });
 
+        // Add click effect to nav icons
+        document.querySelectorAll(".nav-item a").forEach((link) => {
+          link.addEventListener("mousedown", () => {
+            const icon = link.querySelector(".nav-icon");
+            if (icon) icon.classList.add("active-icon");
+          });
+          link.addEventListener("mouseup", () => {
+            const icon = link.querySelector(".nav-icon");
+            if (icon) icon.classList.remove("active-icon");
+          });
+        });
+
+        // Add this after your existing nav click handlers
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            // Remove active class from all nav items
+            document
+              .querySelectorAll(".nav-item")
+              .forEach((nav) => nav.classList.remove("active"));
+
+            // Add active class to clicked item
+            item.classList.add("active");
+          });
+        });
+
+        // Random article link in mobile menu
         const mobileRandomLink = document.getElementById("mobile-random-link");
         if (mobileRandomLink) {
           mobileRandomLink.addEventListener("click", (e) => {
@@ -101,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
 
+        // Search functionality for desktop and mobile
         const searchBar = document.getElementById("search-bar");
         const mobileSearchBar = document.getElementById("mobile-search-bar");
         const handleSearch = (e) => {
@@ -122,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => console.error("Error loading articles:", error));
 
-  // Fetch quotes data
+  // Fetch quotes from quotes.json
   fetch("data/quotes.json")
     .then((response) => {
       if (!response.ok) throw new Error("Network response was not ok");
@@ -133,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("No quotes available!");
         return;
       }
+      // Populate separator quote
       const separatorQuote = document.querySelector(".separator-quote");
       const quoteText = separatorQuote.querySelector(".quote-text");
       const quoteAuthor = separatorQuote.querySelector(".quote-author");
@@ -140,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quoteText.textContent = `"${data[randomIndex1].text}"`;
       quoteAuthor.textContent = `- ${data[randomIndex1].author}`;
 
+      // Populate bottom quote
       const bottomQuoteText = document.querySelector("#quote-text");
       const bottomQuoteAuthor = document.querySelector("#quote-author");
       let randomIndex2 = Math.floor(Math.random() * data.length);
@@ -157,80 +213,84 @@ document.addEventListener("DOMContentLoaded", () => {
         "Failed to load quote.";
     });
 
-  // Sticky navigation observer
-  const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
-  let stickyObserver = new IntersectionObserver(
-    ([entry]) => {
-      stickyNav.classList.toggle("is-sticky", !entry.isIntersecting);
-    },
-    { threshold: 1 }
-  );
-  stickyObserver.observe(stickyNav);
-});
-// Category modal toggle with dynamic positioning
-const categoryLink = document.querySelector('.categories a[href="#ai"]');
-const categoryModal = document.getElementById("category-modal");
+  // Category modal toggle on click or hover
+  const categoryItem = document.querySelector(
+    '.nav-item a[href="#category"]'
+  ).parentElement;
+  const categoryModal = document.getElementById("category-modal");
 
-if (categoryLink) {
-  categoryLink.addEventListener("click", (e) => {
-    e.preventDefault();
+  if (categoryItem) {
+    // Toggle modal on click
+    categoryItem.addEventListener("click", (e) => {
+      e.preventDefault();
+      categoryModal.style.display =
+        categoryModal.style.display === "block" ? "none" : "block";
+    });
 
-    // Get the category button's position
-    const categoryButton = categoryLink.closest(".nav-item");
-    const buttonRect = categoryButton.getBoundingClientRect();
-    const modalContent = categoryModal.querySelector(".modal-content");
+    // Show modal on mouse enter
+    categoryItem.addEventListener("mouseenter", () => {
+      categoryModal.style.display = "block";
+    });
 
-    // Calculate center position of the button
-    const buttonCenter = buttonRect.left + buttonRect.width / 2;
+    categoryModal.addEventListener("mouseenter", () => {
+      categoryModal.style.display = "block";
+    });
 
-    // Set modal position to align with button center
-    modalContent.style.left = `${buttonCenter}px`;
-    modalContent.style.transform = "translateX(-50%) translateY(20px)";
-
-    categoryModal.classList.toggle("hidden");
-  });
-}
-
-// Close modal when clicking outside
-if (categoryModal) {
-  categoryModal.addEventListener("click", (e) => {
-    if (e.target === categoryModal) {
-      categoryModal.classList.add("hidden");
-    }
-  });
-}
-
-/**
- * Toggles mobile menu on "more" link click.
- */
-const moreLink = document.getElementById("more-link");
-if (moreLink) {
-  moreLink.addEventListener("click", () => {
-    if (menuTransitioning) return;
-
-    if (!mobileMenu.classList.contains("open")) {
-      mobileMenu.style.display = "flex";
-      requestAnimationFrame(() => {
-        mobileMenu.classList.add("open");
-      });
-    } else {
-      menuTransitioning = true;
-      mobileMenu.classList.remove("open");
+    // Hide modal on mouse leave with a short delay to prevent flicker
+    function hideModalIfNotHovered() {
       setTimeout(() => {
-        mobileMenu.style.display = "none";
-        menuTransitioning = false;
-      }, 900);
+        if (
+          !categoryItem.matches(":hover") &&
+          !categoryModal.matches(":hover")
+        ) {
+          categoryModal.style.display = "none";
+        }
+      }, 150);
     }
-  });
-}
 
-if (!mobileMenu.classList.contains("open")) {
-  mobileMenu.style.display = "none";
-}
+    categoryItem.addEventListener("mouseleave", hideModalIfNotHovered);
+    categoryModal.addEventListener("mouseleave", hideModalIfNotHovered);
+  }
 
-/* ========================================================================== */
-/* Utility Functions */
-/* ========================================================================== */
+  // Close modal when clicking outside
+  if (categoryModal) {
+    categoryModal.addEventListener("click", (e) => {
+      if (e.target === categoryModal) {
+        categoryModal.classList.add("hidden");
+      }
+    });
+  }
+
+  // Mobile menu toggle on "more" link click
+  const moreLink = document.getElementById("more-link");
+  if (moreLink) {
+    moreLink.addEventListener("click", () => {
+      if (menuTransitioning) return;
+      if (!mobileMenu.classList.contains("open")) {
+        mobileMenu.style.display = "flex";
+        requestAnimationFrame(() => {
+          mobileMenu.classList.add("open");
+        });
+      } else {
+        menuTransitioning = true;
+        mobileMenu.classList.remove("open");
+        setTimeout(() => {
+          mobileMenu.style.display = "none";
+          menuTransitioning = false;
+        }, 900);
+      }
+    });
+  }
+
+  // Ensure mobile menu is hidden by default
+  if (!mobileMenu.classList.contains("open")) {
+    mobileMenu.style.display = "none";
+  }
+});
+
+// ============================================================================
+// Utility Functions
+// ============================================================================
 
 /**
  * Normalizes a category string to lowercase and trimmed format.
@@ -242,7 +302,7 @@ function normalizeCategory(category) {
 }
 
 /**
- * Formats a date string into a readable format.
+ * Formats a date string into a readable format (e.g., "Jan 1, 2023").
  * @param {string} dateStr - The date string to format
  * @returns {string} Formatted date
  */
@@ -257,7 +317,7 @@ function formatDate(dateStr) {
 /**
  * Preloads an image and provides a fallback on error.
  * @param {string} url - The image URL to preload
- * @returns {Promise<string>} Resolved URL or fallback
+ * @returns {Promise<string>} Resolved URL or fallback image path
  */
 function preloadImage(url) {
   return new Promise((resolve) => {
@@ -268,16 +328,16 @@ function preloadImage(url) {
   });
 }
 
-/* ========================================================================== */
-/* Article Card Management */
-/* ========================================================================== */
+// ============================================================================
+// Article Card Management
+// ============================================================================
 
 /**
- * Creates an article card element with loading state.
- * @param {Object} article - Article data
- * @param {string} type - Card type (small/huge)
- * @param {boolean} isSideBySide - Whether to display side by side
- * @returns {HTMLElement} Created card element
+ * Creates an article card element with a loading state.
+ * @param {Object} article - Article data object
+ * @param {string} type - Card type ("small" or "huge")
+ * @param {boolean} isSideBySide - Whether to display small cards side by side
+ * @returns {Promise<HTMLElement>} Created card element
  */
 async function createArticleCard(
   article,
@@ -287,6 +347,8 @@ async function createArticleCard(
   const card = document.createElement("div");
   card.classList.add("article-card", "glass", type, "loading");
   if (isSideBySide) card.classList.add("side-by-side");
+
+  // Define card HTML structure based on type
   if (type === "huge") {
     card.innerHTML = `
       <div class="card-inner">
@@ -312,8 +374,12 @@ async function createArticleCard(
       </div>
     `;
   }
+
+  // Set article data attributes
   card.setAttribute("data-article-id", article.id || "");
   card.setAttribute("data-category", normalizeCategory(article.category || ""));
+
+  // Populate card elements
   const img = card.querySelector(".article-image");
   const title = card.querySelector(".article-title");
   const meta = card.querySelector(".article-meta");
@@ -323,6 +389,7 @@ async function createArticleCard(
   if (meta)
     meta.textContent = `${formatDate(article.date)} | ${article.category}`;
 
+  // Lazy load image with IntersectionObserver
   const observer = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
@@ -346,12 +413,13 @@ async function createArticleCard(
 /**
  * Populates an existing article card with data.
  * @param {HTMLElement} card - The card element to populate
- * @param {Object} article - Article data
+ * @param {Object} article - Article data object
  */
 async function populateArticleCard(card, article) {
   card.setAttribute("data-article-id", article.id || "");
   card.setAttribute("data-category", normalizeCategory(article.category || ""));
   card.classList.add("loading");
+
   const img = card.querySelector(".article-image");
   const title = card.querySelector(".article-title");
   const meta = card.querySelector(".article-meta");
@@ -366,6 +434,7 @@ async function populateArticleCard(card, article) {
     meta.textContent = `${formatDate(article.date)} | ${article.category}`;
   if (author) author.textContent = `By ${article.author || "Unknown Author"}`;
 
+  // Lazy load image with IntersectionObserver
   const observer = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
@@ -386,7 +455,7 @@ async function populateArticleCard(card, article) {
 
 /**
  * Populates the main article view with data.
- * @param {Object} article - Article data
+ * @param {Object} article - Article data object
  */
 async function populateMainArticle(article) {
   const mainArticle = document.querySelector(".main-article");
@@ -394,6 +463,7 @@ async function populateMainArticle(article) {
     "data-category",
     normalizeCategory(article.category || "")
   );
+
   const img = mainArticle.querySelector(".main-article-image");
   const title = mainArticle.querySelector(".main-article-title");
   const author = mainArticle.querySelector(".main-article-author");
@@ -406,6 +476,7 @@ async function populateMainArticle(article) {
   title.textContent = article.title || "Untitled Article";
   author.textContent = `By ${article.author || "Unknown Author"}`;
 
+  // Process article content
   const paragraphs = article.content
     ? article.content
         .split("</p>")
@@ -413,6 +484,7 @@ async function populateMainArticle(article) {
         .map((p) => p.replace(/style="[^"]*"/g, ""))
     : ["<p>No content available.</p>"];
 
+  // Insert inline image if available
   if (article.inline_image) {
     const halfwayIndex = Math.ceil(paragraphs.length / 2);
     const inlineImage = `<img src="${await preloadImage(
@@ -425,6 +497,7 @@ async function populateMainArticle(article) {
 
   body.innerHTML = paragraphs.join("");
 
+  // Populate tags
   tagsContainer.innerHTML = "";
   const tags = Array.isArray(article.tags) ? article.tags.slice(0, 6) : [];
   tags.forEach((tag, index) => {
@@ -436,15 +509,15 @@ async function populateMainArticle(article) {
   });
 }
 
-/* ========================================================================== */
-/* Article View and Navigation */
-/* ========================================================================== */
+// ============================================================================
+// Article View and Navigation
+// ============================================================================
 
 /**
  * Gets random articles excluding a specific ID.
- * @param {string} excludeArticleId - ID to exclude
- * @param {Array} allArticles - All available articles
- * @returns {Array} Random articles
+ * @param {string} excludeArticleId - ID of the article to exclude
+ * @param {Array} allArticles - Array of all available articles
+ * @returns {Array} Array of up to 3 random articles
  */
 function getRandomArticles(excludeArticleId, allArticles) {
   const filteredArticles = allArticles.filter(
@@ -455,17 +528,19 @@ function getRandomArticles(excludeArticleId, allArticles) {
 }
 
 /**
- * Displays the full article view.
- * @param {string} articleId - ID of the article to show
+ * Displays the full article view for a specific article.
+ * @param {string} articleId - ID of the article to display
  */
 async function showArticleView(articleId) {
   lastLatestScrollY = window.scrollY;
   window.scrollTo(0, 0);
 
+  // Hide bento grid and latest label
   document.querySelector(".bento-grid").style.display = "none";
   const latestLabel = document.querySelector(".category-label.latest-label");
   if (latestLabel) latestLabel.style.display = "none";
 
+  // Show article view
   const articleView = document.querySelector(".article-view");
   articleView.classList.remove("hidden");
 
@@ -474,6 +549,7 @@ async function showArticleView(articleId) {
 
   await populateMainArticle(article);
 
+  // Populate related articles
   const randomArticles = getRandomArticles(articleId, articlesData).slice(0, 2);
   const randomCards = articleView.querySelectorAll(
     ".random-grid .article-card"
@@ -486,6 +562,7 @@ async function showArticleView(articleId) {
     }
   }
 
+  // Close button functionality
   const closeBtn = document.querySelector(".close-article");
   if (closeBtn) {
     closeBtn.onclick = () => {
@@ -499,7 +576,7 @@ async function showArticleView(articleId) {
 
 /**
  * Loads articles for a specific category.
- * @param {string} category - Category to load
+ * @param {string} category - The category to load articles for
  */
 async function loadCategory(category) {
   const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
@@ -511,15 +588,18 @@ async function loadCategory(category) {
   const smallGrid = bentoGrid.querySelector(".small-grid");
   const articleView = document.querySelector(".article-view");
 
+  // Update category title
   const displayCategory = category.charAt(0).toUpperCase() + category.slice(1);
   categoryTitle.textContent =
     category === "latest" ? "Latest" : displayCategory;
 
+  // Reset view
   smallGrid.innerHTML = "";
   bentoGrid.style.display = "";
   articleView.classList.add("hidden");
   document.querySelector(".category-label.latest-label").style.display = "";
 
+  // Filter and sort articles
   let articles = articlesData;
   if (category !== "latest") {
     articles = articlesData.filter(
@@ -530,10 +610,12 @@ async function loadCategory(category) {
     .slice(0, 5)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
+  // Populate huge card
   if (articles[0]) {
     await populateArticleCard(hugeArticleCard, articles[0]);
   }
 
+  // Populate small cards
   for (let index = 0; index < 4; index++) {
     if (articles[index + 1]) {
       const isSideBySide = index < 2;
@@ -546,12 +628,14 @@ async function loadCategory(category) {
     }
   }
 
+  // Add click listeners to article cards
   const allArticleCards = document.querySelectorAll(".article-card");
   allArticleCards.forEach((card) => {
     card.removeEventListener("click", handleArticleClick);
     card.addEventListener("click", handleArticleClick);
   });
 
+  // Adjust scroll position
   if (wasSticky) {
     const navHeight = stickyNav.offsetHeight;
     window.scrollTo(0, navHeight + 20);
@@ -561,8 +645,8 @@ async function loadCategory(category) {
 }
 
 /**
- * Loads search results based on query.
- * @param {string} query - Search query
+ * Loads search results based on user query.
+ * @param {string} query - The search query
  */
 async function loadSearchResults(query) {
   const categoryTitle = document.getElementById("category-title");
@@ -571,13 +655,16 @@ async function loadSearchResults(query) {
   const smallGrid = bentoGrid.querySelector(".small-grid");
   const articleView = document.querySelector(".article-view");
 
+  // Update title with search query
   categoryTitle.textContent = ` ${query.toUpperCase()}`;
 
+  // Reset view
   smallGrid.innerHTML = "";
   bentoGrid.style.display = "";
   articleView.classList.add("hidden");
   document.querySelector(".category-label.latest-label").style.display = "";
 
+  // Filter articles by category or tags
   const normalizedQuery = query.toLowerCase().trim();
   const articles = articlesData
     .filter((article) => {
@@ -592,10 +679,12 @@ async function loadSearchResults(query) {
     .slice(0, 5)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
+  // Populate huge card
   if (articles[0]) {
     await populateArticleCard(hugeArticleCard, articles[0]);
   }
 
+  // Populate small cards
   for (let index = 0; index < 4; index++) {
     if (articles[index + 1]) {
       const isSideBySide = index < 2;
@@ -608,6 +697,7 @@ async function loadSearchResults(query) {
     }
   }
 
+  // Add click listeners to article cards
   const allArticleCards = document.querySelectorAll(".article-card");
   allArticleCards.forEach((card) => {
     card.removeEventListener("click", handleArticleClick);
@@ -616,8 +706,8 @@ async function loadSearchResults(query) {
 }
 
 /**
- * Handles click events on article cards.
- * @param {Event} e - Click event
+ * Handles click events on article cards to display full article view.
+ * @param {Event} e - The click event
  */
 function handleArticleClick(e) {
   e.preventDefault();
@@ -626,7 +716,7 @@ function handleArticleClick(e) {
 }
 
 /**
- * Loads a random article.
+ * Loads a random article, avoiding recently viewed ones.
  */
 async function loadRandomArticle() {
   const availableArticles = articlesData.filter(

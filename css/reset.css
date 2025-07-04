@@ -1,4 +1,12 @@
-/* css/reset.css */
+/* ============================================================================ */
+/* reset.css */
+/* ============================================================================ */
+/* Description: Resets browser default styles for consistent rendering. */
+/* Version: 1.0 */
+/* Author: [Your Name] */
+/* ============================================================================ */
+
+/* Reset margins, padding, and box-sizing */
 * {
   margin: 0;
   padding: 0;

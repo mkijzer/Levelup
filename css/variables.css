@@ -6,7 +6,9 @@
 :root {
   /* Dark Mode Colors */
   --background: rgb(20, 22, 24);
+  --icon-grey: rgb(180, 180, 180); /* Light grey for icons */
   --white: rgb(255, 255, 255);
+  --accent-color: rgb(0, 255, 136); /* Add this line */
   --glass-bg: rgba(42, 47, 49, 0.3);
   --glass-border: rgba(
     255,

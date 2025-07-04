@@ -1,92 +1,107 @@
-/* themes.css: Dark/light mode theming and theme toggle styles */
+/* ============================================================================ */
+/* themes.css */
+/* ============================================================================ */
+/* Description: Styles for light/dark mode theming and theme toggle switch. */
+/* Version: 1.0 */
+/* Author: [Your Name] */
+/* ============================================================================ */
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Theme Toggle Styles */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Theme Toggle: Styles for the large theme toggle switch */
+/* Theme toggle label */
 .theme-label {
   color: #fff;
   font-size: 1rem;
 }
 
+/* Theme toggle slider container */
 .theme-slider {
   display: flex;
   align-items: center;
   position: relative;
-  width: 60px; /* Reduced from 100px */
-  height: 24px; /* Reduced from 35px */
+  width: 60px;
+  height: 24px;
 }
 
+/* Hide input for theme toggle */
 .theme-slider input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
+/* Slider background */
 .theme-slider .slider {
   position: absolute;
   width: 100%;
   height: 100%;
   background-color: #808080;
-  border-radius: 24px; /* Adjusted for smaller height */
+  border-radius: 24px;
   cursor: pointer;
 }
 
+/* Moon and sun icons */
 .theme-slider .slider::before,
 .theme-slider .slider::after {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 0.8rem; /* Reduced from 1.2rem */
+  font-size: 0.8rem;
 }
 
+/* Moon icon */
 .theme-slider .slider::before {
   content: "☽";
-  left: 6px; /* Adjusted for smaller width */
+  left: 6px;
   color: #000000;
 }
 
+/* Sun icon */
 .theme-slider .slider::after {
   content: "☼";
-  right: 6px; /* Adjusted for smaller width */
+  right: 6px;
   z-index: 0;
   color: #ffffff;
 }
 
+/* Slider button */
 .theme-slider .slider .slider-button {
   position: absolute;
-  width: 30px; /* Reduced from 50px */
-  height: 20px; /* Reduced from 31px */
+  width: 30px;
+  height: 20px;
   background-color: #000000;
-  border-radius: 20px; /* Adjusted for smaller size */
+  border-radius: 20px;
   top: 2px;
   left: 2px;
   transition: transform 0.3s ease, background-color 0.3s ease;
   z-index: 2;
 }
 
+/* Slider when checked */
 .theme-slider input:checked ~ .slider {
   background-color: #d3d3d3;
 }
 
+/* Slider button when checked */
 .theme-slider input:checked ~ .slider .slider-button {
   background-color: #ffffff;
-  transform: translateX(28px); /* Adjusted for smaller width */
+  transform: translateX(28px);
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Dark Mode (Default) */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Default background for dark mode */
+/* Default background */
 html {
   background: var(--background);
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Light Mode Overrides */
-/* ========================================================================== */
+/* ============================================================================ */
 
 /* Light mode background */
 html.light-mode {
@@ -100,7 +115,7 @@ html.light-mode body {
 /* Header in light mode */
 html.light-mode header {
   background: rgb(210, 207, 207);
-  color: black !important; /* Ensure header text isn’t white */
+  color: black !important;
 }
 
 /* Navigation categories in light mode */
@@ -112,11 +127,13 @@ html.light-mode .mobile-menu .categories li a {
   transition: none !important;
 }
 
+/* Remove category underlines in light mode */
 html.light-mode .nav-container .categories li a.active::after,
 html.light-mode .nav-container .categories li a:hover::after {
   background: transparent !important;
 }
 
+/* Navigation container in light mode */
 html.light-mode .nav-container {
   background: var(--light-background) !important;
 }
@@ -130,9 +147,9 @@ html.light-mode .main-article,
 html.light-mode .separator-quote,
 html.light-mode .ad-container,
 html.light-mode .quote-container {
-  background: var(--light-glass-bg);
-  border: 1px solid var(--light-glass-border);
-  backdrop-filter: blur(10px);
+  background: var(--light-background);
+  border: none;
+  backdrop-filter: none;
 }
 
 /* Text elements in light mode */
@@ -150,17 +167,16 @@ html.light-mode .tag {
 
 /* Main title in light mode */
 html.light-mode .main-title {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3),
-    /* Shadow for contrast */ 0 0 8px rgb(255, 200, 0),
-    /* Softer gold glow */ 0 0 16px rgb(255, 230, 100); /* Lighter gold spread */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3), 0 0 8px rgb(255, 200, 0),
+    0 0 16px rgb(255, 230, 100);
 }
 
-/* Keep top article title white in light mode for readability */
+/* Keep huge card title white in light mode */
 html.light-mode .article-card.huge .article-title {
   color: var(--white);
 }
 
-/* Hamburger menu visibility in light mode */
+/* Hamburger menu bars in light mode */
 html.light-mode .hamburger-menu span {
   background: var(--light-text);
 }
@@ -170,36 +186,19 @@ html.light-mode .search-icon path {
   stroke: var(--light-text);
 }
 
+/* Search bar in light mode */
 html.light-mode .search-bar {
   color: var(--light-text);
-}
-
-/* Remove border and match search bar background in light mode */
-html.light-mode .search-bar {
   border: none;
   background: var(--light-background);
 }
 
-/* Close "X" in light mode */
+/* Close button in light mode */
 html.light-mode .close-article {
   color: var(--light-text);
 }
 
-/* Update under Light Mode Overrides section */
-html.light-mode .glass,
-html.light-mode .article-card,
-html.light-mode .mobile-menu,
-html.light-mode .search-bar,
-html.light-mode .main-article,
-html.light-mode .separator-quote,
-html.light-mode .ad-container,
-html.light-mode .quote-container {
-  background: var(--light-background);
-  border: none;
-  backdrop-filter: none;
-}
-
-/* Ensure category gradients remain vibrant in light mode */
+/* Category gradients in light mode */
 html.light-mode .categories a[href="#latest"].active::after,
 html.light-mode .categories a[href="#latest"]:hover::after {
   background: linear-gradient(to right, #ff4500, #ff0000);
@@ -217,12 +216,12 @@ html.light-mode .categories a[href="#coins"]:hover::after {
 
 html.light-mode .categories a[href="#hack"].active::after,
 html.light-mode .categories a[href="#hack"]:hover::after {
-  background: linear-gradient(to right, #00ff00, #008000);
+  background: linear-gradient(to right, #800080, #4b0082);
 }
 
 html.light-mode .categories a[href="#ai"].active::after,
 html.light-mode .categories a[href="#ai"]:hover::after {
-  background: linear-gradient(to right, #800080, #4b0082);
+  background: linear-gradient(to right, #ffa500, #ff4500);
 }
 
 html.light-mode .categories a[href="#random"].active::after,

@@ -1,9 +1,15 @@
-/* layout.css: Structural layout styles for the LevelUpOrDieTrying website */
-/* Mobile-first approach with media queries for tablet and desktop */
+/* ============================================================================ */
+/* layout.css */
+/* ============================================================================ */
+/* Description: Structural layout styles for the LevelUpOrDieTrying website. */
+/* Version: 1.0 */
+/* Author: [Your Name] */
+/* Note: Mobile-first approach with media queries for tablet and desktop. */
+/* ============================================================================ */
 
-/* ========================================================================== */
-/* Global Resets and Base Layout */
-/* ========================================================================== */
+/* ============================================================================ */
+/* Global Layout */
+/* ============================================================================ */
 
 /* Reset browser inconsistencies */
 * {
@@ -12,21 +18,21 @@
   box-sizing: border-box;
 }
 
-/* Ensure body supports sticky positioning and scrolling */
+/* Body layout for scrolling */
 body {
   margin: 0;
   min-height: 100vh;
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding-bottom: 60px; /* Match nav height to avoid overlap */
+  overflow-y: auto;
+  padding-bottom: 60px;
 }
 
-/* Wrapper to prevent horizontal overflow */
+/* Prevent horizontal overflow */
 .page-wrapper {
   overflow-x: hidden;
   width: 100%;
 }
 
-/* Sticky navigation container with smooth transitions */
+/* Sticky navigation container */
 .sticky-wrapper-navcontainer {
   position: sticky;
   top: 0;
@@ -37,17 +43,16 @@ body {
   transform: translateY(0);
 }
 
-/* Add slight shadow when sticky */
+/* Shadow when sticky */
 .sticky-wrapper-navcontainer.is-sticky {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Header Layout */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Base header styles for mobile */
 header {
   display: flex;
   flex-direction: column;
@@ -59,7 +64,6 @@ header {
   z-index: 1000;
 }
 
-/* Align logo, title, and hamburger menu */
 .header-top {
   display: flex;
   flex-direction: row;
@@ -69,15 +73,13 @@ header {
   position: relative;
 }
 
-/* Wrapper for logo image */
 .logo-container {
   flex: 0 0 auto;
-  margin-right: 8px; /* Tighter spacing */
+  margin-right: 8px;
   position: relative;
   top: 3px;
 }
 
-/* Circular logo image */
 .logo {
   width: 35px;
   height: 35px;
@@ -87,7 +89,6 @@ header {
   transform: translateY(1px);
 }
 
-/* Align main title and subtitle */
 .title-container {
   display: flex;
   flex-direction: row;
@@ -97,47 +98,35 @@ header {
   white-space: nowrap;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Navigation Layout */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Navigation bar for categories */
 .nav-container {
-  /* display: flex; */
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0;
+  right: 0;
+  width: 100%;
   max-width: 600px;
-  /* flex-direction: row; */
-  /* align-items: center; */
-  background-color: rgba(255, 255, 255, 0.05); /* Darker glass effect */
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 1200;
-  padding: var(--spacing-sm) 0;
+  z-index: 9999;
+  padding: 10px 0;
   height: auto;
   min-height: 50px;
-  visibility: visible;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Sticky wrapper for navigation */
-.sticky-nav-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 1100;
-  background-color: transparent;
-}
-
+/* Hide desktop theme toggle in mobile nav */
 .nav-container .desktop-theme-toggle {
   display: none !important;
 }
 
-/* Horizontal list of navigation links */
 .categories {
   list-style: none;
   display: flex;
@@ -148,28 +137,20 @@ header {
   justify-content: center;
   font-size: 0.6rem;
   align-items: center;
-  /* overflow-x: auto;
-  scrollbar-width: none;
-  scroll-behavior: smooth; */
-  width: 100%; /* Ensure full width */
-  gap: clamp(45px, 4vw, 120px); /* Remove the other gap line */
+  width: 100%;
+  gap: clamp(45px, 4vw, 120px);
 }
 
-/* Thin bar under active or hovered category */
 .categories li {
   position: relative;
   text-align: center;
 }
 
-.categories li[class*="separator"] {
-  display: none;
-}
-
-/* Add this new rule */
+.categories li[class*="separator"],
 .categories li:empty {
   display: none;
 }
-
+/* effect for active and hovered links */
 .categories li a::after {
   content: "";
   position: absolute;
@@ -180,50 +161,22 @@ header {
   background: transparent;
   transition: width 0.3s ease, left 0.3s ease;
 }
-
 .categories li a.active::after,
 .categories li a:hover::after {
   width: 100%;
   left: 0;
 }
 
-.categories li a[href="#latest"].active::after,
-.categories li a[href="#latest"]:hover::after {
-  background: linear-gradient(to right, #ff4500, #ff0000); /* Red gradient */
-}
-
-.categories li a[href="#health"].active::after,
-.categories li a[href="#health"]:hover::after {
-  background: linear-gradient(to right, #00ff00, #008000); /* Green gradient */
-}
-
-.categories li a[href="#coins"].active::after,
-.categories li a[href="#coins"]:hover::after {
-  background: linear-gradient(to right, #ffd700, #b8860b); /* Gold gradient */
-}
-
-.categories li a[href="#hack"].active::after,
-.categories li a[href="#hack"]:hover::after {
-  background: linear-gradient(to right, #800080, #4b0082); /* Purple gradient */
-}
-
-.categories li a[href="#ai"].active::after,
-.categories li a[href="#ai"]:hover::after {
-  background: linear-gradient(to right, #ffa500, #ff4500); /* Orange gradient */
-}
-
+/* Random icon animation on hover */
 a[href="#random"]:hover .random-icon path {
   animation: smooth-wave 1.5s ease-in-out infinite;
 }
-
 a[href="#random"]:hover .random-icon path:nth-child(2) {
   animation-delay: 0.2s;
 }
-
 a[href="#random"]:hover .random-icon path:nth-child(3) {
   animation-delay: 0.4s;
 }
-
 a[href="#random"]:hover .random-icon path:nth-child(4) {
   animation-delay: 0.6s;
 }
@@ -238,48 +191,85 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
   }
 }
 
-/* Wrapper for search input and icon */
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--icon-grey); /* Light grey default */
+}
+
+.nav-item:hover .nav-icon:not(.category-icon),
+.nav-item:focus .nav-icon:not(.category-icon),
+.nav-item:active .nav-icon:not(.category-icon),
+.nav-item.active .nav-icon:not(.category-icon) {
+  filter: brightness(0) invert(1); /* Make black first, then invert to white */
+}
+
+/* Category icon just turns white on hover/active */
+.nav-item:hover .category-icon,
+.nav-item:focus .category-icon,
+.nav-item:active .category-icon,
+.nav-item.active .category-icon {
+  fill: var(--white);
+}
+
+/* Active page styling */
+.nav-item.active .nav-icon:not(.category-icon) {
+  fill: var(--accent-color);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.nav-item.active .category-icon {
+  fill: var(--white);
+}
+
+.nav-icon.active-icon,
+.modal-nav-icon.active-icon {
+  filter: brightness(0) invert(1) sepia(1) hue-rotate(50deg) saturate(2);
+}
+
 .search-bar-container {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 50vw; /* Half screen width on mobile */
+  max-width: 50vw;
 }
 
-/* Holds search bar and theme toggle */
 .nav-search-item {
   flex-direction: column;
   align-items: flex-start;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Hamburger Menu Layout */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Button for mobile menu */
 .hamburger-menu {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 12px; /* Smaller width */
-  height: 8px; /* Smaller height */
+  width: 12px;
+  height: 8px;
   background: transparent;
   border: none;
   cursor: pointer;
-  position: fixed; /* Anchor to viewport */
-  right: 20px; /* Align with page padding */
-  top: 20px; /* Position at top-right */
-  z-index: 1500; /* Higher than mobile menu (1200) */
-  visibility: visible !important; /* Force visibility */
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 1500;
+  visibility: visible !important;
 }
 
-/* Ensure visibility when mobile menu is open */
 .hamburger-menu.open {
-  z-index: 1500; /* Reinforce z-index */
+  z-index: 1500;
 }
 
-/* Full-screen menu layout */
 .mobile-menu {
   position: fixed;
   top: 0;
@@ -291,31 +281,30 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
   align-items: flex-start;
   justify-content: flex-start;
   padding: 32px var(--spacing-md) var(--spacing-sm);
-  z-index: 1200; /* Below hamburger menu (1300) */
+  z-index: 1200;
   opacity: 0;
   transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1), opacity 0.3s;
 }
 
-/* Keep hamburger visible above mobile menu */
-.mobile-menu.open ~ .header-top .hamburger-menu {
-  z-index: 1600; /* Ensure it stays above */
-}
-
-/* Slide in animation */
 .mobile-menu.open {
   transform: translateY(0);
   opacity: 1;
 }
 
+/* Keep hamburger above mobile menu */
+.mobile-menu.open ~ .header-top .hamburger-menu {
+  z-index: 1600;
+}
+
+/* Hide sticky nav when mobile menu open */
 .mobile-menu.open + .sticky-wrapper-navcontainer {
   display: none !important;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Main Content Layout */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Decorative gradient bar */
 .divider {
   height: 1px;
   background: linear-gradient(to right, #ff4500, #ff8c00, #ff69b4);
@@ -323,43 +312,32 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
   margin: 3px 0;
 }
 
-/* Main articles section */
 .articles {
   padding: 0;
   margin-top: -20px;
   position: relative;
 }
 
-/* Center content with padding */
 .container {
   max-width: 100%;
   padding: 16px;
 }
 
-/* Wrapper for category sections */
 .category-content {
   margin-bottom: 24px;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Grid Layouts */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Layout for main article cards */
-.bento-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Layout for category articles */
+.bento-grid,
 .category-grid {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* Grid for small cards in Latest section */
 .small-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -367,17 +345,14 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
   gap: 16px;
 }
 
-/* First two small cards */
 .small-grid .article-card.small.side-by-side {
   grid-column: auto;
 }
 
-/* Last three small cards */
 .small-grid .article-card.small:not(.side-by-side) {
   grid-column: 1 / -1;
 }
 
-/* Horizontal layout for non-side-by-side cards */
 .small-grid .article-card.small:not(.side-by-side) .card-inner,
 .category-grid .article-card.small .card-inner {
   flex-direction: row;
@@ -386,363 +361,46 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
   align-items: center;
 }
 
-/* Vertical stack for side-by-side cards */
 .small-grid .article-card.small.side-by-side .card-inner {
   flex-direction: column;
-  gap: 8px; /* Space between image and text */
+  gap: 8px;
 }
 
-/* Image container */
 .article-image-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 2;
   background-color: transparent;
+  min-height: 10px; /* prevent layout shift */
 }
 
-/* Prevent layout shift during image load */
-.article-image-wrapper {
-  min-height: 10px; /* Adjust based on design */
-}
-
-/* Adjust content width for small cards */
 .small-grid .article-card.small:not(.side-by-side) .article-content,
 .category-grid .article-card.small .article-content {
   width: 60%;
 }
 
-/* Full width for side-by-side content */
 .small-grid .article-card.small.side-by-side .article-content {
   width: 100%;
 }
 
-/* Layout for full article view */
 .article-view {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0 10%;
-}
-
-/* Container for related articles */
-.random-articles {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Layout for related article cards */
-.random-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 24px; /* Consistent spacing */
-  padding: var(--spacing-sm); /* Breathing room */
-}
-
-/* Horizontal layout for small cards */
-.random-grid .article-card.small .card-inner {
-  flex-direction: row;
   gap: 12px;
-  padding: 8px;
-  align-items: center;
 }
 
-/* Constrain image width */
-.random-grid .article-card.small .article-image-wrapper {
-  width: 40%; /* Image takes 40% of card width */
-  aspect-ratio: 3 / 2;
-}
+/* ============================================================================ */
+/* Responsive Styles */
+/* ============================================================================ */
 
-/* Text area */
-.random-grid .article-card.small .article-content {
-  width: 60%; /* Content takes 60% of card width */
-  padding: var(--spacing-sm); /* Breathing room */
-}
-
-/* Final quote section */
-.quote-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 40vh;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-  padding: 16px;
-  box-sizing: border-box;
-}
-
-/* Background image */
-.quote-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-/* Advertisement placeholder */
-.separator-ad {
-  width: 100%;
-  padding: 16px;
-  text-align: center;
-  margin: 24px 0;
-}
-
-/* ========================================================================== */
-/* Media Queries: Tablet (min-width: 769px) */
-/* ========================================================================== */
-@media (min-width: 769px) {
-  /* Adjust header padding */
-  header {
-    padding: 12px 24px;
-  }
-
-  /* Larger logo size */
-  .logo {
-    width: clamp(60px, 10vw, 100px);
-    height: clamp(60px, 10vw, 100px);
-  }
-
-  /* Larger main title font */
-  .main-title {
-    font-size: clamp(3rem, 5vw, 4rem);
-  }
-
-  /* Larger subtitle font */
-  .subtitle {
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-  }
-
-  /* Hide hamburger and mobile menu */
-  .hamburger-menu,
-  .mobile-menu {
-    display: none;
-  }
-
-  /* Inline layout for search and theme toggle */
-  .nav-search-item {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .desktop-theme-toggle {
-    display: flex;
-    align-items: center;
-  }
-
-  /* Two-column layout for bento grid */
-  .bento-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  /* Two-column layout for category grid */
-  .category-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  /* Span both columns for huge card */
-  .article-card.huge {
-    grid-column: span 2;
-  }
-
-  /* Two-column layout for small grid */
+@media (min-width: 768px) {
   .small-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 20px;
-  }
-
-  /* Adjust article view padding */
-  .article-view {
-    padding: 0 15%;
-  }
-
-  /* Constrain main article width */
-  .main-article {
-    max-width: clamp(600px, 70%, 800px);
-  }
-
-  /* Full width for random articles */
-  .random-articles {
-    width: 100%;
-  }
-
-  /* Adjust random grid spacing */
-  .random-grid {
-    gap: 28px;
-  }
-
-  /* Taller quote section */
-  .quote-section {
-    padding: 24px 16px;
-    min-height: 50vh;
-  }
-
-  /* More padding for quote container */
-  .quote-container {
-    padding: 20px;
-  }
-}
-
-/* ========================================================================== */
-/* Media Queries: Desktop (min-width: 1025px) */
-/* ========================================================================== */
-@media (min-width: 1025px) {
-  /* Horizontal header layout */
-  header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 32px;
-  }
-
-  /* Align header items */
-  .header-top {
-    flex-direction: row;
-    align-items: baseline;
-    gap: clamp(8px, 2vw, 10px);
-  }
-
-  /* Reset logo transform */
-  .logo {
-    width: 60px;
-    height: 60px;
-    transform: translateY(0);
-  }
-
-  /* Horizontal title layout */
-  .title-container {
-    flex-direction: row;
-    gap: clamp(4px, 1vw, 8px);
-  }
-
-  /* Larger main title font */
-  .main-title {
-    font-size: clamp(4rem, 5vw, 5rem);
-  }
-
-  /* Larger subtitle font */
-  .subtitle {
-    font-size: clamp(1.5rem, 2vw, 2rem);
-  }
-
-  /* Main title specific size */
-  .main-title {
-    font-size: 2.5rem;
-  }
-
-  /* Subtitle specific size */
-  .subtitle {
-    font-size: 1rem;
-  }
-
-  /* Right-aligned navigation */
-  .nav-container {
-    justify-content: flex-end;
-    gap: clamp(8px, 2vw, 16px);
-    margin-left: 0 !important;
-  }
-
-  /* Larger gap for categories */
-  .categories {
-    gap: clamp(8px, 2vw, 16px);
-  }
-
-  /* Wider search bar */
-  .search-bar {
-    width: clamp(120px, 15vw, 200px);
-  }
-
-  /* Centered container with max-width */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px;
-  }
-
-  /* Three-column layout for bento grid */
-  .bento-grid {
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 24px;
-  }
-
-  /* Huge card spans first column */
-  .article-card.huge {
-    grid-column: 1 / 2;
-    grid-row: 1 / 3;
-    aspect-ratio: 3 / 2;
-  }
-
-  /* Small grid in last two columns */
-  .small-grid {
-    grid-column: 2 / 4;
-    grid-row: 1 / 2;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 24px;
-  }
-
-  /* Three-column layout for category grid */
-  .category-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  /* Two-column layout for article view */
-  .article-view {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-    padding: 0 24px;
-  }
-
-  /* Full width for main article */
-  .main-article {
-    max-width: none;
-  }
-
-  /* Adjust random grid layout */
-  .random-grid {
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  /* Adjust proportions for random grid articles */
-  .random-grid .article-card.small .article-image-wrapper {
-    width: 30%;
-  }
-
-  .random-grid .article-card.small .article-content {
-    width: 70%;
-  }
-
-  /* More padding for quote section */
-  .quote-section {
-    padding: 32px;
-  }
-
-  /* More padding for quote container */
-  .quote-container {
-    padding: 24px;
   }
 }
 
-/* Additional Desktop Adjustments (min-width: 1025px) */
-@media (min-width: 1025px) {
-  /* Adjust navigation padding and alignment */
-  .nav-container {
-    padding: var(--spacing-sm) 32px;
-    justify-content: flex-end;
-    gap: clamp(8px, 2vw, 16px);
-    margin-left: clamp(8px, 2vw, 16px);
+@media (min-width: 1024px) {
+  .small-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

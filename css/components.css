@@ -1,12 +1,18 @@
-/* components.css: Styles for reusable UI components */
+/* ============================================================================ */
+/* components.css */
+/* ============================================================================ */
+/* Description: Styles for reusable UI components like titles, navigation, and cards. */
+/* Version: 1.0 */
+/* Author: [Your Name] */
+/* ============================================================================ */
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Main Title and Subtitle */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Main-title: Bold "Level Up" text */
+/* Main title: Bold "Level Up" with neon glow */
 .main-title {
-  font-size: 1.75rem; /* Smaller font */
+  font-size: 1.75rem;
   font-weight: 700;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   letter-spacing: 0.2rem;
@@ -27,27 +33,26 @@
   margin-right: 2px;
   display: inline-flex;
   align-items: baseline;
-  gap: 10px; /* Space between Level Up and Or Die Trying */
+  gap: 10px;
 }
 
 /* Subtitle: "Or Die Trying" with neon gradient */
 .subtitle {
   font-family: "Shadows Into Light", cursive;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-style: italic;
-  color: #f34343; /* Solid red for clarity */
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.5); /* Subtle shadow for contrast */
+  color: #f34343;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
   position: relative;
-  top: 1px;
   margin: 0;
   display: inline;
 }
 
-/* ========================================================================== */
-/* Navigation Components */
-/* ========================================================================== */
+/* ============================================================================ */
+/* Search Bar Components */
+/* ============================================================================ */
 
-/* Search-bar: Input with space for icon */
+/* Search bar input */
 .search-bar {
   font-size: 0.85rem;
   border: none;
@@ -56,15 +61,12 @@
   color: var(--white);
 }
 
-/* Search-icon: Magnifying glass SVG */
-
-/* .search-icon path {
-  stroke: var(--white);
-} */
-
+/* Search wrapper for icon positioning */
 .search-wrapper {
   position: relative;
 }
+
+/* Search icon positioning */
 .search-icon {
   position: absolute;
   left: 0.75em;
@@ -73,117 +75,115 @@
   width: 1em;
   height: 1em;
 }
+
+/* Input padding to accommodate icon */
 input {
   padding-left: 2em;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Hamburger Menu Components */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Hamburger-menu: Button for mobile menu */
+/* Hamburger menu button */
 .hamburger-menu {
-  /* Scoped variables for hamburger dimensions */
   --hamburger-width: 0.8rem;
   --hamburger-height: 0.6rem;
   --hamburger-bar-height: 0.4px;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: var(--hamburger-width); /* Use scoped variable */
-  height: var(--hamburger-height); /* Use scoped variable */
+  width: var(--hamburger-width);
+  height: var(--hamburger-height);
   background: transparent;
   border: none;
   cursor: pointer;
-  right: 16px; /* Align with page padding */
-  top: 18px; /* Position at top-left */
-  transform: translateY(0); /* Remove unnecessary transform */
+  right: 16px;
+  top: 18px;
   z-index: 1500;
 }
 
+/* Hamburger menu when open */
 .hamburger-menu.open {
-  z-index: 1500; /* Reinforce z-index */
+  z-index: 1500;
 }
 
-/* Hamburger-menu bars */
+/* Hamburger menu bars */
 .hamburger-menu span {
-  height: var(--hamburger-bar-height); /* Use scoped variable */
+  height: var(--hamburger-bar-height);
   background-color: var(--white);
   border-radius: 2px;
   transition: all 0.3s ease;
 }
 
-/* Hamburger-menu open: Transform into upward pyramid */
+/* Hamburger menu open: Transform into upward pyramid */
 .hamburger-menu.open span:nth-child(1) {
   transform-origin: center;
-  transform: translateY(10px); /* Base - centered */
+  transform: translateY(10px);
   width: 15px;
 }
 
 .hamburger-menu.open span:nth-child(2) {
   transform-origin: left center;
-  transform: translateY(5px) translateX(1px) rotate(-64deg); /* Left side */
+  transform: translateY(5px) translateX(1px) rotate(-64deg);
   width: 15px;
 }
 
 .hamburger-menu.open span:nth-child(3) {
   transform-origin: right center;
-  transform: translateY(0px) translateX(-1px) rotate(64deg); /* Right side */
+  transform: translateY(0px) translateX(-1px) rotate(64deg);
   width: 15px;
 }
 
-/* Mobile-menu: Full-screen menu with neon glass effect */
+/* Mobile menu with neon glass effect */
 .mobile-menu {
   background: linear-gradient(
     180deg,
     rgba(128, 0, 128, 0.6) 0%,
-    /* var(--think-start), semi-transparent dark purple */ rgba(18, 0, 18, 0.5)
-      15%,
-    /* custom #120012 dark purple */ rgba(0, 0, 255, 0.35) 35%,
-    /* var(--focus-start), deep blue */ rgba(0, 0, 48, 0.3) 55%,
-    /* custom #000030 navy-black */ rgba(0, 24, 32, 0.25) 75%,
-    /* custom #001820 cyan-black */ rgba(20, 22, 24, 0.15) 100%
-      /* var(--background), slightly see-through */
+    rgba(18, 0, 18, 0.5) 15%,
+    rgba(0, 0, 255, 0.35) 35%,
+    rgba(0, 0, 48, 0.3) 55%,
+    rgba(0, 24, 32, 0.25) 75%,
+    rgba(20, 22, 24, 0.15) 100%
   );
-
   backdrop-filter: blur(36px) saturate(300%) brightness(1.3) contrast(1.3);
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Category Label */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Category-label: Styling for category titles (latest, health, etc.) */
+/* Category titles (e.g., Latest, Health) */
 .category-label {
   display: inline-block;
   font-family: Roboto, "Arial Narrow Bold", sans-serif;
   font-weight: 100;
-  font-size: 0.8rem; /* Smaller size */
-  color: #b0b0b0; /* Lighter grey */
+  font-size: 0.8rem;
+  color: #b0b0b0;
   letter-spacing: 0.0625rem;
   margin: 16px 0;
   margin-left: 25px;
   margin-bottom: -15px;
 }
 
-/* ========================================================================== */
-/* Article Image */
-/* ========================================================================== */
+/* ============================================================================ */
+/* Article Images */
+/* ============================================================================ */
 
+/* Article and main article images */
 .article-image,
 .main-article-image {
   display: block;
   width: 100%;
   height: auto;
-  object-fit: cover; /* Ensure images scale nicely */
+  object-fit: cover;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Article Cards */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Article-card: Base styles for all cards */
+/* Base article card styles */
 .article-card {
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -195,37 +195,41 @@ input {
   transition: transform 0.2s ease;
 }
 
-/* Card-inner: Inner content wrapper */
+/* Inner card content wrapper */
 .card-inner {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Article-card huge: Large featured card */
+/* Huge article card */
 .article-card.huge {
   aspect-ratio: 3 / 2;
-  position: relative; /* Add this to establish positioning context */
+  position: relative;
 }
 
-/* Article-card small: Smaller cards */
+/* Small article card */
 .article-card.small {
   aspect-ratio: auto;
 }
 
+/* Loading state for cards */
 .article-card.loading {
-  background: transparent; /* No glass effect */
-  border: none; /* No outline */
-  backdrop-filter: none; /* No blur */
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
 }
+
 .article-card.loading .article-image {
-  opacity: 0.5; /* Subtle placeholder */
+  opacity: 0.5;
   transition: opacity 0.3s ease;
 }
+
 .article-card .article-image {
   opacity: 1;
 }
 
+/* Loading spinner */
 .article-card.loading .article-image-wrapper::after {
   content: "";
   position: absolute;
@@ -239,24 +243,25 @@ input {
   animation: spin 1s linear infinite;
   transform: translate(-50%, -50%);
 }
+
 @keyframes spin {
   to {
     transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
-/* Gradient-overlay: Glassmorphism for huge card's bottom 1/3 */
+/* Gradient overlay for huge card */
 .bento-grid .article-card.huge .article-image-wrapper .gradient-overlay {
   position: absolute;
-  bottom: 0; /* Changed from top: 70% to bottom: 0 */
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 40%; /* Covers bottom 40% */
+  height: 40%;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
-  z-index: 1; /* Below text but above image */
+  z-index: 1;
   opacity: 1;
   display: block !important;
 }
@@ -268,12 +273,12 @@ input {
   }
 }
 
-/* Ensure small cards have no overlay */
-.bento-grid .article-card.small .article-image-wrapper .gradient-overlay {
+/* No overlay for small cards */
+.bento-grid .article-card.small .gradient-overlay {
   display: none;
 }
 
-/* Gradient-overlay: Image overlay for huge cards */
+/* General gradient overlay */
 .gradient-overlay {
   position: absolute;
   bottom: 0;
@@ -296,7 +301,7 @@ input {
   display: none;
 }
 
-/* Article-image: Card image */
+/* Article image styles */
 .article-image {
   width: 100%;
   height: 100%;
@@ -312,14 +317,14 @@ input {
   opacity: 1;
 }
 
-/* Article-meta: Date and category text */
+/* Article meta (date and category) */
 .article-meta {
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 4px;
 }
 
-/* Article-title: Card title */
+/* Article title */
 .article-title {
   font-size: 1.5rem;
   margin-bottom: 8px;
@@ -329,14 +334,14 @@ input {
   letter-spacing: 0.0625rem;
 }
 
-/* Small card title: Smaller size */
+/* Small card title */
 .article-card.small .article-title {
   font-size: 1rem;
   max-width: none;
   margin-bottom: 0;
 }
 
-/* Huge card title: Larger size */
+/* Huge card title */
 .article-card.huge .article-title {
   font-size: 1.5rem;
   margin-bottom: 8px;
@@ -344,25 +349,25 @@ input {
   line-height: 1.3;
   max-width: 75ch;
   letter-spacing: 0.0625rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8); /* Add text shadow for better readability */
-  pointer-events: auto; /* Allow clicks on the title */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  pointer-events: auto;
 }
 
-/* Article-content: Text overlay for cards */
+/* Article content wrapper */
 .article-content {
-  position: static; /* Change from absolute */
-  bottom: auto; /* Remove bottom positioning */
+  position: static;
+  bottom: auto;
   left: auto;
   right: auto;
-  padding: 1px; /* Adjust padding */
+  padding: 1px;
   color: var(--white);
   z-index: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Change from flex-end */
+  justify-content: flex-start;
 }
 
-/* Huge card content: Prevent clipping */
+/* Huge card content */
 .article-card.huge .article-content {
   position: absolute;
   bottom: 0;
@@ -374,11 +379,11 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: center; /* Center text horizontally */
+  align-items: center;
   pointer-events: none;
 }
 
-/* Small card content: Adjust positioning */
+/* Small card content */
 .article-card.small .article-content {
   position: static;
   padding-top: 10px;
@@ -386,48 +391,48 @@ input {
   z-index: auto;
 }
 
-/* Small card inner: Proper spacing */
+/* Small card inner spacing */
 .article-card.small .card-inner {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Space between image and text */
+  gap: 8px;
   padding: 8px;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Article View Components */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Main-article: Full article container */
+/* Main article container */
 .main-article {
   border-radius: var(--radius-md);
   background: rgba(42, 47, 49, 0.1);
   backdrop-filter: blur(0.625rem);
-  padding: 16px 24px 24px; /* Reduced top padding from 24px to 16px */
+  padding: 16px 24px 24px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-/* Main-article-title: Article title */
+/* Main article title */
 .main-article-title {
   font-size: 1.75rem;
   color: var(--white);
   text-align: center;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-  margin-top: -30px; /* Added negative margin to pull title upward */
+  margin-top: -30px;
 }
 
-/* Main-article-image-wrapper: Image container */
+/* Main article image wrapper */
 .main-article-image-wrapper {
   width: 100%;
   aspect-ratio: 3 / 2;
   background-color: #333;
-  position: relative; /* Ensure image stays contained */
+  position: relative;
 }
 
-/* Main-article-image: Article image */
+/* Main article image */
 .main-article-image {
   width: 100%;
   height: 100%;
@@ -435,7 +440,7 @@ input {
   border-radius: var(--radius-md);
   opacity: 0;
   transition: opacity 0.3s ease;
-  margin-top: -30px; /* Added negative margin to pull title upward */
+  margin-top: -30px;
 }
 
 /* Fade in loaded images */
@@ -443,23 +448,24 @@ input {
   opacity: 1;
 }
 
-/* Main-article-body: Article content */
+/* Main article body */
 .main-article-body {
-  font-size: 0.5rem !important; /* Reduced from 1rem for smaller text */
+  font-size: 0.5rem !important;
   color: var(--white);
   line-height: 1.6;
   margin-top: -35px;
 }
-/* Inline-image: Image within article content */
+
+/* Inline image in article content */
 .main-article-body .inline-image {
   width: 100%;
-  max-width: 300px; /* Smaller than main article image */
+  max-width: 300px;
   aspect-ratio: 3 / 2;
   object-fit: cover;
   border-radius: var(--radius-md);
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
-  margin: var(--spacing-md) auto; /* Center with spacing */
+  margin: var(--spacing-md) auto;
   display: block;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -470,7 +476,7 @@ input {
   opacity: 1;
 }
 
-/* Main-article-author: Author text */
+/* Main article author */
 .main-article-author {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.7);
@@ -478,11 +484,11 @@ input {
   font-style: italic;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Tags */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Article-tags: Wrapping layout for tags */
+/* Article tags container */
 .article-tags {
   display: flex;
   flex-direction: row;
@@ -494,7 +500,7 @@ input {
   padding: 0;
 }
 
-/* Tag: Glassmorphism style for tags */
+/* Individual tag styles */
 .tag {
   display: inline-block;
   padding: 4px 12px;
@@ -511,18 +517,17 @@ input {
   cursor: pointer;
 }
 
-/* Tag hover: Glow effect */
+/* Tag hover effect */
 .tag:hover {
-  /* transform: translateY(-2px); */
   box-shadow: 0 1px 16px rgb(255, 215, 0), 0 0 8px;
 }
 
-/* Tag click: Blown up and disappear animation */
+/* Tag click animation */
 .tag.clicked {
   animation: blowUpAndFade 0.5s ease forwards;
 }
 
-/* Animation: Scale up and fade out */
+/* Animation for tag click */
 @keyframes blowUpAndFade {
   0% {
     transform: scale(1);
@@ -538,11 +543,11 @@ input {
   }
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Separators and Ads */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Separator-quote: Quote between sections */
+/* Separator quote container */
 .separator-quote {
   max-width: 600px;
   width: 100%;
@@ -555,7 +560,7 @@ input {
   margin: 24px auto;
 }
 
-/* Ad-container: Ad placeholder content */
+/* Advertisement container */
 .ad-container {
   max-width: 600px;
   width: 100%;
@@ -569,11 +574,11 @@ input {
   text-align: center;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Quote Section Components */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Quote-container: Quote content with glass effect */
+/* Quote container */
 .quote-container {
   max-width: 600px;
   width: 90%;
@@ -587,7 +592,7 @@ input {
   z-index: 1;
 }
 
-/* Quote-text: Quote content */
+/* Quote text */
 .quote-text {
   font-size: 1.5rem;
   color: var(--white);
@@ -595,78 +600,89 @@ input {
   line-height: 1.5;
 }
 
-/* Quote-author: Quote author */
+/* Quote author */
 .quote-author {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.7);
   font-style: italic;
 }
 
-/* ========================================================================== */
+/* ============================================================================ */
 /* Close Button */
-/* ========================================================================== */
+/* ============================================================================ */
 
-/* Close "X" in dark mode */
+/* Close button for article view */
 .close-article {
   color: var(--white);
   font-size: 1.5rem;
   cursor: pointer;
 }
-/* ========================================================================== */
-/* Category Modal */
-/* ========================================================================== */
 
-/* Modal overlay */
+/* ============================================================================ */
+/* Category Modal */
+/* ============================================================================ */
+
+/* Navigation container for modal */
+.nav-container {
+  position: relative;
+  display: flex;
+}
+
+/* Category modal */
 .category-modal {
-  position: absolute; /* Now relative to the fixed wrapper */
-  bottom: 0;
+  position: absolute;
+  bottom: 100%;
   left: 0;
   width: 100%;
-  height: auto;
-  background: transparent;
-  z-index: 1300;
-  display: block;
+  z-index: 0;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Hidden state for modal */
+.category-modal.hidden {
+  opacity: 0;
   pointer-events: none;
 }
 
+/* Modal content */
 .modal-content {
-  width: 50px;
+  width: 120px;
   min-height: 150px;
+  bottom: 100%;
   border-radius: var(--radius-md);
-  background: linear-gradient(
-    180deg,
-    rgba(128, 0, 128, 0.6) 0%,
-    rgba(18, 0, 18, 0.5) 15%,
-    rgba(0, 0, 255, 0.35) 35%,
-    rgba(0, 0, 48, 0.3) 55%,
-    rgba(0, 24, 32, 0.25) 75%,
-    rgba(20, 22, 24, 0.15) 100%
-  );
   backdrop-filter: blur(36px) saturate(300%) brightness(1.3) contrast(1.3);
+  position: relative;
+  margin: 0 auto;
+  transform: translateY(0) scale(1);
+  transition: transform 0.5s ease-out;
+}
+
+.modal-nav-icon path {
+  fill: rgba(255, 255, 255, 0.7);
+}
+
+/* Hidden modal content animation */
+.category-modal.hidden .modal-content {
+  transform: translateY(80px) scale(0.4);
+}
+
+.category-modal {
+  display: none;
   position: absolute;
-  bottom: 70px; /* Distance above nav */
-  left: 50%; /* Start centered */
-  transform: translateX(-50%) translateY(20px);
-  opacity: 0;
-  transition: transform 0.6s ease-out, width 0.6s ease-out,
-    min-height 0.6s ease-out, opacity 0.6s ease-out;
+  bottom: 100%;
+  left: 0;
 }
-.category-modal:not(.hidden) {
-  pointer-events: auto;
+.nav-item a[href="#ai"]:hover ~ .category-modal,
+.nav-item a[href="#ai"]:focus ~ .category-modal {
+  display: block;
 }
-
-/* Modal content visible state */
-.category-modal:not(.hidden) .modal-content {
-  transform: translateX(-50%) translateY(-20px);
-  width: 250px;
-  min-height: 150px;
-  opacity: 1;
-}
-
-/* ========================================================================== */
+/* ============================================================================ */
 /* Modal Categories List */
-/* ========================================================================== */
+/* ============================================================================ */
 
+/* Modal categories list */
 .modal-categories {
   list-style: none;
   padding: 10px;
@@ -676,15 +692,18 @@ input {
   gap: 8px;
 }
 
+/* Modal category item */
 .modal-category-item {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+/* Modal navigation icon */
 .modal-nav-icon {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
+  color: white;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(5px);
   border-radius: 50%;
@@ -692,137 +711,46 @@ input {
   object-fit: contain;
 }
 
+/* Modal category links */
 .modal-categories a {
   color: var(--white);
   text-decoration: none;
   font-size: 0.6rem;
 }
-/* ========================================================================== */
+
+/* ============================================================================ */
 /* Media Queries: Tablet (min-width: 769px) */
-/* ========================================================================== */
+/* ============================================================================ */
 @media (min-width: 769px) {
-  /* Article-card huge: Adjust padding */
+  /* Huge card content padding */
   .article-card.huge .article-content {
     padding: 32px;
   }
 
-  /* Huge card title: Larger size */
+  /* Huge card title size */
   .article-card.huge .article-title {
     font-size: 1.75rem;
   }
 
-  /* Inline-image: Adjust size and spacing */
+  /* Inline image size and spacing */
   .main-article-body .inline-image {
-    max-width: 350px; /* Slightly larger for tablet */
+    max-width: 350px;
     margin: var(--spacing-lg) auto;
   }
 
-  /* Article-tags: Adjust spacing */
+  /* Article tags spacing */
   .article-tags {
     gap: 10px;
     padding: 8px;
   }
 
-  /* Tag: Adjust width */
+  /* Tag width */
   .tag {
     min-width: 70px;
   }
+
+  /* Hide hamburger menu */
   .hamburger-menu {
     display: none;
-  }
-}
-
-.nav-wrapper {
-  position: fixed; /* This makes it stick to viewport */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-/* ========================================================================== */
-/* Navigation Item */
-/* ========================================================================== */
-
-/* Nav-item: Container for icon and text */
-/* Navigation Item */
-.nav-item {
-  display: flex;
-  width: 5px;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-}
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border-radius: 50%;
-  padding: 4px;
-  transition: transform 0.3s ease;
-  object-fit: contain;
-}
-.nav-icon:hover {
-  transform: scale(1.1);
-}
-.categories li {
-  text-align: center;
-}
-
-/* ul.categories {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-} */
-
-/* Nav-icon: Styling for navigation icons */
-.nav-icon {
-  width: 20px; /* Reduced size */
-  height: 20px; /* Reduced size */
-  background: rgba(255, 255, 255, 0.05); /* Subtle glass background */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border-radius: 50%; /* Circular shape */
-  padding: 4px;
-  transition: transform 0.3s ease; /* Smooth hover effect */
-  object-fit: contain; /* Ensure the image fits without distortion */
-}
-
-.nav-icon:hover {
-  transform: scale(1.1); /* Microinteraction on hover */
-}
-
-/* Hamburger-menu (disabled) */
-.hamburger-menu {
-  display: none;
-} /* Hide it */
-.hamburger-menu span {
-  height: 0.4px;
-  background-color: var(--white);
-  border-radius: 2px;
-  transition: all 0.3s ease;
-  width: 100%;
-}
-
-/* ========================================================================== */
-/* Media Queries: Desktop (min-width: 1025px) */
-/* ========================================================================== */
-@media (min-width: 1025px) {
-  /* Article-card huge: Adjust padding */
-  .article-card.huge .article-content {
-    padding: 40px;
-  }
-
-  /* Huge card title: Larger size */
-  .article-card.huge .article-title {
-    font-size: 2rem;
-  }
-
-  /* Inline-image: Adjust size and spacing */
-  .main-article-body .inline-image {
-    max-width: 400px; /* Larger for desktop */
-    margin: var(--spacing-lg) auto;
   }
 }

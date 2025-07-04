@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- =========================================================== -->
     <!-- Meta and SEO -->
+    <!-- =========================================================== -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LevelUpOrDieTrying - Articles and insights on health, wealth, tech, and more"
+    />
     <title>LevelUpOrDieTrying</title>
 
-    <!-- Stylesheets -->
+    <!-- =========================================================== -->
+    <!-- Stylesheets: Loaded in order of dependency -->
+    <!-- =========================================================== -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/base.css" />
@@ -15,7 +23,9 @@
     <link rel="stylesheet" href="css/utils.css" />
     <link rel="stylesheet" href="css/themes.css" />
 
-    <!-- Fonts -->
+    <!-- =========================================================== -->
+    <!-- Fonts: Preconnect and load custom fonts -->
+    <!-- =========================================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,90 +35,106 @@
   </head>
 
   <body>
-    <!-- Header Section -->
+    <!-- =========================================================== -->
+    <!-- Header Section: Logo, title, search bar, and mobile menu -->
+    <!-- =========================================================== -->
     <div class="sticky-wrapper-navcontainer">
       <header>
-        <div>
-          <!-- Header Top: Logo, Title, and Hamburger Menu -->
-          <div class="header-top">
-            <div class="logo-container">
-              <img
-                src="assets/images/logo_NEW.png"
-                alt="LevelUpOrDieTrying Logo"
-                class="logo"
+        <!-- Header Top: Contains logo, title, and search -->
+        <div class="header-top">
+          <!-- Logo: Circular brand image -->
+          <div class="logo-container">
+            <img
+              src="assets/images/logo_NEW.png"
+              alt="LevelUpOrDieTrying Logo"
+              class="logo"
+            />
+          </div>
+
+          <!-- Title: Main title with subtitle -->
+          <div class="title-container">
+            <h1 class="main-title">
+              Level Up <span class="subtitle">Or Die Trying</span>
+            </h1>
+          </div>
+
+          <!-- Search: Input field with magnifying glass icon -->
+          <div class="search-bar-container">
+            <div class="search-wrapper">
+              <div class="search-icon">
+                <svg
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 5.333 5.333"
+                  style="width: 16px; height: 16px"
+                >
+                  <circle
+                    fill="none"
+                    stroke="#000000"
+                    stroke-width="0.5"
+                    stroke-miterlimit="10"
+                    cx="2.222"
+                    cy="2.222"
+                    r="1.556"
+                  />
+                  <line
+                    fill="none"
+                    stroke="#000000"
+                    stroke-width="0.5"
+                    stroke-miterlimit="10"
+                    x1="3.556"
+                    y1="3.556"
+                    x2="4.444"
+                    y2="4.444"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="search-bar"
+                placeholder="  Search"
+                class="search-bar"
               />
             </div>
-            <div class="title-container">
-              <h1 class="main-title">
-                Level Up <span class="subtitle">Or Die Trying</span>
-              </h1>
-            </div>
-            <div class="search-bar-container">
-              <div class="search-wrapper">
-                <div class="search-icon">
-                  <svg
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 5.333 5.333"
-                    style="width: 16px; height: 16px"
-                  >
-                    <circle
-                      fill="none"
-                      stroke="#000000"
-                      stroke-width="0.5"
-                      stroke-miterlimit="10"
-                      cx="2.222"
-                      cy="2.222"
-                      r="1.556"
-                    />
-                    <line
-                      fill="none"
-                      stroke="#000000"
-                      stroke-width="0.5"
-                      stroke-miterlimit="10"
-                      x1="3.556"
-                      y1="3.556"
-                      x2="4.444"
-                      y2="4.444"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  id="search-bar"
-                  placeholder="  Search"
-                  class="search-bar"
-                />
-              </div>
-            </div>
           </div>
-          <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
-          <nav class="mobile-menu">
-            <div class="theme-toggle">
-              <label class="theme-slider">
-                <input type="checkbox" id="theme-switch" />
-                <span class="slider">
-                  <span class="slider-button"></span>
-                </span>
-              </label>
-            </div>
-          </nav>
         </div>
+
+        <!-- Mobile Menu: Full-screen navigation for mobile devices -->
+        <!-- Note: DO NOT CHANGE 'HAMBURGERMENU' comment as per user instruction -->
+        <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
+        <nav class="mobile-menu">
+          <!-- Theme Toggle: Switch for light/dark mode -->
+          <div class="theme-toggle">
+            <label class="theme-slider">
+              <input type="checkbox" id="theme-switch" />
+              <span class="slider">
+                <span class="slider-button"></span>
+              </span>
+            </label>
+          </div>
+        </nav>
       </header>
     </div>
 
-    <!-- Main Content -->
+    <!-- =========================================================== -->
+    <!-- Main Content: Core article sections and layouts -->
+    <!-- =========================================================== -->
     <main>
-      <!-- Articles Section -->
+      <!-- Articles Section: Displays article cards and full article view -->
       <section id="articles" class="articles">
         <div class="container">
-          <!-- Latest Articles -->
+          <!-- ------------------------------------------------------ -->
+          <!-- Latest Articles: Featured and smaller article cards -->
+          <!-- ------------------------------------------------------ -->
           <div class="category-label latest-label">
             <h2 id="category-title">Latest</h2>
           </div>
+
           <div id="main-content-area">
             <div class="content-area">
+              <!-- Bento Grid: Layout for featured and small article cards -->
               <div class="bento-grid">
+                <!-- Featured Article: Large hero card -->
                 <div class="article-card glass huge" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
@@ -126,8 +152,10 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Small Grid: Smaller article cards in a grid layout -->
                 <div class="small-grid">
-                  <!-- Small article cards populated dynamically -->
+                  <!-- Small Article Card 1 -->
                   <div class="article-card glass small" data-article-id="">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
@@ -144,6 +172,7 @@
                       </div>
                     </div>
                   </div>
+                  <!-- Small Article Card 2 -->
                   <div class="article-card glass small" data-article-id="">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
@@ -160,6 +189,7 @@
                       </div>
                     </div>
                   </div>
+                  <!-- Small Article Card 3 -->
                   <div class="article-card glass small" data-article-id="">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
@@ -176,6 +206,7 @@
                       </div>
                     </div>
                   </div>
+                  <!-- Small Article Card 4 -->
                   <div class="article-card glass small" data-article-id="">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
@@ -194,16 +225,19 @@
                   </div>
                 </div>
 
-                <!-- Ad Separator -->
+                <!-- Ad Separator: Placeholder for advertisements -->
                 <div class="separator-ad">
                   <div class="ad-container glass">
                     <p>Advertisement</p>
                   </div>
                 </div>
               </div>
-              <!-- Full Article View -->
+
+              <!-- Article View: Full article display with related articles -->
               <div class="article-view hidden">
+                <!-- Main Article: Full article content -->
                 <div class="main-article glass">
+                  <!-- Close Button: Returns to main view -->
                   <button
                     class="close-article"
                     style="
@@ -229,8 +263,11 @@
                   <div class="article-tags"></div>
                   <p class="main-article-author"></p>
                 </div>
+
+                <!-- Random Articles: Suggested related articles -->
                 <div class="random-articles">
                   <div class="random-grid">
+                    <!-- Random Article Card 1 -->
                     <div class="article-card small">
                       <div class="card-inner">
                         <div class="article-image-wrapper">
@@ -247,6 +284,7 @@
                         </div>
                       </div>
                     </div>
+                    <!-- Random Article Card 2 -->
                     <div class="article-card small">
                       <div class="card-inner">
                         <div class="article-image-wrapper">
@@ -268,16 +306,22 @@
               </div>
             </div>
           </div>
+
+          <!-- Divider: Visual separator -->
           <div class="divider"></div>
 
-          <!-- Quote Separator -->
+          <!-- Quote Separator: Inspirational quote between sections -->
           <div class="separator-quote glass">
             <blockquote class="quote-text"></blockquote>
             <p class="quote-author"></p>
           </div>
+
+          <!-- Divider: Visual separator -->
           <div class="divider"></div>
 
-          <!-- Health Section -->
+          <!-- ------------------------------------------------------ -->
+          <!-- Health Section: Articles for Health category -->
+          <!-- ------------------------------------------------------ -->
           <div class="category-label">
             <h2>Health</h2>
           </div>
@@ -286,9 +330,13 @@
               <!-- Articles populated dynamically -->
             </div>
           </div>
+
+          <!-- Divider: Visual separator -->
           <div class="divider"></div>
 
-          <!-- Coins Section -->
+          <!-- ------------------------------------------------------ -->
+          <!-- Coins Section: Articles for Coins category -->
+          <!-- ------------------------------------------------------ -->
           <div class="category-label">
             <h2>Coins</h2>
           </div>
@@ -297,16 +345,23 @@
               <!-- Articles populated dynamically -->
             </div>
           </div>
+
+          <!-- Divider: Visual separator -->
           <div class="divider"></div>
 
-          <!-- Ad Separator -->
+          <!-- Ad Separator: Second advertisement placeholder -->
           <div class="separator-ad">
             <div class="ad-container glass">
               <p>Advertisement Placeholder</p>
             </div>
           </div>
+
+          <!-- Divider: Visual separator -->
           <div class="divider"></div>
-          <!-- Final Quote Section -->
+
+          <!-- ------------------------------------------------------ -->
+          <!-- Final Quote Section: Inspirational quote at page bottom -->
+          <!-- ------------------------------------------------------ -->
           <section id="quote-section" class="quote-section">
             <img
               src="assets/images/openart-image_OaoTLx0Z_1744901057391_raw copy.png"
@@ -318,7 +373,10 @@
               <p id="quote-author" class="quote-author"></p>
             </div>
           </section>
-          <!-- Hack Section -->
+
+          <!-- ------------------------------------------------------ -->
+          <!-- Hack Section: Articles for Hack category -->
+          <!-- ------------------------------------------------------ -->
           <div class="category-label">
             <h2>Hack</h2>
           </div>
@@ -327,9 +385,13 @@
               <!-- Articles populated dynamically -->
             </div>
           </div>
+
+          <!-- Divider: Visual separator -->
           <div class="divider"></div>
 
-          <!-- AI Section -->
+          <!-- ------------------------------------------------------ -->
+          <!-- AI Section: Articles for AI category -->
+          <!-- ------------------------------------------------------ -->
           <div class="category-label">
             <h2>AI</h2>
           </div>
@@ -341,59 +403,96 @@
         </div>
       </section>
     </main>
+
+    <!-- Divider: Visual separator -->
     <div class="divider"></div>
 
-    <!-- Navigation wrapper with modal inside -->
-    <div class="nav-wrapper">
-      <nav class="nav-container">
-        <ul class="categories">
-          <li>
-            <div class="nav-item">
-              <img
-                src="assets/icons/latest.svg"
-                alt="Latest Icon"
-                class="nav-icon"
+    <!-- =========================================================== -->
+    <!-- Navigation: Fixed bottom navigation with category modal -->
+    <!-- =========================================================== -->
+    <nav class="nav-container">
+      <!-- Category Navigation: Links to sections and features -->
+      <ul class="categories">
+        <!-- Latest: Displays latest articles -->
+        <li>
+          <div class="nav-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              id="Layer_1"
+              data-name="Layer 1"
+              viewBox="0 0 24 24"
+              class="nav-icon"
+              aria-label="Latest Icon"
+              role="img"
+            >
+              <path
+                d="m24,9.561v1.939c0,.276-.224.5-.5.5s-.5-.224-.5-.5v-1.939c0-1.164-.577-2.249-1.542-2.901L13.958,1.599c-1.189-.803-2.726-.803-3.915,0L2.542,6.659c-.966.652-1.542,1.737-1.542,2.901v9.939c0,1.93,1.57,3.5,3.5,3.5h7c.276,0,.5.224.5.5s-.224.5-.5.5h-7c-2.481,0-4.5-2.019-4.5-4.5v-9.939c0-1.497.741-2.892,1.983-3.729L9.483.771c1.53-1.032,3.505-1.032,5.034,0l7.5,5.061c1.242.838,1.983,2.232,1.983,3.729Zm0,7.939c0,3.584-2.916,6.5-6.5,6.5s-6.5-2.916-6.5-6.5,2.916-6.5,6.5-6.5,6.5,2.916,6.5,6.5Zm-1,0c0-3.032-2.467-5.5-5.5-5.5s-5.5,2.468-5.5,5.5,2.467,5.5,5.5,5.5,5.5-2.468,5.5-5.5Zm-2.857-1.369l-2.706,2.618c-.336.331-.885.333-1.223.004l-1.363-1.345c-.196-.194-.513-.192-.707.004-.194.197-.192.514.005.707l1.364,1.347c.362.354.837.531,1.312.531s.951-.178,1.311-.533l2.703-2.614c.198-.192.204-.509.012-.707-.191-.198-.507-.203-.707-.012Z"
               />
-              <a href="#latest">Latest</a>
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <img
-                src="assets/icons/list.svg"
-                alt="list Icon"
-                class="nav-icon"
+            </svg>
+            <a href="#latest">Latest</a>
+          </div>
+        </li>
+        <!-- Category: Opens modal with category options -->
+        <li>
+          <div class="nav-item category">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              id="Filled"
+              viewBox="0 0 24 24"
+              class="nav-icon"
+              aria-label="Category Icon"
+              role="img"
+            >
+              <path d="M7,6H23a1,1,0,0,0,0-2H7A1,1,0,0,0,7,6Z" />
+              <path d="M23,11H7a1,1,0,0,0,0,2H23a1,1,0,0,0,0-2Z" />
+              <path d="M23,18H7a1,1,0,0,0,0,2H23a1,1,0,0,0,0-2Z" />
+              <circle cx="2" cy="5" r="2" />
+              <circle cx="2" cy="12" r="2" />
+              <circle cx="2" cy="19" r="2" />
+            </svg>
+            <a href="#category">Category</a>
+          </div>
+        </li>
+        <!-- Spin: Loads a random article -->
+        <li>
+          <div class="nav-item category">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              id="Layer_1"
+              viewBox="0 0 24 24"
+              class="nav-icon"
+              aria-label="Random Icon"
+              role="img"
+            >
+              <path
+                d="M21.5,9H11.5c-1.378,0-2.5,1.121-2.5,2.5v12.5h15V11.5c0-1.379-1.121-2.5-2.5-2.5Zm1.5,14H10V11.5c0-.827,.673-1.5,1.5-1.5h10c.827,0,1.5,.673,1.5,1.5v11.5ZM15,14c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1Zm5,5c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1ZM10.707,5.293c.391,.391,.391,1.024,0,1.414-.391,.391-1.024,.391-1.414,0-.391-.391-.391-1.024,0-1.414,.391-.391,1.024-.391,1.414,0Zm-4,4c.391,.391,.391,1.024,0,1.414-.391,.391-1.024,.391-1.414,0-.391-.391-.391-1.024,0-1.414,.391-.391,1.024-.391,1.414,0Zm1.833-7.824L1.469,8.54c-.585,.585-.585,1.536,0,2.121l5.531,5.531v1.414L.762,11.368c-.975-.975-.975-2.561,0-3.535L7.833,.762c.943-.945,2.592-.945,3.535,0l6.238,6.238h-1.414L10.661,1.469c-.566-.566-1.555-.566-2.121,0Z"
               />
-              <a href="#ai">Category</a>
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <img
-                src="assets/icons/random.svg"
-                alt="Random Icon"
-                class="nav-icon"
+            </svg>
+            <a href="#random">random</a>
+          </div>
+        </li>
+        <!-- Tools: Toggles mobile menu -->
+        <li>
+          <div class="nav-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              id="Layer_1"
+              viewBox="0 0 24 24"
+              class="nav-icon"
+              aria-label="Random Icon"
+              role="img"
+            >
+              <path
+                d="m20.993,12c0-.691-.084-1.39-.25-2.082l2.924-1.655-2.464-4.352-2.927,1.657c-1.063-1.04-2.358-1.795-3.783-2.207V0h-5v3.361c-1.425.412-2.72,1.167-3.784,2.207l-2.927-1.657L.319,8.263l2.923,1.655c-.166.692-.25,1.391-.25,2.082s.084,1.391.25,2.082l-2.924,1.655,2.463,4.351,2.927-1.657c1.064,1.041,2.359,1.796,3.784,2.208v3.361h5v-3.361c1.425-.412,2.72-1.167,3.784-2.208l2.927,1.657,2.464-4.351-2.924-1.655c.166-.692.25-1.391.25-2.082Zm1.311,4.114l-1.479,2.61-2.733-1.547-.269.287c-1.069,1.141-2.435,1.937-3.948,2.303l-.382.093v3.14h-3v-3.14l-.382-.093c-1.514-.366-2.879-1.162-3.949-2.303l-.269-.287-2.733,1.547-1.478-2.61,2.73-1.546-.108-.378c-.207-.726-.312-1.462-.312-2.19s.105-1.463.312-2.19l.107-.378-2.73-1.546,1.479-2.611,2.733,1.548.269-.287c1.069-1.141,2.435-1.937,3.949-2.303l.382-.093V1h3v3.14l.382.093c1.514.366,2.879,1.162,3.948,2.303l.269.287,2.733-1.548,1.478,2.611-2.73,1.546.107.378c.207.728.312,1.464.312,2.19s-.105,1.463-.312,2.19l-.107.378,2.73,1.546Zm-13.804-4.043v-5.071h-1v5.071c-.86.224-1.5,1-1.5,1.929s.64,1.705,1.5,1.929v1.071h1v-1.071c.86-.224,1.5-1,1.5-1.929s-.64-1.705-1.5-1.929Zm-.5,2.929c-.551,0-1-.448-1-1s.449-1,1-1,1,.448,1,1-.449,1-1,1Zm8.5-2.929v-5.071h-1v5.071c-.86.224-1.5,1-1.5,1.929s.64,1.705,1.5,1.929v1.071h1v-1.071c.86-.224,1.5-1,1.5-1.929s-.64-1.705-1.5-1.929Zm-.5,2.929c-.551,0-1-.448-1-1s.449-1,1-1,1,.448,1,1-.449,1-1,1Zm-3.5-6.929v-1.071h-1v1.071c-.86.224-1.5,1-1.5,1.929s.64,1.705,1.5,1.929v5.071h1v-5.071c.86-.224,1.5-1,1.5-1.929s-.64-1.705-1.5-1.929Zm-.5,2.929c-.551,0-1-.448-1-1s.449-1,1-1,1,.448,1,1-.449,1-1,1Z"
               />
-              <a href="#random" id="random-link" aria-label="Random Article"
-                >Spin</a
-              >
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <img
-                src="assets/icons/cogwheel.svg"
-                alt="More Icon"
-                class="nav-icon"
-              />
-              <a href="#more" id="more-link" aria-label="More">Tools</a>
-            </div>
-          </li>
-        </ul>
-      </nav>
+            </svg>
+            <a href="#category">Setting</a>
+          </div>
+        </li>
+      </ul>
 
-      <!-- Modal for category button -->
-      <div class="category-modal hidden" id="category-modal">
+      <!-- Category Modal: Dropdown for additional category navigation -->
+      <div class="category-modal" id="category-modal">
         <div class="modal-content glass">
           <ul class="modal-categories">
             <li class="modal-category-item">
@@ -431,9 +530,12 @@
           </ul>
         </div>
       </div>
-    </div>
+    </nav>
 
-    <!-- Scripts -->
+    <!-- =========================================================== -->
+    <!-- Scripts: JavaScript modules for functionality -->
+    <!-- =========================================================== -->
+    <script type="module" src="js/modal.js"></script>
     <script type="module" src="js/data.js"></script>
     <script type="module" src="js/theme.js"></script>
   </body>

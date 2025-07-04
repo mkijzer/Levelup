@@ -1,4 +1,18 @@
-/* js/theme.js: Replace the entire file */
+// ============================================================================
+// theme.js
+// ============================================================================
+// Description: Manages light/dark theme switching and persistence.
+// Version: 1.0
+// Author: [Your Name]
+// ============================================================================
+
+// ============================================================================
+// Theme Switching
+// ============================================================================
+
+/**
+ * Initializes theme based on saved preference and sets up toggle listeners.
+ */
 const themeSwitches = document.querySelectorAll(
   "#theme-switch, #theme-switch-desktop"
 );
@@ -25,6 +39,7 @@ themeSwitches.forEach((switcher) => {
   });
 });
 
+// Log error if theme switches are not found
 if (themeSwitches.length === 0) {
   console.error("Theme switch elements not found");
 }

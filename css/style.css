@@ -1,4 +1,10 @@
+/* ============================================================================ */
 /* style.css */
+/* ============================================================================ */
+/* Description: Entry point for CSS, importing all other stylesheets. */
+/* Version: 1.0 */
+/* Author: [Your Name] */
+/* ============================================================================ */
 
 /* Base styles (resets and general styles) */
 @import url("base.css");
@@ -12,10 +18,11 @@
 /* Theme-specific styles (light/dark mode) */
 @import url("themes.css");
 
+/* Custom font */
 @font-face {
   font-family: "TwoFiftySix";
   src: url("../fonts/256-bytes.twofiftysix-regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
-  font-display: swap; /* Fallback to system font while loading */
+  font-display: swap;
 }

@@ -1,26 +1,36 @@
-/* Utility Classes - Use rem for global spacing, px for fixed values like borders */
+/* ============================================================================ */
+/* utils.css */
+/* ============================================================================ */
+/* Description: Utility classes for common styling needs. */
+/* Version: 1.0 */
+/* Author: [Your Name] */
+/* ============================================================================ */
 
+/* Center text */
 .text-center {
   text-align: center;
 }
 
+/* Hide element */
 .hidden {
   display: none;
 }
 
+/* Padding utility */
 .p-2 {
   padding: var(--spacing-md);
 }
 
+/* Margin-top utility */
 .mt-2 {
   margin-top: var(--spacing-md);
 }
 
+/* Glassmorphism effect */
 .glass {
   background: rgba(42, 47, 49, 0.2);
   backdrop-filter: blur(0.9375rem);
-  border: none; /* Remove border */
-
+  border: none;
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
 }

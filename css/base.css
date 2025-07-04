@@ -1,29 +1,43 @@
-/* css/base.css: Add at the top of the file */
+/* ============================================================================ */
+/* base.css */
+/* ============================================================================ */
+/* Description: Base styles for typography, resets, global elements, and utility classes. */
+/* Version: 1.0 */
+/* Author: [Your Name] */
+/* ============================================================================ */
+
+/* ============================================================================ */
+/* Global Defaults */
+/* ============================================================================ */
+
 /* Prevent flash by setting default background */
 html {
   background: var(--background);
 }
 
-/* Base layout and typography */
+/* Base layout for HTML and body */
 html,
 body {
   width: 100%;
   max-width: 100vw;
-  /* overflow-x: hidden; */
   font-family: sans-serif;
 }
 
+/* Body typography and spacing */
 body {
   font-family: var(--font-primary);
   background: var(--background);
   color: var(--white);
-  line-height: 1.6;
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   margin-bottom: var(--spacing-md);
 }
 
+/* ============================================================================ */
 /* Typography */
+/* ============================================================================ */
+
+/* Headings */
 h1,
 h2 {
   font-weight: bold;
@@ -40,6 +54,7 @@ h2 {
   line-height: var(--line-height-h2);
 }
 
+/* Paragraphs */
 p {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
@@ -58,7 +73,11 @@ a {
   transition: color 0.3s ease;
 }
 
-/* Buttons & Inputs */
+/* ============================================================================ */
+/* Form Elements */
+/* ============================================================================ */
+
+/* Buttons and inputs */
 button,
 input {
   border: none;
@@ -72,26 +91,70 @@ button {
   transition: all 0.3s ease;
 }
 
-/* Layout */
+/* ============================================================================ */
+/* Layout Containers */
+/* ============================================================================ */
+
+/* Main content container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-md);
 }
 
+/* ============================================================================ */
 /* Custom Typography Classes */
+/* ============================================================================ */
+
+/* Huge card title */
 .card-title-huge {
   font-size: var(--font-size-huge-title);
 }
 
+/* Small card title */
 .card-title-small {
   font-size: var(--font-size-small-title);
 }
 
+/* Huge card author */
 .card-author-huge {
   font-size: var(--font-size-huge-author);
 }
 
+/* Small card author */
 .card-author-small {
   font-size: var(--font-size-small-author);
+}
+
+/* ============================================================================ */
+/* Utility Classes */
+/* ============================================================================ */
+
+/* Center text */
+.text-center {
+  text-align: center;
+}
+
+/* Hide element */
+.hidden {
+  display: none;
+}
+
+/* Padding utility */
+.p-2 {
+  padding: var(--spacing-md);
+}
+
+/* Margin-top utility */
+.mt-2 {
+  margin-top: var(--spacing-md);
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(42, 47, 49, 0.2);
+  backdrop-filter: blur(0.9375rem);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
 }
