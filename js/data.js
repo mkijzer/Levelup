@@ -2,7 +2,7 @@
 // data.js
 // ============================================================================
 // Description: Core logic for the SPA, handling data fetching, article card
-//              creation, and user interactions like navigation and search.
+//              creation, and user interactions like navigation
 // Version: 1.0
 // Author: [Mike]
 // ============================================================================
@@ -153,27 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
             loadRandomArticle();
           });
         }
-
-        // Search functionality for desktop and mobile
-        const searchBar = document.getElementById("search-bar");
-        const mobileSearchBar = document.getElementById("mobile-search-bar");
-        const handleSearch = (e) => {
-          const query = e.target.value;
-          if (query.length > 0) {
-            loadSearchResults(query);
-          } else {
-            loadCategory("latest");
-          }
-        };
-
-        if (searchBar) {
-          searchBar.addEventListener("input", handleSearch);
-        }
-        if (mobileSearchBar) {
-          mobileSearchBar.addEventListener("input", handleSearch);
-        }
       })();
     })
+
     .catch((error) => console.error("Error loading articles:", error));
 
   // Fetch quotes from quotes.json
@@ -578,7 +560,7 @@ async function showArticleView(articleId) {
  * Loads articles for a specific category.
  * @param {string} category - The category to load articles for
  */
-async function loadCategory(category) {
+export async function loadCategory(category) {
   const stickyNav = document.querySelector(".sticky-wrapper-navcontainer");
   const wasSticky = stickyNav.classList.contains("is-sticky");
 
@@ -648,7 +630,7 @@ async function loadCategory(category) {
  * Loads search results based on user query.
  * @param {string} query - The search query
  */
-async function loadSearchResults(query) {
+export async function loadSearchResults(query) {
   const categoryTitle = document.getElementById("category-title");
   const bentoGrid = document.querySelector(".bento-grid");
   const hugeArticleCard = bentoGrid.querySelector(".article-card.huge");

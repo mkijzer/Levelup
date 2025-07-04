@@ -51,36 +51,100 @@
 /* ============================================================================ */
 /* Search Bar Components */
 /* ============================================================================ */
-
-/* Search bar input */
-.search-bar {
-  font-size: 0.85rem;
-  border: none;
-  width: 100%;
-  border-radius: var(--radius-sm);
-  color: var(--white);
+/* Search Container */
+.search-container {
+  position: fixed;
+  top: 18px;
+  right: 0;
+  z-index: 1000;
 }
 
-/* Search wrapper for icon positioning */
-.search-wrapper {
-  position: relative;
-}
-
-/* Search icon positioning */
+/* Search Icon (right side) */
 .search-icon {
-  position: absolute;
-  left: 0.75em;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1em;
-  height: 1em;
+  position: fixed;
+  right: 0.75rem;
+  top: 18px;
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  stroke: var(--icon-grey);
+  transition: stroke 0.3s ease, opacity 0.4s ease;
+  z-index: 1001;
 }
 
-/* Input padding to accommodate icon */
-input {
-  padding-left: 2em;
+.search-icon:hover,
+.search-icon.active {
+  stroke: var(--white);
 }
 
+.search-icon.expanding {
+  opacity: 0;
+}
+
+/* Sliding Search Bar */
+.search-bar-slide {
+  position: fixed;
+  top: 18px;
+  right: 0.75rem;
+  width: 1rem;
+  height: 28px;
+  background: transparent;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s ease, backdrop-filter 0.3s ease, border 0.3s ease,
+    box-shadow 0.3s ease;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.search-bar-slide.active {
+  width: 200px;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Input Wrapper */
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 6px;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.2s;
+}
+
+.search-bar-slide.active .search-input-wrapper {
+  opacity: 1;
+}
+
+/* Small Search Icon */
+.search-icon-small {
+  width: 10px;
+  height: 10px;
+  stroke: var(--icon-grey);
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+/* Search Input */
+#search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 300;
+  outline: none;
+  min-width: 0;
+}
+
+#search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.65rem;
+  font-weight: 300;
+}
 /* ============================================================================ */
 /* Hamburger Menu Components */
 /* ============================================================================ */

@@ -233,19 +233,6 @@ a[href="#random"]:hover .random-icon path:nth-child(4) {
   filter: brightness(0) invert(1) sepia(1) hue-rotate(50deg) saturate(2);
 }
 
-.search-bar-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 50vw;
-}
-
-.nav-search-item {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 /* ============================================================================ */
 /* Hamburger Menu Layout */
 /* ============================================================================ */
