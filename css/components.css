@@ -1,8 +1,8 @@
 /* ============================================================================ */
-/* components.css - CLEANED VERSION */
+/* components.css - UI COMPONENTS SYSTEM */
 /* ============================================================================ */
-/* Description: Reusable UI components with consistent design patterns */
-/* Version: 3.0 - Removed hamburger + Added settings modal */
+/* Description: Reusable UI components with consistent styling and interactions */
+/* Version: 3.4 - Fixed modal animations sliding from behind navbar */
 /* ============================================================================ */
 
 /* ============================================================================ */
@@ -51,6 +51,89 @@
   }
   100% {
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.9), 0 0 15px rgba(255, 215, 0, 0.7);
+  }
+}
+
+/* ============================================================================ */
+/* Navigation Components */
+/* ============================================================================ */
+
+/* Navigation container styling */
+.nav-container {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Nav item structure */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* Nav icons */
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--icon-grey);
+  transition: var(--transition-fast);
+}
+
+/* Nav icon hover effects */
+.nav-item:hover .nav-icon,
+.nav-item:focus .nav-icon,
+.nav-item:active .nav-icon {
+  filter: brightness(0) invert(1);
+}
+
+.nav-item.active .nav-icon {
+  fill: var(--accent-color);
+}
+
+/* Active link underline effect */
+.categories li a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: transparent;
+  transition: width var(--transition-medium), left var(--transition-medium);
+}
+
+.categories li a.active::after,
+.categories li a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Random icon animation */
+a[href="#random"]:hover .nav-icon path {
+  animation: smooth-wave 1.5s ease-in-out infinite;
+}
+
+a[href="#random"]:hover .nav-icon path:nth-child(2) {
+  animation-delay: 0.2s;
+}
+a[href="#random"]:hover .nav-icon path:nth-child(3) {
+  animation-delay: 0.4s;
+}
+a[href="#random"]:hover .nav-icon path:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+@keyframes smooth-wave {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-1px) rotate(0.5deg);
   }
 }
 
@@ -158,13 +241,11 @@
   font-size: var(--font-size-category-label);
   color: #b0b0b0;
   letter-spacing: 0.0625rem;
-  margin: var(--spacing-4) 0;
-  margin-left: var(--spacing-6);
-  margin-bottom: calc(var(--spacing-4) * -1);
+  margin: var(--spacing-article-separation) 0 var(--spacing-4) var(--spacing-6);
 }
 
 /* ============================================================================ */
-/* Article Cards */
+/* Article Cards - Base Styles */
 /* ============================================================================ */
 
 .article-card {
@@ -175,6 +256,8 @@
   backdrop-filter: blur(var(--glass-blur));
   border: none;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-inner {
@@ -183,17 +266,87 @@
   flex-direction: column;
 }
 
-/* Card size variants */
+/* ============================================================================ */
+/* Hero Article Card */
+/* ============================================================================ */
+
 .article-card.huge {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   position: relative;
+  background: none;
+  backdrop-filter: none;
+  border: none;
+  overflow: hidden;
 }
 
-.article-card.small {
-  aspect-ratio: auto;
+.article-card.huge .article-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* Loading states */
+.article-card.huge .article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-lg);
+  mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.1) 90%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.1) 90%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.article-card.huge .gradient-overlay {
+  display: none;
+}
+
+.article-card.huge .article-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-4);
+  z-index: 2;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.article-card.huge .article-title {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: var(--white);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  margin: 0;
+  line-height: 1.2;
+  font-weight: var(--font-weight-bold);
+  pointer-events: auto;
+}
+
+/* ============================================================================ */
+/* Small Article Cards */
+/* ============================================================================ */
+
+/* ============================================================================ */
+/* Loading States */
+/* ============================================================================ */
+
 .article-card.loading {
   background: transparent;
   border: none;
@@ -229,13 +382,24 @@
 /* Article Images */
 /* ============================================================================ */
 
+.article-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.article-card.small .article-image-wrapper {
+  height: 160px;
+  flex-shrink: 0;
+}
+
 .article-image,
 .main-article-image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center;
   border-radius: var(--radius-lg);
   opacity: 0;
   transition: opacity var(--transition-normal);
@@ -246,38 +410,21 @@
   opacity: 1;
 }
 
-/* Gradient overlays for hero cards */
-.article-card.huge .gradient-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1));
-  backdrop-filter: blur(12px);
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  z-index: 1;
-  opacity: 1;
-}
-
-@supports not (backdrop-filter: blur(12px)) {
-  .article-card.huge .gradient-overlay {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
-  }
-}
-
 .article-card.small .gradient-overlay {
   display: none;
 }
 
 /* ============================================================================ */
-/* Article Content */
+/* Article Content - Typography */
 /* ============================================================================ */
 
 .article-meta {
   font-size: var(--font-size-card-meta);
   color: var(--text-muted);
   margin-bottom: var(--spacing-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .article-title {
@@ -286,20 +433,19 @@
   color: var(--text-primary);
   line-height: var(--line-height-tight);
   letter-spacing: 0.0625rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .article-card.small .article-title {
   font-size: var(--font-size-base);
   margin-bottom: 0;
+  -webkit-line-clamp: 2;
 }
 
-.article-card.huge .article-title {
-  font-size: var(--font-size-huge-title);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  pointer-events: auto;
-}
-
-/* Content positioning */
 .article-content {
   position: static;
   padding: var(--spacing-1);
@@ -307,23 +453,14 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-
-.article-card.huge .article-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: var(--spacing-4);
-  z-index: 2;
-  justify-content: flex-end;
-  align-items: center;
-  pointer-events: none;
+  flex: 1;
 }
 
 .article-card.small .article-content {
   position: static;
-  padding-top: var(--spacing-3);
+  padding: var(--spacing-3);
+  flex: 1;
+  justify-content: space-between;
 }
 
 .article-card.small .card-inner {
@@ -331,6 +468,89 @@
   flex-direction: column;
   gap: var(--spacing-2);
   padding: var(--spacing-2);
+  height: 100%;
+}
+
+/* ============================================================================ */
+/* Side-by-Side Cards Layout */
+/* ============================================================================ */
+
+.side-by-side-container {
+  gap: 0.75rem !important;
+}
+
+.side-by-side-container .article-card.small {
+  height: 180px !important;
+  min-height: 180px !important;
+  max-height: 180px !important;
+}
+
+.side-by-side-container .article-card.small .card-inner {
+  padding: 0.7rem !important;
+  gap: 0.5rem !important;
+  height: 100% !important;
+}
+
+.side-by-side-container .article-card.small .article-image-wrapper {
+  height: 90px !important;
+  flex-shrink: 0 !important;
+}
+
+.side-by-side-container .article-card.small .article-content {
+  padding: 0.4rem 0 !important;
+  flex: 1 !important;
+  justify-content: flex-start !important;
+}
+
+.side-by-side-container .article-card.small .article-meta {
+  font-size: 0.65rem !important;
+  margin-bottom: 0.25rem !important;
+  color: var(--text-muted) !important;
+  line-height: 1.1 !important;
+}
+
+.side-by-side-container .article-card.small .article-title {
+  font-size: 0.8rem !important;
+  line-height: 1.2 !important;
+  margin-bottom: 0 !important;
+  -webkit-line-clamp: 2 !important;
+  font-weight: 600 !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+}
+
+/* ============================================================================ */
+/* Category Grid Cards */
+/* ============================================================================ */
+
+.category-grid .article-card.small {
+  height: 160px;
+  min-height: 120px;
+}
+
+.category-grid .article-card.small .card-inner {
+  flex-direction: row;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  align-items: stretch;
+}
+
+.category-grid .article-card.small .article-image-wrapper {
+  width: 40%;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.category-grid .article-card.small .article-content {
+  width: 60%;
+  flex: 1;
+  padding: var(--spacing-1);
+}
+
+.category-grid .article-card.small .article-title {
+  -webkit-line-clamp: 2;
+  font-size: var(--font-size-sm);
 }
 
 /* ============================================================================ */
@@ -469,11 +689,10 @@
   margin: var(--spacing-6) auto;
 }
 
-/* Quote Section with Background Image */
 .quote-section {
   position: relative;
   margin: var(--spacing-6) 0;
-  min-height: 200px; /* Fixed height on mobile */
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -494,18 +713,18 @@
   width: 90%;
   position: relative;
   z-index: var(--z-index-base);
-  margin: 0; /* Remove auto margins in quote section */
+  margin: 0;
 }
 
 .quote-text {
-  font-size: var(--font-size-lg); /* Smaller on mobile */
+  font-size: var(--font-size-lg);
   color: var(--text-primary);
   margin-bottom: var(--spacing-3);
   line-height: var(--line-height-normal);
 }
 
 .quote-author {
-  font-size: var(--font-size-sm); /* Smaller on mobile */
+  font-size: var(--font-size-sm);
   color: var(--text-secondary);
   font-style: italic;
 }
@@ -515,180 +734,169 @@
 }
 
 /* ============================================================================ */
-/* Utility Components */
-/* ============================================================================ */
-
-.close-article {
-  color: var(--text-primary);
-  font-size: var(--font-size-2xl);
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: var(--spacing-2);
-  transition: color var(--transition-fast);
-}
-
-.close-article:hover {
-  color: var(--accent-color);
-}
-
-/* ============================================================================ */
-/* Category Modal */
+/* Category Modal - Slides from behind navbar */
 /* ============================================================================ */
 
 .category-modal {
-  position: absolute;
-  bottom: 100%;
+  position: fixed;
+  bottom: 0;
   left: 0;
+  right: 0;
   width: 100%;
-  z-index: var(--z-index-dropdown);
-  opacity: 1;
-  pointer-events: auto;
-  transition: opacity var(--transition-normal);
-}
-
-.category-modal.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.modal-content {
-  width: 120px;
-  min-height: 150px;
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(36px) saturate(300%) brightness(1.3) contrast(1.3);
-  position: relative;
+  max-width: 600px;
   margin: 0 auto;
-  transform: translateY(0) scale(1);
-  transition: transform var(--transition-slow);
+  height: 50px;
+  z-index: calc(var(--z-index-nav) - 1);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  opacity: 0;
 }
 
-.category-modal.hidden .modal-content {
-  transform: translateY(80px) scale(0.4);
+.category-modal.active {
+  transform: translateY(-55px);
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.category-modal .modal-content {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 0;
+  min-height: 50px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-categories {
   list-style: none;
-  padding: var(--spacing-3);
-  margin: 0;
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  font-size: 0.6rem;
+  align-items: center;
+  width: 100%;
+  gap: clamp(45px, 4vw, 120px);
 }
 
 .modal-category-item {
+  position: relative;
+  text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--spacing-2);
+  gap: 0.2rem;
+  cursor: pointer;
 }
 
 .modal-nav-icon {
-  width: 10px;
-  height: 10px;
-  color: var(--white);
-  background: var(--glass-bg);
-  backdrop-filter: blur(5px);
-  border-radius: var(--radius-full);
-  padding: var(--spacing-1);
-  object-fit: contain;
+  width: 16px;
+  height: 16px;
+  stroke: var(--icon-grey);
+  fill: currentColor;
+  transition: var(--transition-fast);
+}
+
+.modal-category-item:hover .modal-nav-icon,
+.modal-category-item:focus .modal-nav-icon,
+.modal-category-item:active .modal-nav-icon {
+  stroke: var(--white);
 }
 
 .modal-categories a {
-  color: var(--text-primary);
   text-decoration: none;
-  font-size: var(--font-size-nav);
-  transition: color var(--transition-fast);
+  color: inherit;
+  transition: color 0.3s ease;
+  font-size: 0.6rem;
+  pointer-events: none;
 }
 
-.modal-categories a:hover {
-  color: var(--accent-color);
+.modal-category-item:hover a {
+  color: var(--white);
 }
 
 /* ============================================================================ */
-/* Settings Modal & Theme Toggle */
+/* Settings Modal - Exactly like category modal */
 /* ============================================================================ */
 
-/* Settings Modal - CSS Animation Driven */
 .settings-modal {
   position: fixed;
-  top: 0;
+  bottom: 0;
+  left: 0;
   right: 0;
-  height: 100vh;
-  width: 70%;
-  z-index: 9999;
-  transform: translateX(100%);
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 200px;
+  z-index: calc(var(--z-index-nav) - 1);
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events: none;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* Active state - slides in */
 .settings-modal.active {
-  transform: translateX(0);
+  transform: translateY(-20px);
   pointer-events: auto;
+  opacity: 1;
   visibility: visible;
 }
 
-/* Hidden state - slides out */
-.settings-modal.hidden {
-  transform: translateX(100%);
-  pointer-events: none;
-}
 .settings-modal .modal-content {
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(15, 23, 42, 0.98) 0%,
-    rgba(55, 48, 163, 0.98) 50%,
-    rgba(88, 28, 135, 0.98) 100%
-  );
-  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
   border: none;
-  border-radius: 0;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 0;
+  margin: 0;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
 }
 
-/* Retro grid overlay effect */
 .settings-modal .modal-content::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px
-    ),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-  pointer-events: none;
-  z-index: 1;
+  display: none;
 }
 
 .settings-content {
-  padding: var(--spacing-8) var(--spacing-6);
+  padding: var(--spacing-4);
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-/* Settings Items - No header, just the toggle */
 .settings-items {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-6);
-  margin-top: var(--spacing-6);
+  flex-direction: row;
+  gap: var(--spacing-3);
+  margin: 0;
 }
 
 .setting-item {
   background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
-  padding: var(--spacing-4);
+  padding: var(--spacing-2);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -712,17 +920,16 @@
   margin-top: var(--spacing-1);
 }
 
-/* Close Button */
 .settings-close {
   position: absolute;
-  top: var(--spacing-4);
-  right: var(--spacing-4);
-  width: 24px;
-  height: 24px;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  width: 20px;
+  height: 20px;
   background: transparent;
   border: none;
   color: var(--white);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-base);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -736,7 +943,6 @@
   opacity: 1;
 }
 
-/* Theme Slider Component */
 .theme-slider {
   display: flex;
   align-items: center;
@@ -763,7 +969,6 @@
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-/* Theme icons */
 .theme-slider .slider::before,
 .theme-slider .slider::after {
   position: absolute;
@@ -797,7 +1002,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Checked state */
 .theme-slider input:checked ~ .slider {
   background: rgba(255, 255, 255, 0.4);
 }
@@ -806,7 +1010,6 @@
   transform: translateX(28px);
 }
 
-/* Backdrop when modal is open */
 .settings-backdrop {
   position: fixed;
   top: 0;
@@ -814,7 +1017,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 9998;
+  z-index: calc(var(--z-index-nav) - 2);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-normal);
@@ -828,12 +1031,35 @@
 }
 
 /* ============================================================================ */
+/* Utility Components */
+/* ============================================================================ */
+
+.close-article {
+  color: var(--text-primary);
+  font-size: var(--font-size-2xl);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: var(--spacing-2);
+  transition: color var(--transition-fast);
+}
+
+.close-article:hover {
+  color: var(--accent-color);
+}
+
+/* ============================================================================ */
 /* Responsive Adjustments */
 /* ============================================================================ */
 
 @media (min-width: 769px) {
   .article-card.huge .article-content {
     padding: var(--spacing-8);
+  }
+
+  .bento-grid .article-card.huge {
+    aspect-ratio: 16 / 9;
+    max-height: 280px;
   }
 
   .article-card.huge .article-title {
@@ -854,7 +1080,6 @@
     min-width: 70px;
   }
 
-  /* Desktop quote section - larger text and height */
   .quote-section {
     min-height: 400px;
   }
@@ -867,21 +1092,13 @@
   .quote-author {
     font-size: var(--font-size-base);
   }
-}
 
-/* Category grid cards - horizontal layout */
-.category-grid .article-card.small .card-inner {
-  flex-direction: row;
-  gap: var(--spacing-3);
-  padding: var(--spacing-2);
-  align-items: center;
-}
+  .article-card.small {
+    height: 320px;
+    min-height: 320px;
+  }
 
-.category-grid .article-card.small .article-image-wrapper {
-  width: 40%;
-  flex-shrink: 0;
-}
-
-.category-grid .article-card.small .article-content {
-  width: 60%;
+  .article-card.small .article-image-wrapper {
+    height: 180px;
+  }
 }

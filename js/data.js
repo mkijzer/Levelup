@@ -1,8 +1,8 @@
 // ============================================================================
-// data.js - CLEANED VERSION
+// data.js - CLEANED VERSION WITH DAILY ROTATION
 // ============================================================================
-// Description: Core data fetching and article management
-// Version: 2.0 - Cleaned and optimized
+// Description: Core data fetching and article management with daily rotation
+// Version: 2.1 - Added daily rotation starting from bottom of JSON
 // ============================================================================
 
 import { normalizeCategory, formatDate, preloadImage } from "./utils.js";
@@ -14,6 +14,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 let articlesData = [];
 let randomArticleHistory = [];
 let lastLatestScrollY = 0;
+let currentStartIndex = 0; // Track current day's starting index
 
 // ============================================================================
 // Configuration
@@ -128,27 +129,23 @@ function updateCategoryTitle(category) {
 
 function getArticlesByCategory(category) {
   if (category === "latest") {
-    // Get one from each category
-    const articles = [];
-    CATEGORIES.forEach((cat) => {
-      const categoryArticles = articlesData.filter(
-        (article) => normalizeCategory(article.category || "") === cat
-      );
-      if (categoryArticles.length > 0) {
-        const mostRecent = categoryArticles.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
-        )[0];
-        articles.push(mostRecent);
-      }
-    });
-    return articles;
+    // Get current day's 4 articles starting from calculated index
+    const endIndex = currentStartIndex + 4;
+    return articlesData.slice(currentStartIndex, endIndex).reverse(); // newest first for display
   } else {
-    // Get articles from specific category
+    // Get articles from specific category (excluding current "Latest" articles)
+    const latestArticleIds = articlesData
+      .slice(currentStartIndex, currentStartIndex + 4)
+      .map((a) => a.id);
+
     return articlesData
-      .filter(
-        (article) => normalizeCategory(article.category || "") === category
-      )
-      .slice(0, 4)
+      .filter((article) => {
+        const articleCategory = normalizeCategory(article.category || "");
+        return (
+          articleCategory === category && !latestArticleIds.includes(article.id)
+        );
+      })
+      .slice(0, 6)
       .sort((a, b) => new Date(b.date) - new Date(a.date));
   }
 }
@@ -264,8 +261,8 @@ function populateArticleView(article) {
   // Populate body content
   if (bodyElement) {
     // If article has body content, use it; otherwise create placeholder
-    if (article.body) {
-      bodyElement.innerHTML = article.body;
+    if (article.content) {
+      bodyElement.innerHTML = article.content;
     } else {
       // Create placeholder content based on article data
       bodyElement.innerHTML = `
@@ -372,6 +369,33 @@ async function initializeApp() {
     if (!response.ok) throw new Error("Failed to fetch articles");
 
     articlesData = await response.json();
+
+    // Calculate daily rotation starting from bottom of JSON
+    const today = new Date();
+    const launchDate = new Date("2025-01-15"); // Change to your launch date
+    const daysSinceLaunch = Math.floor(
+      (today - launchDate) / (1000 * 60 * 60 * 24)
+    );
+
+    // Start from bottom of JSON, move up 4 articles per day
+    const totalArticles = articlesData.length;
+    const articlesPerDay = 4;
+    currentStartIndex = Math.max(
+      0,
+      totalArticles - (daysSinceLaunch + 1) * articlesPerDay
+    );
+
+    console.log(
+      `Day ${
+        daysSinceLaunch + 1
+      }: Using articles starting from index ${currentStartIndex}`
+    );
+
+    // Assign today's date to all articles (for display purposes)
+    articlesData.forEach((article) => {
+      article.date = today.toISOString().split("T")[0];
+    });
+
     console.log(`Loaded ${articlesData.length} articles`);
     console.log("Categories found:", [
       ...new Set(articlesData.map((a) => a.category)),
@@ -425,7 +449,7 @@ async function populateCategoryGrids() {
         const articleCategory = normalizeCategory(article.category || "");
         return articleCategory === category && !usedArticleIds.has(article.id);
       })
-      .slice(0, 3);
+      .slice(0, 6);
 
     console.log(`Found ${categoryArticles.length} articles for ${category}`);
 

@@ -446,52 +446,82 @@
           </div>
         </li>
       </ul>
-
-      <!-- Category Modal: Dropdown for additional category navigation -->
-      <div class="category-modal" id="category-modal">
-        <div class="modal-content glass">
-          <ul class="modal-categories">
-            <li class="modal-category-item">
-              <img
-                src="assets/icons/health.svg"
-                alt="Health Icon"
-                class="modal-nav-icon"
-              />
-              <a href="#health">Health</a>
-            </li>
-            <li class="modal-category-item">
-              <img
-                src="assets/icons/coins.svg"
-                alt="Coins Icon"
-                class="modal-nav-icon"
-              />
-              <a href="#coins">Coins</a>
-            </li>
-            <li class="modal-category-item">
-              <img
-                src="assets/icons/hack.svg"
-                alt="Hack Icon"
-                class="modal-nav-icon"
-              />
-              <a href="#hack">Hack</a>
-            </li>
-            <li class="modal-category-item">
-              <img
-                src="assets/icons/ai.svg"
-                alt="AI Icon"
-                class="modal-nav-icon"
-              />
-              <a href="#ai">AI</a>
-            </li>
-          </ul>
-        </div>
-      </div>
     </nav>
 
-    <!-- Settings Modal: Right-slide with retro gradient -->
+    <!-- Category Modal: Slides from behind navbar -->
+    <div class="category-modal" id="category-modal">
+      <div class="modal-content glass">
+        <ul class="modal-categories">
+          <li class="modal-category-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              class="modal-nav-icon"
+            >
+              <g fill="currentColor">
+                <path
+                  d="m8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053C.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857q.09.083.176.171a3 3 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01zM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5c-2.648-1.75-4.523-3.434-5.788-5"
+                />
+                <path
+                  d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956L6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209l1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593l1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162z"
+                />
+              </g>
+            </svg>
+            <a href="#health">Health</a>
+          </li>
+          <li class="modal-category-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="modal-nav-icon"
+            >
+              <g fill="none" stroke="currentColor">
+                <path
+                  d="M20.247 14.052a8.502 8.502 0 0 1-10.302 6.194C5.394 19.11 2.62 14.5 3.754 9.95c1.134-4.551 5.74-7.33 10.288-6.195c4.562 1.12 7.337 5.744 6.205 10.298Z"
+                />
+                <path
+                  stroke-linecap="square"
+                  stroke-linejoin="round"
+                  d="m9.4 14.912l1.693-6.792m-1.456-.363L13.818 8.8c2.728.68 2.12 3.877-.786 3.153c3.184.794 2.86 4.578-.907 3.639c-1.841-.46-3.813-.95-3.813-.95m1.994-3.368l2.669.665m-1.397-3.698l.363-1.455m-2.42 9.703l.363-1.456m3.634-6.308l.363-1.455m-2.419 9.703l.363-1.456"
+                />
+              </g>
+            </svg>
+            <a href="#coins">Coins</a>
+          </li>
+          <li class="modal-category-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              class="modal-nav-icon"
+            >
+              <path
+                fill="currentColor"
+                d="M6.13 2.793A3.9 3.9 0 0 1 8.5 2c.24 0 .431.125.542.211c.124.098.24.223.344.348a.5.5 0 0 1 .114.318V6.5H8.415a1.5 1.5 0 1 0 0 1H9.5v9.415a.5.5 0 0 1-.183.387C8.855 17.68 8.237 18 7.5 18c-1.186 0-2.069-.598-2.64-1.313a4.06 4.06 0 0 1-.819-1.752a2.7 2.7 0 0 1-1.054-.555C2.435 13.907 2 13.14 2 12c0-.557.037-1.06.12-1.5h3.13c.636 0 1.16.475 1.24 1.089a1.5 1.5 0 1 0 1.004-.006A2.25 2.25 0 0 0 5.25 9.5H2.441c.153-.298.358-.55.625-.729a2 2 0 0 1 .212-.118c-.284-.832-.21-1.806.064-2.571c.175-.492.453-.957.835-1.267c.252-.205.552-.34.88-.366c.144-.683.549-1.248 1.074-1.656M10.5 14.5h.75a2.25 2.25 0 0 0 2.25-2.25v-1.835a1.5 1.5 0 1 0-1 0v1.835c0 .69-.56 1.25-1.25 1.25h-.75V2.877a.5.5 0 0 1 .114-.318c.103-.125.22-.25.344-.348c.11-.086.301-.211.542-.211a3.9 3.9 0 0 1 2.37.793c.525.408.93.973 1.073 1.656c.328.025.628.161.88.366c.382.31.66.775.835 1.267c.274.765.348 1.74.064 2.57q.108.051.212.12c.275.183.484.445.638.754c.303.605.428 1.449.428 2.474c0 1.141-.435 1.907-.987 2.38a2.7 2.7 0 0 1-1.054.555c-.1.558-.38 1.204-.819 1.752c-.57.715-1.454 1.313-2.64 1.313c-.736 0-1.355-.32-1.816-.698a.5.5 0 0 1-.184-.387zM7 6.5a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1m0 6a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1m6-3a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1"
+              />
+            </svg>
+            <a href="#hack">Hack</a>
+          </li>
+          <li class="modal-category-item">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              class="modal-nav-icon"
+            >
+              <path
+                fill="currentColor"
+                d="M16 1a2 2 0 0 0-2 2c0 .738.402 1.371 1 1.719V7h-5c-2.75 0-5 2.25-5 5v2H2v8h3v5h22v-5h3v-8h-3v-2c0-2.75-2.25-5-5-5h-5V4.719c.598-.348 1-.98 1-1.719a2 2 0 0 0-2-2m-6 8h12c1.668 0 3 1.332 3 3v13h-2v-5H9v5H7V12c0-1.668 1.332-3 3-3m2 4a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4m8 0a1.999 1.999 0 1 0 0 4a1.999 1.999 0 1 0 0-4M4 16h1v4H4zm23 0h1v4h-1zm-16 6h2v3h-2zm4 0h2v3h-2zm4 0h2v3h-2z"
+              />
+            </svg>
+            <a href="#ai">AI</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Settings Modal: Slides from behind navbar -->
     <div class="settings-modal" id="settings-modal">
       <div class="modal-content">
-        <button class="settings-close">×</button>
+        <!-- <button class="settings-close">×</button> -->
 
         <div class="settings-content">
           <div class="settings-header">

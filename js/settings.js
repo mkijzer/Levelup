@@ -2,7 +2,7 @@
 // settings.js - MINIMAL CSS-DRIVEN VERSION
 // ============================================================================
 // Description: Minimal JS - animations handled by CSS
-// Version: 1.0 - CSS-first approach
+// Version: 1.1 - Fixed CSS-first approach with proper element selection
 // ============================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -48,5 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeSettings() {
     if (settingsModal) settingsModal.classList.remove("active");
     if (settingsBackdrop) settingsBackdrop.classList.remove("active");
+    // Add delay before hiding completely
+    setTimeout(() => {
+      // Modal stays visible during slide down
+    }, 400);
   }
 });

@@ -1,8 +1,8 @@
 // ============================================================================
 // modal.js - CATEGORY MODAL ONLY
 // ============================================================================
-// Description: Category modal management - no settings functionality
-// Version: 3.0 - Category modal only, settings handled separately
+// Description: Category modal management - settings handled separately
+// Version: 3.1 - Fixed CSS-driven animations
 // ============================================================================
 
 // ============================================================================
@@ -41,7 +41,7 @@ class ModalManager {
     );
 
     return {
-      categoryItem: categoryLink?.parentElement,
+      categoryItem: categoryLink?.parentElement?.parentElement,
       categoryModal: document.getElementById("category-modal"),
       categoryLink: categoryLink,
     };
@@ -101,17 +101,17 @@ class ModalManager {
   }
 
   setupCategoryLinks() {
-    const categoryLinks = document.querySelectorAll(".modal-category-item a");
+    const categoryItems = document.querySelectorAll(".modal-category-item");
 
-    categoryLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
+    categoryItems.forEach((item) => {
+      item.addEventListener("click", (e) => {
         e.preventDefault();
-        const href = link.getAttribute("href");
+        const link = item.querySelector("a");
+        const href = link?.getAttribute("href");
 
         if (href) {
           // Hide modal first
           this.hideModal();
-
           // Navigate to category
           window.location.hash = href;
         }
@@ -129,25 +129,25 @@ class ModalManager {
 
   showModal() {
     const { categoryModal } = this.elements;
-
     this.cancelScheduledHide();
 
     if (!this.isModalVisible) {
-      categoryModal.style.display = "block";
-      categoryModal.classList.remove("hidden");
+      categoryModal.classList.add("active");
       this.isModalVisible = true;
     }
   }
 
   hideModal() {
+    // Change this to add a delay before hiding
     const { categoryModal } = this.elements;
-
     this.cancelScheduledHide();
 
     if (this.isModalVisible) {
-      categoryModal.style.display = "none";
-      categoryModal.classList.add("hidden");
-      this.isModalVisible = false;
+      categoryModal.classList.remove("active");
+      // Add delay to match CSS transition
+      setTimeout(() => {
+        this.isModalVisible = false;
+      }, 400); // Match CSS transition duration
     }
   }
 

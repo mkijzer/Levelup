@@ -1,8 +1,8 @@
 /* ============================================================================ */
-/* variables.css - CLEANED VERSION */
+/* variables.css - GOLDEN RATIO GAPS VERSION */
 /* ============================================================================ */
-/* Description: Centralized design tokens and CSS custom properties */
-/* Version: 2.0 - Added missing variables and organized better */
+/* Description: Centralized design tokens with golden ratio proportions */
+/* Version: 2.1 - Added golden ratio spacing system */
 /* ============================================================================ */
 
 :root {
@@ -11,7 +11,7 @@
   /* ========================================================================== */
 
   /* Dark Mode (Default) */
-  --background: rgb(20, 22, 24);
+  --background: #0d1117;
   --surface: rgb(42, 47, 49);
   --text-primary: rgb(255, 255, 255);
   --text-secondary: rgba(255, 255, 255, 0.7);
@@ -80,33 +80,33 @@
   --font-weight-bold: 700;
 
   /* ========================================================================== */
-  /* Spacing System */
+  /* Golden Ratio Spacing System */
   /* ========================================================================== */
 
-  /* Base spacing scale (8px base) */
+  /* Golden ratio: 1.618 */
+  --golden-ratio: 1.618;
+  /* Base spacing scale (golden ratio with gentle reduction) */
   --spacing-0: 0;
-  --spacing-1: 0.25rem; /* 4px */
-  --spacing-2: 0.5rem; /* 8px */
-  --spacing-3: 0.75rem; /* 12px */
-  --spacing-4: 1rem; /* 16px */
-  --spacing-5: 1.25rem; /* 20px */
-  --spacing-6: 1.5rem; /* 24px */
-  --spacing-8: 2rem; /* 32px */
-  --spacing-10: 2.5rem; /* 40px */
-  --spacing-12: 3rem; /* 48px */
-  --spacing-16: 4rem; /* 64px */
-
-  /* Semantic spacing */
-  --spacing-xs: var(--spacing-1);
-  --spacing-sm: var(--spacing-3);
-  --spacing-md: var(--spacing-6);
-  --spacing-lg: var(--spacing-12);
-  --spacing-xl: var(--spacing-16);
+  --spacing-1: 0.24rem; /* 3.8px - tiny increase */
+  --spacing-2: 0.39rem; /* 6.2px - golden ratio from spacing-1 */
+  --spacing-3: 0.63rem; /* 10.1px - golden ratio from spacing-2 */
+  --spacing-4: 1rem; /* 16px - golden ratio from spacing-3 */
+  --spacing-5: 1.02rem; /* 16.3px - golden ratio from spacing-4 */
+  --spacing-6: 1.65rem; /* 26.4px - golden ratio from spacing-5 */
+  --spacing-8: 1.95rem; /* 31.2px - golden ratio from spacing-6 */
+  --spacing-10: 2.67rem; /* 42.7px - golden ratio from spacing-8 */
+  --spacing-12: 2.92rem; /* 46.7px - golden ratio from spacing-10 */
+  --spacing-16: 3.89rem; /* 62.2px - golden ratio from spacing-12 */
+  /* Article-specific gaps */
+  --spacing-article-gap-mobile: 0.35rem; /* 5.6px - gentle reduction */
+  --spacing-article-gap-tablet: 0.55rem; /* 8.8px - gentle reduction */
+  --spacing-article-gap-desktop: 0.65rem; /* 10.4px - gentle reduction */
+  --spacing-side-cards: 0.22rem; /* 3.5px - minimal */
+  --spacing-category-section: 0.9rem; /* 14.4px - gentle reduction */
 
   /* Page spacing */
-  --spacing-page: var(--spacing-4);
-  --spacing-section: var(--spacing-10);
-
+  --spacing-page: var(--spacing-6); /* Increase from spacing-4 to spacing-6 */
+  --spacing-section: var(--spacing-10); /* Keep existing section spacing */
   /* ========================================================================== */
   /* Layout Dimensions */
   /* ========================================================================== */
