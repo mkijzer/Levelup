@@ -5,7 +5,10 @@
     <!-- Meta and SEO -->
     <!-- =========================================================== -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <meta
       name="description"
       content="LevelUpOrDieTrying - Articles and insights on health, wealth, tech, and more"
@@ -36,7 +39,7 @@
 
   <body>
     <!-- =========================================================== -->
-    <!-- Header Section: Logo, title, search bar, and mobile menu -->
+    <!-- Header Section: Logo, title, search bar -->
     <!-- =========================================================== -->
     <div class="sticky-wrapper-navcontainer">
       <header>
@@ -58,38 +61,40 @@
             </h1>
           </div>
 
-           <!-- Search -->
+          <!-- Search -->
           <div class="search-container">
-  <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="11" cy="11" r="8" />
-    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-  </svg>
-  
-  <div class="search-bar-slide">
-    <div class="search-input-wrapper">
-      <svg class="search-icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </svg>
-      <input type="text" id="search-input" placeholder="Search articles, titles, subjects...">
-    </div>
-  </div>
-</div>
+            <svg
+              class="search-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
 
-        <!-- Mobile Menu: Full-screen navigation for mobile devices -->
-        <!-- Note: DO NOT CHANGE 'HAMBURGERMENU' comment as per user instruction -->
-        <!-- HAMBURGERMENU  DONT CHANGE THIS NAME!!!  -->
-        <nav class="mobile-menu">
-          <!-- Theme Toggle: Switch for light/dark mode -->
-          <div class="theme-toggle">
-            <label class="theme-slider">
-              <input type="checkbox" id="theme-switch" />
-              <span class="slider">
-                <span class="slider-button"></span>
-              </span>
-            </label>
+            <div class="search-bar-slide">
+              <div class="search-input-wrapper">
+                <svg
+                  class="search-icon-small"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input
+                  type="text"
+                  id="search-input"
+                  placeholder="Search articles, titles, subjects..."
+                />
+              </div>
+            </div>
           </div>
-        </nav>
+        </div>
       </header>
     </div>
 
@@ -107,177 +112,146 @@
             <h2 id="category-title">Latest</h2>
           </div>
 
-
-
           <div id="main-content-area">
-            <div class="content-area">
-              <!-- Bento Grid: Layout for featured and small article cards -->
-              <div class="bento-grid">
-                <!-- Featured Article: Large hero card -->
-                <div class="article-card glass huge" data-article-id="">
-                  <div class="card-inner">
-                    <div class="article-image-wrapper">
-                      <img
-                        src=""
-                        alt=""
-                        class="article-image"
-                        loading="eager"
-                        fetchpriority="high"
-                      />
-                      <div class="gradient-overlay"></div>
-                      <div class="article-content">
-                        <h2 class="article-title"></h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Small Grid: Smaller article cards in a grid layout -->
-                <div class="small-grid">
-                  <!-- Small Article Card 1 -->
-                  <div class="article-card glass small" data-article-id="">
-                    <div class="card-inner">
-                      <div class="article-image-wrapper">
-                        <img
-                          src=""
-                          alt=""
-                          class="article-image"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="article-content">
-                        <p class="article-meta"></p>
-                        <h2 class="article-title"></h2>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Small Article Card 2 -->
-                  <div class="article-card glass small" data-article-id="">
-                    <div class="card-inner">
-                      <div class="article-image-wrapper">
-                        <img
-                          src=""
-                          alt=""
-                          class="article-image"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="article-content">
-                        <p class="article-meta"></p>
-                        <h2 class="article-title"></h2>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Small Article Card 3 -->
-                  <div class="article-card glass small" data-article-id="">
-                    <div class="card-inner">
-                      <div class="article-image-wrapper">
-                        <img
-                          src=""
-                          alt=""
-                          class="article-image"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="article-content">
-                        <p class="article-meta"></p>
-                        <h2 class="article-title"></h2>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Small Article Card 4 -->
-                  <div class="article-card glass small" data-article-id="">
-                    <div class="card-inner">
-                      <div class="article-image-wrapper">
-                        <img
-                          src=""
-                          alt=""
-                          class="article-image"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div class="article-content">
-                        <p class="article-meta"></p>
-                        <h2 class="article-title"></h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Ad Separator: Placeholder for advertisements -->
-                <div class="separator-ad">
-                  <div class="ad-container glass">
-                    <p>Advertisement</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Article View: Full article display with related articles -->
-              <div class="article-view hidden">
-                <!-- Main Article: Full article content -->
-                <div class="main-article glass">
-                  <!-- Close Button: Returns to main view -->
-                  <button
-                    class="close-article"
-                    style="
-                      float: right;
-                      font-size: 2rem;
-                      background: none;
-                      border: none;
-                      cursor: pointer;
-                    "
-                  >
-                    ×
-                  </button>
-                  <h2 class="main-article-title"></h2>
+            <!-- Bento Grid: Magazine layout for featured articles -->
+            <div class="bento-grid">
+              <!-- Hero Article: Large main article (2/3 width on desktop) -->
+              <div class="article-card glass huge" data-article-id="">
+                <div class="card-inner">
                   <div class="article-image-wrapper">
                     <img
                       src=""
                       alt=""
-                      class="main-article-image"
-                      loading="lazy"
+                      class="article-image"
+                      loading="eager"
+                      fetchpriority="high"
                     />
+                    <div class="gradient-overlay"></div>
+                    <div class="article-content">
+                      <h2 class="article-title"></h2>
+                    </div>
                   </div>
-                  <div class="main-article-body"></div>
-                  <div class="article-tags"></div>
-                  <p class="main-article-author"></p>
+                </div>
+              </div>
+
+              <!-- Side-by-side Articles: Two articles below hero (mobile and desktop) -->
+              <div class="side-by-side-container">
+                <!-- Article 2 -->
+                <div class="article-card glass small" data-article-id="">
+                  <div class="card-inner">
+                    <div class="article-image-wrapper">
+                      <img src="" alt="" class="article-image" loading="lazy" />
+                    </div>
+                    <div class="article-content">
+                      <p class="article-meta"></p>
+                      <h2 class="article-title"></h2>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Random Articles: Suggested related articles -->
-                <div class="random-articles">
-                  <div class="random-grid">
-                    <!-- Random Article Card 1 -->
-                    <div class="article-card small">
-                      <div class="card-inner">
-                        <div class="article-image-wrapper">
-                          <img
-                            src=""
-                            alt=""
-                            class="article-image"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div class="article-content">
-                          <p class="article-meta"></p>
-                          <h2 class="article-title"></h2>
-                        </div>
+                <!-- Article 3 -->
+                <div class="article-card glass small" data-article-id="">
+                  <div class="card-inner">
+                    <div class="article-image-wrapper">
+                      <img src="" alt="" class="article-image" loading="lazy" />
+                    </div>
+                    <div class="article-content">
+                      <p class="article-meta"></p>
+                      <h2 class="article-title"></h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Article 4: Right column top (1/3 width on desktop) -->
+              <div class="article-four-container">
+                <div class="article-card glass small" data-article-id="">
+                  <div class="card-inner">
+                    <div class="article-image-wrapper">
+                      <img src="" alt="" class="article-image" loading="lazy" />
+                    </div>
+                    <div class="article-content">
+                      <p class="article-meta"></p>
+                      <h2 class="article-title"></h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Advertisement: Right column bottom (1/3 width on desktop) -->
+              <div class="separator-ad">
+                <div class="ad-container glass">
+                  <p>Advertisement</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Article View: Full article display with related articles -->
+            <div class="article-view hidden">
+              <!-- Main Article: Full article content -->
+              <div class="main-article glass">
+                <!-- Close Button: Returns to main view -->
+                <button
+                  class="close-article"
+                  style="
+                    float: right;
+                    font-size: 2rem;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                  "
+                >
+                  ×
+                </button>
+                <h2 class="main-article-title"></h2>
+                <div class="article-image-wrapper">
+                  <img
+                    src=""
+                    alt=""
+                    class="main-article-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="main-article-body"></div>
+                <div class="article-tags"></div>
+                <p class="main-article-author"></p>
+              </div>
+
+              <!-- Random Articles: Suggested related articles -->
+              <div class="random-articles">
+                <div class="random-grid">
+                  <!-- Random Article Card 1 -->
+                  <div class="article-card small">
+                    <div class="card-inner">
+                      <div class="article-image-wrapper">
+                        <img
+                          src=""
+                          alt=""
+                          class="article-image"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="article-content">
+                        <p class="article-meta"></p>
+                        <h2 class="article-title"></h2>
                       </div>
                     </div>
-                    <!-- Random Article Card 2 -->
-                    <div class="article-card small">
-                      <div class="card-inner">
-                        <div class="article-image-wrapper">
-                          <img
-                            src=""
-                            alt=""
-                            class="article-image"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div class="article-content">
-                          <p class="article-meta"></p>
-                          <h2 class="article-title"></h2>
-                        </div>
+                  </div>
+
+                  <!-- Random Article Card 2 -->
+                  <div class="article-card small">
+                    <div class="card-inner">
+                      <div class="article-image-wrapper">
+                        <img
+                          src=""
+                          alt=""
+                          class="article-image"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="article-content">
+                        <p class="article-meta"></p>
+                        <h2 class="article-title"></h2>
                       </div>
                     </div>
                   </div>
@@ -411,6 +385,7 @@
             <a href="#latest">Latest</a>
           </div>
         </li>
+
         <!-- Category: Opens modal with category options -->
         <li>
           <div class="nav-item category">
@@ -432,9 +407,10 @@
             <a href="#category">Category</a>
           </div>
         </li>
-        <!-- Spin: Loads a random article -->
+
+        <!-- Random: Loads a random article -->
         <li>
-          <div class="nav-item category">
+          <div class="nav-item">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               id="Layer_1"
@@ -447,25 +423,26 @@
                 d="M21.5,9H11.5c-1.378,0-2.5,1.121-2.5,2.5v12.5h15V11.5c0-1.379-1.121-2.5-2.5-2.5Zm1.5,14H10V11.5c0-.827,.673-1.5,1.5-1.5h10c.827,0,1.5,.673,1.5,1.5v11.5ZM15,14c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1Zm5,5c0,.552-.448,1-1,1s-1-.448-1-1,.448-1,1-1,1,.448,1,1ZM10.707,5.293c.391,.391,.391,1.024,0,1.414-.391,.391-1.024,.391-1.414,0-.391-.391-.391-1.024,0-1.414,.391-.391,1.024-.391,1.414,0Zm-4,4c.391,.391,.391,1.024,0,1.414-.391,.391-1.024,.391-1.414,0-.391-.391-.391-1.024,0-1.414,.391-.391,1.024-.391,1.414,0Zm1.833-7.824L1.469,8.54c-.585,.585-.585,1.536,0,2.121l5.531,5.531v1.414L.762,11.368c-.975-.975-.975-2.561,0-3.535L7.833,.762c.943-.945,2.592-.945,3.535,0l6.238,6.238h-1.414L10.661,1.469c-.566-.566-1.555-.566-2.121,0Z"
               />
             </svg>
-            <a href="#random">random</a>
+            <a href="#random">Random</a>
           </div>
         </li>
-        <!-- Tools: Toggles mobile menu -->
+
+        <!-- Settings: Opens settings dropdown with theme toggle -->
         <li>
-          <div class="nav-item">
+          <div class="nav-item settings">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               id="Layer_1"
               viewBox="0 0 24 24"
               class="nav-icon"
-              aria-label="Random Icon"
+              aria-label="Settings Icon"
               role="img"
             >
               <path
                 d="m20.993,12c0-.691-.084-1.39-.25-2.082l2.924-1.655-2.464-4.352-2.927,1.657c-1.063-1.04-2.358-1.795-3.783-2.207V0h-5v3.361c-1.425.412-2.72,1.167-3.784,2.207l-2.927-1.657L.319,8.263l2.923,1.655c-.166.692-.25,1.391-.25,2.082s.084,1.391.25,2.082l-2.924,1.655,2.463,4.351,2.927-1.657c1.064,1.041,2.359,1.796,3.784,2.208v3.361h5v-3.361c1.425-.412,2.72-1.167,3.784-2.208l2.927,1.657,2.464-4.351-2.924-1.655c.166-.692.25-1.391.25-2.082Zm1.311,4.114l-1.479,2.61-2.733-1.547-.269.287c-1.069,1.141-2.435,1.937-3.948,2.303l-.382.093v3.14h-3v-3.14l-.382-.093c-1.514-.366-2.879-1.162-3.949-2.303l-.269-.287-2.733,1.547-1.478-2.61,2.73-1.546-.108-.378c-.207-.726-.312-1.462-.312-2.19s.105-1.463.312-2.19l.107-.378-2.73-1.546,1.479-2.611,2.733,1.548.269-.287c1.069-1.141,2.435-1.937,3.949-2.303l.382-.093V1h3v3.14l.382.093c1.514.366,2.879,1.162,3.948,2.303l.269.287,2.733-1.548,1.478,2.611-2.73,1.546.107.378c.207.728.312,1.464.312,2.19s-.105,1.463-.312,2.19l-.107.378,2.73,1.546Zm-13.804-4.043v-5.071h-1v5.071c-.86.224-1.5,1-1.5,1.929s.64,1.705,1.5,1.929v1.071h1v-1.071c.86-.224,1.5-1,1.5-1.929s-.64-1.705-1.5-1.929Zm-.5,2.929c-.551,0-1-.448-1-1s.449-1,1-1,1,.448,1,1-.449,1-1,1Zm8.5-2.929v-5.071h-1v5.071c-.86.224-1.5,1-1.5,1.929s.64,1.705,1.5,1.929v1.071h1v-1.071c.86-.224,1.5-1,1.5-1.929s-.64-1.705-1.5-1.929Zm-.5,2.929c-.551,0-1-.448-1-1s.449-1,1-1,1,.448,1,1-.449,1-1,1Zm-3.5-6.929v-1.071h-1v1.071c-.86.224-1.5,1-1.5,1.929s.64,1.705,1.5,1.929v5.071h1v-5.071c.86-.224,1.5-1,1.5-1.929s-.64-1.705-1.5-1.929Zm-.5,2.929c-.551,0-1-.448-1-1s.449-1,1-1,1,.448,1,1-.449,1-1,1Z"
               />
             </svg>
-            <a href="#category">Setting</a>
+            <a href="#settings">Settings</a>
           </div>
         </li>
       </ul>
@@ -511,6 +488,40 @@
       </div>
     </nav>
 
+    <!-- Settings Modal: Right-slide with retro gradient -->
+    <div class="settings-modal" id="settings-modal">
+      <div class="modal-content">
+        <button class="settings-close">×</button>
+
+        <div class="settings-content">
+          <div class="settings-header">
+            <!-- <h2 class="settings-title">Settings</h2>
+            <p class="settings-subtitle">Customize your experience</p> -->
+          </div>
+
+          <div class="settings-items">
+            <div class="setting-item">
+              <div class="theme-toggle-container">
+                <div>
+                  <!-- <div class="theme-label"></div> -->
+                  <div class="theme-description">light or dark mode</div>
+                </div>
+                <label class="theme-slider">
+                  <input type="checkbox" id="theme-switch" />
+                  <span class="slider">
+                    <span class="slider-button"></span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backdrop for settings modal -->
+    <div class="settings-backdrop" id="settings-backdrop"></div>
+
     <!-- =========================================================== -->
     <!-- Scripts: JavaScript modules for functionality -->
     <!-- =========================================================== -->
@@ -518,5 +529,9 @@
     <script type="module" src="js/data.js"></script>
     <script type="module" src="js/theme.js"></script>
     <script type="module" src="js/search.js"></script>
+    <script type="module" src="js/quotes.js"></script>
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/articleCards.js"></script>
+    <script type="module" src="js/settings.js"></script>
   </body>
 </html>
