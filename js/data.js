@@ -3,7 +3,7 @@
 // ============================================================================
 // Description: Core data fetching and article management with daily rotation
 // Author: Development Team
-// Version: 3.0 - Professional refactor with improved structure
+// Version: 3.1 - Fixed category navigation bug
 // ============================================================================
 
 import { normalizeCategory, formatDate, preloadImage } from "./utils.js";
@@ -20,6 +20,12 @@ let randomArticleHistory = [];
 
 /** @type {number} - Current day's starting index for daily rotation */
 let currentStartIndex = 0;
+
+/** @type {string} - Track current category for navigation */
+let currentCategory = "latest";
+
+/** @type {boolean} - Track if we're in category page view */
+let isInCategoryPage = false;
 
 // ============================================================================
 // CONFIGURATION CONSTANTS
@@ -65,6 +71,7 @@ function getCategoryPageElements() {
     sideCards: document.querySelectorAll(".category-side-cards .article-card"),
     listContainer: document.querySelector(".category-articles-list"),
     loadMoreButton: document.querySelector(".load-more-button"),
+    categoryArticleView: document.querySelector(".category-article-view"),
   };
 }
 
@@ -77,6 +84,8 @@ function getCategoryPageElements() {
  * @param {string} category - Category to load ('latest', 'health', etc.)
  */
 export async function loadCategory(category) {
+  currentCategory = category; // Remember which category we're in
+  isInCategoryPage = false; // We're in main view, not category page
   console.log(`Loading category: ${category}`);
 
   const elements = getLayoutElements();
@@ -121,6 +130,9 @@ export async function loadSearchResults(query) {
  * @param {string} category - Category to load
  */
 export async function loadCategoryPage(category) {
+  currentCategory = category; // Track current category
+  isInCategoryPage = true; // We're now in category page
+
   console.log(`Loading category page: ${category}`);
 
   const elements = getCategoryPageElements();
@@ -139,6 +151,11 @@ export async function loadCategoryPage(category) {
 
   // Populate articles list (remaining articles)
   await populateCategoryList(categoryArticles.slice(3), elements.listContainer);
+
+  // Hide category article view initially
+  if (elements.categoryArticleView) {
+    elements.categoryArticleView.classList.add("hidden");
+  }
 
   // Setup interactive elements
   setupCategoryPageInteractions(elements);
@@ -275,6 +292,12 @@ function resetMainViewState(elements) {
   if (elements.bentoGrid) elements.bentoGrid.style.display = "";
   if (elements.articleView) elements.articleView.classList.add("hidden");
   if (elements.latestLabel) elements.latestLabel.style.display = "block";
+
+  // Hide category page if it's showing
+  const categoryPageView = document.getElementById("category-page-view");
+  if (categoryPageView) {
+    categoryPageView.classList.add("hidden");
+  }
 }
 
 /**
@@ -319,6 +342,8 @@ function exitCategoryPage() {
       mainContent.style.display = "";
     }
   }
+
+  isInCategoryPage = false;
 }
 
 /**
@@ -455,9 +480,6 @@ async function populateCategoryGrids() {
 async function showArticleView(articleId) {
   console.log(`Showing article: ${articleId}`);
 
-  // Exit category page if currently viewing one
-  exitCategoryPage();
-
   // Find the article
   const article = articlesData.find((a) => a.id === articleId);
   if (!article) {
@@ -465,26 +487,48 @@ async function showArticleView(articleId) {
     return;
   }
 
-  // Get layout elements
-  const elements = getLayoutElements();
-  if (!elements.bentoGrid || !elements.articleView) {
-    console.error("Required elements not found");
-    return;
+  if (isInCategoryPage) {
+    // Show article in category page context
+    const elements = getCategoryPageElements();
+    const categoryView = elements.categoryArticleView;
+
+    if (categoryView) {
+      // Hide category list/hero grid
+      const heroGrid = document.querySelector(".category-hero-grid");
+      const articlesList = elements.listContainer;
+      const loadMoreBtn = elements.loadMoreButton;
+
+      if (heroGrid) heroGrid.style.display = "none";
+      if (articlesList) articlesList.style.display = "none";
+      if (loadMoreBtn) loadMoreBtn.style.display = "none";
+
+      // Show and populate article view
+      categoryView.classList.remove("hidden");
+      populateArticleView(article, categoryView);
+      setupCategoryCloseButton();
+    }
+  } else {
+    // Show article in main view context
+    const elements = getLayoutElements();
+    if (!elements.bentoGrid || !elements.articleView) {
+      console.error("Required elements not found");
+      return;
+    }
+
+    // Switch to article view
+    elements.bentoGrid.style.display = "none";
+    elements.articleView.classList.remove("hidden");
+
+    // Hide category label
+    if (elements.latestLabel) {
+      elements.latestLabel.style.display = "none";
+    }
+
+    // Populate article content
+    populateArticleView(article, elements.articleView);
+    populateRandomArticles(articleId);
+    setupCloseButton();
   }
-
-  // Switch to article view
-  elements.bentoGrid.style.display = "none";
-  elements.articleView.classList.remove("hidden");
-
-  // Hide category label
-  if (elements.latestLabel) {
-    elements.latestLabel.style.display = "none";
-  }
-
-  // Populate article content
-  populateArticleView(article);
-  populateRandomArticles(articleId);
-  setupCloseButton();
 
   // Scroll to top for clean reading experience
   window.scrollTo(0, 0);
@@ -493,14 +537,16 @@ async function showArticleView(articleId) {
 /**
  * Populates article view with content
  * @param {Object} article - Article object to display
+ * @param {HTMLElement} container - Container element (main or category article view)
  */
-function populateArticleView(article) {
+
+function populateArticleView(article, container) {
   const elements = {
-    title: document.querySelector(".main-article-title"),
-    image: document.querySelector(".main-article-image"),
-    body: document.querySelector(".main-article-body"),
-    author: document.querySelector(".main-article-author"),
-    tags: document.querySelector(".article-tags"),
+    title: container.querySelector(".main-article-title"),
+    image: container.querySelector(".main-article-image"),
+    body: container.querySelector(".main-article-body"),
+    author: container.querySelector(".main-article-author"),
+    tags: container.querySelector(".article-tags"),
   };
 
   // Populate title
@@ -533,6 +579,56 @@ function populateArticleView(article) {
   if (elements.tags && article.tags) {
     populateArticleTags(elements.tags, article.tags);
   }
+
+  // Add related category articles if we're in category page
+  if (isInCategoryPage) {
+    populateRelatedCategoryArticles(container, article.id);
+  }
+}
+
+/**
+ * Populates related category articles below the main article
+ * @param {HTMLElement} container - Article view container
+ * @param {string} currentArticleId - ID of current article to exclude
+ */
+function populateRelatedCategoryArticles(container, currentArticleId) {
+  // Get other articles from the same category
+  const otherCategoryArticles = articlesData
+    .filter(
+      (article) =>
+        normalizeCategory(article.category || "") === currentCategory &&
+        article.id !== currentArticleId
+    )
+    .slice(0, 6); // Show 6 related articles
+
+  // Find the main article element
+  const mainArticle = container.querySelector(".main-article");
+  if (!mainArticle) return;
+
+  // Remove existing related articles if any
+  const existingRelated = mainArticle.querySelector(".related-articles");
+  if (existingRelated) {
+    existingRelated.remove();
+  }
+
+  // Create related articles container
+  const relatedContainer = document.createElement("div");
+  relatedContainer.className = "related-articles";
+  relatedContainer.innerHTML = `
+    <h3 style="color: var(--text-primary); margin: 2rem 0 1rem 0; text-align: center;">More ${currentCategory} articles:</h3>
+    <div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
+  `;
+
+  // Append to main article
+  mainArticle.appendChild(relatedContainer);
+
+  const relatedGrid = relatedContainer.querySelector(".related-grid");
+
+  // Add each related article
+  otherCategoryArticles.forEach(async (article) => {
+    const card = await createArticleCard(article, "small");
+    relatedGrid.appendChild(card);
+  });
 }
 
 /**
@@ -599,23 +695,41 @@ function populateRandomArticles(currentArticleId) {
 }
 
 /**
- * Closes article view and returns to main layout
+ * Closes article view and returns to previous context
  */
 function closeArticleView() {
-  const elements = getLayoutElements();
+  if (isInCategoryPage) {
+    // Close category article view and return to category list
+    const elements = getCategoryPageElements();
+    const categoryView = elements.categoryArticleView;
 
-  // Show main grid and hide article view
-  if (elements.bentoGrid) {
-    elements.bentoGrid.style.display = "";
-  }
+    if (categoryView) {
+      categoryView.classList.add("hidden");
 
-  if (elements.articleView) {
-    elements.articleView.classList.add("hidden");
-  }
+      // Show category list/hero grid
+      const heroGrid = document.querySelector(".category-hero-grid");
+      const articlesList = elements.listContainer;
+      const loadMoreBtn = elements.loadMoreButton;
 
-  // Show category label
-  if (elements.latestLabel) {
-    elements.latestLabel.style.display = "block";
+      if (heroGrid) heroGrid.style.display = "";
+      if (articlesList) articlesList.style.display = "";
+      if (loadMoreBtn) loadMoreBtn.style.display = "";
+    }
+  } else {
+    // Close main article view and return to main grid
+    const elements = getLayoutElements();
+
+    if (elements.bentoGrid) {
+      elements.bentoGrid.style.display = "";
+    }
+
+    if (elements.articleView) {
+      elements.articleView.classList.add("hidden");
+    }
+
+    if (elements.latestLabel) {
+      elements.latestLabel.style.display = "block";
+    }
   }
 
   window.scrollTo(0, 0);
@@ -700,16 +814,37 @@ function setupCategoryPageInteractions(elements) {
 }
 
 /**
- * Sets up close button for article view
+ * Sets up close button for main article view
  */
 function setupCloseButton() {
-  const closeButton = document.querySelector(".close-article");
+  const closeButton = document.querySelector(".article-view .close-article");
   if (closeButton) {
     // Replace element to remove all existing listeners
     closeButton.replaceWith(closeButton.cloneNode(true));
 
     // Add fresh listener
-    const newCloseButton = document.querySelector(".close-article");
+    const newCloseButton = document.querySelector(
+      ".article-view .close-article"
+    );
+    newCloseButton.addEventListener("click", closeArticleView);
+  }
+}
+
+/**
+ * Sets up close button for category article view
+ */
+function setupCategoryCloseButton() {
+  const closeButton = document.querySelector(
+    ".category-article-view .close-article"
+  );
+  if (closeButton) {
+    // Replace element to remove all existing listeners
+    closeButton.replaceWith(closeButton.cloneNode(true));
+
+    // Add fresh listener
+    const newCloseButton = document.querySelector(
+      ".category-article-view .close-article"
+    );
     newCloseButton.addEventListener("click", closeArticleView);
   }
 }
@@ -754,6 +889,23 @@ function setupNavigation() {
     const category = hash || "latest";
 
     if (category !== "category") {
+      // Always close any article views first
+      const mainArticleView = document.querySelector(".article-view");
+      if (mainArticleView && !mainArticleView.classList.contains("hidden")) {
+        mainArticleView.classList.add("hidden");
+      }
+
+      const categoryArticleView = document.querySelector(
+        ".category-article-view"
+      );
+      if (
+        categoryArticleView &&
+        !categoryArticleView.classList.contains("hidden")
+      ) {
+        categoryArticleView.classList.add("hidden");
+      }
+
+      exitCategoryPage();
       loadCategory(category);
     }
   });
@@ -782,11 +934,29 @@ function handleNavigationClick(e) {
     exitCategoryPage();
     loadCategory("latest");
   } else {
+    // For category links
+    const category = href.replace("#", "");
+
+    // Always exit any current state and load category page
     exitCategoryPage();
-    window.location.hash = href;
+
+    // Hide any open article views
+    const mainArticleView = document.querySelector(".article-view");
+    if (mainArticleView) {
+      mainArticleView.classList.add("hidden");
+    }
+
+    const categoryArticleView = document.querySelector(
+      ".category-article-view"
+    );
+    if (categoryArticleView) {
+      categoryArticleView.classList.add("hidden");
+    }
+
+    // Load the new category page
+    loadCategoryPage(category);
   }
 }
-
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
@@ -872,6 +1042,38 @@ async function initializeApp() {
 
 // Auto-initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", initializeApp);
+
+/**
+ * Public function to switch categories from any state
+ * @param {string} category - Category to switch to
+ */
+export function switchToCategory(category) {
+  // Reset all UI states first
+  isInCategoryPage = false;
+
+  // Hide all article views
+  const mainArticleView = document.querySelector(".article-view");
+  if (mainArticleView) {
+    mainArticleView.classList.add("hidden");
+  }
+
+  const categoryArticleView = document.querySelector(".category-article-view");
+  if (categoryArticleView) {
+    categoryArticleView.classList.add("hidden");
+  }
+
+  // Show category page elements that might be hidden
+  const heroGrid = document.querySelector(".category-hero-grid");
+  const articlesList = document.querySelector(".category-articles-list");
+  const loadMoreBtn = document.querySelector(".load-more-button");
+
+  if (heroGrid) heroGrid.style.display = "";
+  if (articlesList) articlesList.style.display = "";
+  if (loadMoreBtn) loadMoreBtn.style.display = "";
+
+  // Now load the new category page
+  loadCategoryPage(category);
+}
 
 // ============================================================================
 // LEGACY EXPORT (for backwards compatibility)
