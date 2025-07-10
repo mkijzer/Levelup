@@ -1,104 +1,45 @@
 // ============================================================================
-// data.js - CLEANED VERSION WITH DAILY ROTATION
+// data.js - ARTICLE DATA MANAGEMENT SYSTEM
 // ============================================================================
 // Description: Core data fetching and article management with daily rotation
-// Version: 2.1 - Added daily rotation starting from bottom of JSON
+// Author: Development Team
+// Version: 3.0 - Professional refactor with improved structure
 // ============================================================================
 
 import { normalizeCategory, formatDate, preloadImage } from "./utils.js";
 import { createArticleCard, populateArticleCard } from "./articleCards.js";
 
 // ============================================================================
-// State Management
+// APPLICATION STATE
 // ============================================================================
+/** @type {Array} - All articles loaded from JSON */
 let articlesData = [];
+
+/** @type {Array<string>} - Track which random articles have been shown */
 let randomArticleHistory = [];
-let lastLatestScrollY = 0;
-let currentStartIndex = 0; // Track current day's starting index
+
+/** @type {number} - Current day's starting index for daily rotation */
+let currentStartIndex = 0;
 
 // ============================================================================
-// Configuration
+// CONFIGURATION CONSTANTS
 // ============================================================================
-const CATEGORIES = ["health", "coins", "hack", "ai"]; // Fixed to match your data
-const MOBILE_MENU_DELAY = 900;
+const CONFIG = {
+  CATEGORIES: ["health", "coins", "hack", "ai"],
+  ARTICLES_PER_DAY: 4,
+  LAUNCH_DATE: new Date("2025-01-15"), // Change to your actual launch date
+  INITIAL_CATEGORY_ARTICLES: 15,
+  LOAD_MORE_BATCH_SIZE: 6,
+  CATEGORY_GRID_SIZE: 6,
+};
 
 // ============================================================================
-// Event Handlers
+// DOM ELEMENT GETTERS
 // ============================================================================
-export function handleArticleClick(e) {
-  e.preventDefault();
-  const articleId = e.currentTarget.getAttribute("data-article-id");
-  if (articleId) showArticleView(articleId);
-}
-
-// ============================================================================
-// Core Functions
-// ============================================================================
-
 /**
- * Loads articles for a specific category
+ * Gets main layout elements for content display
+ * @returns {Object} Object containing main layout elements
  */
-export async function loadCategory(category) {
-  console.log(`Loading category: ${category}`);
-
-  // Get containers once
-  const elements = getLayoutElements();
-  if (!elements.bentoGrid) return;
-
-  // Reset view state
-  resetViewState(elements);
-
-  // Update title
-  updateCategoryTitle(category);
-
-  // Get articles based on category
-  const articles = getArticlesByCategory(category);
-  console.log(`Found ${articles.length} articles for ${category}`);
-
-  // Populate containers
-  await populateMainLayout(articles, elements);
-}
-
-/**
- * Load search results
- */
-export async function loadSearchResults(query) {
-  const elements = getLayoutElements();
-  if (!elements.bentoGrid) return;
-
-  resetViewState(elements);
-  updateCategoryTitle(`SEARCH: ${query.toUpperCase()}`);
-
-  const articles = searchArticles(query);
-  await populateMainLayout(articles, elements);
-}
-
-/**
- * Load random article
- */
-export function loadRandomArticle() {
-  if (articlesData.length === 0) return;
-
-  let availableArticles = articlesData.filter(
-    (article) => !randomArticleHistory.includes(article.id)
-  );
-
-  if (availableArticles.length === 0) {
-    randomArticleHistory = [];
-    availableArticles = [...articlesData];
-  }
-
-  const randomIndex = Math.floor(Math.random() * availableArticles.length);
-  const randomArticle = availableArticles[randomIndex];
-  randomArticleHistory.push(randomArticle.id);
-
-  showArticleView(randomArticle.id);
-}
-
-// ============================================================================
-// Helper Functions
-// ============================================================================
-
 function getLayoutElements() {
   return {
     bentoGrid: document.querySelector(".bento-grid"),
@@ -111,12 +52,235 @@ function getLayoutElements() {
   };
 }
 
-function resetViewState(elements) {
+/**
+ * Gets category page elements
+ * @returns {Object} Object containing category page elements
+ */
+function getCategoryPageElements() {
+  return {
+    mainContent: document.getElementById("main-content-area"),
+    categoryPageView: document.getElementById("category-page-view"),
+    categoryTitle: document.querySelector(".category-page-title"),
+    heroCard: document.querySelector(".category-hero-grid .article-card.huge"),
+    sideCards: document.querySelectorAll(".category-side-cards .article-card"),
+    listContainer: document.querySelector(".category-articles-list"),
+    loadMoreButton: document.querySelector(".load-more-button"),
+  };
+}
+
+// ============================================================================
+// PUBLIC API FUNCTIONS
+// ============================================================================
+
+/**
+ * Loads articles for a specific category in main view
+ * @param {string} category - Category to load ('latest', 'health', etc.)
+ */
+export async function loadCategory(category) {
+  console.log(`Loading category: ${category}`);
+
+  const elements = getLayoutElements();
+  if (!elements.bentoGrid) {
+    console.error("Main layout elements not found");
+    return;
+  }
+
+  // Reset UI state
+  resetMainViewState(elements);
+
+  // Update category title
+  updateCategoryTitle(category);
+
+  // Get and populate articles
+  const articles = getArticlesByCategory(category);
+  console.log(`Found ${articles.length} articles for ${category}`);
+
+  await populateMainLayout(articles, elements);
+
+  // Scroll to top for clean navigation
+  window.scrollTo(0, 0);
+}
+
+/**
+ * Loads search results in main view
+ * @param {string} query - Search query
+ */
+export async function loadSearchResults(query) {
+  const elements = getLayoutElements();
+  if (!elements.bentoGrid) return;
+
+  resetMainViewState(elements);
+  updateCategoryTitle(`SEARCH: ${query.toUpperCase()}`);
+
+  const articles = searchArticles(query);
+  await populateMainLayout(articles, elements);
+}
+
+/**
+ * Loads category page with extended article list
+ * @param {string} category - Category to load
+ */
+export async function loadCategoryPage(category) {
+  console.log(`Loading category page: ${category}`);
+
+  const elements = getCategoryPageElements();
+
+  // Switch to category page view
+  showCategoryPageView(elements, category);
+
+  // Reset load more button state
+  resetLoadMoreButton(elements.loadMoreButton);
+
+  // Get articles for this category
+  const categoryArticles = getAllCategoryArticles(category);
+
+  // Populate hero section (first 3 articles)
+  await populateCategoryHero(categoryArticles.slice(0, 3), elements);
+
+  // Populate articles list (remaining articles)
+  await populateCategoryList(categoryArticles.slice(3), elements.listContainer);
+
+  // Setup interactive elements
+  setupCategoryPageInteractions(elements);
+}
+
+/**
+ * Loads a random article
+ */
+export function loadRandomArticle() {
+  if (articlesData.length === 0) {
+    console.warn("No articles available for random selection");
+    return;
+  }
+
+  const randomArticle = getRandomArticle();
+  showArticleView(randomArticle.id);
+}
+
+// ============================================================================
+// ARTICLE DATA FUNCTIONS
+// ============================================================================
+
+/**
+ * Gets articles for a specific category with daily rotation logic
+ * @param {string} category - Category to get articles for
+ * @returns {Array} Array of articles
+ */
+function getArticlesByCategory(category) {
+  if (category === "latest") {
+    return getLatestArticles();
+  } else {
+    return getCategoryArticlesExcludingLatest(category);
+  }
+}
+
+/**
+ * Gets today's latest articles based on daily rotation
+ * @returns {Array} Array of latest articles
+ */
+function getLatestArticles() {
+  const endIndex = currentStartIndex + CONFIG.ARTICLES_PER_DAY;
+  return articlesData.slice(currentStartIndex, endIndex).reverse(); // newest first
+}
+
+/**
+ * Gets category articles excluding today's latest
+ * @param {string} category - Category to filter
+ * @returns {Array} Array of category articles
+ */
+function getCategoryArticlesExcludingLatest(category) {
+  const latestArticleIds = new Set(
+    articlesData
+      .slice(currentStartIndex, currentStartIndex + CONFIG.ARTICLES_PER_DAY)
+      .map((article) => article.id)
+  );
+
+  return articlesData
+    .filter((article) => {
+      const articleCategory = normalizeCategory(article.category || "");
+      return articleCategory === category && !latestArticleIds.has(article.id);
+    })
+    .slice(0, CONFIG.CATEGORY_GRID_SIZE)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+/**
+ * Gets all articles for a specific category (for category page)
+ * @param {string} category - Category to get articles for
+ * @returns {Array} All articles in category
+ */
+function getAllCategoryArticles(category) {
+  return articlesData
+    .filter((article) => normalizeCategory(article.category || "") === category)
+    .slice(0, CONFIG.INITIAL_CATEGORY_ARTICLES);
+}
+
+/**
+ * Searches articles by category and tags
+ * @param {string} query - Search query
+ * @returns {Array} Array of matching articles
+ */
+function searchArticles(query) {
+  const normalizedQuery = query.toLowerCase().trim();
+
+  return articlesData
+    .filter((article) => {
+      const categoryMatch = normalizeCategory(article.category || "").includes(
+        normalizedQuery
+      );
+
+      const tagsMatch =
+        Array.isArray(article.tags) &&
+        article.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery));
+
+      return categoryMatch || tagsMatch;
+    })
+    .slice(0, CONFIG.ARTICLES_PER_DAY)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+/**
+ * Gets a random article that hasn't been shown recently
+ * @returns {Object} Random article object
+ */
+function getRandomArticle() {
+  let availableArticles = articlesData.filter(
+    (article) => !randomArticleHistory.includes(article.id)
+  );
+
+  // Reset history if all articles have been shown
+  if (availableArticles.length === 0) {
+    randomArticleHistory = [];
+    availableArticles = [...articlesData];
+  }
+
+  const randomIndex = Math.floor(Math.random() * availableArticles.length);
+  const randomArticle = availableArticles[randomIndex];
+
+  // Track this article to avoid immediate repeats
+  randomArticleHistory.push(randomArticle.id);
+
+  return randomArticle;
+}
+
+// ============================================================================
+// UI STATE MANAGEMENT
+// ============================================================================
+
+/**
+ * Resets main view state to show bento grid
+ * @param {Object} elements - Layout elements
+ */
+function resetMainViewState(elements) {
   if (elements.bentoGrid) elements.bentoGrid.style.display = "";
   if (elements.articleView) elements.articleView.classList.add("hidden");
   if (elements.latestLabel) elements.latestLabel.style.display = "block";
 }
 
+/**
+ * Updates the category title display
+ * @param {string} category - Category name
+ */
 function updateCategoryTitle(category) {
   const categoryTitle = document.getElementById("category-title");
   if (categoryTitle) {
@@ -127,56 +291,70 @@ function updateCategoryTitle(category) {
   }
 }
 
-function getArticlesByCategory(category) {
-  if (category === "latest") {
-    // Get current day's 4 articles starting from calculated index
-    const endIndex = currentStartIndex + 4;
-    return articlesData.slice(currentStartIndex, endIndex).reverse(); // newest first for display
-  } else {
-    // Get articles from specific category (excluding current "Latest" articles)
-    const latestArticleIds = articlesData
-      .slice(currentStartIndex, currentStartIndex + 4)
-      .map((a) => a.id);
+/**
+ * Shows category page view and hides main content
+ * @param {Object} elements - Category page elements
+ * @param {string} category - Category name
+ */
+function showCategoryPageView(elements, category) {
+  elements.mainContent.style.display = "none";
+  elements.categoryPageView.classList.remove("hidden");
 
-    return articlesData
-      .filter((article) => {
-        const articleCategory = normalizeCategory(article.category || "");
-        return (
-          articleCategory === category && !latestArticleIds.includes(article.id)
-        );
-      })
-      .slice(0, 6)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  if (elements.categoryTitle) {
+    elements.categoryTitle.textContent =
+      category.charAt(0).toUpperCase() + category.slice(1);
   }
 }
 
-function searchArticles(query) {
-  const normalizedQuery = query.toLowerCase().trim();
-  return articlesData
-    .filter((article) => {
-      const categoryMatch = normalizeCategory(article.category || "").includes(
-        normalizedQuery
-      );
-      const tagsMatch =
-        Array.isArray(article.tags) &&
-        article.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery));
-      return categoryMatch || tagsMatch;
-    })
-    .slice(0, 4)
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+/**
+ * Exits category page view and returns to main content
+ */
+function exitCategoryPage() {
+  const categoryPageView = document.getElementById("category-page-view");
+  const mainContent = document.getElementById("main-content-area");
+
+  if (categoryPageView && !categoryPageView.classList.contains("hidden")) {
+    categoryPageView.classList.add("hidden");
+    if (mainContent) {
+      mainContent.style.display = "";
+    }
+  }
 }
 
+/**
+ * Resets load more button to default state
+ * @param {HTMLElement} loadMoreButton - Load more button element
+ */
+function resetLoadMoreButton(loadMoreButton) {
+  if (loadMoreButton) {
+    loadMoreButton.textContent = "Load More";
+    loadMoreButton.style.cursor = "pointer";
+    loadMoreButton.style.backgroundColor = "";
+    loadMoreButton.style.display = "block";
+  }
+}
+
+// ============================================================================
+// CONTENT POPULATION
+// ============================================================================
+
+/**
+ * Populates main bento grid layout with articles
+ * @param {Array} articles - Articles to display
+ * @param {Object} elements - Layout elements
+ */
 async function populateMainLayout(articles, elements) {
-  // 1. Populate huge card
+  // Populate huge hero card
   if (articles[0] && elements.hugeCard) {
     await populateArticleCard(elements.hugeCard, articles[0]);
     elements.hugeCard.style.display = "block";
   }
 
-  // 2. Populate side-by-side cards
+  // Populate side-by-side cards
   if (elements.sideBySideContainer) {
     const sideBySideCards =
       elements.sideBySideContainer.querySelectorAll(".article-card");
+
     for (let i = 0; i < sideBySideCards.length; i++) {
       if (articles[i + 1]) {
         await populateArticleCard(sideBySideCards[i], articles[i + 1]);
@@ -187,10 +365,11 @@ async function populateMainLayout(articles, elements) {
     }
   }
 
-  // 3. Populate fourth article
+  // Populate fourth article slot
   if (elements.articleFourContainer) {
     const articleFourCard =
       elements.articleFourContainer.querySelector(".article-card");
+
     if (articles[3] && articleFourCard) {
       await populateArticleCard(articleFourCard, articles[3]);
       articleFourCard.style.display = "block";
@@ -200,238 +379,42 @@ async function populateMainLayout(articles, elements) {
   }
 }
 
-async function showArticleView(articleId) {
-  console.log(`Showing article: ${articleId}`);
-
-  // Find the article by ID
-  const article = articlesData.find((a) => a.id === articleId);
-  if (!article) {
-    console.error(`Article not found: ${articleId}`);
-    return;
+/**
+ * Populates category page hero section
+ * @param {Array} articles - First 3 articles for hero section
+ * @param {Object} elements - Category page elements
+ */
+async function populateCategoryHero(articles, elements) {
+  // Populate large hero card
+  if (articles[0] && elements.heroCard) {
+    await populateArticleCard(elements.heroCard, articles[0]);
   }
 
-  // Get layout elements
-  const elements = getLayoutElements();
-  if (!elements.bentoGrid || !elements.articleView) {
-    console.error("Required elements not found");
-    return;
-  }
-
-  // Hide main grid and show article view
-  elements.bentoGrid.style.display = "none";
-  elements.articleView.classList.remove("hidden");
-
-  // Hide latest label
-  if (elements.latestLabel) {
-    elements.latestLabel.style.display = "none";
-  }
-
-  // Populate article content
-  populateArticleView(article);
-
-  // Populate random articles in sidebar
-  populateRandomArticles(articleId);
-
-  // Setup close button
-  setupCloseButton();
-
-  // Scroll to top
-  window.scrollTo(0, 0);
-}
-
-function populateArticleView(article) {
-  // Get article view elements
-  const titleElement = document.querySelector(".main-article-title");
-  const imageElement = document.querySelector(".main-article-image");
-  const bodyElement = document.querySelector(".main-article-body");
-  const authorElement = document.querySelector(".main-article-author");
-  const tagsElement = document.querySelector(".article-tags");
-
-  // Populate title
-  if (titleElement) {
-    titleElement.textContent = article.title || "Untitled Article";
-  }
-
-  // Populate image
-  if (imageElement) {
-    imageElement.src = article.image || "assets/images/fallback_image.png";
-    imageElement.alt = article.title || "Article Image";
-  }
-
-  // Populate body content
-  if (bodyElement) {
-    // If article has body content, use it; otherwise create placeholder
-    if (article.content) {
-      bodyElement.innerHTML = article.content;
-    } else {
-      // Create placeholder content based on article data
-      bodyElement.innerHTML = `
-        <p>Published on ${formatDate(article.date)} in ${article.category}</p>
-        <p>This is a featured article about ${article.title.toLowerCase()}. The full content would be displayed here in a real implementation.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      `;
+  // Populate side cards
+  for (let i = 0; i < elements.sideCards.length; i++) {
+    if (articles[i + 1] && elements.sideCards[i]) {
+      await populateArticleCard(elements.sideCards[i], articles[i + 1]);
     }
   }
+}
 
-  // Populate author
-  if (authorElement) {
-    authorElement.textContent = article.author || "Anonymous";
-  }
+/**
+ * Populates category page article list
+ * @param {Array} articles - Articles to display in list
+ * @param {HTMLElement} listContainer - Container element
+ */
+async function populateCategoryList(articles, listContainer) {
+  listContainer.innerHTML = ""; // Clear existing content
 
-  // Populate tags
-  if (tagsElement && article.tags) {
-    tagsElement.innerHTML = "";
-    article.tags.forEach((tag) => {
-      const tagElement = document.createElement("span");
-      tagElement.className = "tag";
-      tagElement.textContent = tag;
-
-      // Add click handler for tag
-      tagElement.addEventListener("click", () => {
-        tagElement.classList.add("clicked");
-        setTimeout(() => {
-          // Could implement tag search here
-          console.log(`Searching for tag: ${tag}`);
-        }, 250);
-      });
-
-      tagsElement.appendChild(tagElement);
-    });
+  for (const article of articles) {
+    const card = await createArticleCard(article, "small");
+    listContainer.appendChild(card);
   }
 }
 
-function populateRandomArticles(currentArticleId) {
-  // Get 2 random articles (excluding current one)
-  const otherArticles = articlesData.filter(
-    (article) => article.id !== currentArticleId
-  );
-  const randomArticles = otherArticles
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 2);
-
-  // Get random article cards
-  const randomCards = document.querySelectorAll(
-    ".random-articles .article-card"
-  );
-
-  randomArticles.forEach((article, index) => {
-    if (randomCards[index]) {
-      populateArticleCard(randomCards[index], article);
-    }
-  });
-}
-
-function setupCloseButton() {
-  const closeButton = document.querySelector(".close-article");
-  if (closeButton) {
-    // Remove existing listeners
-    closeButton.replaceWith(closeButton.cloneNode(true));
-
-    // Add new listener
-    const newCloseButton = document.querySelector(".close-article");
-    newCloseButton.addEventListener("click", () => {
-      closeArticleView();
-    });
-  }
-}
-
-function closeArticleView() {
-  const elements = getLayoutElements();
-
-  // Show main grid and hide article view
-  if (elements.bentoGrid) {
-    elements.bentoGrid.style.display = "";
-  }
-
-  if (elements.articleView) {
-    elements.articleView.classList.add("hidden");
-  }
-
-  // Show latest label
-  if (elements.latestLabel) {
-    elements.latestLabel.style.display = "block";
-  }
-
-  // Scroll to top
-  window.scrollTo(0, 0);
-}
-
-// ============================================================================
-// Initialization
-// ============================================================================
-document.addEventListener("DOMContentLoaded", initializeApp);
-
-async function initializeApp() {
-  try {
-    // Fetch articles
-    const response = await fetch("data/articles.json");
-    if (!response.ok) throw new Error("Failed to fetch articles");
-
-    articlesData = await response.json();
-
-    // Calculate daily rotation starting from bottom of JSON
-    const today = new Date();
-    const launchDate = new Date("2025-01-15"); // Change to your launch date
-    const daysSinceLaunch = Math.floor(
-      (today - launchDate) / (1000 * 60 * 60 * 24)
-    );
-
-    // Start from bottom of JSON, move up 4 articles per day
-    const totalArticles = articlesData.length;
-    const articlesPerDay = 4;
-    currentStartIndex = Math.max(
-      0,
-      totalArticles - (daysSinceLaunch + 1) * articlesPerDay
-    );
-
-    console.log(
-      `Day ${
-        daysSinceLaunch + 1
-      }: Using articles starting from index ${currentStartIndex}`
-    );
-
-    // Assign today's date to all articles (for display purposes)
-    articlesData.forEach((article) => {
-      article.date = today.toISOString().split("T")[0];
-    });
-
-    console.log(`Loaded ${articlesData.length} articles`);
-    console.log("Categories found:", [
-      ...new Set(articlesData.map((a) => a.category)),
-    ]);
-
-    // Setup event delegation
-    setupEventDelegation();
-
-    // Populate category grids
-    await populateCategoryGrids();
-
-    // Setup navigation
-    setupNavigation();
-
-    // Load initial content
-    loadCategory("latest");
-  } catch (error) {
-    console.error("Error initializing app:", error);
-  }
-}
-
-function setupEventDelegation() {
-  const container = document.querySelector(".container");
-  if (container) {
-    container.addEventListener("click", (e) => {
-      const card = e.target.closest(".article-card");
-      if (card && card.getAttribute("data-article-id")) {
-        // Create a new event object with the card as currentTarget
-        const articleId = card.getAttribute("data-article-id");
-        console.log(`Clicked article: ${articleId}`); // Debug line
-        showArticleView(articleId); // Call directly instead of handleArticleClick
-      }
-    });
-  }
-}
-
+/**
+ * Populates category grids on main page
+ */
 async function populateCategoryGrids() {
   const categoryGrids = document.querySelectorAll(".category-grid");
   const usedArticleIds = new Set();
@@ -449,7 +432,7 @@ async function populateCategoryGrids() {
         const articleCategory = normalizeCategory(article.category || "");
         return articleCategory === category && !usedArticleIds.has(article.id);
       })
-      .slice(0, 6);
+      .slice(0, CONFIG.CATEGORY_GRID_SIZE);
 
     console.log(`Found ${categoryArticles.length} articles for ${category}`);
 
@@ -461,26 +444,443 @@ async function populateCategoryGrids() {
   }
 }
 
+// ============================================================================
+// ARTICLE VIEW FUNCTIONS
+// ============================================================================
+
+/**
+ * Shows individual article in full view
+ * @param {string} articleId - ID of article to show
+ */
+async function showArticleView(articleId) {
+  console.log(`Showing article: ${articleId}`);
+
+  // Exit category page if currently viewing one
+  exitCategoryPage();
+
+  // Find the article
+  const article = articlesData.find((a) => a.id === articleId);
+  if (!article) {
+    console.error(`Article not found: ${articleId}`);
+    return;
+  }
+
+  // Get layout elements
+  const elements = getLayoutElements();
+  if (!elements.bentoGrid || !elements.articleView) {
+    console.error("Required elements not found");
+    return;
+  }
+
+  // Switch to article view
+  elements.bentoGrid.style.display = "none";
+  elements.articleView.classList.remove("hidden");
+
+  // Hide category label
+  if (elements.latestLabel) {
+    elements.latestLabel.style.display = "none";
+  }
+
+  // Populate article content
+  populateArticleView(article);
+  populateRandomArticles(articleId);
+  setupCloseButton();
+
+  // Scroll to top for clean reading experience
+  window.scrollTo(0, 0);
+}
+
+/**
+ * Populates article view with content
+ * @param {Object} article - Article object to display
+ */
+function populateArticleView(article) {
+  const elements = {
+    title: document.querySelector(".main-article-title"),
+    image: document.querySelector(".main-article-image"),
+    body: document.querySelector(".main-article-body"),
+    author: document.querySelector(".main-article-author"),
+    tags: document.querySelector(".article-tags"),
+  };
+
+  // Populate title
+  if (elements.title) {
+    elements.title.textContent = article.title || "Untitled Article";
+  }
+
+  // Populate image
+  if (elements.image) {
+    elements.image.src = article.image || "assets/images/fallback_image.png";
+    elements.image.alt = article.title || "Article Image";
+  }
+
+  // Populate body content
+  if (elements.body) {
+    if (article.content) {
+      elements.body.innerHTML = article.content;
+    } else {
+      // Fallback content for articles without body
+      elements.body.innerHTML = createFallbackContent(article);
+    }
+  }
+
+  // Populate author
+  if (elements.author) {
+    elements.author.textContent = article.author || "Anonymous";
+  }
+
+  // Populate tags
+  if (elements.tags && article.tags) {
+    populateArticleTags(elements.tags, article.tags);
+  }
+}
+
+/**
+ * Creates fallback content for articles without body text
+ * @param {Object} article - Article object
+ * @returns {string} HTML content
+ */
+function createFallbackContent(article) {
+  return `
+    <p>Published on ${formatDate(article.date)} in ${article.category}</p>
+    <p>This is a featured article about ${article.title.toLowerCase()}. The full content would be displayed here in a real implementation.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  `;
+}
+
+/**
+ * Populates article tags
+ * @param {HTMLElement} tagsElement - Tags container element
+ * @param {Array} tags - Array of tag strings
+ */
+function populateArticleTags(tagsElement, tags) {
+  tagsElement.innerHTML = "";
+
+  tags.forEach((tag) => {
+    const tagElement = document.createElement("span");
+    tagElement.className = "tag";
+    tagElement.textContent = tag;
+
+    // Add click handler for potential tag search functionality
+    tagElement.addEventListener("click", () => {
+      tagElement.classList.add("clicked");
+      setTimeout(() => {
+        console.log(`Tag clicked: ${tag}`); // Future: implement tag search
+      }, 250);
+    });
+
+    tagsElement.appendChild(tagElement);
+  });
+}
+
+/**
+ * Populates random articles in sidebar
+ * @param {string} currentArticleId - ID of current article to exclude
+ */
+function populateRandomArticles(currentArticleId) {
+  const otherArticles = articlesData.filter(
+    (article) => article.id !== currentArticleId
+  );
+
+  const randomArticles = otherArticles
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 2);
+
+  const randomCards = document.querySelectorAll(
+    ".random-articles .article-card"
+  );
+
+  randomArticles.forEach((article, index) => {
+    if (randomCards[index]) {
+      populateArticleCard(randomCards[index], article);
+    }
+  });
+}
+
+/**
+ * Closes article view and returns to main layout
+ */
+function closeArticleView() {
+  const elements = getLayoutElements();
+
+  // Show main grid and hide article view
+  if (elements.bentoGrid) {
+    elements.bentoGrid.style.display = "";
+  }
+
+  if (elements.articleView) {
+    elements.articleView.classList.add("hidden");
+  }
+
+  // Show category label
+  if (elements.latestLabel) {
+    elements.latestLabel.style.display = "block";
+  }
+
+  window.scrollTo(0, 0);
+}
+
+// ============================================================================
+// LOAD MORE FUNCTIONALITY
+// ============================================================================
+
+/**
+ * Loads more articles for category page
+ */
+async function loadMoreCategoryArticles() {
+  const elements = getCategoryPageElements();
+  const categoryTitle = elements.categoryTitle.textContent.toLowerCase();
+  const currentCount = elements.listContainer.children.length + 3; // +3 for hero articles
+
+  // Get all articles for this category
+  const allCategoryArticles = articlesData.filter(
+    (article) => normalizeCategory(article.category || "") === categoryTitle
+  );
+
+  // Get next batch of articles
+  const moreArticles = allCategoryArticles.slice(
+    currentCount,
+    currentCount + CONFIG.LOAD_MORE_BATCH_SIZE
+  );
+
+  // Add new articles to the list
+  for (const article of moreArticles) {
+    const card = await createArticleCard(article, "small");
+    elements.listContainer.appendChild(card);
+  }
+
+  // Update button state if no more articles
+  if (moreArticles.length < CONFIG.LOAD_MORE_BATCH_SIZE) {
+    showEndOfArticlesMessage(elements.loadMoreButton);
+  }
+}
+
+/**
+ * Shows end of articles message on load more button
+ * @param {HTMLElement} loadMoreButton - Load more button element
+ */
+function showEndOfArticlesMessage(loadMoreButton) {
+  loadMoreButton.textContent =
+    "You've read the last article! Why not try to level up in another category?";
+  loadMoreButton.style.cursor = "default";
+  loadMoreButton.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+
+  // Remove click handler to prevent further clicks
+  loadMoreButton.removeEventListener("click", loadMoreCategoryArticles);
+}
+
+// ============================================================================
+// EVENT SETUP FUNCTIONS
+// ============================================================================
+
+/**
+ * Sets up category page interactions (back button, load more)
+ * @param {Object} elements - Category page elements
+ */
+function setupCategoryPageInteractions(elements) {
+  // Setup back button (if exists)
+  const backButton = document.querySelector(".back-button");
+  if (backButton) {
+    backButton.addEventListener("click", () => {
+      elements.categoryPageView.classList.add("hidden");
+      elements.mainContent.style.display = "";
+    });
+  }
+
+  // Setup load more button
+  if (elements.loadMoreButton) {
+    // Remove existing listeners to prevent duplicates
+    elements.loadMoreButton.removeEventListener(
+      "click",
+      loadMoreCategoryArticles
+    );
+    elements.loadMoreButton.addEventListener("click", loadMoreCategoryArticles);
+  }
+}
+
+/**
+ * Sets up close button for article view
+ */
+function setupCloseButton() {
+  const closeButton = document.querySelector(".close-article");
+  if (closeButton) {
+    // Replace element to remove all existing listeners
+    closeButton.replaceWith(closeButton.cloneNode(true));
+
+    // Add fresh listener
+    const newCloseButton = document.querySelector(".close-article");
+    newCloseButton.addEventListener("click", closeArticleView);
+  }
+}
+
+/**
+ * Sets up event delegation for article card clicks
+ */
+function setupEventDelegation() {
+  // Main container event delegation
+  const container = document.querySelector(".container");
+  if (container) {
+    container.addEventListener("click", handleArticleCardClick);
+  }
+
+  // Category page event delegation
+  const categoryPageView = document.getElementById("category-page-view");
+  if (categoryPageView) {
+    categoryPageView.addEventListener("click", handleArticleCardClick);
+  }
+}
+
+/**
+ * Handles article card click events
+ * @param {Event} e - Click event
+ */
+function handleArticleCardClick(e) {
+  const card = e.target.closest(".article-card");
+  if (card && card.getAttribute("data-article-id")) {
+    const articleId = card.getAttribute("data-article-id");
+    console.log(`Clicked article: ${articleId}`);
+    showArticleView(articleId);
+  }
+}
+
+/**
+ * Sets up navigation event listeners
+ */
 function setupNavigation() {
   // Hash change handling
   window.addEventListener("hashchange", () => {
-    const category = window.location.hash.slice(1) || "latest";
-    loadCategory(category);
+    const hash = window.location.hash.slice(1);
+    const category = hash || "latest";
+
+    if (category !== "category") {
+      loadCategory(category);
+    }
   });
 
-  // Nav item clicks
-  document.querySelectorAll(".nav-item").forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      const link = item.querySelector("a");
-      if (link) {
-        const href = link.getAttribute("href");
-        if (href === "#random") {
-          loadRandomArticle();
-        } else {
-          window.location.hash = href;
-        }
-      }
-    });
+  // Navigation link clicks
+  document.querySelectorAll(".nav-item a").forEach((link) => {
+    link.addEventListener("click", handleNavigationClick);
   });
+}
+
+/**
+ * Handles navigation link clicks
+ * @param {Event} e - Click event
+ */
+function handleNavigationClick(e) {
+  e.preventDefault();
+  const href = e.target.getAttribute("href");
+
+  if (href === "#random") {
+    exitCategoryPage();
+    loadRandomArticle();
+  } else if (href === "#category") {
+    // Category modal handled by modal.js
+    return;
+  } else if (href === "#latest") {
+    exitCategoryPage();
+    loadCategory("latest");
+  } else {
+    exitCategoryPage();
+    window.location.hash = href;
+  }
+}
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+
+/**
+ * Calculates daily rotation index based on days since launch
+ * @returns {number} Starting index for today's articles
+ */
+function calculateDailyRotationIndex() {
+  const today = new Date();
+  const daysSinceLaunch = Math.floor(
+    (today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)
+  );
+
+  const totalArticles = articlesData.length;
+  const startIndex = Math.max(
+    0,
+    totalArticles - (daysSinceLaunch + 1) * CONFIG.ARTICLES_PER_DAY
+  );
+
+  console.log(
+    `Day ${
+      daysSinceLaunch + 1
+    }: Using articles starting from index ${startIndex}`
+  );
+
+  return startIndex;
+}
+
+/**
+ * Assigns current date to all articles for display consistency
+ */
+function assignCurrentDateToArticles() {
+  const today = new Date();
+  const todayString = today.toISOString().split("T")[0];
+
+  articlesData.forEach((article) => {
+    article.date = todayString;
+  });
+}
+
+/**
+ * Main application initialization function
+ */
+async function initializeApp() {
+  try {
+    console.log("Initializing application...");
+
+    // Fetch article data
+    const response = await fetch("data/articles.json");
+    if (!response.ok) {
+      throw new Error(`Failed to fetch articles: ${response.status}`);
+    }
+
+    articlesData = await response.json();
+    console.log(`Loaded ${articlesData.length} articles`);
+
+    // Calculate daily rotation
+    currentStartIndex = calculateDailyRotationIndex();
+
+    // Assign current date to all articles
+    assignCurrentDateToArticles();
+
+    // Log available categories
+    console.log("Categories found:", [
+      ...new Set(articlesData.map((a) => a.category)),
+    ]);
+
+    // Setup application
+    setupEventDelegation();
+    await populateCategoryGrids();
+    setupNavigation();
+
+    // Load initial content
+    loadCategory("latest");
+
+    console.log("Application initialized successfully");
+  } catch (error) {
+    console.error("Error initializing application:", error);
+    // TODO: Show user-friendly error message
+  }
+}
+
+// Auto-initialize when DOM is ready
+document.addEventListener("DOMContentLoaded", initializeApp);
+
+// ============================================================================
+// LEGACY EXPORT (for backwards compatibility)
+// ============================================================================
+export function handleArticleClick(e) {
+  console.warn(
+    "handleArticleClick is deprecated. Use event delegation instead."
+  );
+  e.preventDefault();
+  const articleId = e.currentTarget.getAttribute("data-article-id");
+  if (articleId) showArticleView(articleId);
 }

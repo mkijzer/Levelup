@@ -51,7 +51,6 @@ class ModalManager {
     const { categoryItem, categoryModal } = this.elements;
     return categoryItem && categoryModal;
   }
-
   setupEventListeners() {
     const { categoryItem, categoryModal } = this.elements;
 
@@ -110,21 +109,19 @@ class ModalManager {
         const href = link?.getAttribute("href");
 
         if (href) {
+          // Get category name from href (#health -> health)
+          const category = href.replace("#", "");
+
           // Hide modal first
           this.hideModal();
-          // Navigate to category
-          window.location.hash = href;
+
+          // Load category page instead of changing hash
+          import("./data.js").then((module) => {
+            module.loadCategoryPage(category);
+          });
         }
       });
     });
-  }
-
-  toggleModal() {
-    if (this.isModalVisible) {
-      this.hideModal();
-    } else {
-      this.showModal();
-    }
   }
 
   showModal() {

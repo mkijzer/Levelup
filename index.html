@@ -357,8 +357,62 @@
       </section>
     </main>
 
-    <!-- Divider: Visual separator -->
-    <div class="divider"></div>
+    <!-- =========================================================== -->
+    <!-- Category Page View -->
+    <!-- =========================================================== -->
+    <div id="category-page-view" class="category-page-view hidden">
+      <div class="container">
+        <h2 class="category-page-title"></h2>
+
+        <!-- Hero section (1 big + 2 small) -->
+        <div class="category-hero-grid">
+          <div class="article-card glass huge" data-article-id="">
+            <div class="card-inner">
+              <div class="article-image-wrapper">
+                <img src="" alt="" class="article-image" loading="eager" />
+                <div class="gradient-overlay"></div>
+                <div class="article-content">
+                  <h2 class="article-title"></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="category-side-cards">
+            <div class="article-card glass small" data-article-id="">
+              <div class="card-inner">
+                <div class="article-image-wrapper">
+                  <img src="" alt="" class="article-image" loading="lazy" />
+                </div>
+                <div class="article-content">
+                  <p class="article-meta"></p>
+                  <h2 class="article-title"></h2>
+                </div>
+              </div>
+            </div>
+
+            <div class="article-card glass small" data-article-id="">
+              <div class="card-inner">
+                <div class="article-image-wrapper">
+                  <img src="" alt="" class="article-image" loading="lazy" />
+                </div>
+                <div class="article-content">
+                  <p class="article-meta"></p>
+                  <h2 class="article-title"></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional articles list -->
+        <div class="category-articles-list">
+          <!-- More articles will be added here -->
+        </div>
+
+        <button class="load-more-button">Load More</button>
+      </div>
+    </div>
 
     <!-- =========================================================== -->
     <!-- Navigation: Fixed bottom navigation with category modal -->
@@ -521,19 +575,13 @@
     <!-- Settings Modal: Slides from behind navbar -->
     <div class="settings-modal" id="settings-modal">
       <div class="modal-content">
-        <!-- <button class="settings-close">×</button> -->
-
         <div class="settings-content">
-          <div class="settings-header">
-            <!-- <h2 class="settings-title">Settings</h2>
-            <p class="settings-subtitle">Customize your experience</p> -->
-          </div>
+          <div class="settings-header"></div>
 
           <div class="settings-items">
             <div class="setting-item">
               <div class="theme-toggle-container">
                 <div>
-                  <!-- <div class="theme-label"></div> -->
                   <div class="theme-description">light or dark mode</div>
                 </div>
                 <label class="theme-slider">

@@ -1049,6 +1049,71 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
+/* Category Page View */
+/* ============================================================================ */
+
+.category-page-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--background);
+  z-index: 1000;
+  overflow-y: auto;
+  padding-top: var(--spacing-4);
+  padding-bottom: 120px; /* Add space for navbar */
+}
+
+.category-page-title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-category-label);
+  color: #b0b0b0;
+  letter-spacing: 0.0625rem;
+  margin: var(--spacing-10) 0 var(--spacing-4) var(--spacing-6);
+  display: inline-block;
+}
+/* Hero grid (1 big + 2 small) */
+.category-hero-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.category-side-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+}
+
+/* Articles list (full width cards) */
+.category-articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.load-more-button {
+  width: 100%;
+  padding: var(--spacing-3);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.load-more-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================================ */
 /* Responsive Adjustments */
 /* ============================================================================ */
 
