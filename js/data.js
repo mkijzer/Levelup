@@ -3,7 +3,7 @@
 // ============================================================================
 // Description: Core data fetching and article management with daily rotation
 // Author: Development Team
-// Version: 3.1 - Fixed category navigation bug
+// Version: 3.2 - Fixed orphaned code and structure issues
 // ============================================================================
 
 import { normalizeCategory, formatDate, preloadImage } from "./utils.js";
@@ -32,7 +32,7 @@ let isInCategoryPage = false;
 // ============================================================================
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
-  ARTICLES_PER_DAY: 4,
+  ARTICLES_PER_DAY: 5,
   LAUNCH_DATE: new Date("2025-01-15"), // Change to your actual launch date
   INITIAL_CATEGORY_ARTICLES: 15,
   LOAD_MORE_BATCH_SIZE: 6,
@@ -54,6 +54,7 @@ function getLayoutElements() {
     hugeCard: document.querySelector(".bento-grid .article-card.huge"),
     sideBySideContainer: document.querySelector(".side-by-side-container"),
     articleFourContainer: document.querySelector(".article-four-container"),
+    articleFiveContainer: document.querySelector(".article-five-container"),
     categoryTitle: document.getElementById("category-title"),
   };
 }
@@ -84,8 +85,8 @@ function getCategoryPageElements() {
  * @param {string} category - Category to load ('latest', 'health', etc.)
  */
 export async function loadCategory(category) {
-  currentCategory = category; // Remember which category we're in
-  isInCategoryPage = false; // We're in main view, not category page
+  currentCategory = category;
+  isInCategoryPage = false;
   console.log(`Loading category: ${category}`);
 
   const elements = getLayoutElements();
@@ -94,19 +95,13 @@ export async function loadCategory(category) {
     return;
   }
 
-  // Reset UI state
   resetMainViewState(elements);
-
-  // Update category title
   updateCategoryTitle(category);
 
-  // Get and populate articles
   const articles = getArticlesByCategory(category);
   console.log(`Found ${articles.length} articles for ${category}`);
 
   await populateMainLayout(articles, elements);
-
-  // Scroll to top for clean navigation
   window.scrollTo(0, 0);
 }
 
@@ -130,34 +125,25 @@ export async function loadSearchResults(query) {
  * @param {string} category - Category to load
  */
 export async function loadCategoryPage(category) {
-  currentCategory = category; // Track current category
-  isInCategoryPage = true; // We're now in category page
+  currentCategory = category;
+  isInCategoryPage = true;
 
   console.log(`Loading category page: ${category}`);
 
   const elements = getCategoryPageElements();
 
-  // Switch to category page view
   showCategoryPageView(elements, category);
-
-  // Reset load more button state
   resetLoadMoreButton(elements.loadMoreButton);
 
-  // Get articles for this category
   const categoryArticles = getAllCategoryArticles(category);
 
-  // Populate hero section (first 3 articles)
   await populateCategoryHero(categoryArticles.slice(0, 3), elements);
-
-  // Populate articles list (remaining articles)
   await populateCategoryList(categoryArticles.slice(3), elements.listContainer);
 
-  // Hide category article view initially
   if (elements.categoryArticleView) {
     elements.categoryArticleView.classList.add("hidden");
   }
 
-  // Setup interactive elements
   setupCategoryPageInteractions(elements);
 }
 
@@ -197,7 +183,7 @@ function getArticlesByCategory(category) {
  */
 function getLatestArticles() {
   const endIndex = currentStartIndex + CONFIG.ARTICLES_PER_DAY;
-  return articlesData.slice(currentStartIndex, endIndex).reverse(); // newest first
+  return articlesData.slice(currentStartIndex, endIndex).reverse();
 }
 
 /**
@@ -265,7 +251,6 @@ function getRandomArticle() {
     (article) => !randomArticleHistory.includes(article.id)
   );
 
-  // Reset history if all articles have been shown
   if (availableArticles.length === 0) {
     randomArticleHistory = [];
     availableArticles = [...articlesData];
@@ -274,9 +259,7 @@ function getRandomArticle() {
   const randomIndex = Math.floor(Math.random() * availableArticles.length);
   const randomArticle = availableArticles[randomIndex];
 
-  // Track this article to avoid immediate repeats
   randomArticleHistory.push(randomArticle.id);
-
   return randomArticle;
 }
 
@@ -293,7 +276,6 @@ function resetMainViewState(elements) {
   if (elements.articleView) elements.articleView.classList.add("hidden");
   if (elements.latestLabel) elements.latestLabel.style.display = "block";
 
-  // Hide category page if it's showing
   const categoryPageView = document.getElementById("category-page-view");
   if (categoryPageView) {
     categoryPageView.classList.add("hidden");
@@ -402,6 +384,19 @@ async function populateMainLayout(articles, elements) {
       articleFourCard.style.display = "none";
     }
   }
+
+  // Populate fifth article slot
+  if (elements.articleFiveContainer) {
+    const articleFiveCard =
+      elements.articleFiveContainer.querySelector(".article-card");
+
+    if (articles[4] && articleFiveCard) {
+      await populateArticleCard(articleFiveCard, articles[4]);
+      articleFiveCard.style.display = "block";
+    } else if (articleFiveCard) {
+      articleFiveCard.style.display = "none";
+    }
+  }
 }
 
 /**
@@ -410,12 +405,10 @@ async function populateMainLayout(articles, elements) {
  * @param {Object} elements - Category page elements
  */
 async function populateCategoryHero(articles, elements) {
-  // Populate large hero card
   if (articles[0] && elements.heroCard) {
     await populateArticleCard(elements.heroCard, articles[0]);
   }
 
-  // Populate side cards
   for (let i = 0; i < elements.sideCards.length; i++) {
     if (articles[i + 1] && elements.sideCards[i]) {
       await populateArticleCard(elements.sideCards[i], articles[i + 1]);
@@ -429,7 +422,7 @@ async function populateCategoryHero(articles, elements) {
  * @param {HTMLElement} listContainer - Container element
  */
 async function populateCategoryList(articles, listContainer) {
-  listContainer.innerHTML = ""; // Clear existing content
+  listContainer.innerHTML = "";
 
   for (const article of articles) {
     const card = await createArticleCard(article, "small");
@@ -480,7 +473,6 @@ async function populateCategoryGrids() {
 async function showArticleView(articleId) {
   console.log(`Showing article: ${articleId}`);
 
-  // Find the article
   const article = articlesData.find((a) => a.id === articleId);
   if (!article) {
     console.error(`Article not found: ${articleId}`);
@@ -488,12 +480,10 @@ async function showArticleView(articleId) {
   }
 
   if (isInCategoryPage) {
-    // Show article in category page context
     const elements = getCategoryPageElements();
     const categoryView = elements.categoryArticleView;
 
     if (categoryView) {
-      // Hide category list/hero grid
       const heroGrid = document.querySelector(".category-hero-grid");
       const articlesList = elements.listContainer;
       const loadMoreBtn = elements.loadMoreButton;
@@ -502,35 +492,29 @@ async function showArticleView(articleId) {
       if (articlesList) articlesList.style.display = "none";
       if (loadMoreBtn) loadMoreBtn.style.display = "none";
 
-      // Show and populate article view
       categoryView.classList.remove("hidden");
       populateArticleView(article, categoryView);
       setupCategoryCloseButton();
     }
   } else {
-    // Show article in main view context
     const elements = getLayoutElements();
     if (!elements.bentoGrid || !elements.articleView) {
       console.error("Required elements not found");
       return;
     }
 
-    // Switch to article view
     elements.bentoGrid.style.display = "none";
     elements.articleView.classList.remove("hidden");
 
-    // Hide category label
     if (elements.latestLabel) {
       elements.latestLabel.style.display = "none";
     }
 
-    // Populate article content
     populateArticleView(article, elements.articleView);
     populateRandomArticles(articleId);
     setupCloseButton();
   }
 
-  // Scroll to top for clean reading experience
   window.scrollTo(0, 0);
 }
 
@@ -539,7 +523,6 @@ async function showArticleView(articleId) {
  * @param {Object} article - Article object to display
  * @param {HTMLElement} container - Container element (main or category article view)
  */
-
 function populateArticleView(article, container) {
   const elements = {
     title: container.querySelector(".main-article-title"),
@@ -549,38 +532,31 @@ function populateArticleView(article, container) {
     tags: container.querySelector(".article-tags"),
   };
 
-  // Populate title
   if (elements.title) {
     elements.title.textContent = article.title || "Untitled Article";
   }
 
-  // Populate image
   if (elements.image) {
     elements.image.src = article.image || "assets/images/fallback_image.png";
     elements.image.alt = article.title || "Article Image";
   }
 
-  // Populate body content
   if (elements.body) {
     if (article.content) {
       elements.body.innerHTML = article.content;
     } else {
-      // Fallback content for articles without body
       elements.body.innerHTML = createFallbackContent(article);
     }
   }
 
-  // Populate author
   if (elements.author) {
     elements.author.textContent = article.author || "Anonymous";
   }
 
-  // Populate tags
   if (elements.tags && article.tags) {
     populateArticleTags(elements.tags, article.tags);
   }
 
-  // Add related category articles if we're in category page
   if (isInCategoryPage) {
     populateRelatedCategoryArticles(container, article.id);
   }
@@ -592,26 +568,22 @@ function populateArticleView(article, container) {
  * @param {string} currentArticleId - ID of current article to exclude
  */
 function populateRelatedCategoryArticles(container, currentArticleId) {
-  // Get other articles from the same category
   const otherCategoryArticles = articlesData
     .filter(
       (article) =>
         normalizeCategory(article.category || "") === currentCategory &&
         article.id !== currentArticleId
     )
-    .slice(0, 6); // Show 6 related articles
+    .slice(0, 6);
 
-  // Find the main article element
   const mainArticle = container.querySelector(".main-article");
   if (!mainArticle) return;
 
-  // Remove existing related articles if any
   const existingRelated = mainArticle.querySelector(".related-articles");
   if (existingRelated) {
     existingRelated.remove();
   }
 
-  // Create related articles container
   const relatedContainer = document.createElement("div");
   relatedContainer.className = "related-articles";
   relatedContainer.innerHTML = `
@@ -619,12 +591,10 @@ function populateRelatedCategoryArticles(container, currentArticleId) {
     <div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
   `;
 
-  // Append to main article
   mainArticle.appendChild(relatedContainer);
 
   const relatedGrid = relatedContainer.querySelector(".related-grid");
 
-  // Add each related article
   otherCategoryArticles.forEach(async (article) => {
     const card = await createArticleCard(article, "small");
     relatedGrid.appendChild(card);
@@ -658,11 +628,10 @@ function populateArticleTags(tagsElement, tags) {
     tagElement.className = "tag";
     tagElement.textContent = tag;
 
-    // Add click handler for potential tag search functionality
     tagElement.addEventListener("click", () => {
       tagElement.classList.add("clicked");
       setTimeout(() => {
-        console.log(`Tag clicked: ${tag}`); // Future: implement tag search
+        console.log(`Tag clicked: ${tag}`);
       }, 250);
     });
 
@@ -699,14 +668,12 @@ function populateRandomArticles(currentArticleId) {
  */
 function closeArticleView() {
   if (isInCategoryPage) {
-    // Close category article view and return to category list
     const elements = getCategoryPageElements();
     const categoryView = elements.categoryArticleView;
 
     if (categoryView) {
       categoryView.classList.add("hidden");
 
-      // Show category list/hero grid
       const heroGrid = document.querySelector(".category-hero-grid");
       const articlesList = elements.listContainer;
       const loadMoreBtn = elements.loadMoreButton;
@@ -716,7 +683,6 @@ function closeArticleView() {
       if (loadMoreBtn) loadMoreBtn.style.display = "";
     }
   } else {
-    // Close main article view and return to main grid
     const elements = getLayoutElements();
 
     if (elements.bentoGrid) {
@@ -745,26 +711,22 @@ function closeArticleView() {
 async function loadMoreCategoryArticles() {
   const elements = getCategoryPageElements();
   const categoryTitle = elements.categoryTitle.textContent.toLowerCase();
-  const currentCount = elements.listContainer.children.length + 3; // +3 for hero articles
+  const currentCount = elements.listContainer.children.length + 3;
 
-  // Get all articles for this category
   const allCategoryArticles = articlesData.filter(
     (article) => normalizeCategory(article.category || "") === categoryTitle
   );
 
-  // Get next batch of articles
   const moreArticles = allCategoryArticles.slice(
     currentCount,
     currentCount + CONFIG.LOAD_MORE_BATCH_SIZE
   );
 
-  // Add new articles to the list
   for (const article of moreArticles) {
     const card = await createArticleCard(article, "small");
     elements.listContainer.appendChild(card);
   }
 
-  // Update button state if no more articles
   if (moreArticles.length < CONFIG.LOAD_MORE_BATCH_SIZE) {
     showEndOfArticlesMessage(elements.loadMoreButton);
   }
@@ -780,7 +742,6 @@ function showEndOfArticlesMessage(loadMoreButton) {
   loadMoreButton.style.cursor = "default";
   loadMoreButton.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
 
-  // Remove click handler to prevent further clicks
   loadMoreButton.removeEventListener("click", loadMoreCategoryArticles);
 }
 
@@ -793,7 +754,6 @@ function showEndOfArticlesMessage(loadMoreButton) {
  * @param {Object} elements - Category page elements
  */
 function setupCategoryPageInteractions(elements) {
-  // Setup back button (if exists)
   const backButton = document.querySelector(".back-button");
   if (backButton) {
     backButton.addEventListener("click", () => {
@@ -802,9 +762,7 @@ function setupCategoryPageInteractions(elements) {
     });
   }
 
-  // Setup load more button
   if (elements.loadMoreButton) {
-    // Remove existing listeners to prevent duplicates
     elements.loadMoreButton.removeEventListener(
       "click",
       loadMoreCategoryArticles
@@ -819,10 +777,8 @@ function setupCategoryPageInteractions(elements) {
 function setupCloseButton() {
   const closeButton = document.querySelector(".article-view .close-article");
   if (closeButton) {
-    // Replace element to remove all existing listeners
     closeButton.replaceWith(closeButton.cloneNode(true));
 
-    // Add fresh listener
     const newCloseButton = document.querySelector(
       ".article-view .close-article"
     );
@@ -838,10 +794,8 @@ function setupCategoryCloseButton() {
     ".category-article-view .close-article"
   );
   if (closeButton) {
-    // Replace element to remove all existing listeners
     closeButton.replaceWith(closeButton.cloneNode(true));
 
-    // Add fresh listener
     const newCloseButton = document.querySelector(
       ".category-article-view .close-article"
     );
@@ -853,13 +807,11 @@ function setupCategoryCloseButton() {
  * Sets up event delegation for article card clicks
  */
 function setupEventDelegation() {
-  // Main container event delegation
   const container = document.querySelector(".container");
   if (container) {
     container.addEventListener("click", handleArticleCardClick);
   }
 
-  // Category page event delegation
   const categoryPageView = document.getElementById("category-page-view");
   if (categoryPageView) {
     categoryPageView.addEventListener("click", handleArticleCardClick);
@@ -883,13 +835,11 @@ function handleArticleCardClick(e) {
  * Sets up navigation event listeners
  */
 function setupNavigation() {
-  // Hash change handling
   window.addEventListener("hashchange", () => {
     const hash = window.location.hash.slice(1);
     const category = hash || "latest";
 
     if (category !== "category") {
-      // Always close any article views first
       const mainArticleView = document.querySelector(".article-view");
       if (mainArticleView && !mainArticleView.classList.contains("hidden")) {
         mainArticleView.classList.add("hidden");
@@ -910,7 +860,6 @@ function setupNavigation() {
     }
   });
 
-  // Navigation link clicks
   document.querySelectorAll(".nav-item a").forEach((link) => {
     link.addEventListener("click", handleNavigationClick);
   });
@@ -928,19 +877,15 @@ function handleNavigationClick(e) {
     exitCategoryPage();
     loadRandomArticle();
   } else if (href === "#category") {
-    // Category modal handled by modal.js
     return;
   } else if (href === "#latest") {
     exitCategoryPage();
     loadCategory("latest");
   } else {
-    // For category links
     const category = href.replace("#", "");
 
-    // Always exit any current state and load category page
     exitCategoryPage();
 
-    // Hide any open article views
     const mainArticleView = document.querySelector(".article-view");
     if (mainArticleView) {
       mainArticleView.classList.add("hidden");
@@ -953,10 +898,10 @@ function handleNavigationClick(e) {
       categoryArticleView.classList.add("hidden");
     }
 
-    // Load the new category page
     loadCategoryPage(category);
   }
 }
+
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
@@ -1005,7 +950,6 @@ async function initializeApp() {
   try {
     console.log("Initializing application...");
 
-    // Fetch article data
     const response = await fetch("data/articles.json");
     if (!response.ok) {
       throw new Error(`Failed to fetch articles: ${response.status}`);
@@ -1014,29 +958,22 @@ async function initializeApp() {
     articlesData = await response.json();
     console.log(`Loaded ${articlesData.length} articles`);
 
-    // Calculate daily rotation
     currentStartIndex = calculateDailyRotationIndex();
-
-    // Assign current date to all articles
     assignCurrentDateToArticles();
 
-    // Log available categories
     console.log("Categories found:", [
       ...new Set(articlesData.map((a) => a.category)),
     ]);
 
-    // Setup application
     setupEventDelegation();
     await populateCategoryGrids();
     setupNavigation();
 
-    // Load initial content
     loadCategory("latest");
 
     console.log("Application initialized successfully");
   } catch (error) {
     console.error("Error initializing application:", error);
-    // TODO: Show user-friendly error message
   }
 }
 
@@ -1048,10 +985,8 @@ document.addEventListener("DOMContentLoaded", initializeApp);
  * @param {string} category - Category to switch to
  */
 export function switchToCategory(category) {
-  // Reset all UI states first
   isInCategoryPage = false;
 
-  // Hide all article views
   const mainArticleView = document.querySelector(".article-view");
   if (mainArticleView) {
     mainArticleView.classList.add("hidden");
@@ -1062,7 +997,6 @@ export function switchToCategory(category) {
     categoryArticleView.classList.add("hidden");
   }
 
-  // Show category page elements that might be hidden
   const heroGrid = document.querySelector(".category-hero-grid");
   const articlesList = document.querySelector(".category-articles-list");
   const loadMoreBtn = document.querySelector(".load-more-button");
@@ -1071,7 +1005,6 @@ export function switchToCategory(category) {
   if (articlesList) articlesList.style.display = "";
   if (loadMoreBtn) loadMoreBtn.style.display = "";
 
-  // Now load the new category page
   loadCategoryPage(category);
 }
 
