@@ -8,6 +8,16 @@
 
 import { normalizeCategory, formatDate, preloadImage } from "./utils.js";
 import { createArticleCard, populateArticleCard } from "./articleCards.js";
+import {
+  latestSvg,
+  healthSvg,
+  coinsSvg,
+  hackSvg,
+  aiSvg,
+  randomSvg,
+  categorySvg,
+  settingsSvg,
+} from "./svg.js";
 
 // ============================================================================
 // APPLICATION STATE
@@ -103,6 +113,7 @@ export async function loadCategory(category) {
 
   await populateMainLayout(articles, elements);
   window.scrollTo(0, 0);
+  updateDesktopNavigation(category); // Add this line
 }
 
 /**
@@ -863,6 +874,11 @@ function setupNavigation() {
   document.querySelectorAll(".nav-item a").forEach((link) => {
     link.addEventListener("click", handleNavigationClick);
   });
+
+  // Add desktop navigation listeners
+  document.querySelectorAll(".desktop-nav-item").forEach((link) => {
+    link.addEventListener("click", handleNavigationClick);
+  });
 }
 
 /**
@@ -875,6 +891,7 @@ function handleNavigationClick(e) {
 
   if (href === "#random") {
     exitCategoryPage();
+    updateDesktopNavigation("random");
     loadRandomArticle();
   } else if (href === "#category") {
     return;
@@ -885,20 +902,34 @@ function handleNavigationClick(e) {
     const category = href.replace("#", "");
 
     exitCategoryPage();
+    loadCategory(category); // Use loadCategory instead
+  }
 
-    const mainArticleView = document.querySelector(".article-view");
-    if (mainArticleView) {
-      mainArticleView.classList.add("hidden");
-    }
+  const mainArticleView = document.querySelector(".article-view");
+  if (mainArticleView) {
+    mainArticleView.classList.add("hidden");
+  }
 
-    const categoryArticleView = document.querySelector(
-      ".category-article-view"
-    );
-    if (categoryArticleView) {
-      categoryArticleView.classList.add("hidden");
-    }
+  const categoryArticleView = document.querySelector(".category-article-view");
+  if (categoryArticleView) {
+    categoryArticleView.classList.add("hidden");
+  }
+}
 
-    loadCategoryPage(category);
+function updateDesktopNavigation(currentCategory) {
+  // Remove active class from all desktop nav items INCLUDING random
+  document
+    .querySelectorAll(".desktop-nav-item, .random-btn")
+    .forEach((item) => {
+      item.classList.remove("active");
+    });
+
+  // Add active class to current category
+  const activeItem = document.querySelector(
+    `.desktop-nav-item[href="#${currentCategory}"]`
+  );
+  if (activeItem) {
+    activeItem.classList.add("active");
   }
 }
 
@@ -974,6 +1005,86 @@ async function initializeApp() {
     console.log("Application initialized successfully");
   } catch (error) {
     console.error("Error initializing application:", error);
+  }
+
+  addIcons();
+}
+
+function addIcons() {
+  const latest = document.querySelector('.desktop-nav-item[href="#latest"]');
+  if (latest) latest.innerHTML = `${latestSvg} Home`;
+
+  const health = document.querySelector('.desktop-nav-item[href="#health"]');
+  if (health) health.innerHTML = `${healthSvg} Health`;
+
+  const coins = document.querySelector('.desktop-nav-item[href="#coins"]');
+  if (coins) coins.innerHTML = `${coinsSvg} Coins`;
+
+  const hack = document.querySelector('.desktop-nav-item[href="#hack"]');
+  if (hack) hack.innerHTML = `${hackSvg} Hack`;
+
+  const ai = document.querySelector('.desktop-nav-item[href="#ai"]');
+  if (ai) ai.innerHTML = `${aiSvg} AI`;
+
+  const random = document.querySelector('.desktop-nav-item[href="#random"]');
+  if (random) random.innerHTML = `${randomSvg} Random`;
+
+  // Mobile icons
+  const mobileLatest = document.querySelector('.nav-item a[href="#latest"]');
+  if (mobileLatest) {
+    const navItem = mobileLatest.parentElement;
+    navItem.innerHTML = `${latestSvg}<a href="#latest">Latest</a>`;
+  }
+
+  const mobileCategory = document.querySelector(
+    '.nav-item a[href="#category"]'
+  );
+  if (mobileCategory) {
+    const navItem = mobileCategory.parentElement;
+    navItem.innerHTML = `${categorySvg}<a href="#category">Category</a>`;
+  }
+
+  const mobileRandom = document.querySelector('.nav-item a[href="#random"]');
+  if (mobileRandom) {
+    const navItem = mobileRandom.parentElement;
+    navItem.innerHTML = `${randomSvg}<a href="#random">Random</a>`;
+  }
+
+  const mobileSettings = document.querySelector(
+    '.nav-item a[href="#settings"]'
+  );
+  if (mobileSettings) {
+    const navItem = mobileSettings.parentElement;
+    navItem.innerHTML = `${settingsSvg}<a href="#settings">Settings</a>`;
+  }
+  const modalHealth = document.querySelector(
+    '.modal-category-item a[href="#health"]'
+  );
+  if (modalHealth) {
+    const modalItem = modalHealth.parentElement;
+    modalItem.innerHTML = `${healthSvg}<a href="#health">Health</a>`;
+  }
+
+  const modalCoins = document.querySelector(
+    '.modal-category-item a[href="#coins"]'
+  );
+  if (modalCoins) {
+    const modalItem = modalCoins.parentElement;
+    modalItem.innerHTML = `${coinsSvg}<a href="#coins">Coins</a>`;
+  }
+
+  const modalHack = document.querySelector(
+    '.modal-category-item a[href="#hack"]'
+  );
+  if (modalHack) {
+    const modalItem = modalHack.parentElement;
+    modalItem.innerHTML = `${hackSvg}<a href="#hack">Hack</a>`;
+  }
+
+  const modalAi = document.querySelector('.modal-category-item a[href="#ai"]');
+  if (modalAi) {
+    const modalItem = modalAi.parentElement;
+    modalItem.innerHTML = `${aiSvg}<a href="#ai">AI</a>`;
   }
 }
 
