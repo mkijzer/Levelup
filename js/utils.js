@@ -22,7 +22,7 @@ export function normalizeCategory(category) {
  */
 export function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
+    month: "long",
     day: "numeric",
     year: "numeric",
   });

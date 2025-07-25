@@ -113,7 +113,7 @@ export async function loadCategory(category) {
 
   await populateMainLayout(articles, elements);
   window.scrollTo(0, 0);
-  updateDesktopNavigation(category); // Add this line
+  updateDesktopNavigation(category);
 }
 
 /**
@@ -535,41 +535,59 @@ async function showArticleView(articleId) {
  * @param {HTMLElement} container - Container element (main or category article view)
  */
 function populateArticleView(article, container) {
-  const elements = {
-    title: container.querySelector(".main-article-title"),
-    image: container.querySelector(".main-article-image"),
-    body: container.querySelector(".main-article-body"),
-    author: container.querySelector(".main-article-author"),
-    tags: container.querySelector(".article-tags"),
-  };
+  const mainArticle = container.querySelector(".main-article");
 
-  if (elements.title) {
-    elements.title.textContent = article.title || "Untitled Article";
-  }
+  mainArticle.innerHTML = `
+    <article class="reading-layout">
+      <header class="article-header">
+        <span class="article-category">${
+          article.category?.charAt(0).toUpperCase() +
+            article.category?.slice(1) || "Uncategorized"
+        } | ${formatDate(article.date)}</span>
+        <h1 class="article-main-title">${
+          article.title || "Untitled Article"
+        }</h1>
+        <p class="article-hook">${article.hook || "Here comes the hook"}</p>
+        
+        <div class="social-sharing">
+          <button class="social-btn social-x" aria-label="Share on X">
+            <span class="social-icon-placeholder">X</span>
+          </button>
+          <button class="social-btn social-tiktok" aria-label="Share on TikTok">
+            <span class="social-icon-placeholder">TT</span>
+          </button>
+          <button class="social-btn social-facebook" aria-label="Share on Facebook">
+            <span class="social-icon-placeholder">FB</span>
+          </button>
+          <button class="social-btn social-pinterest" aria-label="Share on Pinterest">
+            <span class="social-icon-placeholder">PT</span>
+          </button>
+          <button class="social-btn social-snapchat" aria-label="Share on Snapchat">
+            <span class="social-icon-placeholder">SC</span>
+          </button>
+        </div>
+      </header>
 
-  if (elements.image) {
-    elements.image.src = article.image || "assets/images/fallback_image.png";
-    elements.image.alt = article.title || "Article Image";
-  }
+      <img 
+        src="${article.image || "assets/images/fallback_image.png"}" 
+        alt="${article.title || "Article image"}" 
+        class="article-hero-image"
+      />
+      
+      <div class="article-body">
+        ${article.content || createFallbackContent(article)}
+      </div>
+      
+      <footer class="article-footer">
+        <div class="article-tags"></div>
+      </footer>
+    </article>
+  `;
 
-  if (elements.body) {
-    if (article.content) {
-      elements.body.innerHTML = article.content;
-    } else {
-      elements.body.innerHTML = createFallbackContent(article);
-    }
-  }
-
-  if (elements.author) {
-    elements.author.textContent = article.author || "Anonymous";
-  }
-
-  if (elements.tags && article.tags) {
-    populateArticleTags(elements.tags, article.tags);
-  }
-
-  if (isInCategoryPage) {
-    populateRelatedCategoryArticles(container, article.id);
+  // Populate tags separately
+  if (article.tags) {
+    const tagsContainer = mainArticle.querySelector(".article-tags");
+    populateArticleTags(tagsContainer, article.tags);
   }
 }
 
@@ -887,7 +905,7 @@ function setupNavigation() {
  */
 function handleNavigationClick(e) {
   e.preventDefault();
-  const href = e.target.getAttribute("href");
+  const href = e.target.closest("a").getAttribute("href");
 
   if (href === "#random") {
     exitCategoryPage();
@@ -902,7 +920,7 @@ function handleNavigationClick(e) {
     const category = href.replace("#", "");
 
     exitCategoryPage();
-    loadCategory(category); // Use loadCategory instead
+    loadCategory(category);
   }
 
   const mainArticleView = document.querySelector(".article-view");
@@ -1008,6 +1026,44 @@ async function initializeApp() {
   }
 
   addIcons();
+  setupNavigation(); // Move this after addIcons
+  // Header hide/show on scroll
+  try {
+    let lastScrollY = window.scrollY;
+    let scrollTimeout;
+
+    window.addEventListener("scroll", () => {
+      const header = document.querySelector(".sticky-wrapper-navcontainer");
+      const navbar = document.querySelector(".nav-container"); // ADD THIS LINE
+      if (!header) return;
+
+      const currentScrollY = window.scrollY;
+
+      // Add scrolling class (lighter glass)
+      header.classList.add("scrolling");
+      navbar.classList.add("scrolling"); // ADD THIS LINE
+
+      // Clear previous timeout
+      clearTimeout(scrollTimeout);
+
+      // Remove scrolling class when stopped (darker glass)
+      scrollTimeout = setTimeout(() => {
+        header.classList.remove("scrolling");
+        navbar.classList.remove("scrolling"); // ADD THIS LINE
+      }, 150);
+
+      // Keep existing hide/show logic
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        header.classList.add("hide-header");
+      } else if (currentScrollY < lastScrollY) {
+        header.classList.remove("hide-header");
+      }
+
+      lastScrollY = currentScrollY;
+    });
+  } catch (error) {
+    console.error("Scroll listener error:", error);
+  }
 }
 
 function addIcons() {
@@ -1033,7 +1089,7 @@ function addIcons() {
   const mobileLatest = document.querySelector('.nav-item a[href="#latest"]');
   if (mobileLatest) {
     const navItem = mobileLatest.parentElement;
-    navItem.innerHTML = `${latestSvg}<a href="#latest">Latest</a>`;
+    navItem.innerHTML = `${latestSvg}<a href="#latest"></a>`;
   }
 
   const mobileCategory = document.querySelector(
@@ -1041,13 +1097,13 @@ function addIcons() {
   );
   if (mobileCategory) {
     const navItem = mobileCategory.parentElement;
-    navItem.innerHTML = `${categorySvg}<a href="#category">Category</a>`;
+    navItem.innerHTML = `${categorySvg}<a href="#category"></a>`;
   }
 
   const mobileRandom = document.querySelector('.nav-item a[href="#random"]');
   if (mobileRandom) {
     const navItem = mobileRandom.parentElement;
-    navItem.innerHTML = `${randomSvg}<a href="#random">Random</a>`;
+    navItem.innerHTML = `${randomSvg}<a href="#random"></a>`;
   }
 
   const mobileSettings = document.querySelector(
@@ -1055,14 +1111,15 @@ function addIcons() {
   );
   if (mobileSettings) {
     const navItem = mobileSettings.parentElement;
-    navItem.innerHTML = `${settingsSvg}<a href="#settings">Settings</a>`;
+    navItem.innerHTML = `${settingsSvg}<a href="#settings"></a>`;
   }
+
   const modalHealth = document.querySelector(
     '.modal-category-item a[href="#health"]'
   );
   if (modalHealth) {
     const modalItem = modalHealth.parentElement;
-    modalItem.innerHTML = `${healthSvg}<a href="#health">Health</a>`;
+    modalItem.innerHTML = `<a href="#health">Health</a>`;
   }
 
   const modalCoins = document.querySelector(
@@ -1070,7 +1127,7 @@ function addIcons() {
   );
   if (modalCoins) {
     const modalItem = modalCoins.parentElement;
-    modalItem.innerHTML = `${coinsSvg}<a href="#coins">Coins</a>`;
+    modalItem.innerHTML = `<a href="#coins">Coins</a>`;
   }
 
   const modalHack = document.querySelector(
@@ -1078,13 +1135,13 @@ function addIcons() {
   );
   if (modalHack) {
     const modalItem = modalHack.parentElement;
-    modalItem.innerHTML = `${hackSvg}<a href="#hack">Hack</a>`;
+    modalItem.innerHTML = `<a href="#hack">Hack</a>`;
   }
 
   const modalAi = document.querySelector('.modal-category-item a[href="#ai"]');
   if (modalAi) {
     const modalItem = modalAi.parentElement;
-    modalItem.innerHTML = `${aiSvg}<a href="#ai">AI</a>`;
+    modalItem.innerHTML = `<a href="#ai">AI</a>`;
   }
 }
 

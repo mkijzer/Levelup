@@ -13,8 +13,8 @@
   /* Dark Mode (Default) */
   --background: #0d1117;
   --surface: rgb(42, 47, 49);
-  --text-primary: rgb(255, 255, 255);
-  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-primary: #e2e2e5;
+  --text-secondary: #a1a1aa;
   --text-muted: rgba(255, 255, 255, 0.6);
   --icon-grey: rgb(180, 180, 180);
   --white: rgb(255, 255, 255);

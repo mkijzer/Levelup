@@ -214,7 +214,7 @@
               <!-- Main Article: Full article content -->
               <div class="main-article glass">
                 <!-- Close Button: Returns to main view -->
-                <button
+                <!-- <button
                   class="close-article"
                   style="
                     float: right;
@@ -225,7 +225,7 @@
                   "
                 >
                   ×
-                </button>
+                </button> -->
                 <h2 class="main-article-title"></h2>
                 <div class="article-image-wrapper">
                   <img
@@ -456,7 +456,7 @@
     <!-- =========================================================== -->
     <nav class="nav-container">
       <!-- Category Navigation: Links to sections and features -->
-      <ul class="categories">
+      <ul class="mobile-nav">
         <!-- Latest: Displays latest articles -->
         <li>
           <div class="nav-item">
@@ -523,6 +523,24 @@
 
           <div class="settings-items">
             <div class="setting-item">
+              <label>Font Size</label>
+              <select id="font-size-select">
+                <option value="small">Small</option>
+                <option value="medium" selected>Medium</option>
+                <option value="large">Large</option>
+              </select>
+            </div>
+
+            <!-- <div class="setting-item">
+              <label>Reading Width</label>
+              <select id="reading-width-select">
+                <option value="narrow" selected>Narrow</option>
+                <option value="wide">Wide</option>
+              </select>
+            </div> -->
+
+            <!-- LIGHT MODE - TEMPORARILY DISABLED
+            <!-- <div class="setting-item">
               <div class="theme-toggle-container">
                 <div>
                   <div class="theme-description">light or dark mode</div>
@@ -534,8 +552,9 @@
                   </span>
                 </label>
               </div>
-            </div>
+            </div> -->
           </div>
+          <button class="close-settings-btn">close</button>
         </div>
       </div>
     </div>

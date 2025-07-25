@@ -21,6 +21,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-top: 100px; /* Add space for fixed header */
   padding-bottom: var(--nav-height, 60px);
   width: 100%;
   max-width: 100vw;
@@ -48,12 +49,19 @@ body {
 /* ============================================================================ */
 
 .sticky-wrapper-navcontainer {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: var(--z-index-nav, 1100);
   background-color: var(--background);
-  transition: var(--transition-medium);
+  transition: transform 0.3s ease-in-out;
   transform: translateY(0);
+}
+
+.sticky-wrapper-navcontainer.hide-header {
+  transform: translateY(-100%);
 }
 
 .sticky-wrapper-navcontainer.is-sticky {
@@ -65,7 +73,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: var(--spacing-sm) var(--spacing-page);
+  padding: var(--spacing-4) var(--spacing-page);
   gap: var(--spacing-sm);
   z-index: 1000;
 }
@@ -118,18 +126,18 @@ header {
   min-height: 50px;
 }
 
-.categories {
+.mobile-nav {
   list-style: none;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   padding: 0;
   margin: 0;
-  justify-content: center;
+  justify-content: space-evenly;
   font-size: 0.6rem;
   align-items: center;
   width: 100%;
-  gap: clamp(45px, 4vw, 120px);
+  gap: clamp(50px, 8vw, 70px);
 }
 
 .categories li {
@@ -150,7 +158,7 @@ header {
 
 .articles {
   padding: 0;
-  margin-top: -20px;
+  margin-top: -80px; /* Change from -20px to -40px */
   position: relative;
 }
 
@@ -172,10 +180,6 @@ header {
 /* ============================================================================ */
 /* UTILITY CLASSES - Helper classes */
 /* ============================================================================ */
-
-.hidden {
-  display: none !important;
-}
 
 .sr-only {
   position: absolute;
@@ -223,6 +227,13 @@ header {
 
 .article-five-container {
   grid-column: 1 / -1;
+}
+
+/* Articles 4 & 5 - rectangular images on mobile */
+.article-four-container .article-card.small .article-image-wrapper,
+.article-five-container .article-card.small .article-image-wrapper {
+  aspect-ratio: 16 / 9;
+  height: 250px;
 }
 
 /* Ad - full width on mobile */
