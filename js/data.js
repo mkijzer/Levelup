@@ -17,6 +17,11 @@ import {
   randomSvg,
   categorySvg,
   settingsSvg,
+  xSvg,
+  tiktokSvg,
+  snapSvg,
+  instagramSvg,
+  youtubeSvg,
 } from "./svg.js";
 
 // ============================================================================
@@ -505,7 +510,7 @@ async function showArticleView(articleId) {
 
       categoryView.classList.remove("hidden");
       populateArticleView(article, categoryView);
-      populateRelatedCategoryArticles(categoryView, articleId); // Add this line
+      populateRelatedCategoryArticles(categoryView, articleId);
       setupCategoryCloseButton();
     }
   } else {
@@ -570,23 +575,7 @@ function populateArticleView(article, container) {
        }</h1>
        <p class="article-hook">${article.hook || "Here comes the hook"}</p>
        
-       <div class="social-sharing">
-         <button class="social-btn social-x" aria-label="Share on X">
-           <span class="social-icon-placeholder">X</span>
-         </button>
-         <button class="social-btn social-tiktok" aria-label="Share on TikTok">
-           <span class="social-icon-placeholder">TT</span>
-         </button>
-         <button class="social-btn social-facebook" aria-label="Share on Facebook">
-           <span class="social-icon-placeholder">FB</span>
-         </button>
-         <button class="social-btn social-pinterest" aria-label="Share on Pinterest">
-           <span class="social-icon-placeholder">PT</span>
-         </button>
-         <button class="social-btn social-snapchat" aria-label="Share on Snapchat">
-           <span class="social-icon-placeholder">SC</span>
-         </button>
-       </div>
+       <div class="social-sharing"></div>
      </header>
 
      <img 
@@ -604,6 +593,41 @@ function populateArticleView(article, container) {
      </footer>
    </article>
  `;
+
+  // Add social icons like in the footer
+  const socialSharing = mainArticle.querySelector(".social-sharing");
+  const socialLinks = [
+    { social: "x", href: "#" },
+    { social: "tiktok", href: "#" },
+    { social: "snap", href: "#" },
+    { social: "instagram", href: "#" },
+    { social: "youtube", href: "#" },
+  ];
+
+  socialLinks.forEach(({ social, href }) => {
+    const link = document.createElement("a");
+    link.href = href;
+    link.className = "social-icon";
+    link.setAttribute("data-social", social);
+    socialSharing.appendChild(link);
+  });
+
+  // Apply icons after adding links, matching footer logic
+  const socialIcons = socialSharing.querySelectorAll(".social-icon");
+  const socialSvgs = {
+    x: xSvg,
+    tiktok: tiktokSvg,
+    snap: snapSvg,
+    instagram: instagramSvg,
+    youtube: youtubeSvg,
+  };
+
+  socialIcons.forEach((icon) => {
+    const social = icon.getAttribute("data-social");
+    if (socialSvgs[social]) {
+      icon.innerHTML = socialSvgs[social];
+    }
+  });
 
   // Populate tags separately
   if (article.tags) {
@@ -1061,14 +1085,14 @@ async function initializeApp() {
 
     window.addEventListener("scroll", () => {
       const header = document.querySelector(".sticky-wrapper-navcontainer");
-      const navbar = document.querySelector(".nav-container"); // ADD THIS LINE
+      const navbar = document.querySelector(".nav-container");
       if (!header) return;
 
       const currentScrollY = window.scrollY;
 
       // Add scrolling class (lighter glass)
       header.classList.add("scrolling");
-      navbar.classList.add("scrolling"); // ADD THIS LINE
+      navbar.classList.add("scrolling");
 
       // Clear previous timeout
       clearTimeout(scrollTimeout);
@@ -1076,7 +1100,7 @@ async function initializeApp() {
       // Remove scrolling class when stopped (darker glass)
       scrollTimeout = setTimeout(() => {
         header.classList.remove("scrolling");
-        navbar.classList.remove("scrolling"); // ADD THIS LINE
+        navbar.classList.remove("scrolling");
       }, 150);
 
       // Keep existing hide/show logic
@@ -1094,6 +1118,7 @@ async function initializeApp() {
 }
 
 function addIcons() {
+  // Desktop nav icons
   const latest = document.querySelector('.desktop-nav-item[href="#latest"]');
   if (latest) latest.innerHTML = `${latestSvg} Home`;
 
@@ -1141,6 +1166,7 @@ function addIcons() {
     navItem.innerHTML = `${settingsSvg}<a href="#settings"></a>`;
   }
 
+  // Modal icons
   const modalHealth = document.querySelector(
     '.modal-category-item a[href="#health"]'
   );
@@ -1170,6 +1196,23 @@ function addIcons() {
     const modalItem = modalAi.parentElement;
     modalItem.innerHTML = `<a href="#ai">AI</a>`;
   }
+
+  // Social icons in footer
+  const socialIcons = document.querySelectorAll(".social-icon");
+  const socialSvgs = {
+    x: xSvg,
+    tiktok: tiktokSvg,
+    snap: snapSvg,
+    instagram: instagramSvg,
+    youtube: youtubeSvg,
+  };
+
+  socialIcons.forEach((icon) => {
+    const social = icon.getAttribute("data-social");
+    if (socialSvgs[social]) {
+      icon.innerHTML = socialSvgs[social];
+    }
+  });
 }
 
 // Auto-initialize when DOM is ready

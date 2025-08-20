@@ -1,15 +1,19 @@
 /* ============================================================================ */
 /* components.css - UI COMPONENTS SYSTEM */
 /* ============================================================================ */
-/* Description: Reusable UI components with consistent styling and interactions. */
-/* Version: 3.5 - Reorganized for clarity, added detailed documentation, no functional changes. */
-/* Author: Mike */
-/* ============================================================================ */
+/* Description: Defines reusable UI components with consistent styling and smooth interactions.
+ *              Ensures modularity, accessibility, and responsive design across all devices.
+ * Version: 3.6 - Enhanced documentation, reorganized sections, added tablet/desktop media queries.
+ * Author: Mike
+ * Last Updated: August 20, 2025
+ * ============================================================================ */
 
 /* ============================================================================ */
 /* Brand Title Components */
 /* ============================================================================ */
-/* Styling for main title and subtitle, used in header for branding. */
+/* Styling for the main title and subtitle in the header, creating a branded look with animations.
+ * Uses custom variables for typography and color consistency.
+ */
 
 .main-title {
   font-size: var(--font-size-3xl);
@@ -59,7 +63,9 @@
 /* ============================================================================ */
 /* Navigation Components - Mobile */
 /* ============================================================================ */
-/* Styling for mobile navigation bar and items, fixed at bottom. */
+/* Styling for the mobile navigation bar, fixed at the bottom with interactive icons.
+ * Includes hover and active states for user feedback.
+ */
 
 .nav-container {
   background-color: rgba(0, 0, 0, 0.7);
@@ -144,7 +150,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Navigation Components - Desktop */
 /* ============================================================================ */
-/* Styling for desktop navigation links and effects. */
+/* Styling for desktop navigation links with gradient underlines and hover effects.
+ * Ensures smooth transitions and category-specific styling.
+ */
 
 .desktop-nav-item {
   position: relative;
@@ -223,7 +231,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Search Components */
 /* ============================================================================ */
-/* Styling for search icon and sliding search bar. */
+/* Styling for the search icon and sliding search bar with smooth animations.
+ * Positioned fixed for accessibility across screen sizes.
+ */
 
 .search-container {
   position: fixed;
@@ -317,7 +327,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Category Modal */
 /* ============================================================================ */
-/* Styling for category modal, slides up from behind navbar. */
+/* Styling for the category modal, sliding up from behind the navbar.
+ * Includes hover effects for interactive categories.
+ */
 
 .category-modal {
   position: fixed;
@@ -411,7 +423,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Settings Modal */
 /* ============================================================================ */
-/* Styling for settings modal, slides in from right. */
+/* Styling for the settings modal, sliding in from the right with toggle options.
+ * Includes backdrop and close button for usability.
+ */
 
 .settings-modal {
   position: fixed;
@@ -657,9 +671,11 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
-/* Article Cards - Base Styles */
+/* Article Cards - Base Styles (Continued) */
 /* ============================================================================ */
-/* Shared styles for all article cards (hero, small, grid). */
+/* Shared styles for all article cards (hero, small, grid) with glass effect.
+ * Ensures consistent layout and hover interactions.
+ */
 
 .article-card {
   border-radius: var(--radius-lg);
@@ -737,7 +753,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Hero Article Card */
 /* ============================================================================ */
-/* Styling for large hero article cards in main and category views. */
+/* Styling for large hero article cards in main and category views.
+ * Features a gradient mask and positioned content for visual hierarchy.
+ */
 
 .article-card.huge {
   aspect-ratio: 16 / 9;
@@ -811,7 +829,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Small Article Cards */
 /* ============================================================================ */
-/* Styling for small article cards in side-by-side and grid layouts. */
+/* Styling for small article cards in side-by-side and grid layouts.
+ * Adjusts content and image proportions for different contexts.
+ */
 
 .article-card.small .article-title {
   font-size: var(--font-size-base);
@@ -894,7 +914,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Loading States */
 /* ============================================================================ */
-/* Styles for article cards during loading. */
+/* Styles for article cards during loading, including a spinning animation.
+ * Provides visual feedback while content loads.
+ */
 
 .article-card.loading {
   background: transparent;
@@ -930,7 +952,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Main Article View */
 /* ============================================================================ */
-/* Styling for full article view, including text and images. */
+/* Styling for the full article view, including images and body text.
+ * Features responsive typography and image handling.
+ */
 
 .main-article {
   border-radius: var(--radius-lg);
@@ -1030,7 +1054,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Article Header and Metadata */
 /* ============================================================================ */
-/* Styling for article headers, categories, and metadata. */
+/* Styling for article headers, categories, and metadata with consistent spacing.
+ * Ensures readability and hierarchy.
+ */
 
 .article-header {
   margin-top: var(--spacing-6);
@@ -1077,7 +1103,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Tags System */
 /* ============================================================================ */
-/* Styling for article tags with interactive effects. */
+/* Styling for article tags with hover effects and animations.
+ * Supports interactive tag selection with a fade-out effect.
+ */
 
 .article-tags {
   display: flex;
@@ -1132,7 +1160,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Social Sharing */
 /* ============================================================================ */
-/* Styling for social sharing buttons in article view. */
+/* Styling for social sharing buttons and icons in article and footer views.
+ * Ensures consistent design with responsive adjustments.
+ */
 
 .social-sharing {
   display: flex;
@@ -1162,7 +1192,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Quote and Advertisement Components */
 /* ============================================================================ */
-/* Styling for quotes and ads in article views. */
+/* Styling for quotes and ads in article views with glass effects.
+ * Ensures centered layout and visual distinction.
+ */
 
 .quote {
   position: relative;
@@ -1226,10 +1258,13 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   margin: var(--spacing-6) auto;
   color: var(--text-primary);
 }
+
 /* ============================================================================ */
 /* Category Page View */
 /* ============================================================================ */
-/* Styling for category page layout with hero grid and article list. */
+/* Styling for category page layout with hero grid and article list.
+ * Ensures smooth scrolling and structured content display.
+ */
 
 .category-page-view {
   position: fixed;
@@ -1294,7 +1329,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Random Articles */
 /* ============================================================================ */
-/* Styling for random article cards and grid. */
+/* Styling for random article cards and grid layout.
+ * Ensures proper image scaling and grid alignment.
+ */
 
 .random-articles {
   display: none;
@@ -1324,7 +1361,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Content Labels */
 /* ============================================================================ */
-/* Styling for category labels in main and category views. */
+/* Styling for category labels in main and category views.
+ * Maintains consistent typography and spacing.
+ */
 
 .category-label {
   display: inline-block;
@@ -1339,7 +1378,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* ============================================================================ */
 /* Utility Components */
 /* ============================================================================ */
-/* Styling for close buttons and other utility elements. */
+/* Styling for close buttons and other utility elements with animations.
+ * Enhances user interaction with visual feedback.
+ */
 
 .close-article {
   color: var(--text-primary);
@@ -1377,9 +1418,118 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
-/* Responsive Adjustments */
+/* FOOTER */
 /* ============================================================================ */
-/* Desktop-specific adjustments for search and title. */
+/* Styling for the footer with consistent background and padding.
+ * Ensures proper alignment and spacing.
+ */
+
+.footer {
+  width: 100%;
+  background-color: var(
+    --glass-bg,
+    rgba(0, 0, 0, 0.7)
+  ); /* Keep the background */
+  padding: var(--spacing-6) 0; /* Increased top and bottom spacing */
+  text-align: center;
+  height: auto;
+  z-index: 30;
+}
+
+/* ============================================================================ */
+/* Social Sharing in Footer */
+/* ============================================================================ */
+/* Styling for social icons in the footer with hover effects.
+ * Uses consistent sizing and color transitions.
+ */
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.social-icon,
+.social-icon svg,
+.social-icon path {
+  color: #e0e0e0 !important; /* Slightly less white (light gray) */
+  fill: #e0e0e0 !important;
+  width: 20px;
+  height: 20px;
+  transition: color var(--transition-fast), fill var(--transition-fast); /* Smooth transition */
+}
+
+.social-icon:hover,
+.social-icon:hover svg,
+.social-icon:hover path {
+  color: #ffffff !important; /* Full white on hover */
+  fill: #ffffff !important;
+}
+
+/* ============================================================================ */
+/* Social Sharing in Article */
+/* ============================================================================ */
+/* Styling for social icons in the article view with responsive adjustments.
+ * Ensures consistency with footer while allowing specific tweaks.
+ */
+
+.article-view .social-sharing {
+  gap: var(--spacing-3); /* Base gap, adjustable for larger screens */
+}
+
+.article-view .social-icon,
+.article-view .social-icon svg,
+.article-view .social-icon path {
+  width: clamp(
+    16px,
+    2vw,
+    24px
+  ); /* Scales from 16px (mobile) to 24px (desktop) */
+  height: clamp(16px, 2vw, 24px); /* Matches width for consistency */
+}
+
+/* ============================================================================ */
+/* Responsive Adjustments - Tablet (min-width: 768px) */
+/* ============================================================================ */
+/* Tablet-specific adjustments for enhanced layout and usability.
+ * Applies at 768px and above.
+ */
+
+@media (min-width: 768px) {
+  .search-icon {
+    right: 20px;
+    width: 22px;
+    height: 22px;
+  }
+
+  .search-bar-slide {
+    top: 18px;
+    right: 20px;
+  }
+
+  .main-title {
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
+  }
+
+  .article-view .social-sharing {
+    gap: var(--spacing-4); /* More gap on tablet */
+  }
+
+  .article-view .social-icon,
+  .article-view .social-icon svg,
+  .article-view .social-icon path {
+    width: clamp(18px, 2.5vw, 26px); /* Slightly larger on tablet */
+    height: clamp(18px, 2.5vw, 26px);
+  }
+}
+
+/* ============================================================================ */
+/* Responsive Adjustments - Desktop (min-width: 1200px) */
+/* ============================================================================ */
+/* Desktop-specific adjustments for optimized layout and readability.
+ * Applies at 1200px and above.
+ */
 
 @media (min-width: 1200px) {
   .search-icon {
@@ -1396,12 +1546,25 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   .main-title {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
   }
+
+  .article-view .social-sharing {
+    gap: var(--spacing-5); /* More gap on desktop */
+  }
+
+  .article-view .social-icon,
+  .article-view .social-icon svg,
+  .article-view .social-icon path {
+    width: clamp(20px, 3vw, 28px); /* Larger on desktop */
+    height: clamp(20px, 3vw, 28px);
+  }
 }
 
 /* ============================================================================ */
 /* Overrides for Article Images */
 /* ============================================================================ */
-/* Ensure consistent image positioning across contexts. */
+/* Ensure consistent image positioning across contexts.
+ * Overrides to maintain uniformity.
+ */
 
 .article-image,
 .main-article-image {
