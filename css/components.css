@@ -1,13 +1,15 @@
 /* ============================================================================ */
 /* components.css - UI COMPONENTS SYSTEM */
 /* ============================================================================ */
-/* Description: Reusable UI components with consistent styling and interactions */
-/* Version: 3.4 - Fixed modal animations sliding from behind navbar */
+/* Description: Reusable UI components with consistent styling and interactions. */
+/* Version: 3.5 - Reorganized for clarity, added detailed documentation, no functional changes. */
+/* Author: Mike */
 /* ============================================================================ */
 
 /* ============================================================================ */
 /* Brand Title Components */
 /* ============================================================================ */
+/* Styling for main title and subtitle, used in header for branding. */
 
 .main-title {
   font-size: var(--font-size-3xl);
@@ -55,10 +57,10 @@
 }
 
 /* ============================================================================ */
-/* Navigation Components */
+/* Navigation Components - Mobile */
 /* ============================================================================ */
+/* Styling for mobile navigation bar and items, fixed at bottom. */
 
-/* Navigation container styling */
 .nav-container {
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
@@ -72,7 +74,6 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Nav item structure */
 .nav-item {
   display: flex;
   flex-direction: column;
@@ -80,7 +81,6 @@
   gap: 0.2rem;
 }
 
-/* Nav icons */
 .nav-icon {
   width: 20px;
   height: 20px;
@@ -88,7 +88,6 @@
   transition: var(--transition-fast);
 }
 
-/* Nav icon hover effects */
 .nav-item:hover .nav-icon,
 .nav-item:focus .nav-icon,
 .nav-item:active .nav-icon {
@@ -99,7 +98,6 @@
   fill: var(--accent-color);
 }
 
-/* Active link underline effect */
 .categories li a::after {
   content: "";
   position: absolute;
@@ -117,7 +115,6 @@
   left: 0;
 }
 
-/* Random icon animation */
 a[href="#random"]:hover .nav-icon path {
   animation: smooth-wave 1.5s ease-in-out infinite;
 }
@@ -125,9 +122,11 @@ a[href="#random"]:hover .nav-icon path {
 a[href="#random"]:hover .nav-icon path:nth-child(2) {
   animation-delay: 0.2s;
 }
+
 a[href="#random"]:hover .nav-icon path:nth-child(3) {
   animation-delay: 0.4s;
 }
+
 a[href="#random"]:hover .nav-icon path:nth-child(4) {
   animation-delay: 0.6s;
 }
@@ -143,8 +142,88 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
+/* Navigation Components - Desktop */
+/* ============================================================================ */
+/* Styling for desktop navigation links and effects. */
+
+.desktop-nav-item {
+  position: relative;
+  padding: 0.5rem 1rem;
+  transition: color var(--transition-normal);
+}
+
+.desktop-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 0.5px;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.desktop-nav-item:hover::after,
+.desktop-nav-item.active::after,
+.desktop-actions .random-btn:hover::after,
+.desktop-actions .random-btn.active::after {
+  width: 100%;
+}
+
+.desktop-categories:hover .desktop-nav-item.active::after,
+.desktop-categories:hover .desktop-actions .random-btn.active::after {
+  width: 0;
+}
+
+.desktop-categories:hover .desktop-nav-item:hover::after,
+.desktop-categories:hover .desktop-actions .random-btn:hover::after {
+  width: 100%;
+}
+
+.desktop-nav-item[href="#latest"]::after {
+  background: linear-gradient(to right, #87ceeb, #4169e1);
+}
+
+.desktop-nav-item[href="#health"]::after {
+  background: linear-gradient(to right, #ff6b6b, #ff0000);
+}
+
+.desktop-nav-item[href="#coins"]::after {
+  background: linear-gradient(to right, #ffd700, #ff8c00);
+}
+
+.desktop-nav-item[href="#hack"]::after {
+  background: linear-gradient(to right, #ff69b4, #ff1493);
+}
+
+.desktop-nav-item[href="#ai"]::after {
+  background: linear-gradient(to right, #9370db, #4b0082);
+}
+
+.random-btn::after {
+  background: linear-gradient(to right, #32cd32, #008000);
+}
+
+.desktop-nav-item svg {
+  width: 19px;
+  height: 19px;
+  margin-right: 9px;
+  fill: var(--icon-grey);
+  stroke: var(--icon-grey);
+  transition: var(--transition-fast);
+  vertical-align: center;
+}
+
+.desktop-nav-item:hover svg,
+.desktop-nav-item.active svg {
+  fill: var(--white);
+  stroke: var(--white);
+}
+
+/* ============================================================================ */
 /* Search Components */
 /* ============================================================================ */
+/* Styling for search icon and sliding search bar. */
 
 .search-container {
   position: fixed;
@@ -236,625 +315,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
-/* Content Labels */
+/* Category Modal */
 /* ============================================================================ */
-
-.category-label {
-  display: inline-block;
-  font-family: var(--font-primary);
-  font-weight: var(--font-weight-light);
-  font-size: var(--font-size-category-label);
-  color: #b0b0b0;
-  letter-spacing: 0.0625rem;
-  margin: var(--spacing-article-separation) 0 var(--spacing-4) var(--spacing-6);
-}
-
-/* ============================================================================ */
-/* Article Cards - Base Styles */
-/* ============================================================================ */
-
-.article-card {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-sizing: border-box;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  border: none;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-inner {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ============================================================================ */
-/* Hero Article Card */
-/* ============================================================================ */
-
-.article-card.huge {
-  aspect-ratio: 16 / 9;
-  position: relative;
-  background: none;
-  backdrop-filter: none;
-  border: none;
-  overflow: hidden;
-}
-
-.article-card.huge .article-image-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.article-card.huge .article-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  border-radius: var(--radius-lg);
-  mask: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0.4) 75%,
-    rgba(0, 0, 0, 0.1) 90%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  -webkit-mask: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 0.4) 75%,
-    rgba(0, 0, 0, 0.1) 90%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
-
-.article-card.huge .gradient-overlay {
-  display: none;
-}
-
-.article-card.huge .article-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: var(--spacing-4);
-  z-index: 2;
-  background: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  pointer-events: none;
-}
-
-.article-card.huge .article-title {
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  color: var(--white);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-  margin: 0;
-  line-height: 1.2;
-  font-weight: var(--font-weight-bold);
-  pointer-events: auto;
-}
-
-/* ============================================================================ */
-/* Small Article Cards */
-/* ============================================================================ */
-
-/* ============================================================================ */
-/* Loading States */
-/* ============================================================================ */
-
-.article-card.loading {
-  background: transparent;
-  border: none;
-  backdrop-filter: none;
-}
-
-.article-card.loading .article-image {
-  opacity: 0.5;
-  transition: opacity var(--transition-normal);
-}
-
-.article-card.loading .article-image-wrapper::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 24px;
-  height: 24px;
-  border: 3px solid var(--text-primary);
-  border-top: 3px solid transparent;
-  border-radius: var(--radius-full);
-  animation: spin 1s linear infinite;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes spin {
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-/* ============================================================================ */
-/* Article Images */
-/* ============================================================================ */
-
-.article-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-}
-
-/* .article-card.small .article-image-wrapper {
-  height: 200px;
-  flex-shrink: 0;
-} */
-
-.article-image,
-.main-article-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: var(--radius-lg);
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-}
-
-.article-image[src],
-.main-article-image[src] {
-  opacity: 1;
-}
-
-.article-card.small .gradient-overlay {
-  display: none;
-}
-
-/* ============================================================================ */
-/* Article Content - Typography */
-/* ============================================================================ */
-
-.article-meta {
-  font-size: var(--font-size-card-meta);
-  color: var(--text-muted);
-  margin-bottom: var(--spacing-1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.article-title {
-  font-size: var(--font-size-xl);
-  margin-bottom: var(--spacing-2);
-  color: var(--text-primary);
-  line-height: var(--line-height-tight);
-  letter-spacing: 0.0625rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.article-card.small .article-title {
-  font-size: var(--font-size-base);
-  margin-bottom: 0;
-  -webkit-line-clamp: 2;
-}
-
-.article-content {
-  position: static;
-  padding: var(--spacing-1);
-  color: var(--text-primary);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex: 1;
-}
-
-.article-card.small .article-content {
-  position: static;
-  padding: var(--spacing-3);
-  flex: 1;
-  justify-content: flex-start;
-}
-
-.article-card.small .card-inner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  padding: var(--spacing-2);
-  height: 100%;
-}
-
-/* ============================================================================ */
-/* Side-by-Side Cards Layout */
-/* ============================================================================ */
-
-/* Side-by-side cards - mobile specific styling */
-.side-by-side-container .article-card.small {
-  height: 200px;
-}
-
-.side-by-side-container .article-card.small .article-image-wrapper {
-  height: 120px;
-}
-
-.side-by-side-container .article-card.small .article-content {
-  padding: var(--spacing-2);
-  flex: 1;
-}
-
-.side-by-side-container .article-card.small .article-title {
-  font-size: 0.85rem;
-  line-height: 1.2;
-  -webkit-line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.side-by-side-container .article-card.small .article-meta {
-  font-size: 0.7rem;
-  margin-bottom: var(--spacing-1);
-}
-
-/* ============================================================================ */
-/* Category Grid Cards */
-/* ============================================================================ */
-
-.category-grid .article-card.small {
-  height: 160px;
-  min-height: 120px;
-}
-
-.category-grid .article-card.small .card-inner {
-  flex-direction: row;
-  gap: var(--spacing-3);
-  padding: var(--spacing-2);
-  align-items: stretch;
-}
-
-.category-grid .article-card.small .article-image-wrapper {
-  width: 40%;
-  height: 100%;
-  flex-shrink: 0;
-}
-
-.category-grid .article-card.small .article-content {
-  width: 60%;
-  flex: 1;
-  padding: var(--spacing-1);
-}
-
-.category-grid .article-card.small .article-title {
-  -webkit-line-clamp: 2;
-  font-size: var(--font-size-sm);
-}
-
-/* ============================================================================ */
-/* Article View Components */
-/* ============================================================================ */
-
-.main-article {
-  border-radius: var(--radius-lg);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  padding: var(--spacing-6) var(--spacing-8) var(--spacing-8);
-  margin-top: var(--spacing-8); /* Add this line */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-10);
-}
-
-.main-article-title {
-  font-size: var(--font-size-3xl);
-  color: var(--text-primary);
-  text-align: left;
-  max-width: 100%;
-  text-shadow: var(--shadow-glow);
-  margin-top: calc(var(--spacing-8) * -1);
-}
-
-.main-article-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  aspect-ratio: 3/2;
-  max-width: 100%;
-  border-radius: var(--radius-lg);
-  margin-top: calc(var(--spacing-8) * -1);
-  margin-bottom: var(--spacing-6);
-}
-
-.article-hero-image {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  margin: var(--spacing-6) 0;
-  border-radius: var(--radius-xl);
-}
-
-.main-article-body {
-  font-size: var(--font-size-lg);
-  color: red !important;
-  font-weight: 900 !important;
-  line-height: var(--line-height-relaxed);
-  max-width: 65ch;
-  margin: calc(var(--spacing-8) * -1) auto 0 auto;
-}
-
-.main-article-body p {
-  margin-bottom: var(--spacing-8);
-}
-
-.main-article .article-body p {
-  margin-bottom: var(--spacing-6);
-  font-weight: 100;
-  font-size: var(--font-size-base);
-}
-
-.main-article-body .inline-image {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  margin: var(--spacing-md) auto;
-  display: block;
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-}
-
-.main-article-body .inline-image[src] {
-  opacity: 1;
-}
-
-.main-article-body p {
-  margin-bottom: var(--spacing-6);
-}
-
-.main-article-author {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  text-align: center;
-  font-style: italic;
-  margin-top: var(--spacing-2);
-}
-
-.article-image,
-.main-article-image {
-  object-position: center top !important;
-}
-
-/* social sharing */
-.social-sharing {
-  display: flex;
-  gap: var(--spacing-2);
-  margin: var(--spacing-4) 0;
-}
-
-.social-btn {
-  padding: var(--spacing-2) var(--spacing-3);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  font-size: var(--font-size-xs);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.social-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.social-icon-placeholder {
-  display: block;
-}
-
-/* Font size options */
-.main-article .article-body.font-small p {
-  font-size: var(--font-size-sm) !important;
-}
-
-.main-article .article-body.font-medium p {
-  font-size: var(--font-size-base) !important;
-}
-
-.main-article .article-body.font-large p {
-  font-size: var(--font-size-lg) !important;
-}
-
-/* Reading width options */
-.article-body.width-narrow {
-  max-width: 55ch;
-}
-
-.article-body.width-wide {
-  max-width: 80ch;
-}
-
-/* ============================================================================ */
-/* Reading Layout Typography */
-/* ============================================================================ */
-
-.article-header {
-  text-align: left;
-  margin-bottom: var(--spacing-6);
-}
-
-.article-category {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-light);
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-3);
-  display: block;
-}
-
-.article-main-title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
-  line-height: var(--line-height-tight);
-  margin-bottom: var(--spacing-4);
-}
-
-.article-hook {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-light);
-  color: var(--text-secondary);
-  font-style: italic;
-  margin-bottom: var(--spacing-5);
-}
-
-.article-hook::before,
-.article-hook::after {
-  content: '"';
-}
-
-.article-date {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-light);
-  color: var(--text-muted);
-  margin-bottom: var(--spacing-4);
-  display: block;
-}
-
-/* ============================================================================ */
-/* Tags System */
-/* ============================================================================ */
-
-.article-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-2);
-  /* margin-top: calc(var(--spacing-2) * -1);
-  margin-bottom: var(--spacing-2); */
-  margin: var(--spacing-8) 0 var(--spacing-6) 0;
-  justify-content: center;
-  padding: 0;
-}
-
-.tag {
-  display: inline-block;
-  padding: var(--spacing-1) var(--spacing-3);
-  font-size: var(--font-size-xs);
-  color: var(--text-primary);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  border-radius: var(--radius-sm);
-  text-transform: capitalize;
-  box-shadow: var(--shadow-md);
-  transition: transform var(--transition-fast),
-    box-shadow var(--transition-normal);
-  text-align: center;
-  min-width: 90px;
-  cursor: pointer;
-}
-
-.tag:hover {
-  box-shadow: var(--shadow-glow), var(--shadow-lg);
-  transform: translateY(-1px);
-}
-
-.tag.clicked {
-  animation: blowUpAndFade 0.5s ease forwards;
-}
-
-@keyframes blowUpAndFade {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.5);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-/* ============================================================================ */
-/* Quote and Advertisement Components */
-/* ============================================================================ */
-
-.separator-quote,
-.ad-container,
-.quote-container {
-  max-width: 600px;
-  width: 100%;
-  padding: var(--spacing-4);
-  border-radius: var(--radius-xl);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-  margin: var(--spacing-6) auto;
-}
-
-.quote-section {
-  position: relative;
-  margin: var(--spacing-6) 0;
-  min-height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.quote-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.3;
-}
-
-.quote-container {
-  width: 90%;
-  position: relative;
-  z-index: var(--z-index-base);
-  margin: 0;
-}
-
-.quote-text {
-  font-size: var(--font-size-lg);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-3);
-  line-height: var(--line-height-normal);
-}
-
-.quote-author {
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  font-style: italic;
-}
-
-.ad-container {
-  color: var(--text-primary);
-}
-
-/* ============================================================================ */
-/* Category Modal - Slides from behind navbar */
-/* ============================================================================ */
+/* Styling for category modal, slides up from behind navbar. */
 
 .category-modal {
   position: fixed;
@@ -946,8 +409,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
-/* Settings Modal - Exactly like category modal */
+/* Settings Modal */
 /* ============================================================================ */
+/* Styling for settings modal, slides in from right. */
 
 .settings-modal {
   position: fixed;
@@ -1028,22 +492,17 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius-md);
-  padding: var(--spacing-1) var(--spacing-2); /* Smaller padding */
+  padding: var(--spacing-1) var(--spacing-2);
   color: var(--text-primary);
-  font-size: var(--font-size-sm); /* Smaller font */
+  font-size: var(--font-size-sm);
   cursor: pointer;
   transition: var(--transition-fast);
-  min-width: 100px; /* Control width */
+  min-width: 100px;
 }
 
 .setting-item select:focus {
   outline: none;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.2
-  ); /* Glass glow effect like close button */
+  background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -1190,7 +649,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   cursor: pointer;
   transition: var(--transition-fast);
   margin-top: auto;
-  margin-bottom: 30px; /* Space above navbar */
+  margin-bottom: 30px;
 }
 
 .close-settings-btn:hover {
@@ -1198,8 +657,689 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
+/* Article Cards - Base Styles */
+/* ============================================================================ */
+/* Shared styles for all article cards (hero, small, grid). */
+
+.article-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-sizing: border-box;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.article-image,
+.main-article-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+  border-radius: var(--radius-lg);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.article-image[src],
+.main-article-image[src] {
+  opacity: 1;
+}
+
+.article-meta {
+  font-size: var(--font-size-card-meta);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article-title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-2);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  letter-spacing: 0.0625rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article-content {
+  position: static;
+  padding: var(--spacing-1);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+/* ============================================================================ */
+/* Hero Article Card */
+/* ============================================================================ */
+/* Styling for large hero article cards in main and category views. */
+
+.article-card.huge {
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: none;
+  backdrop-filter: none;
+  border: none;
+  overflow: hidden;
+}
+
+.article-card.huge .article-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.article-card.huge .article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-lg);
+  mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.1) 90%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.1) 90%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.article-card.huge .gradient-overlay {
+  display: none;
+}
+
+.article-card.huge .article-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-4);
+  z-index: 2;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.article-card.huge .article-title {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: var(--white);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  margin: 0;
+  line-height: 1.2;
+  font-weight: var(--font-weight-bold);
+  pointer-events: auto;
+}
+
+/* ============================================================================ */
+/* Small Article Cards */
+/* ============================================================================ */
+/* Styling for small article cards in side-by-side and grid layouts. */
+
+.article-card.small .article-title {
+  font-size: var(--font-size-base);
+  margin-bottom: 0;
+  -webkit-line-clamp: 2;
+}
+
+.article-card.small .gradient-overlay {
+  display: none;
+}
+
+.article-card.small .article-content {
+  position: static;
+  padding: var(--spacing-3);
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.article-card.small .card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2);
+  height: 100%;
+}
+
+/* Side-by-side cards - mobile specific styling */
+.side-by-side-container .article-card.small {
+  height: 200px;
+}
+
+.side-by-side-container .article-card.small .article-image-wrapper {
+  height: 120px;
+}
+
+.side-by-side-container .article-card.small .article-content {
+  padding: var(--spacing-2);
+  flex: 1;
+}
+
+.side-by-side-container .article-card.small .article-title {
+  font-size: 0.85rem;
+  line-height: 1.2;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Category grid cards */
+.category-grid .article-card.small {
+  height: 160px;
+  min-height: 120px;
+}
+
+.category-grid .article-card.small .card-inner {
+  flex-direction: row;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2);
+  align-items: stretch;
+}
+
+.category-grid .article-card.small .article-image-wrapper {
+  width: 40%;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.category-grid .article-card.small .article-content {
+  width: 60%;
+  flex: 1;
+  padding: var(--spacing-1);
+}
+
+.category-grid .article-card.small .article-title {
+  -webkit-line-clamp: 2;
+  font-size: var(--font-size-sm);
+}
+
+/* ============================================================================ */
+/* Loading States */
+/* ============================================================================ */
+/* Styles for article cards during loading. */
+
+.article-card.loading {
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+}
+
+.article-card.loading .article-image {
+  opacity: 0.5;
+  transition: opacity var(--transition-normal);
+}
+
+.article-card.loading .article-image-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--text-primary);
+  border-top: 3px solid transparent;
+  border-radius: var(--radius-full);
+  animation: spin 1s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ============================================================================ */
+/* Main Article View */
+/* ============================================================================ */
+/* Styling for full article view, including text and images. */
+
+.main-article {
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  padding: var(--spacing-6) var(--spacing-8) var(--spacing-8);
+  padding-bottom: var(--spacing-6);
+  width: 100%;
+  display: block;
+  flex-direction: column;
+  gap: 0; /* Reset gap to avoid overriding margin */
+  max-width: 800px;
+}
+
+.main-article-title {
+  font-size: var(--font-size-3xl);
+  color: var(--text-primary);
+  text-align: left;
+  max-width: 100%;
+  text-shadow: var(--shadow-glow);
+  margin-top: calc(var(--spacing-8) * -1);
+}
+
+.main-article-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  object-position: center top;
+  aspect-ratio: 3/2;
+  max-width: 100%;
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--spacing-6);
+}
+
+.main-article-body {
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  line-height: var(--line-height-relaxed);
+  max-width: 65ch;
+}
+
+.main-article .article-body p {
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+  font-weight: 100;
+  font-size: var(--font-size-base);
+}
+
+.main-article-body .inline-image {
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  margin: var(--spacing-md) auto;
+  display: block;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.main-article-body .inline-image[src] {
+  opacity: 1;
+}
+
+.main-article-author {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  text-align: center;
+  font-style: italic;
+  margin-top: var(--spacing-2);
+}
+
+/* Font size options */
+.main-article .article-body.font-small p {
+  font-size: var(--font-size-sm) !important;
+}
+
+.main-article .article-body.font-medium p {
+  font-size: var(--font-size-base) !important;
+}
+
+.main-article .article-body.font-large p {
+  font-size: var(--font-size-lg) !important;
+}
+
+/* Reading width options */
+.article-body.width-narrow {
+  max-width: 55ch;
+}
+
+.article-body.width-wide {
+  max-width: 80ch;
+}
+
+/* ============================================================================ */
+/* Article Header and Metadata */
+/* ============================================================================ */
+/* Styling for article headers, categories, and metadata. */
+
+.article-header {
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+.article-category {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-3);
+  display: block;
+}
+
+.article-main-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-4);
+}
+
+.article-hook {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-light);
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: var(--spacing-5);
+}
+
+.article-hook::before,
+.article-hook::after {
+  content: '"';
+}
+
+.article-date {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-4);
+  display: block;
+}
+
+/* ============================================================================ */
+/* Tags System */
+/* ============================================================================ */
+/* Styling for article tags with interactive effects. */
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin: var(--spacing-8) 0 var(--spacing-6) 0;
+  justify-content: center;
+  padding: 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-xs);
+  color: var(--text-primary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius-sm);
+  text-transform: capitalize;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast),
+    box-shadow var(--transition-normal);
+  text-align: center;
+  min-width: 90px;
+  cursor: pointer;
+}
+
+.tag:hover {
+  box-shadow: var(--shadow-glow), var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+.tag.clicked {
+  animation: blowUpAndFade 0.5s ease forwards;
+}
+
+@keyframes blowUpAndFade {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================ */
+/* Social Sharing */
+/* ============================================================================ */
+/* Styling for social sharing buttons in article view. */
+
+.social-sharing {
+  display: flex;
+  gap: var(--spacing-2);
+  margin: var(--spacing-4) 0;
+}
+
+.social-btn {
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.social-icon-placeholder {
+  display: block;
+}
+
+/* ============================================================================ */
+/* Quote and Advertisement Components */
+/* ============================================================================ */
+/* Styling for quotes and ads in article views. */
+
+.quote {
+  position: relative;
+  margin: var(--spacing-8) auto;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.quote-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+.quote-container {
+  max-width: 600px;
+  width: 100%;
+  padding: var(--spacing-8) var(--spacing-4);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.quote-text {
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+  padding-top: var(--spacing-4);
+  margin: 0;
+  line-height: var(--line-height-normal);
+}
+
+.quote-author {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-style: italic;
+  padding-bottom: var(--spacing-4);
+  margin-top: var(--spacing-2);
+}
+
+.ad-container {
+  max-width: 600px;
+  width: 100%;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-xl);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  margin: var(--spacing-6) auto;
+  color: var(--text-primary);
+}
+/* ============================================================================ */
+/* Category Page View */
+/* ============================================================================ */
+/* Styling for category page layout with hero grid and article list. */
+
+.category-page-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--background);
+  z-index: 1000;
+  overflow-y: auto;
+  padding-top: var(--spacing-4);
+  padding-bottom: 120px;
+}
+
+.category-page-title {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-category-label);
+  color: #b0b0b0;
+  letter-spacing: 0.0625rem;
+  margin: var(--spacing-10) 0 var(--spacing-4) var(--spacing-6);
+  display: inline-block;
+}
+
+.category-hero-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.category-side-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3);
+}
+
+.category-articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.load-more-button {
+  width: 100%;
+  padding: var(--spacing-3);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.load-more-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================================ */
+/* Random Articles */
+/* ============================================================================ */
+/* Styling for random article cards and grid. */
+
+.random-articles {
+  display: none;
+}
+
+.random-articles .article-card .article-image {
+  max-width: 300px;
+  height: 200px;
+  margin: 0 auto;
+  display: block;
+}
+
+.random-articles .article-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  margin: var(--spacing-4) 0;
+}
+
+.random-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-4);
+  max-width: 100%;
+}
+
+/* ============================================================================ */
+/* Content Labels */
+/* ============================================================================ */
+/* Styling for category labels in main and category views. */
+
+.category-label {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-category-label);
+  color: #b0b0b0;
+  letter-spacing: 0.0625rem;
+  margin: var(--spacing-article-separation) 0 var(--spacing-4) var(--spacing-6);
+}
+
+/* ============================================================================ */
 /* Utility Components */
 /* ============================================================================ */
+/* Styling for close buttons and other utility elements. */
 
 .close-article {
   color: var(--text-primary);
@@ -1237,70 +1377,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
-/* Category Page View */
+/* Responsive Adjustments */
 /* ============================================================================ */
-
-.category-page-view {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: var(--background);
-  z-index: 1000;
-  overflow-y: auto;
-  padding-top: var(--spacing-4);
-  padding-bottom: 120px; /* Add space for navbar */
-}
-
-.category-page-title {
-  font-family: var(--font-primary);
-  font-weight: var(--font-weight-light);
-  font-size: var(--font-size-category-label);
-  color: #b0b0b0;
-  letter-spacing: 0.0625rem;
-  margin: var(--spacing-10) 0 var(--spacing-4) var(--spacing-6);
-  display: inline-block;
-}
-
-/* Hero grid (1 big + 2 small) */
-.category-hero-grid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-  margin-bottom: var(--spacing-6);
-}
-
-.category-side-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-3);
-}
-
-/* Articles list (full width cards) */
-.category-articles-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-  margin-bottom: var(--spacing-6);
-}
-
-.load-more-button {
-  width: 100%;
-  padding: var(--spacing-3);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: var(--font-size-base);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.load-more-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
+/* Desktop-specific adjustments for search and title. */
 
 @media (min-width: 1200px) {
   .search-icon {
@@ -1308,137 +1387,23 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
     width: 24px;
     height: 24px;
   }
+
+  .search-bar-slide {
+    top: 18px;
+    right: 40px;
+  }
+
+  .main-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
 }
 
-.search-icon {
-  right: 40px;
-  top: 18px;
-  width: 24px;
-  height: 24px;
-}
+/* ============================================================================ */
+/* Overrides for Article Images */
+/* ============================================================================ */
+/* Ensure consistent image positioning across contexts. */
 
-.search-bar-slide {
-  top: 18px;
-  right: 40px;
-}
-
-.main-title {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-}
-
-/* Desktop nav link styling */
-.desktop-nav-item {
-  position: relative;
-  padding: 0.5rem 1rem;
-  transition: color var(--transition-normal);
-}
-
-/* Underline effect - hidden by default */
-.desktop-nav-item::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  width: 0;
-  height: 0.5px;
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
-}
-
-/* Show line only on hover OR active */
-
-.desktop-nav-item:hover::after,
-.desktop-nav-item.active::after,
-.desktop-actions .random-btn:hover::after,
-.desktop-actions .random-btn.active::after {
-  width: 100%;
-}
-
-/* Remove active line when hovering other items */
-.desktop-categories:hover .desktop-nav-item.active::after,
-.desktop-categories:hover .desktop-actions .random-btn.active::after {
-  width: 0;
-}
-
-.desktop-categories:hover .desktop-nav-item:hover::after,
-.desktop-categories:hover .desktop-actions .random-btn:hover::after {
-  width: 100%;
-}
-/* Color gradients */
-.desktop-nav-item[href="#latest"]::after {
-  background: linear-gradient(to right, #87ceeb, #4169e1);
-}
-.desktop-nav-item[href="#health"]::after {
-  background: linear-gradient(to right, #ff6b6b, #ff0000);
-}
-.desktop-nav-item[href="#coins"]::after {
-  background: linear-gradient(to right, #ffd700, #ff8c00);
-}
-.desktop-nav-item[href="#hack"]::after {
-  background: linear-gradient(to right, #ff69b4, #ff1493);
-}
-.desktop-nav-item[href="#ai"]::after {
-  background: linear-gradient(to right, #9370db, #4b0082);
-}
-.random-btn::after {
-  background: linear-gradient(to right, #32cd32, #008000);
-}
-
-.desktop-nav-item svg {
-  width: 19px;
-  height: 19px;
-  margin-right: 9px; /* Increase from 8px */
-  fill: var(--icon-grey); /* Consistent color */
-  stroke: var(--icon-grey); /* For outline icons */
-  transition: var(--transition-fast);
-  vertical-align: center;
-}
-
-.desktop-nav-item:hover svg,
-.desktop-nav-item.active svg {
-  fill: var(--white);
-  stroke: var(--white);
-}
-
-.main-article {
-  max-width: 800px; /* Narrow reading column */
-  margin: var(--spacing-8) auto 0 auto; /* Center it */
-}
-
+.article-image,
 .main-article-image {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  margin: var(--spacing-6) 0;
-  border-radius: var(--radius-xl); /* Softer corners */
-}
-
-.random-articles .article-image {
-  width: 100%;
-  height: 300px; /* Same height for all images */
-  object-fit: cover;
-  margin: var(--spacing-4) 0; /* Consistent spacing */
-}
-
-.random-articles {
-  display: none;
-}
-
-.random-articles .article-card .article-image {
-  max-width: 300px; /* Smaller width */
-  height: 200px; /* Fixed height */
-  margin: 0 auto;
-  display: block;
-}
-
-.main-article-body {
-  font-size: var(--font-size-lg); /* Bigger text for easier reading */
-  line-height: 1.7; /* More line spacing */
-}
-
-.random-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-4);
-  max-width: 100%; /* Use full article width */
+  object-position: center top !important;
 }

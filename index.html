@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- =========================================================== -->
-    <!-- Meta and SEO -->
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
+    <!-- Meta and SEO Configuration -->
+    <!-- ===================================================== -->
+    <!-- Basic meta tags for character encoding, viewport, and site description -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -15,9 +16,10 @@
     />
     <title>LevelUpOrDieTrying</title>
 
-    <!-- =========================================================== -->
-    <!-- Stylesheets: Loaded in order of dependency -->
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
+    <!-- Stylesheets -->
+    <!-- ===================================================== -->
+    <!-- CSS files loaded in dependency order for consistent styling -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/base.css" />
@@ -26,9 +28,10 @@
     <link rel="stylesheet" href="css/utils.css" />
     <link rel="stylesheet" href="css/themes.css" />
 
-    <!-- =========================================================== -->
-    <!-- Fonts: Preconnect and load custom fonts -->
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
+    <!-- Fonts -->
+    <!-- ===================================================== -->
+    <!-- Preconnect to Google Fonts for performance, loading custom font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -38,14 +41,15 @@
   </head>
 
   <body>
-    <!-- =========================================================== -->
-    <!-- Header Section: Logo, title, search bar -->
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
+    <!-- Header Section -->
+    <!-- ===================================================== -->
+    <!-- Sticky header containing logo, title, search, and desktop navigation -->
     <div class="sticky-wrapper-navcontainer">
       <header>
-        <!-- Header Top: Contains logo, title, search, and navigation -->
         <div class="header-top">
-          <!-- Logo + Title: Main title with subtitle -->
+          <!-- Logo and Title -->
+          <!-- Container for logo and main title with subtitle -->
           <div class="title-container">
             <div class="logo-container">
               <img src="assets/images/logo.png" alt="Logo" class="logo" />
@@ -55,7 +59,8 @@
             </h1>
           </div>
 
-          <!-- Right side - Desktop navigation (only visible on desktop) -->
+          <!-- Desktop Navigation -->
+          <!-- Navigation links visible only on desktop screens -->
           <nav class="desktop-nav">
             <ul class="desktop-categories">
               <li><a href="#latest" class="desktop-nav-item">Home</a></li>
@@ -71,7 +76,8 @@
 
           <a href="#settings" class="desktop-settings-icon">Settings</a>
 
-          <!-- Search -->
+          <!-- Search Component -->
+          <!-- Search icon and sliding input field -->
           <div class="search-container">
             <svg
               class="search-icon"
@@ -106,24 +112,24 @@
         </div>
       </header>
     </div>
-    <!-- =========================================================== -->
-    <!-- Main Content: Core article sections and layouts -->
-    <!-- =========================================================== -->
+
+    <!-- ===================================================== -->
+    <!-- Main Content -->
+    <!-- ===================================================== -->
+    <!-- Primary content area with articles, categories, and quotes -->
     <main>
-      <!-- Articles Section: Displays article cards and full article view -->
       <section id="articles" class="articles">
         <div class="container">
-          <!-- ------------------------------------------------------ -->
-          <!-- Latest Articles: Featured and smaller article cards -->
-          <!-- ------------------------------------------------------ -->
+          <!-- Latest Articles -->
+          <!-- Featured articles with a bento grid layout -->
           <div class="category-label latest-label">
             <h2 id="category-title">Latest</h2>
           </div>
 
           <div id="main-content-area">
-            <!-- Bento Grid: Magazine layout for featured articles -->
             <div class="bento-grid">
-              <!-- Hero Article: Large main article (2/3 width on desktop) -->
+              <!-- Hero Article -->
+              <!-- Large article card (2/3 width on desktop) -->
               <div class="article-card glass huge" data-article-id="">
                 <div class="card-inner">
                   <div class="article-image-wrapper">
@@ -142,9 +148,9 @@
                 </div>
               </div>
 
-              <!-- Side-by-side Articles: Two articles below hero -->
+              <!-- Side-by-Side Articles -->
+              <!-- Two smaller articles below hero -->
               <div class="side-by-side-container">
-                <!-- Article 2 -->
                 <div class="article-card glass small" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
@@ -157,7 +163,6 @@
                   </div>
                 </div>
 
-                <!-- Article 3 -->
                 <div class="article-card glass small" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
@@ -171,7 +176,8 @@
                 </div>
               </div>
 
-              <!-- Article 4: Fourth article (spans both columns) -->
+              <!-- Article 4 -->
+              <!-- Fourth article spanning both columns -->
               <div class="article-four-container">
                 <div class="article-card glass small" data-article-id="">
                   <div class="card-inner">
@@ -186,7 +192,8 @@
                 </div>
               </div>
 
-              <!-- Article 5: Fifth article (spans both columns) -->
+              <!-- Article 5 -->
+              <!-- Fifth article spanning both columns -->
               <div class="article-five-container">
                 <div class="article-card glass small" data-article-id="">
                   <div class="card-inner">
@@ -201,7 +208,8 @@
                 </div>
               </div>
 
-              <!-- Advertisement: Right column bottom (1/3 width on desktop) -->
+              <!-- Advertisement -->
+              <!-- Right column ad placeholder -->
               <div class="separator-ad">
                 <div class="ad-container glass">
                   <p>Advertisement</p>
@@ -209,11 +217,10 @@
               </div>
             </div>
 
-            <!-- Article View: Full article display with related articles -->
+            <!-- Article View -->
+            <!-- Full article display with related content -->
             <div class="article-view hidden">
-              <!-- Main Article: Full article content -->
               <div class="main-article glass">
-                <!-- Close Button: Returns to main view -->
                 <!-- <button
                   class="close-article"
                   style="
@@ -240,10 +247,10 @@
                 <p class="main-article-author"></p>
               </div>
 
-              <!-- Random Articles: Suggested related articles -->
+              <!-- Random Articles -->
+              <!-- Suggested related articles -->
               <div class="random-articles">
                 <div class="random-grid">
-                  <!-- Random Article Card 1 -->
                   <div class="article-card small">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
@@ -261,7 +268,6 @@
                     </div>
                   </div>
 
-                  <!-- Random Article Card 2 -->
                   <div class="article-card small">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
@@ -283,21 +289,30 @@
             </div>
           </div>
 
-          <!-- Divider: Visual separator -->
+          <!-- Divider -->
+          <!-- Visual separator between sections -->
           <div class="divider"></div>
 
-          <!-- Quote Separator: Inspirational quote between sections -->
-          <div class="separator-quote glass">
-            <blockquote class="quote-text"></blockquote>
-            <p class="quote-author"></p>
+          <!-- Quote Section 1 -->
+          <!-- Reusable quote block -->
+          <div class="quote debug-quote">
+            <img
+              src="assets/images/openart-image_OaoTLx0Z_1744901057391_raw copy.png"
+              alt="Quote Background"
+              class="quote-background"
+            />
+            <div class="quote-container glass">
+              <blockquote class="quote-text"></blockquote>
+              <p class="quote-author"></p>
+            </div>
           </div>
 
-          <!-- Divider: Visual separator -->
+          <!-- Divider -->
+          <!-- Visual separator between sections -->
           <div class="divider"></div>
 
-          <!-- ------------------------------------------------------ -->
-          <!-- Health Section: Articles for Health category -->
-          <!-- ------------------------------------------------------ -->
+          <!-- Health Section -->
+          <!-- Articles for the Health category -->
           <div class="category-label">
             <h2>Health</h2>
           </div>
@@ -307,12 +322,12 @@
             </div>
           </div>
 
-          <!-- Divider: Visual separator -->
+          <!-- Divider -->
+          <!-- Visual separator between sections -->
           <div class="divider"></div>
 
-          <!-- ------------------------------------------------------ -->
-          <!-- Coins Section: Articles for Coins category -->
-          <!-- ------------------------------------------------------ -->
+          <!-- Coins Section -->
+          <!-- Articles for the Coins category -->
           <div class="category-label">
             <h2>Coins</h2>
           </div>
@@ -322,37 +337,42 @@
             </div>
           </div>
 
-          <!-- Divider: Visual separator -->
+          <!-- Divider -->
+          <!-- Visual separator between sections -->
           <div class="divider"></div>
 
-          <!-- Ad Separator: Second advertisement placeholder -->
+          <!-- Ad Separator -->
+          <!-- Second advertisement placeholder -->
           <div class="separator-ad">
             <div class="ad-container glass">
               <p>Advertisement Placeholder</p>
             </div>
           </div>
 
-          <!-- Divider: Visual separator -->
+          <!-- Divider -->
+          <!-- Visual separator between sections -->
           <div class="divider"></div>
 
-          <!-- ------------------------------------------------------ -->
-          <!-- Final Quote Section: Inspirational quote at page bottom -->
-          <!-- ------------------------------------------------------ -->
-          <section id="quote-section" class="quote-section">
+          <!-- Quote Section 2 -->
+          <!-- Reusable quote block -->
+          <div class="quote">
             <img
               src="assets/images/openart-image_OaoTLx0Z_1744901057391_raw copy.png"
               alt="Quote Background"
               class="quote-background"
             />
             <div class="quote-container glass">
-              <blockquote id="quote-text" class="quote-text"></blockquote>
-              <p id="quote-author" class="quote-author"></p>
+              <blockquote class="quote-text"></blockquote>
+              <p class="quote-author"></p>
             </div>
-          </section>
+          </div>
 
-          <!-- ------------------------------------------------------ -->
-          <!-- Hack Section: Articles for Hack category -->
-          <!-- ------------------------------------------------------ -->
+          <!-- Divider -->
+          <!-- Visual separator between sections -->
+          <div class="divider"></div>
+
+          <!-- Hack Section -->
+          <!-- Articles for the Hack category -->
           <div class="category-label">
             <h2>Hack</h2>
           </div>
@@ -362,12 +382,12 @@
             </div>
           </div>
 
-          <!-- Divider: Visual separator -->
+          <!-- Divider -->
+          <!-- Visual separator between sections -->
           <div class="divider"></div>
 
-          <!-- ------------------------------------------------------ -->
-          <!-- AI Section: Articles for AI category -->
-          <!-- ------------------------------------------------------ -->
+          <!-- AI Section -->
+          <!-- Articles for the AI category -->
           <div class="category-label">
             <h2>AI</h2>
           </div>
@@ -380,14 +400,16 @@
       </section>
     </main>
 
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
     <!-- Category Page View -->
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
+    <!-- Full-screen view for category-specific content -->
     <div id="category-page-view" class="category-page-view hidden">
       <div class="container">
         <h2 class="category-page-title"></h2>
 
-        <!-- Hero section (1 big + 2 small) -->
+        <!-- Hero Section -->
+        <!-- Large hero card with two smaller cards -->
         <div class="category-hero-grid">
           <div class="article-card glass huge" data-article-id="">
             <div class="card-inner">
@@ -428,12 +450,14 @@
           </div>
         </div>
 
-        <!-- Additional articles list -->
+        <!-- Additional Articles List -->
+        <!-- Placeholder for more category articles -->
         <div class="category-articles-list">
           <!-- More articles will be added here -->
         </div>
 
-        <!-- NEW: Article reading view for category page -->
+        <!-- Category Article View -->
+        <!-- Full article view within category page -->
         <div class="category-article-view hidden">
           <div class="main-article glass">
             <button class="close-article category-close">×</button>
@@ -451,71 +475,61 @@
       </div>
     </div>
 
-    <!-- =========================================================== -->
-    <!-- Navigation: Fixed bottom navigation with category modal -->
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
+    <!-- Bottom Navigation -->
+    <!-- ===================================================== -->
+    <!-- Fixed navigation bar with category modal -->
     <nav class="nav-container">
-      <!-- Category Navigation: Links to sections and features -->
       <ul class="mobile-nav">
-        <!-- Latest: Displays latest articles -->
         <li>
           <div class="nav-item">
-            <!-- Icon populated by svg.js -->
             <a href="#latest">Latest</a>
           </div>
         </li>
 
-        <!-- Category: Opens modal with category options -->
         <li>
           <div class="nav-item category">
-            <!-- Icon populated by svg.js -->
             <a href="#category">Category</a>
           </div>
         </li>
 
-        <!-- Random: Loads a random article -->
         <li>
           <div class="nav-item">
-            <!-- Icon populated by svg.js -->
             <a href="#random">Random</a>
           </div>
         </li>
 
-        <!-- Settings: Opens settings dropdown with theme toggle -->
         <li>
           <div class="nav-item settings">
-            <!-- Icon populated by svg.js -->
             <a href="#settings">Settings</a>
           </div>
         </li>
       </ul>
     </nav>
 
-    <!-- Category Modal: Slides from behind navbar -->
+    <!-- Category Modal -->
+    <!-- Slides up from behind navbar with category options -->
     <div class="category-modal" id="category-modal">
       <div class="modal-content glass">
         <ul class="modal-categories">
           <li class="modal-category-item">
-            <!-- Icon populated by svg.js -->
             <a href="#health">Health</a>
           </li>
           <li class="modal-category-item">
-            <!-- Icon populated by svg.js -->
             <a href="#coins">Coins</a>
           </li>
           <li class="modal-category-item">
-            <!-- Icon populated by svg.js -->
             <a href="#hack">Hack</a>
           </li>
           <li class="modal-category-item">
-            <!-- Icon populated by svg.js -->
             <a href="#ai">AI</a>
           </li>
         </ul>
       </div>
     </div>
 
-    <!-- Settings Modal: Slides from behind navbar -->
+    <!-- Settings Modal -->
+    <!-- Slides in from right with settings options -->
     <div class="settings-modal" id="settings-modal">
       <div class="modal-content">
         <div class="settings-content">
@@ -531,6 +545,7 @@
               </select>
             </div>
 
+            <!-- Reading Width (Temporarily Disabled) -->
             <!-- <div class="setting-item">
               <label>Reading Width</label>
               <select id="reading-width-select">
@@ -539,7 +554,7 @@
               </select>
             </div> -->
 
-            <!-- LIGHT MODE - TEMPORARILY DISABLED
+            <!-- Theme Toggle (Temporarily Disabled) -->
             <!-- <div class="setting-item">
               <div class="theme-toggle-container">
                 <div>
@@ -559,12 +574,14 @@
       </div>
     </div>
 
-    <!-- Backdrop for settings modal -->
+    <!-- Settings Backdrop -->
+    <!-- Overlay for settings modal -->
     <div class="settings-backdrop" id="settings-backdrop"></div>
 
-    <!-- =========================================================== -->
-    <!-- Scripts: JavaScript modules for functionality -->
-    <!-- =========================================================== -->
+    <!-- ===================================================== -->
+    <!-- Scripts -->
+    <!-- ===================================================== -->
+    <!-- JavaScript modules for dynamic functionality -->
     <script type="module" src="js/modal.js"></script>
     <script type="module" src="js/data.js"></script>
     <script type="module" src="js/theme.js"></script>

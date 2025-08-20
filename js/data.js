@@ -505,17 +505,39 @@ async function showArticleView(articleId) {
 
       categoryView.classList.remove("hidden");
       populateArticleView(article, categoryView);
+      populateRelatedCategoryArticles(categoryView, articleId); // Add this line
       setupCategoryCloseButton();
     }
   } else {
+    // Force main view state for random articles
+    const categoryPageView = document.getElementById("category-page-view");
+    if (categoryPageView) {
+      categoryPageView.classList.add("hidden");
+      console.log("Hidden category page view");
+    }
+
+    const mainContent = document.getElementById("main-content-area");
+    if (mainContent) {
+      mainContent.style.display = "";
+      console.log("Showed main content area");
+    }
+
     const elements = getLayoutElements();
+    console.log("Elements found:", elements);
+
     if (!elements.bentoGrid || !elements.articleView) {
-      console.error("Required elements not found");
+      console.error("Required elements not found", {
+        bentoGrid: elements.bentoGrid,
+        articleView: elements.articleView,
+      });
       return;
     }
 
     elements.bentoGrid.style.display = "none";
+    console.log("Hidden bento grid");
+
     elements.articleView.classList.remove("hidden");
+    console.log("Showed article view");
 
     if (elements.latestLabel) {
       elements.latestLabel.style.display = "none";
@@ -525,7 +547,6 @@ async function showArticleView(articleId) {
     populateRandomArticles(articleId);
     setupCloseButton();
   }
-
   window.scrollTo(0, 0);
 }
 
@@ -538,51 +559,51 @@ function populateArticleView(article, container) {
   const mainArticle = container.querySelector(".main-article");
 
   mainArticle.innerHTML = `
-    <article class="reading-layout">
-      <header class="article-header">
-        <span class="article-category">${
-          article.category?.charAt(0).toUpperCase() +
-            article.category?.slice(1) || "Uncategorized"
-        } | ${formatDate(article.date)}</span>
-        <h1 class="article-main-title">${
-          article.title || "Untitled Article"
-        }</h1>
-        <p class="article-hook">${article.hook || "Here comes the hook"}</p>
-        
-        <div class="social-sharing">
-          <button class="social-btn social-x" aria-label="Share on X">
-            <span class="social-icon-placeholder">X</span>
-          </button>
-          <button class="social-btn social-tiktok" aria-label="Share on TikTok">
-            <span class="social-icon-placeholder">TT</span>
-          </button>
-          <button class="social-btn social-facebook" aria-label="Share on Facebook">
-            <span class="social-icon-placeholder">FB</span>
-          </button>
-          <button class="social-btn social-pinterest" aria-label="Share on Pinterest">
-            <span class="social-icon-placeholder">PT</span>
-          </button>
-          <button class="social-btn social-snapchat" aria-label="Share on Snapchat">
-            <span class="social-icon-placeholder">SC</span>
-          </button>
-        </div>
-      </header>
+   <article class="reading-layout">
+     <header class="article-header">
+       <span class="article-category">${
+         article.category?.charAt(0).toUpperCase() +
+           article.category?.slice(1) || "Uncategorized"
+       } | ${formatDate(article.date)}</span>
+       <h1 class="article-main-title">${
+         article.title || "Untitled Article"
+       }</h1>
+       <p class="article-hook">${article.hook || "Here comes the hook"}</p>
+       
+       <div class="social-sharing">
+         <button class="social-btn social-x" aria-label="Share on X">
+           <span class="social-icon-placeholder">X</span>
+         </button>
+         <button class="social-btn social-tiktok" aria-label="Share on TikTok">
+           <span class="social-icon-placeholder">TT</span>
+         </button>
+         <button class="social-btn social-facebook" aria-label="Share on Facebook">
+           <span class="social-icon-placeholder">FB</span>
+         </button>
+         <button class="social-btn social-pinterest" aria-label="Share on Pinterest">
+           <span class="social-icon-placeholder">PT</span>
+         </button>
+         <button class="social-btn social-snapchat" aria-label="Share on Snapchat">
+           <span class="social-icon-placeholder">SC</span>
+         </button>
+       </div>
+     </header>
 
-      <img 
-        src="${article.image || "assets/images/fallback_image.png"}" 
-        alt="${article.title || "Article image"}" 
-        class="article-hero-image"
-      />
-      
-      <div class="article-body">
-        ${article.content || createFallbackContent(article)}
-      </div>
-      
-      <footer class="article-footer">
-        <div class="article-tags"></div>
-      </footer>
-    </article>
-  `;
+     <img 
+       src="${article.image || "assets/images/fallback_image.png"}" 
+       alt="${article.title || "Article image"}" 
+       class="article-hero-image"
+     />
+     
+     <div class="article-body">
+       ${article.content || createFallbackContent(article)}
+     </div>
+     
+     <footer class="article-footer">
+       <div class="article-tags"></div>
+     </footer>
+   </article>
+ `;
 
   // Populate tags separately
   if (article.tags) {
@@ -616,9 +637,9 @@ function populateRelatedCategoryArticles(container, currentArticleId) {
   const relatedContainer = document.createElement("div");
   relatedContainer.className = "related-articles";
   relatedContainer.innerHTML = `
-    <h3 style="color: var(--text-primary); margin: 2rem 0 1rem 0; text-align: center;">More ${currentCategory} articles:</h3>
-    <div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
-  `;
+   <h3 style="color: var(--text-primary); margin: 2rem 0 1rem 0; text-align: center;">More ${currentCategory} articles:</h3>
+   <div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
+ `;
 
   mainArticle.appendChild(relatedContainer);
 
@@ -637,11 +658,11 @@ function populateRelatedCategoryArticles(container, currentArticleId) {
  */
 function createFallbackContent(article) {
   return `
-    <p>Published on ${formatDate(article.date)} in ${article.category}</p>
-    <p>This is a featured article about ${article.title.toLowerCase()}. The full content would be displayed here in a real implementation.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  `;
+   <p>Published on ${formatDate(article.date)} in ${article.category}</p>
+   <p>This is a featured article about ${article.title.toLowerCase()}. The full content would be displayed here in a real implementation.</p>
+   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+   <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+ `;
 }
 
 /**
@@ -889,8 +910,8 @@ function setupNavigation() {
     }
   });
 
-  document.querySelectorAll(".nav-item a").forEach((link) => {
-    link.addEventListener("click", handleNavigationClick);
+  document.querySelectorAll(".nav-item").forEach((navItem) => {
+    navItem.addEventListener("click", handleNavigationClick);
   });
 
   // Add desktop navigation listeners
@@ -905,11 +926,28 @@ function setupNavigation() {
  */
 function handleNavigationClick(e) {
   e.preventDefault();
-  const href = e.target.closest("a").getAttribute("href");
 
-  if (href === "#random") {
+  // For desktop nav, the currentTarget IS the link
+  // For mobile nav, the link is inside the nav-item
+  let link, href;
+
+  if (e.currentTarget.classList.contains("desktop-nav-item")) {
+    link = e.currentTarget;
+    href = link.getAttribute("href");
+  } else {
+    link = e.currentTarget.querySelector("a");
+    href = link.getAttribute("href");
+  }
+
+  const isMobileNav = e.currentTarget.closest(".mobile-nav");
+
+  if (href === "#settings") {
+    return; // Don't do anything for settings - just let the settings modal handle it
+  } else if (href === "#random") {
     exitCategoryPage();
-    updateDesktopNavigation("random");
+    if (!isMobileNav) {
+      updateDesktopNavigation("random");
+    }
     loadRandomArticle();
   } else if (href === "#category") {
     return;
@@ -918,19 +956,8 @@ function handleNavigationClick(e) {
     loadCategory("latest");
   } else {
     const category = href.replace("#", "");
-
     exitCategoryPage();
     loadCategory(category);
-  }
-
-  const mainArticleView = document.querySelector(".article-view");
-  if (mainArticleView) {
-    mainArticleView.classList.add("hidden");
-  }
-
-  const categoryArticleView = document.querySelector(".category-article-view");
-  if (categoryArticleView) {
-    categoryArticleView.classList.add("hidden");
   }
 }
 

@@ -1,14 +1,252 @@
 [
   {
-    "text": "Success is the sum of small efforts, repeated day in and day out.",
-    "author": "Robert Collier"
+    "id": 1,
+    "text": "An investment in knowledge pays the best interest.",
+    "author": "Benjamin Franklin"
   },
   {
-    "text": "The only way to do great work is to love what you do.",
-    "author": "Steve Jobs"
+    "id": 2,
+    "text": "The stock market is filled with individuals who know the price of everything, but the value of nothing.",
+    "author": "Philip Fisher"
   },
   {
-    "text": "You can place a dummy quote inside it.",
+    "id": 3,
+    "text": "It's not whether you're right or wrong, but how much money you make when you're right and how much you lose when you're wrong.",
+    "author": "George Soros"
+  },
+  {
+    "id": 4,
+    "text": "Health is the greatest of human blessings.",
+    "author": "Hippocrates"
+  },
+  {
+    "id": 5,
+    "text": "Take care of your body. It's the only place you have to live.",
+    "author": "Jim Rohn"
+  },
+  {
+    "id": 6,
+    "text": "In investing, what is comfortable is rarely profitable.",
+    "author": "Robert Arnott"
+  },
+  {
+    "id": 7,
+    "text": "Physical fitness is the first requisite of happiness.",
+    "author": "Joseph Pilates"
+  },
+  {
+    "id": 8,
+    "text": "Artificial intelligence is the new electricity.",
+    "author": "Andrew Ng"
+  },
+  {
+    "id": 9,
+    "text": "Your brain is like a muscle. When it is in use, we feel very good. Understanding is joyous.",
+    "author": "Carl Sagan"
+  },
+  {
+    "id": 10,
+    "text": "Money is a terrible master but an excellent servant.",
+    "author": "P.T. Barnum"
+  },
+  {
+    "id": 11,
+    "text": "Success is not in what you have, but who you are.",
+    "author": "Bo Bennett"
+  },
+  {
+    "id": 12,
+    "text": "Discipline is the bridge between goals and accomplishment.",
+    "author": "Jim Rohn"
+  },
+  {
+    "id": 13,
+    "text": "Time in the market beats timing the market.",
+    "author": "Ken Fisher"
+  },
+  {
+    "id": 14,
+    "text": "The groundwork of all happiness is health.",
+    "author": "Leigh Hunt"
+  },
+  {
+    "id": 15,
+    "text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
+    "author": "Aristotle"
+  },
+  {
+    "id": 16,
+    "text": "If you want to find the secrets of the universe, think in terms of energy, frequency and vibration.",
+    "author": "Nikola Tesla"
+  },
+  {
+    "id": 17,
+    "text": "Risk comes from not knowing what you're doing.",
+    "author": "Warren Buffett"
+  },
+  {
+    "id": 18,
+    "text": "Walking is man’s best medicine.",
+    "author": "Hippocrates"
+  },
+  {
+    "id": 19,
+    "text": "The greatest wealth is health.",
+    "author": "Virgil"
+  },
+  {
+    "id": 20,
+    "text": "The human brain has 100 billion neurons, each neuron connected to 10 thousand other neurons. Sitting on your shoulders is the most complicated object in the known universe.",
+    "author": "Michio Kaku"
+  },
+  {
+    "id": 21,
+    "text": "Wealth consists not in having great possessions, but in having few wants.",
+    "author": "Epictetus"
+  },
+  {
+    "id": 22,
+    "text": "Invest in yourself. Your career is the engine of your wealth.",
+    "author": "Paul Clitheroe"
+  },
+  {
+    "id": 23,
+    "text": "A fit body, a calm mind, a house full of love. These things cannot be bought – they must be earned.",
+    "author": "Naval Ravikant"
+  },
+  {
+    "id": 24,
+    "text": "The best way to predict the future is to invent it.",
+    "author": "Alan Kay"
+  },
+  {
+    "id": 25,
+    "text": "Do not save what is left after spending, but spend what is left after saving.",
+    "author": "Warren Buffett"
+  },
+  {
+    "id": 26,
+    "text": "The doctor of the future will give no medicine but will interest his patients in the care of the human frame, in diet, and in the cause and prevention of disease.",
+    "author": "Thomas Edison"
+  },
+  {
+    "id": 27,
+    "text": "Artificial intelligence is not a man versus machine saga, it’s man with machine versus problem.",
+    "author": "Ginni Rometty"
+  },
+  {
+    "id": 28,
+    "text": "The intelligent investor is a realist who sells to optimists and buys from pessimists.",
+    "author": "Benjamin Graham"
+  },
+  {
+    "id": 29,
+    "text": "Reading is to the mind what exercise is to the body.",
+    "author": "Joseph Addison"
+  },
+  {
+    "id": 30,
+    "text": "An ounce of prevention is worth a pound of cure.",
+    "author": "Benjamin Franklin"
+  },
+  {
+    "id": 31,
+    "text": "The question is not whether intelligent machines can have emotions, but whether machines can be intelligent without emotions.",
+    "author": "Marvin Minsky"
+  },
+  {
+    "id": 32,
+    "text": "Formal education will make you a living; self-education will make you a fortune.",
+    "author": "Jim Rohn"
+  },
+  {
+    "id": 33,
+    "text": "Happiness is nothing more than good health and a bad memory.",
+    "author": "Albert Schweitzer"
+  },
+  {
+    "id": 34,
+    "text": "Every once in a while, a new technology, an old problem, and a big idea turn into an innovation.",
+    "author": "Dean Kamen"
+  },
+  {
+    "id": 35,
+    "text": "Compound interest is the eighth wonder of the world. He who understands it, earns it. He who doesn't, pays it.",
+    "author": "Albert Einstein"
+  },
+  {
+    "id": 36,
+    "text": "The mind is everything. What you think you become.",
+    "author": "Buddha"
+  },
+  {
+    "id": 37,
+    "text": "Those who think they have no time for healthy eating will sooner or later have to find time for illness.",
+    "author": "Edward Stanley"
+  },
+  {
+    "id": 38,
+    "text": "The pace of progress in artificial intelligence is incredibly fast.",
+    "author": "Elon Musk"
+  },
+  {
+    "id": 39,
+    "text": "Do not be embarrassed by your failures, learn from them and start again.",
+    "author": "Richard Branson"
+  },
+  {
+    "id": 40,
+    "text": "The best investment you can make is in your own health.",
     "author": "Anonymous"
+  },
+  {
+    "id": 41,
+    "text": "Your brain is a garden. Your thoughts are the seeds. You can grow flowers, or you can grow weeds.",
+    "author": "Anonymous"
+  },
+  {
+    "id": 42,
+    "text": "Never depend on a single income. Make investment to create a second source.",
+    "author": "Warren Buffett"
+  },
+  {
+    "id": 43,
+    "text": "Your diet is a bank account. Good food choices are good investments.",
+    "author": "Bethenny Frankel"
+  },
+  {
+    "id": 44,
+    "text": "The empires of the future are the empires of the mind.",
+    "author": "Winston Churchill"
+  },
+  {
+    "id": 45,
+    "text": "To invest successfully over a lifetime does not require a stratospheric IQ, unusual business insights, or inside information. What’s needed is a sound intellectual framework for making decisions and the ability to keep emotions from corroding that framework.",
+    "author": "Warren Buffett"
+  },
+  {
+    "id": 46,
+    "text": "Health is not valued till sickness comes.",
+    "author": "Thomas Fuller"
+  },
+  {
+    "id": 47,
+    "text": "The measure of intelligence is the ability to change.",
+    "author": "Albert Einstein"
+  },
+  {
+    "id": 48,
+    "text": "A healthy outside starts from the inside.",
+    "author": "Robert Urich"
+  },
+  {
+    "id": 49,
+    "text": "The mind is like a parachute. It doesn’t work if it isn’t open.",
+    "author": "Frank Zappa"
+  },
+  {
+    "id": 50,
+    "text": "Money grows on the tree of persistence.",
+    "author": "Japanese Proverb"
   }
 ]

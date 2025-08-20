@@ -233,7 +233,7 @@ header {
 .article-four-container .article-card.small .article-image-wrapper,
 .article-five-container .article-card.small .article-image-wrapper {
   aspect-ratio: 16 / 9;
-  height: 250px;
+  height: 25s0px;
 }
 
 /* Ad - full width on mobile */
@@ -259,7 +259,6 @@ header {
 /* ============================================================================ */
 /* TABLET LAYOUT - Medium screens (768px to 1199px) */
 /* ============================================================================ */
-
 @media (min-width: 768px) and (max-width: 1199px) {
   /* Latest Section Layout */
   .bento-grid {
@@ -272,35 +271,36 @@ header {
   .bento-grid .article-card.huge {
     grid-column: 1 / span 2;
     grid-row: 1;
-    height: 300px;
+    height: auto;
   }
 
   .side-by-side-container {
     display: contents;
+    height: auto;
   }
 
   .side-by-side-container .article-card:nth-child(1) {
     grid-column: 1;
     grid-row: 2;
-    height: 150px;
+    height: auto !important;
   }
 
   .side-by-side-container .article-card:nth-child(2) {
     grid-column: 2;
     grid-row: 2;
-    height: 150px;
+    height: auto !important;
   }
 
   .article-four-container .article-card {
     grid-column: 1;
     grid-row: 3;
-    height: 150px;
+    height: auto;
   }
 
   .article-five-container .article-card {
     grid-column: 2;
     grid-row: 3;
-    height: 150px;
+    height: auto;
   }
 
   .separator-ad {
@@ -356,7 +356,6 @@ header {
   }
 
   /* Category-Specific Layouts */
-
   /* Coins category - Zigzag 2x3 */
   .category-grid[data-category="coins"] {
     grid-template-areas:
@@ -364,7 +363,6 @@ header {
       "c d"
       "e f";
   }
-
   .category-grid[data-category="coins"] .article-card:nth-child(1) {
     grid-area: a;
   }
@@ -392,7 +390,6 @@ header {
       "d e"
       "f .";
   }
-
   .category-grid[data-category="health"] .article-card:nth-child(1) {
     grid-area: a;
   }
@@ -420,7 +417,6 @@ header {
       "d e"
       "f .";
   }
-
   .category-grid[data-category="hack"] .article-card:nth-child(1) {
     grid-area: a;
   }
@@ -447,7 +443,6 @@ header {
       "c d"
       "e f";
   }
-
   .category-grid[data-category="ai"] .article-card:nth-child(1) {
     grid-area: a;
   }
@@ -466,8 +461,18 @@ header {
   .category-grid[data-category="ai"] .article-card:nth-child(6) {
     grid-area: f;
   }
-}
 
+  /* Image size adjustments for tablet */
+  .side-by-side-container .article-card .article-image-wrapper {
+    height: 350px !important; /* Override any conflicting styles */
+  }
+  .article-four-container .article-card .article-image-wrapper {
+    height: 350px !important;
+  }
+  .article-five-container .article-card .article-image-wrapper {
+    height: 350px !important;
+  }
+}
 /* ============================================================================ */
 /* DESKTOP LAYOUT - Large screens (1200px and up) */
 /* ============================================================================ */
