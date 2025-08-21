@@ -681,8 +681,8 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-sizing: border-box;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
+  background-color: var(--background) !important;
+  backdrop-filter: none;
   border: none;
   cursor: pointer;
   display: flex;
@@ -710,6 +710,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   object-position: bottom;
   border-radius: var(--radius-lg);
   opacity: 0;
+  object-position: center top;
   transition: opacity var(--transition-normal);
 }
 
@@ -744,6 +745,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   position: static;
   padding: var(--spacing-1);
   color: var(--text-primary);
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -761,7 +763,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   aspect-ratio: 16 / 9;
   position: relative;
   background: none;
-  backdrop-filter: none;
   border: none;
   overflow: hidden;
 }
@@ -957,10 +958,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
  */
 
 .main-article {
+  background-color: var(--background) !important;
   border-radius: var(--radius-lg);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  padding: var(--spacing-6) var(--spacing-8) var(--spacing-8);
+  /* padding: var(--spacing-6) var(--spacing-8) var(--spacing-8); */
   padding-bottom: var(--spacing-6);
   width: 100%;
   display: block;
@@ -980,19 +980,17 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .main-article-image {
   width: 100%;
-  height: 350px;
+  height: 300px;
   object-fit: cover;
   object-position: center top;
-  aspect-ratio: 3/2;
-  max-width: 100%;
   border-radius: var(--radius-xl);
-  margin-bottom: var(--spacing-6);
+  margin: 0;
 }
 
 .main-article-body {
   font-size: var(--font-size-lg);
   font-weight: 900;
-  line-height: var(--line-height-relaxed);
+  line-height: var(--line-height-loose);
   max-width: 65ch;
 }
 
@@ -1001,6 +999,13 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   margin-bottom: var(--spacing-6);
   font-weight: 100;
   font-size: var(--font-size-base);
+  line-height: 1.8; /* Added to override defaults */
+}
+
+.main-article .reading-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
 }
 
 .main-article-body .inline-image {
@@ -1009,8 +1014,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   aspect-ratio: 3 / 2;
   object-fit: cover;
   border-radius: var(--radius-lg);
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
+  /* background: var(--glass-bg); */
   margin: var(--spacing-md) auto;
   display: block;
   opacity: 0;
@@ -1122,7 +1126,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   font-size: var(--font-size-xs);
   color: var(--text-primary);
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
   border-radius: var(--radius-sm);
   text-transform: capitalize;
   box-shadow: var(--shadow-md);
@@ -1167,7 +1170,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 .social-sharing {
   display: flex;
   gap: var(--spacing-2);
-  margin: var(--spacing-4) 0;
+  margin: 0;
+  opacity: 1 !important;
+  min-height: 20px;
 }
 
 .social-btn {
@@ -1223,7 +1228,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   padding: var(--spacing-8) var(--spacing-4);
   border-radius: var(--radius-xl);
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(var(--glass-blur));
   box-shadow: var(--shadow-lg);
   text-align: center;
   position: relative;
@@ -1252,7 +1256,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   padding: var(--spacing-4);
   border-radius: var(--radius-xl);
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
   box-shadow: var(--shadow-lg);
   text-align: center;
   margin: var(--spacing-6) auto;
@@ -1474,10 +1477,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
  * Ensures consistency with footer while allowing specific tweaks.
  */
 
-.article-view .social-sharing {
-  gap: var(--spacing-3); /* Base gap, adjustable for larger screens */
-}
-
 .article-view .social-icon,
 .article-view .social-icon svg,
 .article-view .social-icon path {
@@ -1516,6 +1515,10 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
     gap: var(--spacing-4); /* More gap on tablet */
   }
 
+  .articles {
+    margin-top: 0;
+  }
+
   .article-view .social-icon,
   .article-view .social-icon svg,
   .article-view .social-icon path {
@@ -1547,6 +1550,15 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
   }
 
+  .desktop-nav {
+    margin-top: -50px; /* Move higher, increased from 20px */
+    margin-left: -20px; /* Shift left slightly */
+  }
+
+  .desktop-nav-item {
+    font-size: calc(var(--font-size-base) * 0.9); /* Keep the smaller font */
+  }
+
   .article-view .social-sharing {
     gap: var(--spacing-5); /* More gap on desktop */
   }
@@ -1559,6 +1571,10 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   }
 }
 
+.main-content-area {
+  padding-top: 0px; /* Extra space for reading pane details */
+}
+
 /* ============================================================================ */
 /* Overrides for Article Images */
 /* ============================================================================ */
@@ -1566,7 +1582,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
  * Overrides to maintain uniformity.
  */
 
-.article-image,
-.main-article-image {
+.article-image {
   object-position: center top !important;
 }

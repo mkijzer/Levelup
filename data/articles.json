@@ -19,9 +19,9 @@
       "savings",
       "budgeting",
       "investing",
-      "expenses",
       "automation",
-      "control"
+      "expenses",
+      "financial-discipline"
     ]
   },
   {
@@ -42,11 +42,11 @@
     "date": "2025-04-14",
     "tags": [
       "focus",
-      "pomodoro",
       "productivity",
+      "pomodoro",
       "workspace",
       "neuroscience",
-      "challenge"
+      "notifications"
     ]
   },
   {
@@ -71,7 +71,7 @@
       "exercise",
       "consistency",
       "functional",
-      "challenge"
+      "fitness"
     ]
   },
   {
@@ -84,7 +84,15 @@
     "slug": "steal-back-day",
     "content": "<p>Time’s slipping. Take it back. Tech should serve you, not enslave you. First, block social media apps during work hours—use apps like Freedom or Cold Turkey to lock yourself out. You don’t need to see another cat video; you need to finish your work.</p><p>Second, automate one repetitive task. If you’re copying data between spreadsheets, script it with Python or use a tool like Zapier. Free up mental space for what matters. Third, batch your emails. Check them twice a day—once at 10 AM, once at 4 PM. Constant inbox-watching kills momentum. Reclaim your day.</p>",
     "tips": ["Block social apps", "Script one task"],
-    "date": "2025-04-12"
+    "date": "2025-04-12",
+    "tags": [
+      "productivity",
+      "automation",
+      "time-management",
+      "email",
+      "social-media",
+      "focus"
+    ]
   },
   {
     "id": "005",
@@ -96,7 +104,15 @@
     "slug": "lock-habits",
     "content": "<p>You’re not a quitter. Prove it. Habits fail because you aim too big. Start small—ridiculously small. Want to read more? Start with one page a day. Want to run? Start with one minute. The goal isn’t progress; it’s consistency. Do it daily, no excuses.</p><p>Track your streak. Use a calendar, an app, or a notebook—mark every day you succeed. If you miss a day, you fail. The streak is your motivator. Build one habit at a time; stack them later. In 66 days, it’ll be automatic. That’s the science. Stick to it.</p>",
     "tips": ["One habit, 1 min", "Track or fail"],
-    "date": "2025-04-11"
+    "date": "2025-04-11",
+    "tags": [
+      "habits",
+      "consistency",
+      "tracking",
+      "discipline",
+      "productivity",
+      "self-improvement"
+    ]
   },
   {
     "id": "006",
@@ -108,7 +124,15 @@
     "slug": "ai-workflow-tools",
     "content": "<p>AI isn’t just hype—it’s your unfair advantage. First, use a tool like Notion AI to summarize your notes. Dump your messy thoughts, and it’ll organize them into bullet points in seconds. Stop wasting time on manual cleanup.</p><p>Second, automate repetitive tasks with AI scripts. Tools like Hugging Face have free models for text generation or data sorting—plug them into your workflow with a bit of Python. If coding’s not your thing, use Zapier with AI integrations. Work smarter, not harder. Your output will skyrocket.</p>",
     "tips": ["Summarize with Notion AI", "Automate with AI scripts"],
-    "date": "2025-04-09"
+    "date": "2025-04-09",
+    "tags": [
+      "ai",
+      "productivity",
+      "automation",
+      "workflow",
+      "note-taking",
+      "efficiency"
+    ]
   },
   {
     "id": "007",
@@ -120,7 +144,15 @@
     "slug": "meditate-like-pro",
     "content": "<p>Your mind’s a storm. Calm it. Meditation doesn’t need hours or a guru. Find a quiet spot—your room, a park, even your car. Sit comfortably, close your eyes, and focus on your breath. Inhale for 4 seconds, hold for 4, exhale for 4. That’s it.</p><p>Thoughts will come. Don’t fight them; notice them, then return to your breath. Set a timer for 5 minutes. Do this daily, same time, same place. In a week, you’ll feel clearer. In a month, you’ll crave it. Peace isn’t a gift; it’s a skill.</p>",
     "tips": ["Breath focus: 4-4-4", "5 mins daily"],
-    "date": "2025-04-08"
+    "date": "2025-04-08",
+    "tags": [
+      "meditation",
+      "mindfulness",
+      "breathing",
+      "mental-health",
+      "focus",
+      "calmness"
+    ]
   },
   {
     "id": "008",
@@ -132,7 +164,15 @@
     "slug": "sleep-better-win",
     "content": "<p>Your sleep sucks. Fix it. A bad night ruins your focus, mood, and energy. Start with a no-screen rule 1 hour before bed—blue light messes with melatonin. Read a book or journal instead. Keep your room cool, around 65°F; your body needs it to rest.</p><p>Next, stick to a sleep schedule. Same bedtime, same wake-up, even on weekends. Your brain loves routine. If you’re tossing and turning, try a 10-minute body scan meditation. Sleep isn’t a luxury; it’s your foundation. Get it right, and everything else follows.</p>",
     "tips": ["No screens 1 hr before bed", "Stick to a sleep schedule"],
-    "date": "2025-04-07"
+    "date": "2025-04-07",
+    "tags": [
+      "sleep",
+      "routine",
+      "mental-health",
+      "energy",
+      "productivity",
+      "recovery"
+    ]
   },
   {
     "id": "010",
@@ -144,7 +184,15 @@
     "slug": "eat-to-live",
     "content": "<p>Your diet’s a mess. Clean it up. Junk food spikes your energy, then tanks it. Start simple: eat one vegetable with every meal. Spinach, broccoli, carrots—doesn’t matter. Just get it in. Cut soda; drink water or black coffee instead.</p><p>Protein is non-negotiable. Eggs, chicken, or beans—aim for 20g per meal. It keeps you full and fuels muscle. Plan your meals weekly to avoid takeout traps. Food isn’t just fuel; it’s strategy. Eat smart, and your body will thank you.</p>",
     "tips": ["One veggie per meal", "20g protein per meal"],
-    "date": "2025-04-06"
+    "date": "2025-04-06",
+    "tags": [
+      "nutrition",
+      "diet",
+      "protein",
+      "healthy-eating",
+      "energy",
+      "meal-planning"
+    ]
   },
   {
     "id": "011",
@@ -156,7 +204,15 @@
     "slug": "master-small-talk",
     "content": "<p>You’re awkward. That’s fixable. Small talk isn’t shallow—it’s a gateway. Start with open-ended questions: ‘What’s the best thing you’ve done this week?’ People love talking about themselves. Listen, don’t just wait to speak.</p><p>Match their energy. If they’re chill, don’t oversell. If they’re hyped, lean in. Practice one conversation daily—barista, coworker, stranger. Connection isn’t magic; it’s a skill. In 30 days, you’ll charm anyone without trying.</p>",
     "tips": ["Ask open-ended questions", "Practice one convo daily"],
-    "date": "2025-04-05"
+    "date": "2025-04-05",
+    "tags": [
+      "communication",
+      "social-skills",
+      "networking",
+      "conversation",
+      "relationships",
+      "confidence"
+    ]
   },
   {
     "id": "012",
@@ -168,7 +224,15 @@
     "slug": "declutter-life",
     "content": "<p>Your stuff owns you. Break free. Start with one room—your bedroom, probably. Pick up every item and ask: ‘Do I use this? Do I love it?’ If not, trash it or donate it. Be ruthless. Clutter clouds your mind.</p><p>Next, digitize what you can. Scan old photos, ditch paper receipts. Use a cloud app like Google Drive. Less physical crap, more mental space. One weekend, 4 hours max, and you’ll feel lighter. Keep only what serves you.</p>",
     "tips": ["Be ruthless with clutter", "Digitize photos, receipts"],
-    "date": "2025-04-04"
+    "date": "2025-04-04",
+    "tags": [
+      "decluttering",
+      "organization",
+      "minimalism",
+      "mental-clarity",
+      "productivity",
+      "simplicity"
+    ]
   },
   {
     "id": "013",
@@ -180,7 +244,15 @@
     "slug": "run-smarter",
     "content": "<p>You’re not unfit—you’re inconsistent. Running builds stamina, but you don’t need to kill yourself. Start with 10 minutes, slow pace, three times a week. Focus on form: short strides, land midfoot, breathe deep.</p><p>Track your runs with a free app like Strava. Set a goal—maybe a 5K in 8 weeks. Mix in one sprint session weekly: 30 seconds fast, 90 seconds walk, repeat 6 times. Running isn’t punishment; it’s power. Build it gradually.</p>",
     "tips": ["Run 10 mins, 3x/week", "Add one sprint session"],
-    "date": "2025-04-03"
+    "date": "2025-04-03",
+    "tags": [
+      "running",
+      "fitness",
+      "endurance",
+      "training",
+      "consistency",
+      "sprints"
+    ]
   },
   {
     "id": "014",
@@ -192,7 +264,15 @@
     "slug": "slash-bills",
     "content": "<p>Your bills are bleeding you dry. Stop it. Call your internet provider today—negotiate a lower rate or switch. Most people overpay by 20%. Check your subscriptions: cancel anything you haven’t used in 30 days.</p><p>Next, switch to LED bulbs and unplug devices when not in use. Small changes cut your electric bill by 10-15%. Money saved is money earned. Track your wins in a spreadsheet. You’re not cheap; you’re smart.</p>",
     "tips": ["Negotiate internet bill", "Switch to LED bulbs"],
-    "date": "2025-04-02"
+    "date": "2025-04-02",
+    "tags": [
+      "savings",
+      "budgeting",
+      "bills",
+      "negotiation",
+      "energy-efficiency",
+      "frugality"
+    ]
   },
   {
     "id": "015",
@@ -204,7 +284,15 @@
     "slug": "side-hustle-cash",
     "content": "<p>You’re broke because you’re not hustling. Start small. Got a skill? Sell it on Fiverr—writing, design, or even voiceovers. Set up a gig in 1 hour, price it at $10. Promote it on social media.</p><p>Day 2: list unused stuff on eBay or Craigslist. Old phone, clothes, books—someone wants it. By day 7, you’ll have cash flow. Hustles aren’t glamorous; they’re effective. Keep 50% for savings, reinvest the rest.</p>",
     "tips": ["Start a Fiverr gig", "Sell unused stuff"],
-    "date": "2025-04-01"
+    "date": "2025-04-01",
+    "tags": [
+      "side-hustle",
+      "income",
+      "freelancing",
+      "selling",
+      "entrepreneurship",
+      "savings"
+    ]
   },
   {
     "id": "016",
@@ -216,7 +304,15 @@
     "slug": "invest-like-pro",
     "content": "<p>Your money’s lazy. Wake it up. Open a brokerage account—Robinhood, Fidelity, whatever’s free. Start with $100 if that’s all you’ve got. Buy an ETF like VOO; it tracks the S&P 500 and grows with the market.</p><p>Don’t chase hot stocks; you’ll lose. Set up auto-investments weekly, even if it’s $10. Dollar-cost averaging kills risk. Check your portfolio once a month, not daily. Investing isn’t gambling—it’s discipline.</p>",
     "tips": ["Buy VOO ETF", "Auto-invest weekly"],
-    "date": "2025-03-31"
+    "date": "2025-03-31",
+    "tags": [
+      "investing",
+      "etf",
+      "discipline",
+      "finance",
+      "portfolio",
+      "dollar-cost-averaging"
+    ]
   },
   {
     "id": "017",
@@ -228,7 +324,15 @@
     "slug": "ditch-debt",
     "content": "<p>Debt’s a chain. Break it. List all your debts—credit cards, loans, everything. Start with the smallest balance. Pay it off first while making minimum payments on others. Momentum matters more than math.</p><p>Call your creditors. Ask for lower rates or payment plans. Most will budge if you’re serious. Cut one luxury—eating out, new clothes—and funnel that cash to debt. Freedom feels better than any purchase.</p>",
     "tips": ["Pay smallest debt first", "Negotiate with creditors"],
-    "date": "2025-03-30"
+    "date": "2025-03-30",
+    "tags": [
+      "debt",
+      "freedom",
+      "negotiation",
+      "finance",
+      "budgeting",
+      "repayment"
+    ]
   },
   {
     "id": "018",
@@ -240,7 +344,15 @@
     "slug": "budget-like-boss",
     "content": "<p>You’re not broke—you’re sloppy. Get a budgeting app like YNAB or Mint. Track every penny for 30 days. Split your income: 50% needs, 30% wants, 20% savings or debt. Stick to it.</p><p>Review weekly. Overspent on takeout? Cut back next week. Budgeting isn’t restriction; it’s power. Know where your money goes, and you’ll control it. In 90 days, you’ll have savings and no stress.</p>",
     "tips": ["Use a budgeting app", "50-30-20 rule"],
-    "date": "2025-03-29"
+    "date": "2025-03-29",
+    "tags": [
+      "budgeting",
+      "finance",
+      "savings",
+      "tracking",
+      "discipline",
+      "money-management"
+    ]
   },
   {
     "id": "019",
@@ -252,7 +364,15 @@
     "slug": "speed-morning-routine",
     "content": "<p>Your mornings drag. Streamline them. Lay out clothes, keys, and breakfast the night before. Prep takes 5 minutes, saves 15. Next, cut your shower to 7 minutes max—use a timer if you’re slow.</p><p>Pick one priority task for the day. Write it down before bed. Hit it first thing, no distractions. A fast morning sets the tone. You’re not rushed; you’re efficient. Own your day from the start.</p>",
     "tips": ["Prep the night before", "One priority task"],
-    "date": "2025-03-28"
+    "date": "2025-03-28",
+    "tags": [
+      "morning-routine",
+      "productivity",
+      "efficiency",
+      "time-management",
+      "planning",
+      "focus"
+    ]
   },
   {
     "id": "020",
@@ -264,7 +384,15 @@
     "slug": "learn-anything-fast",
     "content": "<p>You’re not dumb—you’re slow. Speed up. Pick a skill and break it into 3-5 core parts. Want to code? Focus on variables, loops, and functions first. Use YouTube or free courses on Coursera.</p><p>Spend 1 hour daily, no distractions. Practice deliberately—repeat the hard parts. In 20 hours, you’ll be competent, not perfect. Mastery comes later. Start now, or you’re just dreaming.</p>",
     "tips": ["Break skill into parts", "1 hr daily practice"],
-    "date": "2025-03-27"
+    "date": "2025-03-27",
+    "tags": [
+      "learning",
+      "skill-building",
+      "productivity",
+      "focus",
+      "education",
+      "self-improvement"
+    ]
   },
   {
     "id": "021",
@@ -276,7 +404,15 @@
     "slug": "hack-commute",
     "content": "<p>Your commute’s wasted time. Fix it. If you drive, listen to audiobooks or podcasts—try Audible or Spotify, pick something useful like finance or skills. If you’re on public transit, use a note-taking app like Evernote to braindump ideas.</p><p>Plan your day during the ride. List 3 must-do tasks. No phone scrolling—it’s a trap. Turn dead time into growth time. In a month, you’ll have learned something or planned a side hustle.</p>",
     "tips": ["Listen to audiobooks", "Plan 3 tasks"],
-    "date": "2025-03-26"
+    "date": "2025-03-26",
+    "tags": [
+      "commute",
+      "productivity",
+      "learning",
+      "planning",
+      "time-management",
+      "efficiency"
+    ]
   },
   {
     "id": "022",
@@ -288,7 +424,15 @@
     "slug": "negotiate-like-pro",
     "content": "<p>You’re leaving money on the table. Learn to negotiate. Whether it’s a raise or a deal, research first—know market rates or product value. Glassdoor for salaries, eBay for used goods. Start high, but realistic.</p><p>Silence is your weapon. Make your ask, then shut up. Let them fill the void. Practice with small stuff—haggle at a market or ask for a discount. Confidence, not aggression, wins. You’ll save or earn hundreds in a year.</p>",
     "tips": ["Research market rates", "Use silence after asking"],
-    "date": "2025-03-25"
+    "date": "2025-03-25",
+    "tags": [
+      "negotiation",
+      "confidence",
+      "communication",
+      "finance",
+      "skills",
+      "bargaining"
+    ]
   },
   {
     "id": "023",
@@ -300,7 +444,15 @@
     "slug": "master-email-inbox",
     "content": "<p>Your inbox is a swamp. Drain it. Set up filters—Gmail or Outlook can auto-sort newsletters and spam. Unsubscribe from junk daily; takes 10 seconds per email. Use folders for ‘urgent,’ ‘later,’ and ‘archive.’</p><p>Reply or delete within 24 hours. If it takes more than 2 minutes, schedule it. Check email 3 times a day max. An empty inbox clears your mind. You’re not a secretary—control the chaos.</p>",
     "tips": ["Set up email filters", "Check 3x daily max"],
-    "date": "2025-03-24"
+    "date": "2025-03-24",
+    "tags": [
+      "email",
+      "productivity",
+      "organization",
+      "time-management",
+      "inbox-zero",
+      "efficiency"
+    ]
   },
   {
     "id": "029",
@@ -312,7 +464,15 @@
     "slug": "ai-writing-assistant",
     "content": "<p>Writing’s hard. AI makes it easy. Use Grammarly’s AI for real-time grammar and style fixes—free version’s solid. For emails, try Jasper AI to draft replies in seconds. Feed it a prompt, get a polished response.</p><p>Want custom? Train a free Hugging Face model on your writing style—takes 2 hours if you know Python. AI doesn’t replace you; it amplifies you. Cut writing time in half and sound sharper.</p>",
     "tips": ["Use Grammarly AI", "Train Hugging Face model"],
-    "date": "2025-03-18"
+    "date": "2025-03-18",
+    "tags": [
+      "ai",
+      "writing",
+      "productivity",
+      "automation",
+      "grammar",
+      "efficiency"
+    ]
   },
   {
     "id": "030",
@@ -324,7 +484,15 @@
     "slug": "ai-social-media",
     "content": "<p>Social media eats time. Automate it. Tools like Buffer or Hootsuite use AI to schedule posts at peak engagement times—free plans work for one account. Use Canva’s AI to generate quick visuals.</p><p>For content, plug a topic into ChatGPT or Grok for post ideas. Tweak them in 5 minutes. Set a weekly schedule, batch-create posts. You’ll save hours and still look active online.</p>",
     "tips": ["Schedule with Buffer", "Use AI for post ideas"],
-    "date": "2025-03-17"
+    "date": "2025-03-17",
+    "tags": [
+      "ai",
+      "social-media",
+      "automation",
+      "scheduling",
+      "content-creation",
+      "productivity"
+    ]
   },
   {
     "id": "031",
@@ -336,7 +504,15 @@
     "slug": "ai-job-hunting",
     "content": "<p>Job hunting’s brutal. AI can help. Use Jobscan to match your resume to job descriptions—free for basic scans. It flags keywords you’re missing. For cover letters, plug the job ad into Grok for a tailored draft.</p><p>LinkedIn’s AI suggests roles based on your profile—update it weekly. Set alerts for new postings. AI cuts the grunt work; you focus on networking. Land an interview in half the time.</p>",
     "tips": ["Use Jobscan for resumes", "AI-draft cover letters"],
-    "date": "2025-03-16"
+    "date": "2025-03-16",
+    "tags": [
+      "ai",
+      "job-hunting",
+      "resume",
+      "career",
+      "networking",
+      "automation"
+    ]
   },
   {
     "id": "032",
@@ -348,7 +524,15 @@
     "slug": "ai-trend-prediction",
     "content": "<p>Stay ahead with AI. Tools like Google Trends are free and show what’s spiking in searches—use it for business or side hustles. For deeper dives, try Tableau’s AI analytics—free trial available.</p><p>Feed social media data into a tool like Brandwatch for sentiment analysis. Spot trends before they blow up. No PhD needed; just curiosity. Know what’s next, and you’ll always be one step ahead.</p>",
     "tips": ["Check Google Trends", "Use Brandwatch for insights"],
-    "date": "2025-03-15"
+    "date": "2025-03-15",
+    "tags": [
+      "ai",
+      "trends",
+      "analytics",
+      "business",
+      "sentiment-analysis",
+      "strategy"
+    ]
   },
   {
     "id": "033",
@@ -360,7 +544,15 @@
     "slug": "ai-image-editing",
     "content": "<p>Photoshop’s pricey. Use AI instead. Photopea’s free, browser-based, and mimics Photoshop with AI touch-up tools. Remove backgrounds in seconds. For quick edits, try Canva’s AI Magic Eraser—free tier’s enough.</p><p>Want custom art? Stable Diffusion’s open-source version generates images from text prompts. Run it on a free Google Colab notebook. No design skills needed; AI does the heavy lifting.</p>",
     "tips": ["Use Photopea for edits", "Try Stable Diffusion"],
-    "date": "2025-03-14"
+    "date": "2025-03-14",
+    "tags": [
+      "ai",
+      "image-editing",
+      "design",
+      "automation",
+      "creativity",
+      "free-tools"
+    ]
   },
   {
     "id": "036",
@@ -381,10 +573,10 @@
     "tags": [
       "battery",
       "smartphone",
+      "optimization",
       "charging",
-      "location",
-      "brightness",
-      "optimization"
+      "energy-saving",
+      "tech"
     ]
   },
   {
@@ -403,7 +595,14 @@
       "Use faster DNS servers"
     ],
     "date": "2025-06-06",
-    "tags": ["wifi", "router", "internet", "speed", "optimization", "network"]
+    "tags": [
+      "wifi",
+      "internet",
+      "optimization",
+      "router",
+      "speed",
+      "networking"
+    ]
   },
   {
     "id": "038",
@@ -422,12 +621,12 @@
     ],
     "date": "2025-06-06",
     "tags": [
+      "digital-detox",
       "attention",
       "focus",
-      "detox",
-      "notifications",
-      "grayscale",
-      "productivity"
+      "productivity",
+      "screen-time",
+      "notifications"
     ]
   },
   {
@@ -446,7 +645,14 @@
       "Set a consistent sleep-wake time"
     ],
     "date": "2025-06-05",
-    "tags": ["sleep", "recovery", "brain", "focus", "energy", "longevity"]
+    "tags": [
+      "sleep",
+      "health",
+      "recovery",
+      "mental-health",
+      "energy",
+      "productivity"
+    ]
   },
   {
     "id": "040",
@@ -466,11 +672,11 @@
     "date": "2025-06-05",
     "tags": [
       "nutrition",
+      "diet",
       "discipline",
-      "energy",
-      "disease",
-      "focus",
-      "metabolism"
+      "health",
+      "whole-foods",
+      "energy"
     ]
   },
   {
@@ -489,7 +695,14 @@
       "Use probiotics after antibiotics"
     ],
     "date": "2025-06-05",
-    "tags": ["gut", "mood", "microbiome", "digestion", "focus", "health"]
+    "tags": [
+      "gut-health",
+      "microbiome",
+      "nutrition",
+      "mental-health",
+      "fermented-foods",
+      "digestion"
+    ]
   },
   {
     "id": "042",
@@ -508,12 +721,12 @@
     ],
     "date": "2025-06-05",
     "tags": [
-      "movement",
-      "sedentary",
       "fitness",
-      "longevity",
-      "metabolism",
-      "energy"
+      "movement",
+      "health",
+      "sedentary",
+      "exercise",
+      "longevity"
     ]
   },
   {
@@ -532,7 +745,14 @@
       "Limit dehydrating drinks like coffee"
     ],
     "date": "2025-06-05",
-    "tags": ["hydration", "brain", "energy", "focus", "performance", "clarity"]
+    "tags": [
+      "hydration",
+      "health",
+      "cognitive-function",
+      "energy",
+      "performance",
+      "water"
+    ]
   },
   {
     "id": "044",
@@ -549,7 +769,15 @@
       "Cook three meals at home this week",
       "Set a daily spending alert"
     ],
-    "date": "2025-06-06"
+    "date": "2025-06-06",
+    "tags": [
+      "budgeting",
+      "savings",
+      "frugality",
+      "expense-tracking",
+      "subscriptions",
+      "finance"
+    ]
   },
   {
     "id": "045",
@@ -566,7 +794,15 @@
       "Set auto investments of 5 dollars weekly",
       "Check portfolio weekly"
     ],
-    "date": "2025-06-06"
+    "date": "2025-06-06",
+    "tags": [
+      "investing",
+      "microinvesting",
+      "finance",
+      "robo-advisor",
+      "portfolio",
+      "savings"
+    ]
   },
   {
     "id": "046",
@@ -583,7 +819,15 @@
       "Pay 10 percent extra on top debt",
       "Cut one credit card"
     ],
-    "date": "2025-06-06"
+    "date": "2025-06-06",
+    "tags": [
+      "debt",
+      "finance",
+      "repayment",
+      "interest-rates",
+      "budgeting",
+      "freedom"
+    ]
   },
   {
     "id": "047",
@@ -600,7 +844,15 @@
       "Complete one gig this week",
       "Ask for a review after"
     ],
-    "date": "2025-06-06"
+    "date": "2025-06-06",
+    "tags": [
+      "side-hustle",
+      "freelancing",
+      "income",
+      "entrepreneurship",
+      "gig-economy",
+      "finance"
+    ]
   },
   {
     "id": "048",
@@ -617,6 +869,14 @@
       "Invest in an index fund",
       "Track savings rate"
     ],
-    "date": "2025-06-06"
+    "date": "2025-06-06",
+    "tags": [
+      "retirement",
+      "fire-movement",
+      "savings",
+      "investing",
+      "finance",
+      "index-funds"
+    ]
   }
 ]

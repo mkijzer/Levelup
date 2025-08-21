@@ -96,16 +96,28 @@ class QuoteManager {
     }
   }
 
-  // Populate both quote sections with random quotes
-  populateQuotes() {
+  populateQuotes(category = null) {
     if (!this.isLoaded || this.quotes.length === 0) {
       this.handleError();
       return;
     }
 
     try {
+      // Filter quotes by category if provided
+      let availableQuotes = this.quotes;
+      if (category) {
+        availableQuotes = this.quotes.filter(
+          (quote) => quote.categories && quote.categories.includes(category)
+        );
+
+        // Fallback to all quotes if no category-specific quotes found
+        if (availableQuotes.length === 0) {
+          availableQuotes = this.quotes;
+        }
+      }
+
       // Select two unique random quotes
-      const [quote1, quote2] = this.getTwoRandomQuotes();
+      const [quote1, quote2] = this.getTwoRandomQuotes(availableQuotes);
 
       // Update the first quote section
       this.setQuote(
@@ -127,21 +139,21 @@ class QuoteManager {
   }
 
   // Get two different random quotes from the array
-  getTwoRandomQuotes() {
-    if (this.quotes.length <= 1) {
+  getTwoRandomQuotes(quotesArray = this.quotes) {
+    if (quotesArray.length <= 1) {
       return [
-        this.quotes[0] || FALLBACK_QUOTE,
-        this.quotes[0] || FALLBACK_QUOTE,
+        quotesArray[0] || FALLBACK_QUOTE,
+        quotesArray[0] || FALLBACK_QUOTE,
       ];
     }
 
-    const firstIndex = Math.floor(Math.random() * this.quotes.length);
+    const firstIndex = Math.floor(Math.random() * quotesArray.length);
     let secondIndex;
     do {
-      secondIndex = Math.floor(Math.random() * this.quotes.length);
+      secondIndex = Math.floor(Math.random() * quotesArray.length);
     } while (secondIndex === firstIndex);
 
-    return [this.quotes[firstIndex], this.quotes[secondIndex]];
+    return [quotesArray[firstIndex], quotesArray[secondIndex]];
   }
 
   // Set text and author for a given quote element pair

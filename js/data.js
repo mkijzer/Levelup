@@ -48,7 +48,7 @@ let isInCategoryPage = false;
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_DAY: 5,
-  LAUNCH_DATE: new Date("2025-01-15"), // Change to your actual launch date
+  LAUNCH_DATE: new Date("2025-08-18"), // Use today's date
   INITIAL_CATEGORY_ARTICLES: 15,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -239,6 +239,7 @@ function getAllCategoryArticles(category) {
  * @param {string} query - Search query
  * @returns {Array} Array of matching articles
  */
+
 function searchArticles(query) {
   const normalizedQuery = query.toLowerCase().trim();
 
@@ -256,6 +257,141 @@ function searchArticles(query) {
     })
     .slice(0, CONFIG.ARTICLES_PER_DAY)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+function searchArticlesByTag(tag) {
+  // Get current article ID from the main article view
+  const currentArticleTitle = document.querySelector(
+    ".main-article .article-main-title"
+  );
+  const currentArticle = currentArticleTitle
+    ? articlesData.find((a) => a.title === currentArticleTitle.textContent)
+    : null;
+
+  const tagArticles = articlesData.filter(
+    (article) =>
+      article.tags &&
+      article.tags.includes(tag) &&
+      article.id !== (currentArticle ? currentArticle.id : null)
+  );
+
+  if (tagArticles.length > 0) {
+    // Fast direct approach - skip heavy category loading
+    const elements = getLayoutElements();
+    resetMainViewState(elements);
+    updateCategoryTitle(`TAG: ${tag.toUpperCase()}`);
+    populateMainLayout(tagArticles.slice(0, 5), elements);
+    window.scrollTo(0, 0);
+  }
+}
+
+function checkTagHasResults(tag) {
+  const currentArticleTitle = document.querySelector(
+    ".main-article .article-main-title"
+  );
+  const currentArticle = currentArticleTitle
+    ? articlesData.find((a) => a.title === currentArticleTitle.textContent)
+    : null;
+
+  const tagArticles = articlesData.filter(
+    (article) =>
+      article.tags &&
+      article.tags.includes(tag) &&
+      article.id !== (currentArticle ? currentArticle.id : null)
+  );
+
+  return tagArticles.length > 0;
+}
+function showNoTagResultsMessage(tag) {
+  const elements = getLayoutElements();
+  resetMainViewState(elements);
+  updateCategoryTitle(`TAG: ${tag.toUpperCase()}`);
+
+  const smartCategory = findCategoryForTag(tag);
+  const categoryText = smartCategory
+    ? `Try articles from <span class="clickable-category" data-category="${smartCategory}" style="
+      color: var(--accent-color); 
+      cursor: pointer; 
+      text-decoration: underline;
+      font-weight: bold;
+    ">${smartCategory.charAt(0).toUpperCase() + smartCategory.slice(1)}</span>`
+    : `Check out our latest articles`;
+
+  const messageHTML = `
+    <div class="no-results-message" style="
+      text-align: center; 
+      padding: 60px 20px; 
+      color: var(--text-primary);
+    ">
+      <h2 style="font-size: 2rem; margin-bottom: 20px;">
+        No '${tag}' articles published yet!
+      </h2>
+      <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 30px;">
+        But we're cooking something up...
+      </p>
+      <p style="font-size: 1rem;">
+        ${categoryText}
+      </p>
+    </div>
+  `;
+
+  elements.bentoGrid.innerHTML = messageHTML;
+  elements.bentoGrid.style.display = "block";
+
+  const categoryLink = elements.bentoGrid.querySelector(".clickable-category");
+  if (categoryLink) {
+    categoryLink.addEventListener("click", () => {
+      const category = categoryLink.getAttribute("data-category");
+      console.log("Category clicked:", category);
+
+      // Get category articles directly
+      const categoryArticles = getCategoryArticlesExcludingLatest(category);
+      console.log("Found articles:", categoryArticles.length);
+
+      // Clear message manually
+      elements.bentoGrid.innerHTML = "";
+      console.log("Cleared bento grid");
+
+      // Hide the latest label (first Health title)
+      const latestLabel = document.querySelector(
+        ".category-label.latest-label"
+      );
+      if (latestLabel) {
+        latestLabel.style.display = "none";
+      }
+
+      // Just try simple approach
+      updateCategoryTitle(category.charAt(0).toUpperCase() + category.slice(1));
+
+      if (categoryArticles.length > 0) {
+        populateMainLayout(categoryArticles, elements);
+        console.log("Populated layout");
+      } else {
+        console.log("No articles to show");
+      }
+
+      window.scrollTo(0, 0);
+    });
+  }
+
+  window.scrollTo(0, 0);
+}
+function findCategoryForTag(tag) {
+  const categoryCount = {};
+
+  // Count which categories have this tag
+  articlesData.forEach((article) => {
+    if (article.tags && article.tags.includes(tag)) {
+      const category = normalizeCategory(article.category || "");
+      categoryCount[category] = (categoryCount[category] || 0) + 1;
+    }
+  });
+
+  // Return category with most articles containing this tag
+  return Object.keys(categoryCount).reduce(
+    (a, b) => (categoryCount[a] > categoryCount[b] ? a : b),
+    null
+  );
 }
 
 /**
@@ -466,6 +602,7 @@ async function populateCategoryGrids() {
         const articleCategory = normalizeCategory(article.category || "");
         return articleCategory === category && !usedArticleIds.has(article.id);
       })
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, CONFIG.CATEGORY_GRID_SIZE);
 
     console.log(`Found ${categoryArticles.length} articles for ${category}`);
@@ -494,6 +631,16 @@ async function showArticleView(articleId) {
     console.error(`Article not found: ${articleId}`);
     return;
   }
+
+  // Hide ALL article cards with this ID
+  const allCards = document.querySelectorAll(
+    `[data-article-id="${articleId}"]`
+  );
+  console.log("Found cards to hide:", allCards.length);
+  allCards.forEach((card) => {
+    card.style.display = "none";
+    card.setAttribute("data-hidden-for-view", "true");
+  });
 
   if (isInCategoryPage) {
     const elements = getCategoryPageElements();
@@ -552,6 +699,7 @@ async function showArticleView(articleId) {
     populateRandomArticles(articleId);
     setupCloseButton();
   }
+
   window.scrollTo(0, 0);
 }
 
@@ -578,11 +726,11 @@ function populateArticleView(article, container) {
        <div class="social-sharing"></div>
      </header>
 
-     <img 
-       src="${article.image || "assets/images/fallback_image.png"}" 
-       alt="${article.title || "Article image"}" 
-       class="article-hero-image"
-     />
+    <img 
+  src="${article.image || "assets/images/fallback_image.png"}" 
+  alt="${article.title || "Article image"}" 
+  class="main-article-image"
+/>
      
      <div class="article-body">
        ${article.content || createFallbackContent(article)}
@@ -703,10 +851,15 @@ function populateArticleTags(tagsElement, tags) {
     tagElement.textContent = tag;
 
     tagElement.addEventListener("click", () => {
-      tagElement.classList.add("clicked");
-      setTimeout(() => {
-        console.log(`Tag clicked: ${tag}`);
-      }, 250);
+      const hasResults = checkTagHasResults(tag);
+      if (hasResults) {
+        tagElement.classList.add("clicked");
+        setTimeout(() => {
+          searchArticlesByTag(tag);
+        }, 250);
+      } else {
+        showNoTagResultsMessage(tag);
+      }
     });
 
     tagsElement.appendChild(tagElement);
@@ -770,6 +923,16 @@ function closeArticleView() {
     if (elements.latestLabel) {
       elements.latestLabel.style.display = "block";
     }
+  }
+
+  // Show the hidden article card
+  const hiddenCard = document.querySelector('[data-hidden-for-view="true"]');
+  if (hiddenCard) {
+    console.log("Found hidden card to show:", hiddenCard);
+    hiddenCard.style.display = "";
+    hiddenCard.removeAttribute("data-hidden-for-view");
+  } else {
+    console.log("No hidden card found");
   }
 
   window.scrollTo(0, 0);
@@ -1016,11 +1179,7 @@ function calculateDailyRotationIndex() {
     (today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)
   );
 
-  const totalArticles = articlesData.length;
-  const startIndex = Math.max(
-    0,
-    totalArticles - (daysSinceLaunch + 1) * CONFIG.ARTICLES_PER_DAY
-  );
+  const startIndex = daysSinceLaunch * CONFIG.ARTICLES_PER_DAY;
 
   console.log(
     `Day ${
@@ -1032,14 +1191,17 @@ function calculateDailyRotationIndex() {
 }
 
 /**
- * Assigns current date to all articles for display consistency
+ * Assigns date to articles for display consistency
  */
 function assignCurrentDateToArticles() {
   const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
 
-  articlesData.forEach((article) => {
-    article.date = todayString;
+  articlesData.forEach((article, index) => {
+    const dayIndex = Math.floor(index / CONFIG.ARTICLES_PER_DAY);
+    const articleDate = new Date(CONFIG.LAUNCH_DATE);
+    articleDate.setDate(articleDate.getDate() + dayIndex);
+
+    article.date = articleDate.toISOString().split("T")[0];
   });
 }
 
@@ -1056,6 +1218,14 @@ async function initializeApp() {
     }
 
     articlesData = await response.json();
+    // Only keep published articles
+    const today = new Date();
+    const maxPublishedIndex =
+      Math.floor((today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)) *
+        CONFIG.ARTICLES_PER_DAY +
+      CONFIG.ARTICLES_PER_DAY;
+    articlesData = articlesData.slice(0, maxPublishedIndex);
+
     console.log(`Loaded ${articlesData.length} articles`);
 
     currentStartIndex = calculateDailyRotationIndex();

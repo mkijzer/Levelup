@@ -2,251 +2,902 @@
   {
     "id": 1,
     "text": "An investment in knowledge pays the best interest.",
-    "author": "Benjamin Franklin"
+    "author": "Benjamin Franklin",
+    "categories": ["coins", "hack"]
   },
   {
     "id": 2,
     "text": "The stock market is filled with individuals who know the price of everything, but the value of nothing.",
-    "author": "Philip Fisher"
+    "author": "Philip Fisher",
+    "categories": ["coins"]
   },
   {
     "id": 3,
     "text": "It's not whether you're right or wrong, but how much money you make when you're right and how much you lose when you're wrong.",
-    "author": "George Soros"
+    "author": "George Soros",
+    "categories": ["coins"]
   },
   {
     "id": 4,
     "text": "Health is the greatest of human blessings.",
-    "author": "Hippocrates"
+    "author": "Hippocrates",
+    "categories": ["health"]
   },
   {
     "id": 5,
     "text": "Take care of your body. It's the only place you have to live.",
-    "author": "Jim Rohn"
+    "author": "Jim Rohn",
+    "categories": ["health"]
   },
   {
     "id": 6,
     "text": "In investing, what is comfortable is rarely profitable.",
-    "author": "Robert Arnott"
+    "author": "Robert Arnott",
+    "categories": ["coins"]
   },
   {
     "id": 7,
     "text": "Physical fitness is the first requisite of happiness.",
-    "author": "Joseph Pilates"
+    "author": "Joseph Pilates",
+    "categories": ["health"]
   },
   {
     "id": 8,
     "text": "Artificial intelligence is the new electricity.",
-    "author": "Andrew Ng"
+    "author": "Andrew Ng",
+    "categories": ["ai"]
   },
   {
     "id": 9,
     "text": "Your brain is like a muscle. When it is in use, we feel very good. Understanding is joyous.",
-    "author": "Carl Sagan"
+    "author": "Carl Sagan",
+    "categories": ["health", "hack"]
   },
   {
     "id": 10,
     "text": "Money is a terrible master but an excellent servant.",
-    "author": "P.T. Barnum"
+    "author": "P.T. Barnum",
+    "categories": ["coins"]
   },
   {
     "id": 11,
     "text": "Success is not in what you have, but who you are.",
-    "author": "Bo Bennett"
+    "author": "Bo Bennett",
+    "categories": ["hack"]
   },
   {
     "id": 12,
     "text": "Discipline is the bridge between goals and accomplishment.",
-    "author": "Jim Rohn"
+    "author": "Jim Rohn",
+    "categories": ["hack", "health"]
   },
   {
     "id": 13,
     "text": "Time in the market beats timing the market.",
-    "author": "Ken Fisher"
+    "author": "Ken Fisher",
+    "categories": ["coins"]
   },
   {
     "id": 14,
     "text": "The groundwork of all happiness is health.",
-    "author": "Leigh Hunt"
+    "author": "Leigh Hunt",
+    "categories": ["health"]
   },
   {
     "id": 15,
     "text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.",
-    "author": "Aristotle"
+    "author": "Aristotle",
+    "categories": ["hack", "health"]
   },
   {
     "id": 16,
     "text": "If you want to find the secrets of the universe, think in terms of energy, frequency and vibration.",
-    "author": "Nikola Tesla"
+    "author": "Nikola Tesla",
+    "categories": ["ai", "hack"]
   },
   {
     "id": 17,
     "text": "Risk comes from not knowing what you're doing.",
-    "author": "Warren Buffett"
+    "author": "Warren Buffett",
+    "categories": ["coins"]
   },
   {
     "id": 18,
-    "text": "Walking is man’s best medicine.",
-    "author": "Hippocrates"
+    "text": "Walking is man's best medicine.",
+    "author": "Hippocrates",
+    "categories": ["health"]
   },
   {
     "id": 19,
     "text": "The greatest wealth is health.",
-    "author": "Virgil"
+    "author": "Virgil",
+    "categories": ["health", "coins"]
   },
   {
     "id": 20,
     "text": "The human brain has 100 billion neurons, each neuron connected to 10 thousand other neurons. Sitting on your shoulders is the most complicated object in the known universe.",
-    "author": "Michio Kaku"
+    "author": "Michio Kaku",
+    "categories": ["ai", "health"]
   },
   {
     "id": 21,
     "text": "Wealth consists not in having great possessions, but in having few wants.",
-    "author": "Epictetus"
+    "author": "Epictetus",
+    "categories": ["coins", "hack"]
   },
   {
     "id": 22,
     "text": "Invest in yourself. Your career is the engine of your wealth.",
-    "author": "Paul Clitheroe"
+    "author": "Paul Clitheroe",
+    "categories": ["coins", "hack"]
   },
   {
     "id": 23,
     "text": "A fit body, a calm mind, a house full of love. These things cannot be bought – they must be earned.",
-    "author": "Naval Ravikant"
+    "author": "Naval Ravikant",
+    "categories": ["health", "hack"]
   },
   {
     "id": 24,
     "text": "The best way to predict the future is to invent it.",
-    "author": "Alan Kay"
+    "author": "Alan Kay",
+    "categories": ["ai", "hack"]
   },
   {
     "id": 25,
     "text": "Do not save what is left after spending, but spend what is left after saving.",
-    "author": "Warren Buffett"
+    "author": "Warren Buffett",
+    "categories": ["coins"]
   },
   {
     "id": 26,
     "text": "The doctor of the future will give no medicine but will interest his patients in the care of the human frame, in diet, and in the cause and prevention of disease.",
-    "author": "Thomas Edison"
+    "author": "Thomas Edison",
+    "categories": ["health", "ai"]
   },
   {
     "id": 27,
-    "text": "Artificial intelligence is not a man versus machine saga, it’s man with machine versus problem.",
-    "author": "Ginni Rometty"
+    "text": "Artificial intelligence is not a man versus machine saga, it's man with machine versus problem.",
+    "author": "Ginni Rometty",
+    "categories": ["ai"]
   },
   {
     "id": 28,
     "text": "The intelligent investor is a realist who sells to optimists and buys from pessimists.",
-    "author": "Benjamin Graham"
+    "author": "Benjamin Graham",
+    "categories": ["coins"]
   },
   {
     "id": 29,
     "text": "Reading is to the mind what exercise is to the body.",
-    "author": "Joseph Addison"
+    "author": "Joseph Addison",
+    "categories": ["health", "hack"]
   },
   {
     "id": 30,
     "text": "An ounce of prevention is worth a pound of cure.",
-    "author": "Benjamin Franklin"
+    "author": "Benjamin Franklin",
+    "categories": ["health", "hack"]
   },
   {
     "id": 31,
     "text": "The question is not whether intelligent machines can have emotions, but whether machines can be intelligent without emotions.",
-    "author": "Marvin Minsky"
+    "author": "Marvin Minsky",
+    "categories": ["ai"]
   },
   {
     "id": 32,
     "text": "Formal education will make you a living; self-education will make you a fortune.",
-    "author": "Jim Rohn"
+    "author": "Jim Rohn",
+    "categories": ["hack", "coins"]
   },
   {
     "id": 33,
     "text": "Happiness is nothing more than good health and a bad memory.",
-    "author": "Albert Schweitzer"
+    "author": "Albert Schweitzer",
+    "categories": ["health", "hack"]
   },
   {
     "id": 34,
     "text": "Every once in a while, a new technology, an old problem, and a big idea turn into an innovation.",
-    "author": "Dean Kamen"
+    "author": "Dean Kamen",
+    "categories": ["ai", "hack"]
   },
   {
     "id": 35,
     "text": "Compound interest is the eighth wonder of the world. He who understands it, earns it. He who doesn't, pays it.",
-    "author": "Albert Einstein"
+    "author": "Albert Einstein",
+    "categories": ["coins"]
   },
   {
     "id": 36,
     "text": "The mind is everything. What you think you become.",
-    "author": "Buddha"
+    "author": "Buddha",
+    "categories": ["health", "hack"]
   },
   {
     "id": 37,
     "text": "Those who think they have no time for healthy eating will sooner or later have to find time for illness.",
-    "author": "Edward Stanley"
+    "author": "Edward Stanley",
+    "categories": ["health"]
   },
   {
     "id": 38,
     "text": "The pace of progress in artificial intelligence is incredibly fast.",
-    "author": "Elon Musk"
+    "author": "Elon Musk",
+    "categories": ["ai"]
   },
   {
     "id": 39,
     "text": "Do not be embarrassed by your failures, learn from them and start again.",
-    "author": "Richard Branson"
+    "author": "Richard Branson",
+    "categories": ["hack"]
   },
   {
     "id": 40,
     "text": "The best investment you can make is in your own health.",
-    "author": "Anonymous"
+    "author": "Anonymous",
+    "categories": ["health", "coins"]
   },
   {
     "id": 41,
     "text": "Your brain is a garden. Your thoughts are the seeds. You can grow flowers, or you can grow weeds.",
-    "author": "Anonymous"
+    "author": "Anonymous",
+    "categories": ["health", "hack"]
   },
   {
     "id": 42,
     "text": "Never depend on a single income. Make investment to create a second source.",
-    "author": "Warren Buffett"
+    "author": "Warren Buffett",
+    "categories": ["coins"]
   },
   {
     "id": 43,
     "text": "Your diet is a bank account. Good food choices are good investments.",
-    "author": "Bethenny Frankel"
+    "author": "Bethenny Frankel",
+    "categories": ["health", "coins"]
   },
   {
     "id": 44,
     "text": "The empires of the future are the empires of the mind.",
-    "author": "Winston Churchill"
+    "author": "Winston Churchill",
+    "categories": ["ai", "hack"]
   },
   {
     "id": 45,
-    "text": "To invest successfully over a lifetime does not require a stratospheric IQ, unusual business insights, or inside information. What’s needed is a sound intellectual framework for making decisions and the ability to keep emotions from corroding that framework.",
-    "author": "Warren Buffett"
+    "text": "To invest successfully over a lifetime does not require a stratospheric IQ, unusual business insights, or inside information. What's needed is a sound intellectual framework for making decisions and the ability to keep emotions from corroding that framework.",
+    "author": "Warren Buffett",
+    "categories": ["coins", "hack"]
   },
   {
     "id": 46,
     "text": "Health is not valued till sickness comes.",
-    "author": "Thomas Fuller"
+    "author": "Thomas Fuller",
+    "categories": ["health"]
   },
   {
     "id": 47,
     "text": "The measure of intelligence is the ability to change.",
-    "author": "Albert Einstein"
+    "author": "Albert Einstein",
+    "categories": ["ai", "hack"]
   },
   {
     "id": 48,
     "text": "A healthy outside starts from the inside.",
-    "author": "Robert Urich"
+    "author": "Robert Urich",
+    "categories": ["health"]
   },
   {
     "id": 49,
-    "text": "The mind is like a parachute. It doesn’t work if it isn’t open.",
-    "author": "Frank Zappa"
+    "text": "The mind is like a parachute. It doesn't work if it isn't open.",
+    "author": "Frank Zappa",
+    "categories": ["hack", "ai"]
   },
   {
     "id": 50,
     "text": "Money grows on the tree of persistence.",
-    "author": "Japanese Proverb"
+    "author": "Japanese Proverb",
+    "categories": ["coins", "hack"]
+  },
+
+  {
+    "id": 51,
+    "text": "The way to get started is to quit talking and begin doing.",
+    "author": "Walt Disney",
+    "categories": ["hack"]
+  },
+  {
+    "id": 52,
+    "text": "Innovation distinguishes between a leader and a follower.",
+    "author": "Steve Jobs",
+    "categories": ["hack", "ai"]
+  },
+  {
+    "id": 53,
+    "text": "It is during our darkest moments that we must focus to see the light.",
+    "author": "Aristotle",
+    "categories": ["hack", "health"]
+  },
+  {
+    "id": 54,
+    "text": "The only impossible journey is the one you never begin.",
+    "author": "Tony Robbins",
+    "categories": ["hack"]
+  },
+  {
+    "id": 55,
+    "text": "Price is what you pay. Value is what you get.",
+    "author": "Warren Buffett",
+    "categories": ["coins"]
+  },
+  {
+    "id": 56,
+    "text": "The best time to plant a tree was 20 years ago. The second best time is now.",
+    "author": "Chinese Proverb",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 57,
+    "text": "Your body can stand almost anything. It's your mind that you have to convince.",
+    "author": "Andrew Carnegie",
+    "categories": ["health", "hack"]
+  },
+  {
+    "id": 58,
+    "text": "The computer was born to solve problems that did not exist before.",
+    "author": "Bill Gates",
+    "categories": ["ai"]
+  },
+  {
+    "id": 59,
+    "text": "Don't put all your eggs in one basket.",
+    "author": "Mark Twain",
+    "categories": ["coins"]
+  },
+  {
+    "id": 60,
+    "text": "A goal without a plan is just a wish.",
+    "author": "Antoine de Saint-Exupéry",
+    "categories": ["hack"]
+  },
+  {
+    "id": 61,
+    "text": "The machine does not isolate man from the great problems of nature but plunges him more deeply into them.",
+    "author": "Antoine de Saint-Exupéry",
+    "categories": ["ai"]
+  },
+  {
+    "id": 62,
+    "text": "Exercise is king. Nutrition is queen. Put them together and you've got a kingdom.",
+    "author": "Jack LaLanne",
+    "categories": ["health"]
+  },
+  {
+    "id": 63,
+    "text": "The stock market is a device for transferring money from the impatient to the patient.",
+    "author": "Warren Buffett",
+    "categories": ["coins"]
+  },
+  {
+    "id": 64,
+    "text": "Technology is a useful servant but a dangerous master.",
+    "author": "Christian Lous Lange",
+    "categories": ["ai", "hack"]
+  },
+  {
+    "id": 65,
+    "text": "Sleep is that golden chain that ties health and our bodies together.",
+    "author": "Thomas Dekker",
+    "categories": ["health"]
+  },
+  {
+    "id": 66,
+    "text": "It's not how much money you make, but how much money you keep.",
+    "author": "Robert Kiyosaki",
+    "categories": ["coins"]
+  },
+  {
+    "id": 67,
+    "text": "The greatest wealth is to live content with little.",
+    "author": "Plato",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 68,
+    "text": "I have not failed. I've just found 10,000 ways that won't work.",
+    "author": "Thomas Edison",
+    "categories": ["hack", "ai"]
+  },
+  {
+    "id": 69,
+    "text": "Take care of your body. It's the only place you have to live.",
+    "author": "Jim Rohn",
+    "categories": ["health"]
+  },
+  {
+    "id": 70,
+    "text": "The future belongs to those who believe in the beauty of their dreams.",
+    "author": "Eleanor Roosevelt",
+    "categories": ["hack"]
+  },
+  {
+    "id": 71,
+    "text": "Automation applied to an efficient operation will magnify the efficiency.",
+    "author": "Bill Gates",
+    "categories": ["ai", "hack"]
+  },
+  {
+    "id": 72,
+    "text": "The groundwork for all happiness is good health.",
+    "author": "Leigh Hunt",
+    "categories": ["health"]
+  },
+  {
+    "id": 73,
+    "text": "Diversification is protection against ignorance.",
+    "author": "Warren Buffett",
+    "categories": ["coins"]
+  },
+  {
+    "id": 74,
+    "text": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    "author": "Winston Churchill",
+    "categories": ["hack"]
+  },
+  {
+    "id": 75,
+    "text": "The real problem is not whether machines think but whether men do.",
+    "author": "B.F. Skinner",
+    "categories": ["ai"]
+  },
+  {
+    "id": 76,
+    "text": "He who is not courageous enough to take risks will accomplish nothing in life.",
+    "author": "Muhammad Ali",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 77,
+    "text": "To keep the body in good health is a duty... otherwise we shall not be able to keep our mind strong and clear.",
+    "author": "Buddha",
+    "categories": ["health"]
+  },
+  {
+    "id": 78,
+    "text": "The way to wealth is as plain as the way to market. It depends chiefly on two words, industry and frugality.",
+    "author": "Benjamin Franklin",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 79,
+    "text": "Technology is nothing. What's important is that you have a faith in people.",
+    "author": "Steve Jobs",
+    "categories": ["ai"]
+  },
+  {
+    "id": 80,
+    "text": "What we think, we become.",
+    "author": "Buddha",
+    "categories": ["health", "hack"]
+  },
+  {
+    "id": 81,
+    "text": "The four most expensive words in the English language are 'This time it's different.'",
+    "author": "Sir John Templeton",
+    "categories": ["coins"]
+  },
+  {
+    "id": 82,
+    "text": "A wise man should have money in his head, but not in his heart.",
+    "author": "Jonathan Swift",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 83,
+    "text": "The first wealth is health.",
+    "author": "Ralph Waldo Emerson",
+    "categories": ["health", "coins"]
+  },
+  {
+    "id": 84,
+    "text": "I think there is a world market for maybe five computers.",
+    "author": "Thomas Watson",
+    "categories": ["ai"]
+  },
+  {
+    "id": 85,
+    "text": "It is health that is real wealth and not pieces of gold and silver.",
+    "author": "Mahatma Gandhi",
+    "categories": ["health", "coins"]
+  },
+  {
+    "id": 86,
+    "text": "The art is not in making money, but in keeping it.",
+    "author": "Proverb",
+    "categories": ["coins"]
+  },
+  {
+    "id": 87,
+    "text": "Lack of activity destroys the good condition of every human being.",
+    "author": "Plato",
+    "categories": ["health"]
+  },
+  {
+    "id": 88,
+    "text": "The real question is not whether machines think but whether men do.",
+    "author": "B.F. Skinner",
+    "categories": ["ai"]
+  },
+  {
+    "id": 89,
+    "text": "Don't let what you cannot do interfere with what you can do.",
+    "author": "John Wooden",
+    "categories": ["hack", "health"]
+  },
+  {
+    "id": 90,
+    "text": "Rule No. 1: Never lose money. Rule No. 2: Never forget rule No. 1.",
+    "author": "Warren Buffett",
+    "categories": ["coins"]
+  },
+  {
+    "id": 91,
+    "text": "The only way to do great work is to love what you do.",
+    "author": "Steve Jobs",
+    "categories": ["hack"]
+  },
+  {
+    "id": 92,
+    "text": "Computers are incredibly fast, accurate, and stupid. Human beings are incredibly slow, inaccurate, and brilliant.",
+    "author": "Albert Einstein",
+    "categories": ["ai"]
+  },
+  {
+    "id": 93,
+    "text": "If you want to live a happy life, tie it to a goal, not to people or things.",
+    "author": "Albert Einstein",
+    "categories": ["hack"]
+  },
+  {
+    "id": 94,
+    "text": "Early to bed and early to rise makes a man healthy, wealthy, and wise.",
+    "author": "Benjamin Franklin",
+    "categories": ["health", "coins", "hack"]
+  },
+  {
+    "id": 95,
+    "text": "The stock market is filled with individuals who know the price of everything, but the value of nothing.",
+    "author": "Philip Fisher",
+    "categories": ["coins"]
+  },
+  {
+    "id": 96,
+    "text": "Strength does not come from physical capacity. It comes from an indomitable will.",
+    "author": "Mahatma Gandhi",
+    "categories": ["health", "hack"]
+  },
+  {
+    "id": 97,
+    "text": "The future is not some place we are going to, but one we are creating.",
+    "author": "John Schaar",
+    "categories": ["ai", "hack"]
+  },
+  {
+    "id": 98,
+    "text": "Every master was once a disaster.",
+    "author": "T. Harv Eker",
+    "categories": ["hack"]
+  },
+  {
+    "id": 99,
+    "text": "Money is only a tool. It will take you wherever you wish, but it will not replace you as the driver.",
+    "author": "Ayn Rand",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 100,
+    "text": "The greatest revolution of our generation is the discovery that human beings, by changing the inner attitudes of their minds, can change the outer aspects of their lives.",
+    "author": "William James",
+    "categories": ["hack", "health"]
+  },
+  {
+    "id": 101,
+    "text": "The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty.",
+    "author": "Winston Churchill",
+    "categories": ["hack"]
+  },
+  {
+    "id": 102,
+    "text": "If you don't build your dream, someone else will hire you to help them build theirs.",
+    "author": "Dhirubhai Ambani",
+    "categories": ["hack", "coins"]
+  },
+  {
+    "id": 103,
+    "text": "A penny saved is a penny earned.",
+    "author": "Benjamin Franklin",
+    "categories": ["coins"]
+  },
+  {
+    "id": 104,
+    "text": "The body achieves what the mind believes.",
+    "author": "Napoleon Hill",
+    "categories": ["health", "hack"]
+  },
+  {
+    "id": 105,
+    "text": "I'm not a businessman, I'm a business, man.",
+    "author": "Jay-Z",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 106,
+    "text": "The science of today is the technology of tomorrow.",
+    "author": "Edward Teller",
+    "categories": ["ai"]
+  },
+  {
+    "id": 107,
+    "text": "Your net worth to the network is your net worth.",
+    "author": "Tim O'Reilly",
+    "categories": ["coins", "ai"]
+  },
+  {
+    "id": 108,
+    "text": "Take care of your body. It's the only place you have to live.",
+    "author": "Jim Rohn",
+    "categories": ["health"]
+  },
+  {
+    "id": 109,
+    "text": "The difference between successful people and really successful people is that really successful people say no to almost everything.",
+    "author": "Warren Buffett",
+    "categories": ["hack", "coins"]
+  },
+  {
+    "id": 110,
+    "text": "Machines take me by surprise with great frequency.",
+    "author": "Alan Turing",
+    "categories": ["ai"]
+  },
+  {
+    "id": 111,
+    "text": "Health is not about the weight you lose, but about the life you gain.",
+    "author": "Dr. Josh Axe",
+    "categories": ["health"]
+  },
+  {
+    "id": 112,
+    "text": "Don't work for money; make money work for you.",
+    "author": "Robert Kiyosaki",
+    "categories": ["coins"]
+  },
+  {
+    "id": 113,
+    "text": "You are never too old to set another goal or to dream a new dream.",
+    "author": "C.S. Lewis",
+    "categories": ["hack"]
+  },
+  {
+    "id": 114,
+    "text": "The Internet is becoming the town square for the global village of tomorrow.",
+    "author": "Bill Gates",
+    "categories": ["ai"]
+  },
+  {
+    "id": 115,
+    "text": "Motivation is what gets you started. Habit is what keeps you going.",
+    "author": "Jim Ryun",
+    "categories": ["hack", "health"]
+  },
+  {
+    "id": 116,
+    "text": "Buy when everyone else is selling and hold until everyone else is buying.",
+    "author": "J. Paul Getty",
+    "categories": ["coins"]
+  },
+  {
+    "id": 117,
+    "text": "Your body is a temple, but only if you treat it as one.",
+    "author": "Astrid Alauda",
+    "categories": ["health"]
+  },
+  {
+    "id": 118,
+    "text": "The computer is a bicycle for the mind.",
+    "author": "Steve Jobs",
+    "categories": ["ai", "hack"]
+  },
+  {
+    "id": 119,
+    "text": "Rich people have small TVs and big libraries, and poor people have small libraries and big TVs.",
+    "author": "Zig Ziglar",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 120,
+    "text": "It is not the strongest of the species that survives, but the most adaptable to change.",
+    "author": "Charles Darwin",
+    "categories": ["hack", "health"]
+  },
+  {
+    "id": 121,
+    "text": "Data is the new oil.",
+    "author": "Clive Humby",
+    "categories": ["ai"]
+  },
+  {
+    "id": 122,
+    "text": "The trouble with not having a goal is that you can spend your life running up and down the field and never score.",
+    "author": "Bill Copeland",
+    "categories": ["hack"]
+  },
+  {
+    "id": 123,
+    "text": "An investment in knowledge always pays the best interest.",
+    "author": "Benjamin Franklin",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 124,
+    "text": "Take care of your body. It's the only place you have to live.",
+    "author": "Jim Rohn",
+    "categories": ["health"]
+  },
+  {
+    "id": 125,
+    "text": "The future depends on what you do today.",
+    "author": "Mahatma Gandhi",
+    "categories": ["hack"]
+  },
+  {
+    "id": 126,
+    "text": "Software is eating the world.",
+    "author": "Marc Andreessen",
+    "categories": ["ai"]
+  },
+  {
+    "id": 127,
+    "text": "A budget is telling your money where to go instead of wondering where it went.",
+    "author": "Dave Ramsey",
+    "categories": ["coins"]
+  },
+  {
+    "id": 128,
+    "text": "The groundwork of all happiness is health.",
+    "author": "Leigh Hunt",
+    "categories": ["health"]
+  },
+  {
+    "id": 129,
+    "text": "If you want something you've never had, you must be willing to do something you've never done.",
+    "author": "Thomas Jefferson",
+    "categories": ["hack"]
+  },
+  {
+    "id": 130,
+    "text": "The robots are coming, but we don't have to be afraid. We can harness their capabilities.",
+    "author": "John Markoff",
+    "categories": ["ai"]
+  },
+  {
+    "id": 131,
+    "text": "It's not how much money you make, but how much money you keep, how hard it works for you, and how many generations you keep it for.",
+    "author": "Robert Kiyosaki",
+    "categories": ["coins"]
+  },
+  {
+    "id": 132,
+    "text": "The only bad workout is the one that didn't happen.",
+    "author": "Unknown",
+    "categories": ["health"]
+  },
+  {
+    "id": 133,
+    "text": "Excellence is never an accident. It is always the result of high intention, sincere effort, and intelligent execution.",
+    "author": "Aristotle",
+    "categories": ["hack"]
+  },
+  {
+    "id": 134,
+    "text": "By far, the greatest danger of artificial intelligence is that people conclude too early that they understand it.",
+    "author": "Eliezer Yudkowsky",
+    "categories": ["ai"]
+  },
+  {
+    "id": 135,
+    "text": "Time is more valuable than money. You can get more money, but you cannot get more time.",
+    "author": "Jim Rohn",
+    "categories": ["coins", "hack"]
+  },
+  {
+    "id": 136,
+    "text": "What we plant in the soil of contemplation, we shall reap in the harvest of action.",
+    "author": "Meister Eckhart",
+    "categories": ["hack", "health"]
+  },
+  {
+    "id": 137,
+    "text": "The advance of technology is based on making it fit in so that you don't really even notice it.",
+    "author": "Bill Gates",
+    "categories": ["ai"]
+  },
+  {
+    "id": 138,
+    "text": "Never spend your money before you have earned it.",
+    "author": "Thomas Jefferson",
+    "categories": ["coins"]
+  },
+  {
+    "id": 139,
+    "text": "A healthy outside starts from the inside.",
+    "author": "Robert Urich",
+    "categories": ["health"]
+  },
+  {
+    "id": 140,
+    "text": "The way I see it, if you want the rainbow, you gotta put up with the rain.",
+    "author": "Dolly Parton",
+    "categories": ["hack"]
+  },
+  {
+    "id": 141,
+    "text": "Artificial intelligence would be the ultimate version of Google.",
+    "author": "Larry Page",
+    "categories": ["ai"]
+  },
+  {
+    "id": 142,
+    "text": "Financial peace isn't the acquisition of stuff. It's learning to live on less than you make.",
+    "author": "Dave Ramsey",
+    "categories": ["coins"]
+  },
+  {
+    "id": 143,
+    "text": "To ensure good health: eat lightly, breathe deeply, live moderately, cultivate cheerfulness.",
+    "author": "William Londen",
+    "categories": ["health"]
+  },
+  {
+    "id": 144,
+    "text": "If you are not willing to risk the usual, you will have to settle for the ordinary.",
+    "author": "Jim Rohn",
+    "categories": ["hack", "coins"]
+  },
+  {
+    "id": 145,
+    "text": "The question of whether computers can think is like the question of whether submarines can swim.",
+    "author": "Edsger Dijkstra",
+    "categories": ["ai"]
+  },
+  {
+    "id": 146,
+    "text": "Beware of little expenses. A small leak will sink a great ship.",
+    "author": "Benjamin Franklin",
+    "categories": ["coins"]
+  },
+  {
+    "id": 147,
+    "text": "Health is a state of complete harmony of the body, mind and spirit.",
+    "author": "B.K.S. Iyengar",
+    "categories": ["health"]
+  },
+  {
+    "id": 148,
+    "text": "Don't be afraid to give up the good to go for the great.",
+    "author": "John D. Rockefeller",
+    "categories": ["hack", "coins"]
+  },
+  {
+    "id": 149,
+    "text": "Machine intelligence is the last invention that humanity will ever need to make.",
+    "author": "Nick Bostrom",
+    "categories": ["ai"]
+  },
+  {
+    "id": 150,
+    "text": "The secret of getting ahead is getting started.",
+    "author": "Mark Twain",
+    "categories": ["hack"]
   }
 ]
