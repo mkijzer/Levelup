@@ -41,3 +41,21 @@ export function preloadImage(url) {
     img.onerror = () => resolve("assets/images/fallback_image.png");
   });
 }
+
+/**
+ * Calculates estimated reading time based on word count
+ * @param {string} content - Article content (HTML string)
+ * @returns {string} Reading time (e.g., "3 min read")
+ */
+export function calculateReadingTime(content) {
+  if (!content) return "1 min read";
+
+  // Strip HTML tags and count words
+  const textContent = content.replace(/<[^>]*>/g, "");
+  const wordCount = textContent.trim().split(/\s+/).length;
+
+  // Average reading speed: 225 words per minute
+  const readingTime = Math.ceil(wordCount / 225);
+
+  return `${readingTime} min read`;
+}

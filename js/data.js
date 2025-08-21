@@ -6,7 +6,12 @@
 // Version: 3.2 - Fixed orphaned code and structure issues
 // ============================================================================
 
-import { normalizeCategory, formatDate, preloadImage } from "./utils.js";
+import {
+  normalizeCategory,
+  formatDate,
+  preloadImage,
+  calculateReadingTime,
+} from "./utils.js";
 import { createArticleCard, populateArticleCard } from "./articleCards.js";
 import {
   latestSvg,
@@ -717,7 +722,9 @@ function populateArticleView(article, container) {
        <span class="article-category">${
          article.category?.charAt(0).toUpperCase() +
            article.category?.slice(1) || "Uncategorized"
-       } | ${formatDate(article.date)}</span>
+       } | ${formatDate(article.date)} | ${calculateReadingTime(
+    article.content
+  )}</span>
        <h1 class="article-main-title">${
          article.title || "Untitled Article"
        }</h1>
@@ -745,11 +752,28 @@ function populateArticleView(article, container) {
   // Add social icons like in the footer
   const socialSharing = mainArticle.querySelector(".social-sharing");
   const socialLinks = [
-    { social: "x", href: "#" },
-    { social: "tiktok", href: "#" },
-    { social: "snap", href: "#" },
-    { social: "instagram", href: "#" },
-    { social: "youtube", href: "#" },
+    {
+      social: "x",
+      href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        article.title
+      )}&url=${encodeURIComponent(window.location.href)}`,
+    },
+    {
+      social: "tiktok",
+      href: `https://www.tiktok.com/`, // TikTok doesn't have direct sharing URLs
+    },
+    {
+      social: "snap",
+      href: `https://www.snapchat.com/`, // Snap doesn't have direct sharing URLs
+    },
+    {
+      social: "instagram",
+      href: `https://www.instagram.com/`, // Instagram doesn't have direct sharing URLs
+    },
+    {
+      social: "youtube",
+      href: `https://www.youtube.com/`, // YouTube doesn't have direct sharing URLs
+    },
   ];
 
   socialLinks.forEach(({ social, href }) => {

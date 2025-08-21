@@ -5,7 +5,11 @@
 // Version: 2.0 - Fixed circular import and optimized
 // ============================================================================
 
-import { normalizeCategory, formatDate } from "./utils.js";
+import {
+  normalizeCategory,
+  formatDate,
+  calculateReadingTime,
+} from "./utils.js";
 
 // ============================================================================
 // Shared Observer for Performance
@@ -137,7 +141,10 @@ function populateCardContent(card, article) {
   }
 
   if (meta) {
-    meta.textContent = `${formatDate(article.date)} | ${article.category}`;
+    const readingTime = calculateReadingTime(article.content);
+    meta.textContent = `${formatDate(article.date)} | ${
+      article.category
+    } | ${readingTime}`;
   }
 }
 
