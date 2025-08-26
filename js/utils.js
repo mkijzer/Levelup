@@ -59,3 +59,22 @@ export function calculateReadingTime(content) {
 
   return `${readingTime} min read`;
 }
+
+/**
+ * Extracts alt text from image filename
+ * @param {string} imagePath - The image path/filename
+ * @returns {string} Alt text for the image
+ */
+export function extractAltFromFilename(imagePath) {
+  // Get just the filename without path and extension
+  const filename = imagePath.split("/").pop().split(".")[0];
+
+  // Split on first underscore to separate ID from description
+  const parts = filename.split("_");
+
+  // If no underscore, return filename as-is
+  if (parts.length === 1) return filename;
+
+  // Take everything after first underscore, replace _ with spaces
+  return parts.slice(1).join(" ");
+}

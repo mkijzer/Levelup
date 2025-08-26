@@ -9,6 +9,7 @@ import {
   normalizeCategory,
   formatDate,
   calculateReadingTime,
+  extractAltFromFilename,
 } from "./utils.js";
 
 // ============================================================================
@@ -33,8 +34,14 @@ function getImageObserver() {
               },
               { once: true }
             );
-
-            imageObserver.unobserve(img);
+            img.addEventListener(
+              "error",
+              () => {
+                img.src = "assets/images/fallback_image.png";
+                if (card) card.classList.remove("loading");
+              },
+              { once: true }
+            );
           }
         });
       },
@@ -128,12 +135,17 @@ function createCardHTML(type) {
 
 function populateCardContent(card, article) {
   const img = card.querySelector(".article-image");
+
+  // Skip if already populated
+  if (img && img.dataset.populated === "true") return;
   const title = card.querySelector(".article-title");
   const meta = card.querySelector(".article-meta");
 
   if (img) {
     img.dataset.src = article.image || "assets/images/fallback_image.png";
-    img.alt = article.title || "Article Image";
+    img.dataset.populated = "true";
+    img.alt =
+      extractAltFromFilename(article.image) || article.title || "Article Image";
   }
 
   if (title) {

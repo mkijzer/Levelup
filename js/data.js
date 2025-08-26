@@ -11,6 +11,7 @@ import {
   formatDate,
   preloadImage,
   calculateReadingTime,
+  extractAltFromFilename,
 } from "./utils.js";
 import { createArticleCard, populateArticleCard } from "./articleCards.js";
 import {
@@ -53,7 +54,7 @@ let isInCategoryPage = false;
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_DAY: 5,
-  LAUNCH_DATE: new Date("2025-08-18"), // Use today's date
+  LAUNCH_DATE: new Date("2025-08-22"), // Use today's date
   INITIAL_CATEGORY_ARTICLES: 15,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -244,7 +245,6 @@ function getAllCategoryArticles(category) {
  * @param {string} query - Search query
  * @returns {Array} Array of matching articles
  */
-
 function searchArticles(query) {
   const normalizedQuery = query.toLowerCase().trim();
 
@@ -307,6 +307,7 @@ function checkTagHasResults(tag) {
 
   return tagArticles.length > 0;
 }
+
 function showNoTagResultsMessage(tag) {
   const elements = getLayoutElements();
   resetMainViewState(elements);
@@ -381,6 +382,7 @@ function showNoTagResultsMessage(tag) {
 
   window.scrollTo(0, 0);
 }
+
 function findCategoryForTag(tag) {
   const categoryCount = {};
 
@@ -508,9 +510,17 @@ function resetLoadMoreButton(loadMoreButton) {
  * @param {Object} elements - Layout elements
  */
 async function populateMainLayout(articles, elements) {
+  // Preload first 3 images
+  const preloadPromises = articles
+    .slice(0, 3)
+    .map((article) =>
+      preloadImage(article.image || "assets/images/fallback_image.png")
+    );
+
   // Populate huge hero card
   if (articles[0] && elements.hugeCard) {
     await populateArticleCard(elements.hugeCard, articles[0]);
+    elements.hugeCard.setAttribute("data-article-id", articles[0].id);
     elements.hugeCard.style.display = "block";
   }
 
@@ -735,7 +745,9 @@ function populateArticleView(article, container) {
 
     <img 
   src="${article.image || "assets/images/fallback_image.png"}" 
-  alt="${article.title || "Article image"}" 
+  alt="${
+    extractAltFromFilename(article.image) || article.title || "Article image"
+  }"
   class="main-article-image"
 />
      
@@ -748,6 +760,21 @@ function populateArticleView(article, container) {
      </footer>
    </article>
  `;
+
+  // Process inline images
+  const articleBody = mainArticle.querySelector(".article-body");
+  if (articleBody && article.inline_image) {
+    const inlineImageHtml = `<img src="${article.inline_image}" alt="Inline image" class="inline-image" loading="lazy" />`;
+
+    const paragraphs = articleBody.querySelectorAll("p");
+    if (paragraphs.length > 2) {
+      const middleIndex = Math.floor(paragraphs.length / 2);
+      paragraphs[middleIndex - 1].insertAdjacentHTML(
+        "afterend",
+        inlineImageHtml
+      );
+    }
+  }
 
   // Add social icons like in the footer
   const socialSharing = mainArticle.querySelector(".social-sharing");
@@ -1242,13 +1269,24 @@ async function initializeApp() {
     }
 
     articlesData = await response.json();
-    // Only keep published articles
-    const today = new Date();
-    const maxPublishedIndex =
-      Math.floor((today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)) *
-        CONFIG.ARTICLES_PER_DAY +
-      CONFIG.ARTICLES_PER_DAY;
-    articlesData = articlesData.slice(0, maxPublishedIndex);
+    // Check for admin mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAdminMode = urlParams.get("admin") === "true";
+
+    if (!isAdminMode) {
+      // Only keep published articles for normal users
+      const today = new Date();
+      const maxPublishedIndex =
+        Math.floor((today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)) *
+          CONFIG.ARTICLES_PER_DAY +
+        CONFIG.ARTICLES_PER_DAY;
+      articlesData = articlesData.slice(0, maxPublishedIndex);
+      console.log(
+        `Normal mode: Showing ${articlesData.length} published articles`
+      );
+    } else {
+      console.log(`Admin mode: Showing all ${articlesData.length} articles`);
+    }
 
     console.log(`Loaded ${articlesData.length} articles`);
 
