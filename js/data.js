@@ -118,16 +118,27 @@ export async function loadCategory(category) {
 }
 
 export async function loadSearchResults(query) {
+  // Force back to main view state first
+  setIsInCategoryPage(false);
+
   const elements = getLayoutElements();
   if (!elements.bentoGrid) return;
 
-  setCurrentCategory("search");
-  setIsInCategoryPage(false);
+  // Hide category page if it's showing
+  const categoryPageView = document.getElementById("category-page-view");
+  if (categoryPageView) {
+    categoryPageView.classList.add("hidden");
+  }
 
-  // Hide the bento grid and show category-style layout instead
+  // Show main content area
+  const mainContent = document.getElementById("main-content-area");
+  if (mainContent) {
+    mainContent.style.display = "";
+  }
+
+  // Rest of your existing code...
   elements.bentoGrid.style.display = "none";
 
-  // Create or find search results container
   let searchContainer = document.querySelector(".search-results-grid");
   if (!searchContainer) {
     searchContainer = document.createElement("div");
@@ -142,7 +153,6 @@ export async function loadSearchResults(query) {
 
   const articles = searchArticles(query);
 
-  // Clear and populate like category grids
   searchContainer.innerHTML = "";
   for (const article of articles) {
     const card = await createArticleCard(article, "small");
