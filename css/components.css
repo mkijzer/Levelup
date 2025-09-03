@@ -246,6 +246,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   position: fixed;
   right: var(--spacing-3);
   top: 18px;
+  right: 18px;
   width: var(--spacing-4);
   height: var(--spacing-4);
   cursor: pointer;
@@ -265,25 +266,32 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .search-bar-slide {
   position: fixed;
-  top: 18px;
-  right: var(--spacing-3);
-  width: var(--spacing-4);
-  height: 28px;
-  background: transparent;
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color var(--transition-normal),
-    backdrop-filter var(--transition-normal), border var(--transition-normal),
-    box-shadow var(--transition-normal);
-  overflow: hidden;
-  border-radius: var(--radius-md);
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  padding: 1rem;
+  transform: translateY(-100%) !important; /* Hidden above */
+  transition: transform 0.4s ease-in-out !important; /* Slightly longer for smoother slide */
+  z-index: 1000;
+  width: 100%;
+  max-width: 600px; /* Wider for modal feel */
+  margin: 0 auto;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 0 0 10px 10px; /* Rounded bottom */
 }
 
 .search-bar-slide.active {
-  width: 200px;
-  background-color: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-md);
+  transform: translateY(0) !important;
+}
+
+.search-bar-slide #search-input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 .search-input-wrapper {
@@ -348,7 +356,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 .category-modal.active {
-  transform: translateY(-55px);
+  transform: translateY(-50px);
   pointer-events: auto;
   opacity: 1;
 }
@@ -1117,7 +1125,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
-  margin: var(--spacing-8) 0 var(--spacing-6) 0;
+  margin: var(--spacing-2) 0 var(--spacing-4) 0;
   justify-content: center;
   padding: 0;
 }
@@ -1140,7 +1148,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .tag:hover {
   box-shadow: var(--shadow-glow), var(--shadow-lg);
-  transform: translateY(-1px);
+  /* transform: translateY(-1px); */
 }
 
 .tag.clicked {
@@ -1171,7 +1179,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .social-sharing {
   display: flex;
-  gap: var(--spacing-2);
+  gap: var(--spacing-4);
   margin: 0;
   opacity: 1 !important;
   min-height: 20px;
@@ -1500,8 +1508,8 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 @media (min-width: 768px) {
   .search-icon {
     right: 20px;
-    width: 22px;
-    height: 22px;
+    width: 25px;
+    height: 25px;
   }
 
   .search-bar-slide {

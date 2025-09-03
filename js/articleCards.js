@@ -99,6 +99,9 @@ export async function populateArticleCard(card, article) {
 
   // Setup lazy loading
   setupLazyLoading(card);
+
+  // Remove loading class immediately
+  card.classList.remove("loading");
 }
 
 // ============================================================================
@@ -137,7 +140,6 @@ function populateCardContent(card, article) {
   const img = card.querySelector(".article-image");
 
   // Skip if already populated
-  if (img && img.dataset.populated === "true") return;
   const title = card.querySelector(".article-title");
   const meta = card.querySelector(".article-meta");
 
@@ -163,6 +165,15 @@ function populateCardContent(card, article) {
 function setupLazyLoading(card) {
   const img = card.querySelector(".article-image");
   if (img && img.dataset.src) {
-    getImageObserver().observe(img);
+    // Check if image is already in viewport
+    const rect = img.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      // Load immediately if in viewport
+      img.src = img.dataset.src;
+      card.classList.remove("loading");
+    } else {
+      // Use observer for images outside viewport
+      getImageObserver().observe(img);
+    }
   }
 }

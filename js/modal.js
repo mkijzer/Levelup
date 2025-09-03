@@ -57,7 +57,7 @@ class ModalManager {
     // Click to toggle modal
     categoryItem.addEventListener("click", (e) => {
       e.preventDefault();
-      this.toggleModal();
+      modalManager.showModal(); // or whatever the correct method name is
     });
 
     // Hover events for desktop
