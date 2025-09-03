@@ -89,22 +89,23 @@ function getAllCategoryArticles(category) {
 function searchArticles(query) {
   const normalizedQuery = query.toLowerCase().trim();
 
+  if (!normalizedQuery) return [];
+
   return articlesData
     .filter((article) => {
+      const titleMatch = article.title?.toLowerCase().includes(normalizedQuery);
       const categoryMatch = normalizeCategory(article.category || "").includes(
         normalizedQuery
       );
-
       const tagsMatch =
         Array.isArray(article.tags) &&
         article.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery));
 
-      return categoryMatch || tagsMatch;
+      return titleMatch || categoryMatch || tagsMatch;
     })
-    .slice(0, CONFIG.ARTICLES_PER_DAY)
+    .slice(0, 20) // Limit to 20 results
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 }
-
 // ============================================================================
 // Content Population Functions
 // ============================================================================

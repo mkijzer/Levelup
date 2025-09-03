@@ -169,7 +169,6 @@ class SearchManager {
 
     this.performSearch(query);
   }
-
   performSearch(query) {
     const trimmedQuery = query.trim();
 

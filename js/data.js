@@ -50,6 +50,8 @@ import {
   youtubeSvg,
 } from "./svg.js";
 
+import { createArticleCard } from "./articleCards.js";
+
 // ============================================================================
 // DOM Element Getters
 // ============================================================================
@@ -115,18 +117,37 @@ export async function loadCategory(category) {
   updateDesktopNavigation(category);
 }
 
-/**
- * Loads search results in main view
- */
 export async function loadSearchResults(query) {
   const elements = getLayoutElements();
   if (!elements.bentoGrid) return;
 
-  resetMainViewState(elements);
+  setCurrentCategory("search");
+  setIsInCategoryPage(false);
+
+  // Hide the bento grid and show category-style layout instead
+  elements.bentoGrid.style.display = "none";
+
+  // Create or find search results container
+  let searchContainer = document.querySelector(".search-results-grid");
+  if (!searchContainer) {
+    searchContainer = document.createElement("div");
+    searchContainer.className = "category-grid search-results-grid";
+    elements.bentoGrid.parentNode.insertBefore(
+      searchContainer,
+      elements.bentoGrid.nextSibling
+    );
+  }
+
   updateCategoryTitle(`SEARCH: ${query.toUpperCase()}`);
 
   const articles = searchArticles(query);
-  await populateMainLayout(articles, elements);
+
+  // Clear and populate like category grids
+  searchContainer.innerHTML = "";
+  for (const article of articles) {
+    const card = await createArticleCard(article, "small");
+    searchContainer.appendChild(card);
+  }
 }
 
 /**
