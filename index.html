@@ -4,7 +4,6 @@
     <!-- ===================================================== -->
     <!-- Meta and SEO Configuration -->
     <!-- ===================================================== -->
-    <!-- Basic meta tags for character encoding, viewport, and site description -->
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -14,12 +13,13 @@
       name="description"
       content="LevelUpOrDieTrying - Articles and insights on health, wealth, tech, and more"
     />
-    <title>LevelUpOrDieTrying</title>
+    <meta name="author" content="LevelUpOrDieTrying" />
+    <meta name="robots" content="index, follow" />
+    <title>LevelUpOrDieTrying - Health, Wealth & Tech Articles</title>
 
     <!-- ===================================================== -->
     <!-- Stylesheets -->
     <!-- ===================================================== -->
-    <!-- CSS files loaded in dependency order for consistent styling -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/base.css" />
@@ -31,7 +31,6 @@
     <!-- ===================================================== -->
     <!-- Fonts -->
     <!-- ===================================================== -->
-    <!-- Preconnect to Google Fonts for performance, loading custom font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -42,28 +41,37 @@
 
   <body>
     <!-- ===================================================== -->
-    <!-- Header Section -->
+    <!-- Site Header -->
     <!-- ===================================================== -->
-    <!-- Sticky header containing logo, title, search, and desktop navigation -->
     <div class="sticky-wrapper-navcontainer">
-      <header>
+      <header role="banner">
         <div class="header-top">
-          <!-- Logo and Title -->
-          <!-- Container for logo and main title with subtitle -->
+          <!-- Site Branding -->
           <div class="title-container">
             <div class="logo-container">
-              <img src="assets/images/logo.png" alt="Logo" class="logo" />
+              <img
+                src="assets/images/logo.png"
+                alt="LevelUpOrDieTrying Logo"
+                class="logo"
+              />
             </div>
             <h1 class="main-title">
               Level Up <span class="subtitle">Or Die Trying</span>
             </h1>
           </div>
 
-          <!-- Desktop Navigation -->
-          <!-- Navigation links visible only on desktop screens -->
-          <nav class="desktop-nav">
+          <!-- Primary Navigation - Desktop -->
+          <nav
+            class="desktop-nav"
+            role="navigation"
+            aria-label="Main navigation"
+          >
             <ul class="desktop-categories">
-              <li><a href="#latest" class="desktop-nav-item">Home</a></li>
+              <li>
+                <a href="#latest" class="desktop-nav-item" aria-current="page"
+                  >Home</a
+                >
+              </li>
               <li><a href="#health" class="desktop-nav-item">Health</a></li>
               <li><a href="#coins" class="desktop-nav-item">Coins</a></li>
               <li><a href="#hack" class="desktop-nav-item">Hack</a></li>
@@ -74,21 +82,27 @@
             </div>
           </nav>
 
-          <a href="#settings" class="desktop-settings-icon">Settings</a>
+          <a
+            href="#settings"
+            class="desktop-settings-icon"
+            aria-label="Open settings"
+            >Settings</a
+          >
 
-          <!-- Search Component -->
-          <!-- Search icon and sliding input field -->
-          <div class="search-container">
-            <svg
-              class="search-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
+          <!-- Search Functionality -->
+          <div class="search-container" role="search">
+            <button class="search-icon" aria-label="Open search" type="button">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
             <div class="search-bar-slide">
               <div class="search-input-wrapper">
                 <svg
@@ -97,14 +111,19 @@
                   fill="none"
                   stroke="currentColor"
                   stroke-width="2"
+                  aria-hidden="true"
                 >
                   <circle cx="11" cy="11" r="8" />
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
+                <label for="search-input" class="sr-only"
+                  >Search articles</label
+                >
                 <input
-                  type="text"
+                  type="search"
                   id="search-input"
                   placeholder="Search articles, titles, subjects..."
+                  aria-label="Search articles"
                 />
               </div>
             </div>
@@ -114,23 +133,20 @@
     </div>
 
     <!-- ===================================================== -->
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <!-- ===================================================== -->
-    <!-- Primary content area with articles, categories, and quotes -->
-    <main>
+    <main role="main">
       <section id="articles" class="articles">
         <div class="container">
-          <!-- Latest Articles -->
-          <!-- Featured articles with a bento grid layout -->
-          <div class="category-label latest-label">
+          <!-- Latest Articles Section -->
+          <header class="category-label latest-label">
             <h2 id="category-title">Latest</h2>
-          </div>
+          </header>
 
           <div id="main-content-area">
             <div class="bento-grid">
               <!-- Hero Article -->
-              <!-- Large article card (2/3 width on desktop) -->
-              <div class="article-card glass huge" data-article-id="">
+              <article class="article-card glass huge" data-article-id="">
                 <div class="card-inner">
                   <div class="article-image-wrapper">
                     <img
@@ -140,100 +156,187 @@
                       loading="eager"
                       fetchpriority="high"
                     />
-                    <div class="gradient-overlay"></div>
+                    <div class="gradient-overlay" aria-hidden="true"></div>
                     <div class="article-content">
-                      <h2 class="article-title"></h2>
+                      <h3 class="article-title"></h3>
                     </div>
                   </div>
                 </div>
-              </div>
+              </article>
 
-              <!-- Side-by-Side Articles -->
-              <!-- Two smaller articles below hero -->
+              <!-- Secondary Articles -->
               <div class="side-by-side-container">
-                <div class="article-card glass small" data-article-id="">
+                <article class="article-card glass small" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
                       <img src="" alt="" class="article-image" loading="lazy" />
                     </div>
                     <div class="article-content">
                       <p class="article-meta"></p>
-                      <h2 class="article-title"></h2>
+                      <h3 class="article-title"></h3>
                     </div>
                   </div>
-                </div>
+                </article>
 
-                <div class="article-card glass small" data-article-id="">
+                <article class="article-card glass small" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
                       <img src="" alt="" class="article-image" loading="lazy" />
                     </div>
                     <div class="article-content">
                       <p class="article-meta"></p>
-                      <h2 class="article-title"></h2>
+                      <h3 class="article-title"></h3>
                     </div>
                   </div>
-                </div>
+                </article>
               </div>
 
-              <!-- Article 4 -->
-              <!-- Fourth article spanning both columns -->
+              <!-- Additional Articles -->
               <div class="article-four-container">
-                <div class="article-card glass small" data-article-id="">
+                <article class="article-card glass small" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
                       <img src="" alt="" class="article-image" loading="lazy" />
                     </div>
                     <div class="article-content">
                       <p class="article-meta"></p>
-                      <h2 class="article-title"></h2>
+                      <h3 class="article-title"></h3>
                     </div>
                   </div>
-                </div>
+                </article>
               </div>
 
-              <!-- Article 5 -->
-              <!-- Fifth article spanning both columns -->
               <div class="article-five-container">
-                <div class="article-card glass small" data-article-id="">
+                <article class="article-card glass small" data-article-id="">
                   <div class="card-inner">
                     <div class="article-image-wrapper">
                       <img src="" alt="" class="article-image" loading="lazy" />
                     </div>
                     <div class="article-content">
                       <p class="article-meta"></p>
-                      <h2 class="article-title"></h2>
+                      <h3 class="article-title"></h3>
                     </div>
                   </div>
-                </div>
+                </article>
               </div>
 
-              <!-- Advertisement -->
-              <!-- Right column ad placeholder -->
-              <div class="separator-ad">
+              <!-- Advertisement Space -->
+              <aside class="separator-ad" aria-label="Advertisement">
                 <div class="ad-container glass">
                   <p>Advertisement</p>
                 </div>
-              </div>
+              </aside>
+
+              <!-- Most Read Section - Desktop Sidebar -->
+              <aside
+                class="most-read-sidebar desktop-only"
+                aria-labelledby="most-read-title"
+              >
+                <header class="category-label">
+                  <h2 id="most-read-title">Most Read</h2>
+                </header>
+                <div class="most-read-grid">
+                  <article
+                    class="most-read-card article-card glass"
+                    data-article-id=""
+                  >
+                    <div class="most-read-content">
+                      <p class="most-read-meta"></p>
+                      <h3 class="most-read-title"></h3>
+                    </div>
+                    <div class="most-read-image-wrapper">
+                      <img
+                        src=""
+                        alt=""
+                        class="most-read-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  </article>
+
+                  <article
+                    class="most-read-card article-card glass"
+                    data-article-id=""
+                  >
+                    <div class="most-read-content">
+                      <p class="most-read-meta"></p>
+                      <h3 class="most-read-title"></h3>
+                    </div>
+                    <div class="most-read-image-wrapper">
+                      <img
+                        src=""
+                        alt=""
+                        class="most-read-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  </article>
+
+                  <article
+                    class="most-read-card article-card glass"
+                    data-article-id=""
+                  >
+                    <div class="most-read-content">
+                      <p class="most-read-meta"></p>
+                      <h3 class="most-read-title"></h3>
+                    </div>
+                    <div class="most-read-image-wrapper">
+                      <img
+                        src=""
+                        alt=""
+                        class="most-read-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  </article>
+
+                  <article
+                    class="most-read-card article-card glass"
+                    data-article-id=""
+                  >
+                    <div class="most-read-content">
+                      <p class="most-read-meta"></p>
+                      <h3 class="most-read-title"></h3>
+                    </div>
+                    <div class="most-read-image-wrapper">
+                      <img
+                        src=""
+                        alt=""
+                        class="most-read-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  </article>
+
+                  <article
+                    class="most-read-card article-card glass"
+                    data-article-id=""
+                  >
+                    <div class="most-read-content">
+                      <p class="most-read-meta"></p>
+                      <h3 class="most-read-title"></h3>
+                    </div>
+                    <div class="most-read-image-wrapper">
+                      <img
+                        src=""
+                        alt=""
+                        class="most-read-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  </article>
+                </div>
+              </aside>
             </div>
 
-            <!-- Article View -->
-            <!-- Full article display with related content -->
-            <div class="article-view hidden">
+            <!-- Full Article View -->
+            <article
+              class="article-view hidden"
+              role="dialog"
+              aria-labelledby="current-article-title"
+            >
               <div class="main-article glass">
-                <!-- <button
-                  class="close-article"
-                  style="
-                    float: right;
-                    font-size: 2rem;
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                  "
-                >
-                  ×
-                </button> -->
-                <h2 class="main-article-title"></h2>
+                <h2 id="current-article-title" class="main-article-title"></h2>
                 <div class="article-image-wrapper">
                   <img
                     src=""
@@ -243,15 +346,14 @@
                   />
                 </div>
                 <div class="main-article-body"></div>
-                <div class="article-tags"></div>
+                <div class="article-tags" aria-label="Article tags"></div>
                 <p class="main-article-author"></p>
               </div>
 
-              <!-- Random Articles -->
-              <!-- Suggested related articles -->
-              <div class="random-articles">
+              <!-- Related Articles -->
+              <aside class="random-articles" aria-label="Related articles">
                 <div class="random-grid">
-                  <div class="article-card small">
+                  <article class="article-card small">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
                         <img
@@ -263,12 +365,12 @@
                       </div>
                       <div class="article-content">
                         <p class="article-meta"></p>
-                        <h2 class="article-title"></h2>
+                        <h3 class="article-title"></h3>
                       </div>
                     </div>
-                  </div>
+                  </article>
 
-                  <div class="article-card small">
+                  <article class="article-card small">
                     <div class="card-inner">
                       <div class="article-image-wrapper">
                         <img
@@ -280,122 +382,132 @@
                       </div>
                       <div class="article-content">
                         <p class="article-meta"></p>
-                        <h2 class="article-title"></h2>
+                        <h3 class="article-title"></h3>
                       </div>
                     </div>
-                  </div>
+                  </article>
                 </div>
-              </div>
-            </div>
+              </aside>
+            </article>
           </div>
 
-          <!-- Divider -->
-          <!-- Visual separator between sections -->
-          <div class="divider"></div>
+          <!-- Content Sections -->
+          <div class="divider" role="separator" aria-hidden="true"></div>
 
-          <!-- Quote Section 1 -->
-          <!-- Reusable quote block -->
-          <div class="quote debug-quote">
+          <!-- Inspirational Quote -->
+          <aside class="quote debug-quote" aria-label="Inspirational quote">
             <img
               src="assets/images/openart-image_OaoTLx0Z_1744901057391_raw copy.png"
-              alt="Quote Background"
+              alt=""
               class="quote-background"
+              aria-hidden="true"
             />
             <div class="quote-container glass">
               <blockquote class="quote-text"></blockquote>
-              <p class="quote-author"></p>
+              <cite class="quote-author"></cite>
             </div>
-          </div>
+          </aside>
 
-          <!-- Divider -->
-          <!-- Visual separator between sections -->
-          <div class="divider"></div>
+          <div class="divider" role="separator" aria-hidden="true"></div>
 
-          <!-- Health Section -->
-          <!-- Articles for the Health category -->
-          <div class="category-label">
-            <h2>Health</h2>
-          </div>
-          <div class="category-content">
-            <div class="category-grid" data-category="health">
-              <!-- Articles populated dynamically -->
+          <!-- Health Articles Section -->
+          <section aria-labelledby="health-title">
+            <header class="category-label">
+              <h2 id="health-title">Health</h2>
+            </header>
+            <div class="category-content">
+              <div
+                class="category-grid"
+                data-category="health"
+                role="feed"
+                aria-label="Health articles"
+              >
+                <!-- Articles populated dynamically -->
+              </div>
             </div>
-          </div>
+          </section>
 
-          <!-- Divider -->
-          <!-- Visual separator between sections -->
-          <div class="divider"></div>
+          <div class="divider" role="separator" aria-hidden="true"></div>
 
-          <!-- Coins Section -->
-          <!-- Articles for the Coins category -->
-          <div class="category-label">
-            <h2>Coins</h2>
-          </div>
-          <div class="category-content">
-            <div class="category-grid" data-category="coins">
-              <!-- Articles populated dynamically -->
+          <!-- Coins Articles Section -->
+          <section aria-labelledby="coins-title">
+            <header class="category-label">
+              <h2 id="coins-title">Coins</h2>
+            </header>
+            <div class="category-content">
+              <div
+                class="category-grid"
+                data-category="coins"
+                role="feed"
+                aria-label="Cryptocurrency articles"
+              >
+                <!-- Articles populated dynamically -->
+              </div>
             </div>
-          </div>
+          </section>
 
-          <!-- Divider -->
-          <!-- Visual separator between sections -->
-          <div class="divider"></div>
+          <div class="divider" role="separator" aria-hidden="true"></div>
 
-          <!-- Ad Separator -->
-          <!-- Second advertisement placeholder -->
-          <div class="separator-ad">
+          <!-- Advertisement -->
+          <aside class="separator-ad" aria-label="Advertisement">
             <div class="ad-container glass">
               <p>Advertisement Placeholder</p>
             </div>
-          </div>
+          </aside>
 
-          <!-- Divider -->
-          <!-- Visual separator between sections -->
-          <div class="divider"></div>
+          <div class="divider" role="separator" aria-hidden="true"></div>
 
-          <!-- Quote Section 2 -->
-          <!-- Reusable quote block -->
-          <div class="quote">
+          <!-- Second Quote -->
+          <aside class="quote" aria-label="Inspirational quote">
             <img
               src="assets/images/openart-image_OaoTLx0Z_1744901057391_raw copy.png"
-              alt="Quote Background"
+              alt=""
               class="quote-background"
+              aria-hidden="true"
             />
             <div class="quote-container glass">
               <blockquote class="quote-text"></blockquote>
-              <p class="quote-author"></p>
+              <cite class="quote-author"></cite>
             </div>
-          </div>
+          </aside>
 
-          <!-- Divider -->
-          <!-- Visual separator between sections -->
-          <div class="divider"></div>
+          <div class="divider" role="separator" aria-hidden="true"></div>
 
-          <!-- Hack Section -->
-          <!-- Articles for the Hack category -->
-          <div class="category-label">
-            <h2>Hack</h2>
-          </div>
-          <div class="category-content">
-            <div class="category-grid" data-category="hack">
-              <!-- Articles populated dynamically -->
+          <!-- Hack Articles Section -->
+          <section aria-labelledby="hack-title">
+            <header class="category-label">
+              <h2 id="hack-title">Hack</h2>
+            </header>
+            <div class="category-content">
+              <div
+                class="category-grid"
+                data-category="hack"
+                role="feed"
+                aria-label="Life hack articles"
+              >
+                <!-- Articles populated dynamically -->
+              </div>
             </div>
-          </div>
+          </section>
 
-          <!-- Divider -->
-          <!-- Visual separator between sections -->
-          <div class="divider"></div>
+          <div class="divider" role="separator" aria-hidden="true"></div>
 
-          <!-- AI Section -->
-          <!-- Articles for the AI category -->
-          <div class="category-label">
-            <h2>AI</h2>
-          </div>
-          <div class="category-content">
-            <div class="category-grid" data-category="ai">
-              <!-- Articles populated dynamically -->
+          <!-- AI Articles Section -->
+          <section aria-labelledby="ai-title">
+            <header class="category-label">
+              <h2 id="ai-title">AI</h2>
+            </header>
+            <div class="category-content">
+              <div
+                class="category-grid"
+                data-category="ai"
+                role="feed"
+                aria-label="Artificial intelligence articles"
+              >
+                <!-- Articles populated dynamically -->
+              </div>
             </div>
-          </div>
+          </section>
         </div>
       </section>
     </main>
@@ -403,28 +515,26 @@
     <!-- ===================================================== -->
     <!-- Category Page View -->
     <!-- ===================================================== -->
-    <!-- Full-screen view for category-specific content -->
-    <div id="category-page-view" class="category-page-view hidden">
+    <div id="category-page-view" class="category-page-view hidden" role="main">
       <div class="container">
-        <h2 class="category-page-title"></h2>
+        <h1 class="category-page-title"></h1>
 
-        <!-- Hero Section -->
-        <!-- Large hero card with two smaller cards -->
-        <div class="category-hero-grid">
-          <div class="article-card glass huge" data-article-id="">
+        <!-- Category Hero Section -->
+        <section class="category-hero-grid">
+          <article class="article-card glass huge" data-article-id="">
             <div class="card-inner">
               <div class="article-image-wrapper">
                 <img src="" alt="" class="article-image" loading="eager" />
-                <div class="gradient-overlay"></div>
+                <div class="gradient-overlay" aria-hidden="true"></div>
                 <div class="article-content">
                   <h2 class="article-title"></h2>
                 </div>
               </div>
             </div>
-          </div>
+          </article>
 
           <div class="category-side-cards">
-            <div class="article-card glass small" data-article-id="">
+            <article class="article-card glass small" data-article-id="">
               <div class="card-inner">
                 <div class="article-image-wrapper">
                   <img src="" alt="" class="article-image" loading="lazy" />
@@ -434,9 +544,9 @@
                   <h2 class="article-title"></h2>
                 </div>
               </div>
-            </div>
+            </article>
 
-            <div class="article-card glass small" data-article-id="">
+            <article class="article-card glass small" data-article-id="">
               <div class="card-inner">
                 <div class="article-image-wrapper">
                   <img src="" alt="" class="article-image" loading="lazy" />
@@ -446,59 +556,62 @@
                   <h2 class="article-title"></h2>
                 </div>
               </div>
-            </div>
+            </article>
           </div>
-        </div>
+        </section>
 
-        <!-- Additional Articles List -->
-        <!-- Placeholder for more category articles -->
-        <div class="category-articles-list">
+        <!-- Additional Category Articles -->
+        <section
+          class="category-articles-list"
+          role="feed"
+          aria-label="More category articles"
+        >
           <!-- More articles will be added here -->
-        </div>
+        </section>
 
         <!-- Category Article View -->
-        <!-- Full article view within category page -->
-        <div class="category-article-view hidden">
+        <article class="category-article-view hidden" role="dialog">
           <div class="main-article glass">
-            <button class="close-article category-close">×</button>
+            <button
+              class="close-article category-close"
+              aria-label="Close article"
+            >
+              ×
+            </button>
             <h2 class="main-article-title"></h2>
             <div class="article-image-wrapper">
               <img src="" alt="" class="main-article-image" />
             </div>
             <div class="main-article-body"></div>
-            <div class="article-tags"></div>
+            <div class="article-tags" aria-label="Article tags"></div>
             <p class="main-article-author"></p>
           </div>
-        </div>
+        </article>
 
-        <button class="load-more-button">Load More</button>
+        <button class="load-more-button" type="button">Load More</button>
       </div>
     </div>
 
     <!-- ===================================================== -->
-    <!-- Bottom Navigation -->
+    <!-- Mobile Navigation -->
     <!-- ===================================================== -->
-    <!-- Fixed navigation bar with category modal -->
-    <nav class="nav-container">
+    <nav class="nav-container" role="navigation" aria-label="Mobile navigation">
       <ul class="mobile-nav">
         <li>
           <div class="nav-item">
-            <a href="#latest">Latest</a>
+            <a href="#latest" aria-current="page">Latest</a>
           </div>
         </li>
-
         <li>
           <div class="nav-item category">
             <a href="#category">Category</a>
           </div>
         </li>
-
         <li>
           <div class="nav-item">
             <a href="#random">Random</a>
           </div>
         </li>
-
         <li>
           <div class="nav-item settings">
             <a href="#settings">Settings</a>
@@ -507,9 +620,13 @@
       </ul>
     </nav>
 
-    <!-- Category Modal -->
-    <!-- Slides up from behind navbar with category options -->
-    <div class="category-modal" id="category-modal">
+    <!-- Category Selection Modal -->
+    <div
+      class="category-modal"
+      id="category-modal"
+      role="dialog"
+      aria-label="Category selection"
+    >
       <div class="modal-content glass">
         <ul class="modal-categories">
           <li class="modal-category-item">
@@ -529,82 +646,100 @@
     </div>
 
     <!-- Settings Modal -->
-    <!-- Slides in from right with settings options -->
-    <div class="settings-modal" id="settings-modal">
+    <div
+      class="settings-modal"
+      id="settings-modal"
+      role="dialog"
+      aria-labelledby="settings-title"
+    >
       <div class="modal-content">
         <div class="settings-content">
-          <div class="settings-header"></div>
+          <header class="settings-header">
+            <h2 id="settings-title" class="sr-only">Settings</h2>
+          </header>
 
           <div class="settings-items">
             <div class="setting-item">
-              <label>Font Size</label>
-              <select id="font-size-select">
+              <label for="font-size-select">Font Size</label>
+              <select id="font-size-select" aria-describedby="font-size-desc">
                 <option value="small">Small</option>
                 <option value="medium" selected>Medium</option>
                 <option value="large">Large</option>
               </select>
             </div>
-
-            <!-- Reading Width (Temporarily Disabled) -->
-            <!-- <div class="setting-item">
-              <label>Reading Width</label>
-              <select id="reading-width-select">
-                <option value="narrow" selected>Narrow</option>
-                <option value="wide">Wide</option>
-              </select>
-            </div> -->
-
-            <!-- Theme Toggle (Temporarily Disabled) -->
-            <!-- <div class="setting-item">
-              <div class="theme-toggle-container">
-                <div>
-                  <div class="theme-description">light or dark mode</div>
-                </div>
-                <label class="theme-slider">
-                  <input type="checkbox" id="theme-switch" />
-                  <span class="slider">
-                    <span class="slider-button"></span>
-                  </span>
-                </label>
-              </div>
-            </div> -->
           </div>
-          <button class="close-settings-btn">close</button>
+          <button class="close-settings-btn" type="button">Close</button>
         </div>
       </div>
     </div>
 
     <!-- Settings Backdrop -->
-    <!-- Overlay for settings modal -->
-    <div class="settings-backdrop" id="settings-backdrop"></div>
+    <div
+      class="settings-backdrop"
+      id="settings-backdrop"
+      aria-hidden="true"
+    ></div>
 
-    <!-- Divider -->
-    <!-- Visual separator between sections -->
-    <div class="divider"></div>
     <!-- ===================================================== -->
-    <!-- Footer -->
+    <!-- Site Footer -->
     <!-- ===================================================== -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
       <div class="footer-content">
-        <!-- <p>Follow us:</p> -->
-        <div class="social-icons">
-          <a href="#" class="social-icon" data-social="x">${xSvg}</a>
-          <a href="#" class="social-icon" data-social="tiktok">${tiktokSvg}</a>
-          <a href="#" class="social-icon" data-social="snap">${snapSvg}</a>
-          <a href="#" class="social-icon" data-social="instagram"
-            >${instagramSvg}</a
-          >
-          <a href="#" class="social-icon" data-social="youtube"
-            >${youtubeSvg}</a
-          >
-        </div>
+        <nav aria-label="Social media links">
+          <ul class="social-icons">
+            <li>
+              <a
+                href="#"
+                class="social-icon"
+                data-social="x"
+                aria-label="Follow us on X"
+                >${xSvg}</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="social-icon"
+                data-social="tiktok"
+                aria-label="Follow us on TikTok"
+                >${tiktokSvg}</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="social-icon"
+                data-social="snap"
+                aria-label="Follow us on Snapchat"
+                >${snapSvg}</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="social-icon"
+                data-social="instagram"
+                aria-label="Follow us on Instagram"
+                >${instagramSvg}</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="social-icon"
+                data-social="youtube"
+                aria-label="Follow us on YouTube"
+                >${youtubeSvg}</a
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
     </footer>
 
     <!-- ===================================================== -->
-    <!-- Scripts -->
+    <!-- JavaScript Modules -->
     <!-- ===================================================== -->
-    <!-- JavaScript modules for dynamic functionality -->
     <script type="module" src="js/svg.js"></script>
     <script type="module" src="js/modal.js"></script>
     <script type="module" src="js/data.js"></script>
@@ -614,5 +749,6 @@
     <script type="module" src="js/utils.js"></script>
     <script type="module" src="js/articleCards.js"></script>
     <script type="module" src="js/settings.js"></script>
+    <script type="module" src="js/mostRead.js"></script>
   </body>
 </html>

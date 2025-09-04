@@ -2,7 +2,7 @@
 /* layout.css - RESPONSIVE LAYOUT SYSTEM */
 /* ============================================================================ */
 /* Description: Mobile-first responsive layout with grid systems and spacing */
-/* Version: 4.0 - Cleaned and organized for clarity */
+/* Version: 4.1 - Fixed desktop layout for Most Read sidebar */
 /* ============================================================================ */
 
 /* ============================================================================ */
@@ -158,12 +158,12 @@ header {
 
 .articles {
   padding: 0;
-  margin-top: -80px; /* Change from -20px to -40px */
+  margin-top: -80px;
   position: relative;
 }
 
 .category-grid .article-card {
-  background-color: inherit; /* Removes any override */
+  background-color: inherit;
 }
 
 .container {
@@ -171,7 +171,6 @@ header {
   padding: var(--spacing-page);
 }
 
-/* Improved spacing for category sections */
 .category-content {
   margin-bottom: var(--spacing-10);
 }
@@ -197,11 +196,14 @@ header {
   border: 0;
 }
 
+.desktop-only {
+  display: none;
+}
+
 /* ============================================================================ */
 /* MOBILE LAYOUT - Base mobile-first styles (up to 767px) */
 /* ============================================================================ */
 
-/* Magazine Grid Layouts - Mobile First */
 .bento-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -210,13 +212,11 @@ header {
   gap: var(--spacing-page);
 }
 
-/* Hero article - full width on mobile */
 .bento-grid .article-card.huge {
   grid-column: 1 / -1;
   aspect-ratio: 16 / 9;
 }
 
-/* Side-by-side articles - 2 columns on mobile */
 .side-by-side-container {
   grid-column: 1 / -1;
   display: grid;
@@ -224,7 +224,6 @@ header {
   gap: var(--spacing-page);
 }
 
-/* Articles 4 & 5 - full width on mobile */
 .article-four-container {
   grid-column: 1 / -1;
 }
@@ -233,19 +232,16 @@ header {
   grid-column: 1 / -1;
 }
 
-/* Articles 4 & 5 - rectangular images on mobile */
 .article-four-container .article-card.small .article-image-wrapper,
 .article-five-container .article-card.small .article-image-wrapper {
   aspect-ratio: 16 / 9;
-  height: 25s0px;
+  height: 250px;
 }
 
-/* Ad - full width on mobile */
 .separator-ad {
   grid-column: 1 / -1;
 }
 
-/* Category grids - single column on mobile */
 .category-grid {
   display: flex;
   flex-direction: column;
@@ -264,7 +260,6 @@ header {
 /* TABLET LAYOUT - Medium screens (768px to 1199px) */
 /* ============================================================================ */
 @media (min-width: 768px) and (max-width: 1199px) {
-  /* Latest Section Layout */
   .bento-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -312,7 +307,6 @@ header {
     order: 6;
   }
 
-  /* Image sizing for tablet */
   .article-card.small .article-image-wrapper {
     aspect-ratio: 1 / 1;
     height: 120px;
@@ -327,7 +321,6 @@ header {
     flex: 1;
   }
 
-  /* Category Grid Layout - Tablet */
   .category-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -358,152 +351,31 @@ header {
     padding: var(--spacing-2) 0 0 0;
     flex: 1;
   }
-
-  /* Category-Specific Layouts */
-  /* Coins category - Zigzag 2x3 */
-  .category-grid[data-category="coins"] {
-    grid-template-areas:
-      "a b"
-      "c d"
-      "e f";
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(6) {
-    grid-area: f;
-  }
-
-  /* Health category - Stacked pairs */
-  .category-grid[data-category="health"] {
-    grid-template-areas:
-      "a a"
-      "b c"
-      "d e"
-      "f .";
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(6) {
-    grid-area: f;
-  }
-
-  /* Hack category - Same as Health */
-  .category-grid[data-category="hack"] {
-    grid-template-areas:
-      "a a"
-      "b c"
-      "d e"
-      "f .";
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(6) {
-    grid-area: f;
-  }
-
-  /* AI category - Standard 2x3 grid */
-  .category-grid[data-category="ai"] {
-    grid-template-areas:
-      "a b"
-      "c d"
-      "e f";
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(6) {
-    grid-area: f;
-  }
-
-  /* Image size adjustments for tablet */
-  .side-by-side-container .article-card .article-image-wrapper {
-    height: 350px !important; /* Override any conflicting styles */
-  }
-  .article-four-container .article-card .article-image-wrapper {
-    height: 350px !important;
-  }
-  .article-five-container .article-card .article-image-wrapper {
-    height: 350px !important;
-  }
 }
+
 /* ============================================================================ */
 /* DESKTOP LAYOUT - Large screens (1200px and up) */
 /* ============================================================================ */
 
 @media (min-width: 1200px) {
-  /* Container sizing for desktop */
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--spacing-lg);
   }
 
-  /* ========================================================================== */
-  /* DESKTOP HEADER - Perfect alignment and sizing */
-  /* ========================================================================== */
+  .desktop-only {
+    display: block;
+  }
 
-  /* Hide mobile navigation on desktop */
   .nav-container {
     display: none;
   }
 
-  /* Remove bottom padding since no nav */
   body {
     padding-bottom: 0;
   }
 
-  /* Desktop Header Layout */
   header {
     padding: var(--spacing-8) var(--spacing-page);
   }
@@ -511,17 +383,15 @@ header {
   .header-top {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Changed from space-between */
+    justify-content: flex-start;
     width: 100%;
     position: relative;
   }
 
-  /* Hide mobile title structure on desktop */
   .header-top > .title-container {
     display: flex;
   }
 
-  /* Logo positioning and sizing */
   .logo-container {
     margin-left: 0;
     margin-right: var(--spacing-4);
@@ -532,32 +402,27 @@ header {
     height: 80px;
   }
 
-  /* Title positioning and sizing */
   .title-container {
     margin-right: auto;
+    margin-left: var(--spacing-page);
   }
 
   .main-title {
     font-size: calc(var(--font-size-3xl) * 2);
   }
 
-  .title-container {
-    margin-left: var(--spacing-page);
-  }
-
   .subtitle {
     font-size: calc(var(--font-size-lg) * 1.2);
   }
 
-  /* Desktop navigation - all on same line */
   .desktop-nav {
     display: flex;
     align-items: center;
     gap: var(--spacing-6);
     margin-left: auto;
     margin-right: 120px;
-    margin-top: 0; /* Remove margin-top */
-    transform: translateY(70px); /* Add 20px vertical shift */
+    margin-top: 0;
+    transform: translateY(70px);
   }
 
   .desktop-categories {
@@ -576,77 +441,44 @@ header {
   }
 
   /* ========================================================================== */
-  /* LATEST SECTION - Magazine layout with hero + sidebar + bottom row */
+  /* DESKTOP BENTO GRID - Main article + Most Read sidebar + Articles below */
   /* ========================================================================== */
 
   .bento-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 20px;
+    grid-template-rows: auto auto;
+    gap: 100px !important;
     margin: var(--spacing-12) auto var(--spacing-16) auto;
     max-width: 1200px;
   }
 
-  /* Hero article - Large left column, spans 2 rows */
   .bento-grid .article-card.huge {
     grid-column: 1;
-    grid-row: 1 / 3;
+    grid-row: 1;
     height: 500px;
     aspect-ratio: unset;
   }
 
-  /* Sidebar articles - Right column, spans 2 rows */
-  .side-by-side-container {
+  .most-read-sidebar {
     grid-column: 2;
-    grid-row: 1 / 3;
-    display: flex;
-    flex-direction: column;
+    grid-row: 1;
+    display: block;
+  }
+
+  /* Side-by-side articles - Only under main article (left column) */
+  .side-by-side-container {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
 
-  .side-by-side-container .article-card {
-    flex: none;
-  }
-
-  /* Bottom articles - Side by side under hero */
-  .article-four-container {
-    grid-column: 1;
-    grid-row: 3;
-    width: calc(50% - 10px);
-  }
-
-  .article-five-container {
-    grid-column: 1;
-    grid-row: 3;
-    width: calc(50% - 10px);
-    margin-left: calc(50% + 10px);
-  }
-
-  .article-four-container .article-card,
-  .article-five-container .article-card {
-    height: 300px;
-  }
-
-  /* Image sizing for desktop latest section */
-  .side-by-side-container .article-card.small .article-image-wrapper {
-    height: 500px;
-    width: 300px;
-    aspect-ratio: 4 / 3;
-  }
-
-  .article-four-container .article-card.small .article-image-wrapper,
-  .article-five-container .article-card.small .article-image-wrapper {
-    height: auto;
-    width: 400px;
-    aspect-ratio: 3 / 2;
-  }
-
-  /* Ad placement - Full width below everything */
+  .article-four-container,
+  .article-five-container,
   .separator-ad {
-    grid-column: 1 / -1;
-    grid-row: 4;
-    margin-top: var(--spacing-8);
+    display: none;
   }
 
   /* ========================================================================== */
@@ -673,117 +505,5 @@ header {
     overflow: auto;
     padding: var(--spacing-2) 0 0 0;
     flex: 1;
-  }
-
-  /* Category-Specific Desktop Layouts */
-
-  /* Coins category - Zigzag 2x3 */
-  .category-grid[data-category="coins"] {
-    grid-template-areas:
-      "a b"
-      "c d"
-      "e f";
-  }
-
-  .category-grid[data-category="coins"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="coins"] .article-card:nth-child(6) {
-    grid-area: f;
-  }
-
-  /* Health category - Stacked pairs */
-  .category-grid[data-category="health"] {
-    grid-template-areas:
-      "a a"
-      "b c"
-      "d e"
-      "f .";
-  }
-
-  .category-grid[data-category="health"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="health"] .article-card:nth-child(6) {
-    grid-area: f;
-  }
-
-  /* Hack category - Same as Health */
-  .category-grid[data-category="hack"] {
-    grid-template-areas:
-      "a a"
-      "b c"
-      "d e"
-      "f .";
-  }
-
-  .category-grid[data-category="hack"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="hack"] .article-card:nth-child(6) {
-    grid-area: f;
-  }
-
-  /* AI category - Standard 2x3 grid */
-  .category-grid[data-category="ai"] {
-    grid-template-areas:
-      "a b"
-      "c d"
-      "e f";
-  }
-
-  .category-grid[data-category="ai"] .article-card:nth-child(1) {
-    grid-area: a;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(2) {
-    grid-area: b;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(3) {
-    grid-area: c;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(4) {
-    grid-area: d;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(5) {
-    grid-area: e;
-  }
-  .category-grid[data-category="ai"] .article-card:nth-child(6) {
-    grid-area: f;
   }
 }

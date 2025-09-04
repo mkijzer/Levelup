@@ -20,7 +20,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_DAY: 3,
-  LAUNCH_DATE: new Date("2025-09-01"),
+  LAUNCH_DATE: new Date("2025-09-02"),
   INITIAL_CATEGORY_ARTICLES: 15,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,

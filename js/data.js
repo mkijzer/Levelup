@@ -54,6 +54,8 @@ import {
 
 import { createArticleCard } from "./articleCards.js";
 
+import { populateMostRead } from "./mostRead.js";
+
 // ============================================================================
 // DOM Element Getters
 // ============================================================================
@@ -482,6 +484,8 @@ async function initializeApp() {
     await populateCategoryGrids();
     setupNavigation();
     addIcons();
+
+    populateMostRead();
 
     // Load initial category
     loadCategory("latest");
