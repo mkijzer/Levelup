@@ -70,6 +70,17 @@ async function showArticleView(articleId) {
     if (mainContentArea) {
       mainContentArea.style.display = "";
       console.log("[DEBUG] Showed main content area");
+
+      // Update category title if we're in a category context
+      const currentCategory = getCurrentCategory();
+      if (currentCategory !== "latest") {
+        const categoryTitle = document.getElementById("category-title");
+        if (categoryTitle) {
+          const displayCategory =
+            currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
+          categoryTitle.textContent = displayCategory;
+        }
+      }
     }
   }
 
