@@ -165,12 +165,23 @@ function populateCardContent(card, article) {
 function setupLazyLoading(card) {
   const img = card.querySelector(".article-image");
   if (img && img.dataset.src) {
+    // Set a placeholder or loading state first
+    card.classList.add("loading");
+
     // Check if image is already in viewport
     const rect = img.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      // Load immediately if in viewport
-      img.src = img.dataset.src;
-      card.classList.remove("loading");
+    if (rect.top < window.innerHeight + 200 && rect.bottom > -200) {
+      // Load immediately if in viewport or close to it
+      const image = new Image();
+      image.onload = () => {
+        img.src = img.dataset.src;
+        card.classList.remove("loading");
+      };
+      image.onerror = () => {
+        img.src = "assets/images/fallback_image.png";
+        card.classList.remove("loading");
+      };
+      image.src = img.dataset.src;
     } else {
       // Use observer for images outside viewport
       getImageObserver().observe(img);

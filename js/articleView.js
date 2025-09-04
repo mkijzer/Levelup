@@ -31,34 +31,83 @@ let randomArticleHistory = [];
 /**
  * Shows individual article in full view
  */
+// In the showArticleView function in articleView.js
 async function showArticleView(articleId) {
-  console.log(`Showing article: ${articleId}`);
+  console.log(`[DEBUG] Entering showArticleView with articleId: ${articleId}`);
 
+  // Get the article data
   const article = articlesData.find((a) => a.id === articleId);
   if (!article) {
-    console.error(`Article not found: ${articleId}`);
+    console.error(`[DEBUG] Article not found: ${articleId}`);
     return;
   }
 
-  // Hide ALL article cards with this ID
-  const allCards = document.querySelectorAll(
-    `[data-article-id="${articleId}"]`
-  );
-  console.log("Found cards to hide:", allCards.length);
-  allCards.forEach((card) => {
-    card.style.display = "none";
-    card.setAttribute("data-hidden-for-view", "true");
-  });
+  // Check if we're coming from search results
+  const fromSearch = sessionStorage.getItem("fromSearch") === "true";
+  console.log("[DEBUG] fromSearch flag:", fromSearch);
 
-  if (getIsInCategoryPage()) {
-    showCategoryArticleView(article, articleId);
-  } else {
-    showMainArticleView(article, articleId);
+  // Keep track of current category
+  const currentCategory = getCurrentCategory();
+  console.log("[DEBUG] Current category:", currentCategory);
+
+  // Simplified view switching - hide everything first
+  const mainContentArea = document.getElementById("main-content-area");
+  const categoryPageView = document.getElementById("category-page-view");
+  const articleView = document.querySelector(".article-view");
+  const searchResultsGrid = document.querySelector(".search-results-grid");
+
+  // Make sure article view exists
+  if (!articleView) {
+    console.error("[DEBUG] Article view element not found");
+    return;
+  }
+
+  console.log("[DEBUG] Hiding other views");
+  // Show main content area if we're in a category
+  if (categoryPageView && !categoryPageView.classList.contains("hidden")) {
+    categoryPageView.classList.add("hidden");
+    console.log("[DEBUG] Hid category page view");
+    if (mainContentArea) {
+      mainContentArea.style.display = "";
+      console.log("[DEBUG] Showed main content area");
+    }
+  }
+
+  // Inside main content, hide bento grid but show article view
+  if (mainContentArea) {
+    const bentoGrid = mainContentArea.querySelector(".bento-grid");
+
+    if (bentoGrid) {
+      bentoGrid.style.display = "none";
+      console.log("[DEBUG] Hid bento grid");
+    }
+
+    // Hide search results only if explicitly told to (but remember we're from search)
+    if (searchResultsGrid) {
+      searchResultsGrid.style.display = "none";
+      console.log("[DEBUG] Hid search results grid");
+    }
+  }
+
+  // Show and populate article view
+  console.log("[DEBUG] Showing article view");
+  articleView.classList.remove("hidden");
+  populateArticleView(article, articleView);
+  console.log("[DEBUG] Populated article view");
+  populateRandomArticles(articleId);
+  console.log("[DEBUG] Populated random articles");
+
+  // Make sure close button works
+  const closeButton = articleView.querySelector(".close-article");
+  if (closeButton) {
+    closeButton.removeEventListener("click", closeArticleView);
+    closeButton.addEventListener("click", closeArticleView);
+    console.log("[DEBUG] Set up close button");
   }
 
   window.scrollTo(0, 0);
+  console.log("[DEBUG] Scrolled to top");
 }
-
 /**
  * Show article view in category page
  */
@@ -400,63 +449,91 @@ function getRandomArticle() {
 /**
  * Closes article view and returns to previous context
  */
+// In the closeArticleView function in articleView.js
 function closeArticleView() {
-  if (getIsInCategoryPage()) {
-    closeCategoryArticleView();
-  } else {
-    closeMainArticleView();
-  }
+  // Check if we came from search
+  const fromSearch = sessionStorage.getItem("fromSearch") === "true";
+  console.log("Closing article - fromSearch:", fromSearch);
 
-  // Show the hidden article card
-  const hiddenCard = document.querySelector('[data-hidden-for-view="true"]');
-  if (hiddenCard) {
-    console.log("Found hidden card to show:", hiddenCard);
-    hiddenCard.style.display = "";
-    hiddenCard.removeAttribute("data-hidden-for-view");
-  } else {
-    console.log("No hidden card found");
-  }
-
-  window.scrollTo(0, 0);
-}
-
-/**
- * Close category article view
- */
-function closeCategoryArticleView() {
-  const categoryView = document.querySelector(".category-article-view");
-
-  if (categoryView) {
-    categoryView.classList.add("hidden");
-
-    const heroGrid = document.querySelector(".category-hero-grid");
-    const articlesList = document.querySelector(".category-articles-list");
-    const loadMoreBtn = document.querySelector(".load-more-button");
-
-    if (heroGrid) heroGrid.style.display = "";
-    if (articlesList) articlesList.style.display = "";
-    if (loadMoreBtn) loadMoreBtn.style.display = "";
-  }
-}
-
-/**
- * Close main article view
- */
-function closeMainArticleView() {
   const bentoGrid = document.querySelector(".bento-grid");
   const articleView = document.querySelector(".article-view");
-  const latestLabel = document.querySelector(".category-label.latest-label");
+  const searchResultsGrid = document.querySelector(".search-results-grid");
+  const categoryPageView = document.getElementById("category-page-view");
 
-  if (bentoGrid) {
-    bentoGrid.style.display = "";
-  }
-
+  // Hide article view
   if (articleView) {
     articleView.classList.add("hidden");
   }
 
-  if (latestLabel) {
-    latestLabel.style.display = "block";
+  // Return to appropriate view
+  if (fromSearch && searchResultsGrid) {
+    // Return to search results
+    searchResultsGrid.style.display = "grid"; // Explicitly set to grid to match search results layout
+    if (bentoGrid) bentoGrid.style.display = "none";
+    if (categoryPageView) categoryPageView.classList.add("hidden");
+    // Keep the fromSearch flag to maintain context
+  } else {
+    // Return to latest view
+    if (bentoGrid) bentoGrid.style.display = "";
+    if (categoryPageView) categoryPageView.classList.add("hidden");
+    // Clear search context only if not from search
+    sessionStorage.removeItem("fromSearch");
+  }
+
+  window.scrollTo(0, 0);
+}
+function closeCategoryArticleView(lastSearch) {
+  const categoryView = document.querySelector(".category-article-view");
+  const categorySearchResults = document.querySelector(
+    ".category-search-results"
+  );
+
+  if (categoryView) {
+    categoryView.classList.add("hidden");
+
+    // If we were in a category search, show those results again
+    if (lastSearch && lastSearch.inCategory) {
+      const heroGrid = document.querySelector(".category-hero-grid");
+      const articlesList = document.querySelector(".category-articles-list");
+      const loadMoreBtn = document.querySelector(".load-more-button");
+
+      if (categorySearchResults) categorySearchResults.style.display = "";
+
+      if (heroGrid) heroGrid.style.display = "none";
+      if (articlesList) articlesList.style.display = "none";
+      if (loadMoreBtn) loadMoreBtn.style.display = "none";
+    } else {
+      // Normal category view
+      const heroGrid = document.querySelector(".category-hero-grid");
+      const articlesList = document.querySelector(".category-articles-list");
+      const loadMoreBtn = document.querySelector(".load-more-button");
+
+      if (heroGrid) heroGrid.style.display = "";
+      if (articlesList) articlesList.style.display = "";
+      if (loadMoreBtn) loadMoreBtn.style.display = "";
+    }
+  }
+}
+
+function closeMainArticleView(lastSearch) {
+  const bentoGrid = document.querySelector(".bento-grid");
+  const articleView = document.querySelector(".article-view");
+  const searchResultsGrid = document.querySelector(".search-results-grid");
+  const latestLabel = document.querySelector(".category-label.latest-label");
+
+  // If we have search results and were in a search before
+  if (searchResultsGrid && lastSearch && !lastSearch.inCategory) {
+    bentoGrid.style.display = "none";
+    searchResultsGrid.style.display = "";
+    if (latestLabel) latestLabel.style.display = "none";
+  } else {
+    // Normal main view
+    bentoGrid.style.display = "";
+    if (latestLabel) latestLabel.style.display = "block";
+  }
+
+  if (articleView) {
+    articleView.classList.add("hidden");
   }
 }
 

@@ -40,27 +40,37 @@ function handleHashChange() {
   const hash = window.location.hash.slice(1);
   const category = hash || "latest";
 
-  console.log(`Hash changed to: ${category}`);
+  console.log(`[DEBUG] Hash changed to: ${category}`);
 
-  if (category !== "category") {
-    const mainArticleView = document.querySelector(".article-view");
-    if (mainArticleView && !mainArticleView.classList.contains("hidden")) {
-      mainArticleView.classList.add("hidden");
-    }
-
-    const categoryArticleView = document.querySelector(
-      ".category-article-view"
-    );
-    if (
-      categoryArticleView &&
-      !categoryArticleView.classList.contains("hidden")
-    ) {
-      categoryArticleView.classList.add("hidden");
-    }
-
-    exitCategoryPage();
-    loadCategory(category);
+  // Check if coming from search results
+  const fromSearch = sessionStorage.getItem("fromSearch") === "true";
+  if (fromSearch) {
+    console.log("[DEBUG] Skipping hash change due to active search context");
+    return;
   }
+
+  // Check if an article view is active
+  const articleView = document.querySelector(".article-view");
+  if (articleView && !articleView.classList.contains("hidden")) {
+    console.log("[DEBUG] Skipping hash change due to active article view");
+    return;
+  }
+
+  const mainArticleView = document.querySelector(".article-view");
+  if (mainArticleView && !mainArticleView.classList.contains("hidden")) {
+    mainArticleView.classList.add("hidden");
+  }
+
+  const categoryArticleView = document.querySelector(".category-article-view");
+  if (
+    categoryArticleView &&
+    !categoryArticleView.classList.contains("hidden")
+  ) {
+    categoryArticleView.classList.add("hidden");
+  }
+
+  exitCategoryPage();
+  loadCategory(category);
 }
 
 /**

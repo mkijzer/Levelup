@@ -34,6 +34,8 @@ import {
   setupCategoryPageInteractions,
 } from "./categoryManager.js";
 
+import { normalizeCategory } from "./utils.js";
+
 import {
   latestSvg,
   healthSvg,
@@ -117,9 +119,20 @@ export async function loadCategory(category) {
   updateDesktopNavigation(category);
 }
 
+/**
+ * Loads search results in main view
+ */
+
+// In the loadSearchResults function in data.js
 export async function loadSearchResults(query) {
   // Force back to main view state first
   setIsInCategoryPage(false);
+
+  // Reset any existing article views
+  const articleView = document.querySelector(".article-view");
+  if (articleView && !articleView.classList.contains("hidden")) {
+    articleView.classList.add("hidden");
+  }
 
   const elements = getLayoutElements();
   if (!elements.bentoGrid) return;
@@ -136,9 +149,10 @@ export async function loadSearchResults(query) {
     mainContent.style.display = "";
   }
 
-  // Rest of your existing code...
+  // Hide bento grid
   elements.bentoGrid.style.display = "none";
 
+  // Get or create search results container
   let searchContainer = document.querySelector(".search-results-grid");
   if (!searchContainer) {
     searchContainer = document.createElement("div");
@@ -149,14 +163,32 @@ export async function loadSearchResults(query) {
     );
   }
 
+  // Clear existing search results
+  searchContainer.innerHTML = "";
+  // Make sure it's visible
+  searchContainer.style.display = "";
+
   updateCategoryTitle(`SEARCH: ${query.toUpperCase()}`);
 
   const articles = searchArticles(query);
 
-  searchContainer.innerHTML = "";
-  for (const article of articles) {
-    const card = await createArticleCard(article, "small");
-    searchContainer.appendChild(card);
+  // Show a message if no results found
+  if (articles.length === 0) {
+    searchContainer.innerHTML =
+      '<p class="no-results">No articles found matching your search.</p>';
+  } else {
+    // Important: Mark that we're in search mode in session storage
+    sessionStorage.setItem("fromSearch", "true");
+
+    // Create cards for search results
+    for (const article of articles) {
+      const card = await createArticleCard(article, "small");
+
+      // Add data attribute for explicit search result identification
+      card.setAttribute("data-from-search", "true");
+
+      searchContainer.appendChild(card);
+    }
   }
 }
 
@@ -257,26 +289,48 @@ function showCategoryPageView(elements, category) {
  * Sets up event delegation for article card clicks
  */
 function setupEventDelegation() {
+  // Remove any existing event listeners first
   const container = document.querySelector(".container");
+  const categoryPageView = document.getElementById("category-page-view");
+
   if (container) {
     container.addEventListener("click", handleArticleCardClick);
   }
 
-  const categoryPageView = document.getElementById("category-page-view");
   if (categoryPageView) {
     categoryPageView.addEventListener("click", handleArticleCardClick);
   }
 }
 
-/**
- * Handles article card click events
- */
 function handleArticleCardClick(e) {
   const card = e.target.closest(".article-card");
   if (card && card.getAttribute("data-article-id")) {
     const articleId = card.getAttribute("data-article-id");
-    console.log(`Clicked article: ${articleId}`);
+    e.preventDefault(); // Prevent default navigation
+
+    console.log(`[DEBUG] Clicked article ID: ${articleId}`);
+    console.log(
+      `[DEBUG] Is from search: ${
+        card.getAttribute("data-from-search") === "true" ||
+        !!e.target.closest(".search-results-grid")
+      }`
+    );
+
+    // Check if this is a search result card either by container or data attribute
+    const isFromSearch =
+      card.getAttribute("data-from-search") === "true" ||
+      !!e.target.closest(".search-results-grid");
+
+    if (isFromSearch) {
+      console.log("[DEBUG] Setting fromSearch flag for search result click");
+      sessionStorage.setItem("fromSearch", "true");
+    }
+
+    console.log("[DEBUG] Calling showArticleView with articleId:", articleId);
+    // Directly call showArticleView with no other state changes
     showArticleView(articleId);
+  } else {
+    console.log("[DEBUG] No valid article card clicked");
   }
 }
 
@@ -431,11 +485,4 @@ function setupScrollBehavior() {
 // Auto-initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", initializeApp);
 // Export for backwards compatibility and external access
-export {
-  // loadCategory,
-  // loadSearchResults,
-  // loadCategoryPage,
-  // loadRandomArticle,
-  switchToCategory,
-  showArticleView,
-};
+export { switchToCategory, showArticleView };

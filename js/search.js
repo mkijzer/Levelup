@@ -5,7 +5,8 @@
 // Version: 2.0 - Optimized performance and error handling
 // ============================================================================
 
-import { loadCategory, loadSearchResults } from "./data.js";
+import { loadCategory, loadSearchResults, loadCategoryPage } from "./data.js";
+import { getIsInCategoryPage } from "./navigation.js";
 
 // ============================================================================
 // Configuration
@@ -91,12 +92,21 @@ class SearchManager {
     const { searchBar, searchIcon } = this.elements;
 
     document.addEventListener("click", (e) => {
+      const searchResultsGrid = document.querySelector(".search-results-grid");
+      const clickedArticleCard = e.target.closest(".article-card");
+
       if (
         isSearchActive &&
         !searchBar.contains(e.target) &&
-        !searchIcon.contains(e.target)
+        !searchIcon.contains(e.target) &&
+        !clickedArticleCard && // Don't close if clicking an article card
+        !(
+          searchResultsGrid &&
+          searchResultsGrid.style.display !== "none" &&
+          searchResultsGrid.contains(e.target)
+        )
       ) {
-        this.closeSearch();
+        this.closeSearchOnly();
       }
     });
   }
@@ -146,6 +156,85 @@ class SearchManager {
     }
   }
 
+  closeSearchOnly() {
+    const { searchIcon, searchBar, searchInput } = this.elements;
+
+    searchBar.classList.remove("active");
+    searchIcon.classList.remove("expanding");
+    searchInput.value = "";
+    isSearchActive = false;
+
+    // Clear any pending search
+    if (searchDebounceTimer) {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = null;
+    }
+  }
+
+  // Add this new method right after closeSearch
+  clearSearch() {
+    if (this.elements.searchInput) {
+      this.elements.searchInput.value = "";
+    }
+
+    this.closeSearch();
+
+    // Clear search results from both views
+    const mainSearchResults = document.querySelector(".search-results-grid");
+    const categorySearchResults = document.querySelector(
+      ".category-search-results"
+    );
+
+    if (mainSearchResults) {
+      mainSearchResults.style.display = "none";
+      mainSearchResults.innerHTML = "";
+    }
+
+    if (categorySearchResults) {
+      categorySearchResults.style.display = "none";
+      categorySearchResults.innerHTML = "";
+    }
+
+    // Only reset to latest view if no article is active and not in search context
+    const articleView = document.querySelector(".article-view");
+    const fromSearch = sessionStorage.getItem("fromSearch") === "true";
+    if (
+      !articleView ||
+      articleView.classList.contains("hidden") ||
+      !fromSearch
+    ) {
+      // Restore appropriate view based on context
+      if (getIsInCategoryPage()) {
+        const heroGrid = document.querySelector(".category-hero-grid");
+        const articlesList = document.querySelector(".category-articles-list");
+        const loadMoreBtn = document.querySelector(".load-more-button");
+
+        if (heroGrid) heroGrid.style.display = "";
+        if (articlesList) articlesList.style.display = "";
+        if (loadMoreBtn) loadMoreBtn.style.display = "";
+      } else {
+        const bentoGrid = document.querySelector(".bento-grid");
+        const latestLabel = document.querySelector(
+          ".category-label.latest-label"
+        );
+
+        if (bentoGrid) bentoGrid.style.display = "";
+        if (latestLabel) latestLabel.style.display = "block";
+      }
+
+      // Clear search state
+      sessionStorage.removeItem("lastSearch");
+    }
+  }
+
+  getCurrentContext() {
+    return {
+      isInCategoryPage: getIsInCategoryPage() || false,
+      category: window.currentCategory || "latest",
+      isSearchActive: isSearchActive,
+    };
+  }
+
   handleSearchInput(query) {
     // Clear existing timer
     if (searchDebounceTimer) {
@@ -167,16 +256,37 @@ class SearchManager {
       searchDebounceTimer = null;
     }
 
+    // Reset any open article views first
+    const articleView = document.querySelector(".article-view");
+    if (articleView && !articleView.classList.contains("hidden")) {
+      articleView.classList.add("hidden");
+    }
+
     this.performSearch(query);
   }
+
+  // In the performSearch method of SearchManager in search.js
   performSearch(query) {
     const trimmedQuery = query.trim();
+    const context = this.getCurrentContext();
 
     try {
       if (trimmedQuery.length > 0) {
-        loadSearchResults(trimmedQuery);
+        // Store search state in sessionStorage
+        sessionStorage.setItem("fromSearch", "true");
+
+        // Pass the current context to loadSearchResults
+        loadSearchResults(trimmedQuery, context);
       } else {
-        loadCategory("latest");
+        // Clear search state
+        sessionStorage.removeItem("fromSearch");
+
+        // Return to appropriate view based on context
+        if (context.isInCategoryPage) {
+          loadCategoryPage(context.category);
+        } else {
+          loadCategory("latest");
+        }
       }
     } catch (error) {
       console.error("Search: Error performing search:", error);
@@ -199,4 +309,4 @@ function initializeSearch() {
 document.addEventListener("DOMContentLoaded", initializeSearch);
 
 // Export for manual initialization if needed
-export { initializeSearch };
+export { initializeSearch, searchManager };
