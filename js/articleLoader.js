@@ -19,8 +19,8 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 // ============================================================================
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
-  ARTICLES_PER_DAY: 5,
-  LAUNCH_DATE: new Date("2025-08-22"),
+  ARTICLES_PER_DAY: 3,
+  LAUNCH_DATE: new Date("2025-09-01"),
   INITIAL_CATEGORY_ARTICLES: 15,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -103,7 +103,6 @@ function searchArticles(query) {
 
       return titleMatch || categoryMatch || tagsMatch;
     })
-    .slice(0, 20) // Limit to 20 results
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 // ============================================================================

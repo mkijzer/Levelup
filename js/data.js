@@ -170,28 +170,83 @@ export async function loadSearchResults(query) {
 
   updateCategoryTitle(`SEARCH: ${query.toUpperCase()}`);
 
-  const articles = searchArticles(query);
+  const allSearchResults = searchArticles(query);
+
+  // Store all results but only show first 20
+  searchContainer.setAttribute(
+    "data-all-results",
+    JSON.stringify(allSearchResults.map((a) => a.id))
+  );
+  searchContainer.setAttribute("data-current-page", "1");
 
   // Show a message if no results found
-  if (articles.length === 0) {
+  if (allSearchResults.length === 0) {
     searchContainer.innerHTML =
       '<p class="no-results">No articles found matching your search.</p>';
   } else {
     // Important: Mark that we're in search mode in session storage
     sessionStorage.setItem("fromSearch", "true");
 
-    // Create cards for search results
-    for (const article of articles) {
+    // Create cards for first 20 search results
+    const initialResults = allSearchResults.slice(0, 20);
+    for (const article of initialResults) {
       const card = await createArticleCard(article, "small");
-
-      // Add data attribute for explicit search result identification
       card.setAttribute("data-from-search", "true");
-
       searchContainer.appendChild(card);
+    }
+
+    // Add "Load More" button if there are more results
+    if (allSearchResults.length > 20) {
+      const loadMoreButton = document.createElement("button");
+      loadMoreButton.className = "load-more-button";
+      loadMoreButton.textContent = "Load More Results";
+      loadMoreButton.addEventListener("click", loadMoreSearchResults);
+      searchContainer.after(loadMoreButton);
     }
   }
 }
 
+// New function to load more search results
+async function loadMoreSearchResults() {
+  const searchContainer = document.querySelector(".search-results-grid");
+  const loadMoreButton = document.querySelector(".load-more-button");
+
+  if (!searchContainer || !loadMoreButton) return;
+
+  // Get stored article IDs and current page
+  const allResultIds = JSON.parse(
+    searchContainer.getAttribute("data-all-results") || "[]"
+  );
+  const currentPage = parseInt(
+    searchContainer.getAttribute("data-current-page") || "1"
+  );
+  const nextPage = currentPage + 1;
+
+  // Calculate which results to show next
+  const startIndex = currentPage * 20;
+  const endIndex = startIndex + 20;
+
+  // Get the article objects for these IDs
+  const nextResults = allResultIds
+    .slice(startIndex, endIndex)
+    .map((id) => articlesData.find((article) => article.id === id))
+    .filter((article) => article); // Remove any undefined entries
+
+  // Add the next batch of results
+  for (const article of nextResults) {
+    const card = await createArticleCard(article, "small");
+    card.setAttribute("data-from-search", "true");
+    searchContainer.appendChild(card);
+  }
+
+  // Update current page
+  searchContainer.setAttribute("data-current-page", nextPage.toString());
+
+  // Remove the button if we've loaded all results
+  if (endIndex >= allResultIds.length) {
+    loadMoreButton.remove();
+  }
+}
 /**
  * Loads category page with extended article list
  */
