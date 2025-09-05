@@ -153,7 +153,8 @@ header {
   height: 1px;
   background: linear-gradient(to right, #ff4500, #ff8c00, #ff69b4);
   width: 100%;
-  margin: 3px 0;
+  margin-top: var(--spacing-4);
+  opacity: 0.3; /* Reduce from current value */
 }
 
 .articles {
@@ -420,9 +421,17 @@ header {
     align-items: center;
     gap: var(--spacing-6);
     margin-left: auto;
-    margin-right: 120px;
+    margin-right: 40px; /* Reduce margin to make space */
     margin-top: 0;
     transform: translateY(70px);
+  }
+
+  /* Move search to desktop nav line */
+  @media (min-width: 1200px) {
+    .search-container {
+      order: 3; /* Place after nav items */
+      margin-left: var(--spacing-4);
+    }
   }
 
   .desktop-categories {

@@ -279,7 +279,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   width: 100%;
   max-width: 600px; /* Wider for modal feel */
   margin: 0 auto;
-  border: 1px solid var(--glass-border);
+  /* border: 1px solid var(--glass-border); */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 10px 10px; /* Rounded bottom */
 }
@@ -739,6 +739,10 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   text-overflow: ellipsis;
 }
 
+.article-view .page-title {
+  display: none;
+}
+
 .article-title {
   font-size: var(--font-size-xl);
   margin-bottom: var(--spacing-2);
@@ -1019,6 +1023,11 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   gap: var(--spacing-5);
 }
 
+/* Adjust spacing for subheadings in articles */
+.article-body h3 {
+  margin-bottom: 0.5rem;
+}
+
 .main-article-body .inline-image {
   width: 100%;
   max-width: 300px;
@@ -1076,6 +1085,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 .article-header {
   margin-top: var(--spacing-6);
   margin-bottom: var(--spacing-6);
+  margin-left: -25px;
 }
 
 .article-category {
@@ -1115,6 +1125,17 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   display: block;
 }
 
+/* Hide category title in article view */
+body:has(.article-view:not(.hidden)) #category-title {
+  display: none;
+}
+
+/* Move article header up when in article view */
+body:has(.article-view:not(.hidden)) .article-header {
+  margin-top: calc(var(--spacing-6) * -1) !important;
+  padding-top: 0 !important;
+}
+
 /* ============================================================================ */
 /* Tags System */
 /* ============================================================================ */
@@ -1127,6 +1148,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   flex-wrap: wrap;
   gap: var(--spacing-2);
   margin: var(--spacing-2) 0 var(--spacing-4) 0;
+  margin-bottom: var(--spacing-6); /* Increase gap */
   justify-content: center;
   padding: 0;
 }
@@ -1214,7 +1236,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .quote {
   position: relative;
-  margin: var(--spacing-8) auto;
+  margin-top: 1.5rem;
   min-height: 200px;
   display: flex;
   align-items: center;
@@ -1279,6 +1301,10 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* Styling for category page layout with hero grid and article list.
  * Ensures smooth scrolling and structured content display.
  */
+
+.category-title {
+  display: none;
+}
 
 .category-page-view {
   position: fixed;
@@ -1380,13 +1406,17 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
  */
 
 .category-label {
-  display: inline-block;
+  display: block;
   font-family: var(--font-primary);
   font-weight: var(--font-weight-light);
   font-size: var(--font-size-category-label);
   color: #b0b0b0;
   letter-spacing: 0.0625rem;
-  margin: var(--spacing-article-separation) 0 var(--spacing-4) var(--spacing-6);
+  margin-top: var(--spacing-8) !important; /* Reduce from current */
+}
+
+.category-label .category-title {
+  display: none;
 }
 
 /* ============================================================================ */
@@ -1428,6 +1458,109 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   100% {
     transform: scale(3) rotate(360deg);
     opacity: 0;
+  }
+}
+
+/* ============================================================================ */
+/* Most Read Mobile Carousel */
+/* ============================================================================ */
+
+.most-read-mobile {
+  display: block;
+  margin-bottom: var(--spacing-12);
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  margin: var(--spacing-4) calc(var(--spacing-page) * -1);
+  padding: 0 var(--spacing-page);
+}
+
+.carousel-track {
+  display: flex;
+  gap: var(--spacing-4);
+  scroll-behavior: smooth;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-card {
+  flex: 0 0 75%;
+  scroll-snap-align: start;
+  position: relative;
+  height: 200px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+.carousel-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.carousel-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-4);
+  background: linear-gradient(
+    transparent,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.9)
+  );
+  color: white;
+  transform: translateY(0);
+  transition: transform 0.2s ease;
+}
+
+.carousel-card-meta {
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+  margin-bottom: var(--spacing-1);
+}
+
+.carousel-card-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) {
+  .carousel-card {
+    flex: 0 0 60%;
+    height: 240px;
+  }
+
+  .carousel-card-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* Hide on desktop - keep existing sidebar */
+@media (min-width: 1200px) {
+  .most-read-mobile {
+    display: none;
   }
 }
 
@@ -1549,21 +1682,38 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
  */
 
 /* ============================================================================ */
+/* Search icon Section - Desktop Sidebar */
+/* ============================================================================ */
+
+@media (min-width: 1200px) {
+  .search-icon {
+    position: static; /* Remove fixed positioning */
+    width: var(--spacing-4);
+    height: var(--spacing-4);
+    margin-top: 90px;
+  }
+}
+
+/* ============================================================================ */
 /* Most Read Section - Desktop Sidebar */
 /* ============================================================================ */
 
-/* In the components.css file, for the most read section */
-
 @media (min-width: 1200px) {
+  .most-read-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    align-items: flex-start;
+  }
   .most-read-sidebar {
     display: block !important;
     margin-top: -10px; /* Add top margin to align with article start */
   }
 
   .most-read-sidebar .category-label {
-    margin-left: -25px !important; /* Move title more to the left */
+    margin-left: -20px !important; /* Move further left */
+    text-align: left !important;
   }
-
   .most-read-sidebar #most-read-title {
     font-size: var(--font-size-base); /* Make the title font smaller */
   }
@@ -1579,6 +1729,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
   .most-read-card {
     display: flex;
+    flex-direction: row;
     align-items: center;
     padding: var(--spacing-3);
     border-radius: var(--radius-lg);
@@ -1587,6 +1738,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
     border: 1px solid var(--glass-border);
     cursor: pointer;
     min-height: 70px;
+    width: 100%; /* Set fixed width */
     /* Remove transition property to remove hover effect */
   }
 
@@ -1623,6 +1775,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
     flex-shrink: 0;
     border-radius: var(--radius-sm);
     overflow: hidden;
+    margin-left: auto; /* This pushes all images to the right edge */
   }
 
   .most-read-image {

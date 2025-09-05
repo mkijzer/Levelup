@@ -56,6 +56,8 @@ import { createArticleCard } from "./articleCards.js";
 
 import { populateMostRead } from "./mostRead.js";
 
+import { populateMobileCarousel } from "./mobileCarousel.js";
+
 // ============================================================================
 // DOM Element Getters
 // ============================================================================
@@ -384,8 +386,27 @@ function handleArticleCardClick(e) {
     }
 
     console.log("[DEBUG] Calling showArticleView with articleId:", articleId);
+
+    // Close search if open
+    if (
+      window.searchManager &&
+      typeof window.searchManager.closeSearch === "function"
+    ) {
+      window.searchManager.closeSearch();
+    }
     // Directly call showArticleView with no other state changes
     showArticleView(articleId);
+
+    // Close search if open
+    const searchBar = document.querySelector(".search-bar-slide");
+    const searchIcon = document.querySelector(".search-icon");
+    const searchInput = document.getElementById("search-input");
+
+    if (searchBar && searchBar.classList.contains("active")) {
+      searchBar.classList.remove("active");
+      searchIcon.classList.remove("expanding");
+      searchInput.value = "";
+    }
   } else {
     console.log("[DEBUG] No valid article card clicked");
   }
@@ -487,6 +508,8 @@ async function initializeApp() {
 
     populateMostRead();
 
+    populateMobileCarousel();
+
     // Load initial category
     loadCategory("latest");
 
@@ -502,10 +525,27 @@ async function initializeApp() {
 /**
  * Setup scroll behavior for header
  */
+// Find the setupScrollBehavior function and ensure it's applied to category page:
+
 function setupScrollBehavior() {
   try {
     let lastScrollY = window.scrollY;
     let scrollTimeout;
+    let touchTimeout;
+
+    // Function to show header when scrolling/touching stops
+    const showHeaderAfterDelay = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const header = document.querySelector(".sticky-wrapper-navcontainer");
+        if (header) {
+          header.classList.remove("hide-header");
+          header.classList.remove("scrolling");
+          const navbar = document.querySelector(".nav-container");
+          if (navbar) navbar.classList.remove("scrolling");
+        }
+      }, 500);
+    };
 
     window.addEventListener("scroll", () => {
       const header = document.querySelector(".sticky-wrapper-navcontainer");
@@ -516,18 +556,9 @@ function setupScrollBehavior() {
 
       // Add scrolling class (lighter glass)
       header.classList.add("scrolling");
-      navbar.classList.add("scrolling");
+      if (navbar) navbar.classList.add("scrolling");
 
-      // Clear previous timeout
-      clearTimeout(scrollTimeout);
-
-      // Remove scrolling class when stopped (darker glass)
-      scrollTimeout = setTimeout(() => {
-        header.classList.remove("scrolling");
-        navbar.classList.remove("scrolling");
-      }, 150);
-
-      // Keep existing hide/show logic
+      // Hide header when scrolling down
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
         header.classList.add("hide-header");
       } else if (currentScrollY < lastScrollY) {
@@ -535,6 +566,20 @@ function setupScrollBehavior() {
       }
 
       lastScrollY = currentScrollY;
+
+      // Show header when scrolling stops
+      showHeaderAfterDelay();
+    });
+
+    // Add touchend listener to show header when touch ends
+    window.addEventListener("touchend", () => {
+      clearTimeout(touchTimeout);
+      touchTimeout = setTimeout(() => {
+        const header = document.querySelector(".sticky-wrapper-navcontainer");
+        if (header) {
+          header.classList.remove("hide-header");
+        }
+      }, 500);
     });
   } catch (error) {
     console.error("Scroll listener error:", error);

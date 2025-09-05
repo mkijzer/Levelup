@@ -73,6 +73,12 @@ a {
   transition: color 0.3s ease;
 }
 
+/* Reduce boldness of bold text */
+.article-body strong,
+.article-body b {
+  font-weight: 500; /* Change from 700/bold to 600 */
+}
+
 /* ============================================================================ */
 /* Form Elements */
 /* ============================================================================ */
