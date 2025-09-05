@@ -704,7 +704,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   flex-direction: column;
 }
 
-.article-image-wrapper {
+THIS WAS THE ISSUE .article-image-wrapper {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
@@ -879,13 +879,10 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   height: 200px;
 }
 
-.side-by-side-container .article-card.small .article-image-wrapper {
-  height: 120px;
-}
-
-.side-by-side-container .article-card.small .article-content {
-  padding: var(--spacing-2);
-  flex: 1;
+.side-by-side-container .article-card.small .article-image {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
 }
 
 .side-by-side-container .article-card.small .article-title {
@@ -1682,7 +1679,7 @@ body:has(.article-view:not(.hidden)) .article-header {
  */
 
 /* ============================================================================ */
-/* Search icon Section - Desktop Sidebar */
+/* Search Section - Desktop (min-width: 1200px) */
 /* ============================================================================ */
 
 @media (min-width: 1200px) {
@@ -1692,8 +1689,12 @@ body:has(.article-view:not(.hidden)) .article-header {
     height: var(--spacing-4);
     margin-top: 90px;
   }
-}
 
+  .search-bar-slide {
+    left: auto;
+    width: 1000px; /* Set specific width instead of full width */
+  }
+}
 /* ============================================================================ */
 /* Most Read Section - Desktop Sidebar */
 /* ============================================================================ */
@@ -1839,4 +1840,15 @@ body:has(.article-view:not(.hidden)) .article-header {
 
 .article-image {
   object-position: center top !important;
+}
+
+@media (min-width: 1200px) {
+  .article-image-wrapper {
+    /* Reset mobile constraints for desktop */
+    height: auto;
+  }
+
+  .side-by-side-container .article-card.small .article-image-wrapper {
+    height: 250px;
+  }
 }
