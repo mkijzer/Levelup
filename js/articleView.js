@@ -89,7 +89,7 @@ async function showArticleView(articleId) {
     const bentoGrid = mainContentArea.querySelector(".bento-grid");
 
     if (bentoGrid) {
-      bentoGrid.style.display = "none";
+      bentoGrid.classList.add("hidden-element");
       console.log("[DEBUG] Hid bento grid");
     }
 
@@ -171,7 +171,7 @@ function showMainArticleView(article, articleId) {
   articleView.classList.remove("hidden");
 
   if (latestLabel) {
-    latestLabel.style.display = "none";
+    latestLabel.classList.add("hidden-element");
   }
 
   populateArticleView(article, articleView);
@@ -354,22 +354,94 @@ function checkTagHasResults(tag) {
   return tagArticles.length > 0;
 }
 
-/**
- * Search articles by tag
- */
-function searchArticlesByTag(tag) {
-  // This will be handled by the main data.js coordinator
-  // For now, just log the action
-  console.log(`Searching for tag: ${tag}`);
-}
-
-/**
- * Show no tag results message
- */
 function showNoTagResultsMessage(tag) {
-  // This will be handled by the main data.js coordinator
-  // For now, just log the action
-  console.log(`No results found for tag: ${tag}`);
+  // Hide article view first
+  const articleView = document.querySelector(".article-view");
+  if (articleView) {
+    articleView.classList.add("hidden");
+  }
+
+  // Create a proper no-results display
+  const bentoGrid = document.querySelector(".bento-grid");
+  if (bentoGrid) {
+    bentoGrid.style.display = "none";
+  }
+
+  let searchContainer = document.querySelector(".search-results-grid");
+  if (!searchContainer) {
+    searchContainer = document.createElement("div");
+    searchContainer.className = "category-grid search-results-grid";
+    bentoGrid.parentNode.insertBefore(searchContainer, bentoGrid.nextSibling);
+  }
+
+  searchContainer.innerHTML = `<p class="no-results">No other articles found with the tag "${tag}".</p>`;
+  searchContainer.style.display = "";
+
+  // Update title
+  const categoryTitle = document.getElementById("category-title");
+  if (categoryTitle) {
+    categoryTitle.textContent = `TAG: ${tag.toUpperCase()}`;
+  }
+
+  // Set search flag and scroll to top
+  sessionStorage.setItem("fromSearch", "true");
+  window.scrollTo(0, 0);
+}
+async function searchArticlesByTag(tag) {
+  // Get current article to exclude it
+  const currentArticleTitle = document.querySelector(
+    ".main-article .article-main-title"
+  );
+  const currentArticle = currentArticleTitle
+    ? articlesData.find((a) => a.title === currentArticleTitle.textContent)
+    : null;
+
+  // Filter articles with the tag, excluding current article
+  const tagArticles = articlesData.filter(
+    (article) =>
+      article.tags &&
+      article.tags.includes(tag) &&
+      article.id !== (currentArticle ? currentArticle.id : null)
+  );
+
+  // Hide article view first
+  const articleView = document.querySelector(".article-view");
+  if (articleView) {
+    articleView.classList.add("hidden");
+  }
+
+  // Hide bento grid and show search results
+  const bentoGrid = document.querySelector(".bento-grid");
+  if (bentoGrid) {
+    bentoGrid.style.display = "none";
+  }
+
+  let searchContainer = document.querySelector(".search-results-grid");
+  if (!searchContainer) {
+    searchContainer = document.createElement("div");
+    searchContainer.className = "category-grid search-results-grid";
+    bentoGrid.parentNode.insertBefore(searchContainer, bentoGrid.nextSibling);
+  }
+
+  searchContainer.innerHTML = "";
+  searchContainer.style.display = "";
+
+  // Update title
+  const categoryTitle = document.getElementById("category-title");
+  if (categoryTitle) {
+    categoryTitle.textContent = `TAG: ${tag.toUpperCase()}`;
+  }
+
+  // Create cards for tag results
+  for (const article of tagArticles) {
+    const card = await createArticleCard(article, "small");
+    card.setAttribute("data-from-search", "true");
+    searchContainer.appendChild(card);
+  }
+
+  // Set search flag and scroll to top
+  sessionStorage.setItem("fromSearch", "true");
+  window.scrollTo(0, 0);
 }
 
 /**

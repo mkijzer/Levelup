@@ -2,7 +2,7 @@
 /* components.css - UI COMPONENTS SYSTEM */
 /* ============================================================================ */
 /* Description: Defines reusable UI components with consistent styling and smooth interactions.
- *              Ensures modularity, accessibility, and responsive design across all devices.
+ * Ensures modularity, accessibility, and responsive design across all devices.
  * Version: 3.6 - Enhanced documentation, reorganized sections, added tablet/desktop media queries.
  * Author: Mike
  * Last Updated: August 20, 2025
@@ -14,7 +14,6 @@
 /* Styling for the main title and subtitle in the header, creating a branded look with animations.
  * Uses custom variables for typography and color consistency.
  */
-
 .main-title {
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
@@ -61,12 +60,13 @@
 }
 
 /* ============================================================================ */
-/* Navigation Components - Mobile */
+/* Navigation Components */
 /* ============================================================================ */
+
+/* Mobile Navigation */
 /* Styling for the mobile navigation bar, fixed at the bottom with interactive icons.
  * Includes hover and active states for user feedback.
  */
-
 .nav-container {
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
@@ -104,23 +104,6 @@
   fill: var(--accent-color);
 }
 
-.categories li a::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  width: 0;
-  height: 1px;
-  background: transparent;
-  transition: width var(--transition-medium), left var(--transition-medium);
-}
-
-.categories li a.active::after,
-.categories li a:hover::after {
-  width: 100%;
-  left: 0;
-}
-
 a[href="#random"]:hover .nav-icon path {
   animation: smooth-wave 1.5s ease-in-out infinite;
 }
@@ -147,13 +130,10 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   }
 }
 
-/* ============================================================================ */
-/* Navigation Components - Desktop */
-/* ============================================================================ */
+/* Desktop Navigation */
 /* Styling for desktop navigation links with gradient underlines and hover effects.
  * Ensures smooth transitions and category-specific styling.
  */
-
 .desktop-nav-item {
   position: relative;
   padding: 0.5rem 1rem;
@@ -178,16 +158,17 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   width: 100%;
 }
 
+.desktop-nav:hover .desktop-nav-item.active::after,
 .desktop-categories:hover .desktop-nav-item.active::after,
-.desktop-categories:hover .desktop-actions .random-btn.active::after {
+.desktop-actions:hover .desktop-nav-item.active::after,
+.desktop-actions:hover .random-btn.active::after {
   width: 0;
 }
 
 .desktop-categories:hover .desktop-nav-item:hover::after,
-.desktop-categories:hover .desktop-actions .random-btn:hover::after {
+.desktop-actions:hover .random-btn:hover::after {
   width: 100%;
 }
-
 .desktop-nav-item[href="#latest"]::after {
   background: linear-gradient(to right, #87ceeb, #4169e1);
 }
@@ -228,13 +209,29 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   stroke: var(--white);
 }
 
+.categories li a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: transparent;
+  transition: width var(--transition-medium), left var(--transition-medium);
+}
+
+.categories li a.active::after,
+.categories li a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
 /* ============================================================================ */
 /* Search Components */
 /* ============================================================================ */
 /* Styling for the search icon and sliding search bar with smooth animations.
  * Positioned fixed for accessibility across screen sizes.
  */
-
 .search-container {
   position: fixed;
   top: 18px;
@@ -273,15 +270,14 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   padding: 1rem;
-  transform: translateY(-100%) !important; /* Hidden above */
-  transition: transform 0.4s ease-in-out !important; /* Slightly longer for smoother slide */
+  transform: translateY(-100%) !important;
+  transition: transform 0.4s ease-in-out !important;
   z-index: 1000;
   width: 100%;
-  max-width: 600px; /* Wider for modal feel */
+  max-width: 600px;
   margin: 0 auto;
-  /* border: 1px solid var(--glass-border); */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 0 0 10px 10px; /* Rounded bottom */
+  border-radius: 0 0 10px 10px;
 }
 
 .search-bar-slide.active {
@@ -334,12 +330,13 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
-/* Category Modal */
+/* Modal Components */
 /* ============================================================================ */
+
+/* Category Modal */
 /* Styling for the category modal, sliding up from behind the navbar.
  * Includes hover effects for interactive categories.
  */
-
 .category-modal {
   position: fixed;
   bottom: 0;
@@ -429,13 +426,10 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   color: var(--white);
 }
 
-/* ============================================================================ */
 /* Settings Modal */
-/* ============================================================================ */
 /* Styling for the settings modal, sliding in from the right with toggle options.
  * Includes backdrop and close button for usability.
  */
-
 .settings-modal {
   position: fixed;
   top: 0;
@@ -680,12 +674,13 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* ============================================================================ */
-/* Article Cards - Base Styles (Continued) */
+/* Article Card Components */
 /* ============================================================================ */
+
+/* Base Article Card Styles */
 /* Shared styles for all article cards (hero, small, grid) with glass effect.
  * Ensures consistent layout and hover interactions.
  */
-
 .article-card {
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -696,6 +691,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  margin-bottom: 0;
 }
 
 .card-inner {
@@ -704,18 +700,16 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   flex-direction: column;
 }
 
-THIS WAS THE ISSUE .article-image-wrapper {
+/* .article-image-wrapper {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-lg);
-}
+  border-radius: var(--radius-lg);} */
 
 .article-image,
 .main-article-image {
   display: block;
   width: 100%;
   height: auto;
-  min-height: 200px;
   object-fit: cover;
   object-position: bottom;
   border-radius: var(--radius-lg);
@@ -739,10 +733,6 @@ THIS WAS THE ISSUE .article-image-wrapper {
   text-overflow: ellipsis;
 }
 
-.article-view .page-title {
-  display: none;
-}
-
 .article-title {
   font-size: var(--font-size-xl);
   margin-bottom: var(--spacing-2);
@@ -760,20 +750,17 @@ THIS WAS THE ISSUE .article-image-wrapper {
   position: static;
   padding: var(--spacing-1);
   color: var(--text-primary);
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   flex: 1;
+  padding-bottom: 0;
 }
 
-/* ============================================================================ */
 /* Hero Article Card */
-/* ============================================================================ */
 /* Styling for large hero article cards in main and category views.
  * Features a gradient mask and positioned content for visual hierarchy.
  */
-
 .article-card.huge {
   aspect-ratio: 16 / 9;
   position: relative;
@@ -842,13 +829,10 @@ THIS WAS THE ISSUE .article-image-wrapper {
   pointer-events: auto;
 }
 
-/* ============================================================================ */
 /* Small Article Cards */
-/* ============================================================================ */
 /* Styling for small article cards in side-by-side and grid layouts.
  * Adjusts content and image proportions for different contexts.
  */
-
 .article-card.small .article-title {
   font-size: var(--font-size-base);
   margin-bottom: 0;
@@ -874,15 +858,15 @@ THIS WAS THE ISSUE .article-image-wrapper {
   height: 100%;
 }
 
-/* Side-by-side cards - mobile specific styling */
 .side-by-side-container .article-card.small {
-  height: 200px;
+  height: auto;
 }
 
 .side-by-side-container .article-card.small .article-image {
-  height: 200px;
+  height: auto;
   width: 100%;
   object-fit: cover;
+  aspect-ratio: 4 / 3;
 }
 
 .side-by-side-container .article-card.small .article-title {
@@ -894,7 +878,6 @@ THIS WAS THE ISSUE .article-image-wrapper {
   overflow: hidden;
 }
 
-/* Category grid cards */
 .category-grid .article-card.small {
   height: 160px;
   min-height: 120px;
@@ -909,8 +892,15 @@ THIS WAS THE ISSUE .article-image-wrapper {
 
 .category-grid .article-card.small .article-image-wrapper {
   width: 40%;
-  height: 100%;
+  height: 120px;
   flex-shrink: 0;
+}
+
+.category-grid .article-card.small .article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .category-grid .article-card.small .article-content {
@@ -924,13 +914,10 @@ THIS WAS THE ISSUE .article-image-wrapper {
   font-size: var(--font-size-sm);
 }
 
-/* ============================================================================ */
 /* Loading States */
-/* ============================================================================ */
 /* Styles for article cards during loading, including a spinning animation.
  * Provides visual feedback while content loads.
  */
-
 .article-card.loading {
   background: transparent;
   border: none;
@@ -968,16 +955,14 @@ THIS WAS THE ISSUE .article-image-wrapper {
 /* Styling for the full article view, including images and body text.
  * Features responsive typography and image handling.
  */
-
 .main-article {
   background-color: var(--background) !important;
   border-radius: var(--radius-lg);
-  /* padding: var(--spacing-6) var(--spacing-8) var(--spacing-8); */
   padding-bottom: var(--spacing-6);
   width: 100%;
   display: block;
   flex-direction: column;
-  gap: 0; /* Reset gap to avoid overriding margin */
+  gap: 0;
   max-width: 800px;
 }
 
@@ -1011,7 +996,7 @@ THIS WAS THE ISSUE .article-image-wrapper {
   margin-bottom: var(--spacing-6);
   font-weight: 100;
   font-size: var(--font-size-base);
-  line-height: 1.8; /* Added to override defaults */
+  line-height: 1.8;
 }
 
 .main-article .reading-layout {
@@ -1020,7 +1005,6 @@ THIS WAS THE ISSUE .article-image-wrapper {
   gap: var(--spacing-5);
 }
 
-/* Adjust spacing for subheadings in articles */
 .article-body h3 {
   margin-bottom: 0.5rem;
 }
@@ -1031,7 +1015,6 @@ THIS WAS THE ISSUE .article-image-wrapper {
   aspect-ratio: 3 / 2;
   object-fit: cover;
   border-radius: var(--radius-lg);
-  /* background: var(--glass-bg); */
   margin: var(--spacing-md) auto;
   display: block;
   opacity: 1;
@@ -1050,7 +1033,6 @@ THIS WAS THE ISSUE .article-image-wrapper {
   margin-top: var(--spacing-2);
 }
 
-/* Font size options */
 .main-article .article-body.font-small p {
   font-size: var(--font-size-sm) !important;
 }
@@ -1063,7 +1045,6 @@ THIS WAS THE ISSUE .article-image-wrapper {
   font-size: var(--font-size-lg) !important;
 }
 
-/* Reading width options */
 .article-body.width-narrow {
   max-width: 55ch;
 }
@@ -1078,7 +1059,6 @@ THIS WAS THE ISSUE .article-image-wrapper {
 /* Styling for article headers, categories, and metadata with consistent spacing.
  * Ensures readability and hierarchy.
  */
-
 .article-header {
   margin-top: var(--spacing-6);
   margin-bottom: var(--spacing-6);
@@ -1122,15 +1102,17 @@ THIS WAS THE ISSUE .article-image-wrapper {
   display: block;
 }
 
-/* Hide category title in article view */
 body:has(.article-view:not(.hidden)) #category-title {
   display: none;
 }
 
-/* Move article header up when in article view */
 body:has(.article-view:not(.hidden)) .article-header {
   margin-top: calc(var(--spacing-6) * -1) !important;
   padding-top: 0 !important;
+}
+
+.article-view .page-title {
+  display: none;
 }
 
 /* ============================================================================ */
@@ -1139,13 +1121,12 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* Styling for article tags with hover effects and animations.
  * Supports interactive tag selection with a fade-out effect.
  */
-
 .article-tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-2);
   margin: var(--spacing-2) 0 var(--spacing-4) 0;
-  margin-bottom: var(--spacing-6); /* Increase gap */
+  margin-bottom: var(--spacing-6);
   justify-content: center;
   padding: 0;
 }
@@ -1168,7 +1149,6 @@ body:has(.article-view:not(.hidden)) .article-header {
 
 .tag:hover {
   box-shadow: var(--shadow-glow), var(--shadow-lg);
-  /* transform: translateY(-1px); */
 }
 
 .tag.clicked {
@@ -1191,12 +1171,13 @@ body:has(.article-view:not(.hidden)) .article-header {
 }
 
 /* ============================================================================ */
-/* Social Sharing */
+/* Social Sharing Components */
 /* ============================================================================ */
+
+/* General Social Sharing */
 /* Styling for social sharing buttons and icons in article and footer views.
  * Ensures consistent design with responsive adjustments.
  */
-
 .social-sharing {
   display: flex;
   gap: var(--spacing-4);
@@ -1224,16 +1205,49 @@ body:has(.article-view:not(.hidden)) .article-header {
   display: block;
 }
 
+/* Social Sharing in Article */
+.article-view .social-icon,
+.article-view .social-icon svg,
+.article-view .social-icon path {
+  width: clamp(16px, 2vw, 24px);
+  height: clamp(16px, 2vw, 24px);
+}
+
+/* Social Sharing in Footer */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.social-icon,
+.social-icon svg,
+.social-icon path {
+  color: #e0e0e0 !important;
+  fill: #e0e0e0 !important;
+  width: 20px;
+  height: 20px;
+  transition: color var(--transition-fast), fill var(--transition-fast);
+}
+
+.social-icon:hover,
+.social-icon:hover svg,
+.social-icon:hover path {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
 /* ============================================================================ */
 /* Quote and Advertisement Components */
 /* ============================================================================ */
 /* Styling for quotes and ads in article views with glass effects.
  * Ensures centered layout and visual distinction.
  */
-
 .quote {
   position: relative;
-  margin-top: 1.5rem;
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
   min-height: 200px;
   display: flex;
   align-items: center;
@@ -1288,21 +1302,15 @@ body:has(.article-view:not(.hidden)) .article-header {
   background: var(--glass-bg);
   box-shadow: var(--shadow-lg);
   text-align: center;
-  margin: var(--spacing-6) auto;
+  margin: 0 auto;
   color: var(--text-primary);
 }
-
 /* ============================================================================ */
 /* Category Page View */
 /* ============================================================================ */
 /* Styling for category page layout with hero grid and article list.
  * Ensures smooth scrolling and structured content display.
  */
-
-.category-title {
-  display: none;
-}
-
 .category-page-view {
   position: fixed;
   top: 0;
@@ -1369,7 +1377,6 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* Styling for random article cards and grid layout.
  * Ensures proper image scaling and grid alignment.
  */
-
 .random-articles {
   display: none;
 }
@@ -1401,7 +1408,6 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* Styling for category labels in main and category views.
  * Maintains consistent typography and spacing.
  */
-
 .category-label {
   display: block;
   font-family: var(--font-primary);
@@ -1409,10 +1415,14 @@ body:has(.article-view:not(.hidden)) .article-header {
   font-size: var(--font-size-category-label);
   color: #b0b0b0;
   letter-spacing: 0.0625rem;
-  margin-top: var(--spacing-8) !important; /* Reduce from current */
+  margin-top: var(--spacing-8) !important;
 }
 
 .category-label .category-title {
+  display: none;
+}
+
+.category-title {
   display: none;
 }
 
@@ -1422,7 +1432,6 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* Styling for close buttons and other utility elements with animations.
  * Enhances user interaction with visual feedback.
  */
-
 .close-article {
   color: var(--text-primary);
   font-size: var(--font-size-2xl);
@@ -1461,7 +1470,9 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* ============================================================================ */
 /* Most Read Mobile Carousel */
 /* ============================================================================ */
-
+/* Styling for mobile carousel displaying most-read articles.
+ * Features smooth scrolling and snap behavior.
+ */
 .most-read-mobile {
   display: block;
   margin-bottom: var(--spacing-12);
@@ -1542,104 +1553,183 @@ body:has(.article-view:not(.hidden)) .article-header {
   overflow: hidden;
 }
 
-/* Tablet adjustments */
-@media (min-width: 768px) {
-  .carousel-card {
-    flex: 0 0 60%;
-    height: 240px;
-  }
-
-  .carousel-card-title {
-    font-size: var(--font-size-lg);
-  }
-}
-
-/* Hide on desktop - keep existing sidebar */
-@media (min-width: 1200px) {
-  .most-read-mobile {
-    display: none;
-  }
-}
-
 /* ============================================================================ */
-/* FOOTER */
+/* Footer */
 /* ============================================================================ */
 /* Styling for the footer with consistent background and padding.
  * Ensures proper alignment and spacing.
  */
-
 .footer {
   width: 100%;
-  background-color: var(
-    --glass-bg,
-    rgba(0, 0, 0, 0.7)
-  ); /* Keep the background */
-  padding: var(--spacing-6) 0; /* Increased top and bottom spacing */
+  background-color: var(--glass-bg, rgba(0, 0, 0, 0.7));
+  padding: var(--spacing-6) 0;
   text-align: center;
   height: auto;
   z-index: 30;
 }
 
 /* ============================================================================ */
-/* Social Sharing in Footer */
+/* Most Read Sidebar (Desktop) */
 /* ============================================================================ */
-/* Styling for social icons in the footer with hover effects.
- * Uses consistent sizing and color transitions.
+/* Styling for the most-read articles sidebar displayed on desktop.
+ * Features compact card layouts with aligned images.
  */
+.most-read-sidebar {
+  display: none !important;
+  margin-top: -70px !important; /* Pulls the Most Read sidebar up to align with Latest section */
+}
 
-.social-icons {
+.most-read-grid {
   display: flex;
-  justify-content: center;
-  gap: var(--spacing-8);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  align-items: flex-start;
 }
 
-.social-icon,
-.social-icon svg,
-.social-icon path {
-  color: #e0e0e0 !important; /* Slightly less white (light gray) */
-  fill: #e0e0e0 !important;
-  width: 20px;
-  height: 20px;
-  transition: color var(--transition-fast), fill var(--transition-fast); /* Smooth transition */
+.most-read-sidebar .category-label {
+  margin-left: -20px !important;
+  text-align: left !important;
 }
 
-.social-icon:hover,
-.social-icon:hover svg,
-.social-icon:hover path {
-  color: #ffffff !important; /* Full white on hover */
-  fill: #ffffff !important;
+.most-read-sidebar #most-read-title {
+  font-size: var(--font-size-base);
+}
+
+.most-read-meta {
+  font-size: calc(var(--font-size-xs) * 0.9);
+}
+
+.most-read-title {
+  font-size: calc(var(--font-size-sm) * 0.9);
+}
+
+.most-read-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--spacing-3);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  min-height: 70px;
+  width: 100%;
+}
+
+.most-read-card:hover {
+  background: var(--glass-bg);
+}
+
+.most-read-content {
+  flex: 1;
+  padding-right: var(--spacing-3);
+}
+
+.most-read-meta {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-1);
+}
+
+.most-read-title {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  line-height: var(--line-height-tight);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.most-read-image-wrapper {
+  width: 60px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-left: auto;
+}
+
+.most-read-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.load-more-disabled {
+  cursor: default !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  pointer-events: none;
+}
+
+.carousel-grabbing {
+  cursor: grabbing !important;
+}
+
+.carousel-grab {
+  cursor: grab !important;
+}
+
+.hidden-element {
+  display: none !important;
 }
 
 /* ============================================================================ */
-/* Social Sharing in Article */
+/* Error Message */
 /* ============================================================================ */
-/* Styling for social icons in the article view with responsive adjustments.
- * Ensures consistency with footer while allowing specific tweaks.
- */
 
-.article-view .social-icon,
-.article-view .social-icon svg,
-.article-view .social-icon path {
-  width: clamp(
-    16px,
-    2vw,
-    24px
-  ); /* Scales from 16px (mobile) to 24px (desktop) */
-  height: clamp(16px, 2vw, 24px); /* Matches width for consistency */
+.error-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-primary);
+  font-size: var(--font-size-lg);
+  background: var(--glass-bg);
+  border-radius: var(--radius-lg);
+  margin: 2rem;
+  border: 1px solid var(--glass-border);
 }
+
 /* ============================================================================ */
-/* Responsive Adjustments - Tablet (min-width: 768px) */
+/* Responsive Adjustments */
 /* ============================================================================ */
+
+/* Tablet Adjustments (min-width: 768px) */
 /* Tablet-specific adjustments for enhanced layout and usability.
- * Applies at 768px and above.
  */
-
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .search-icon {
     right: 20px;
     width: 25px;
     height: 25px;
+  }
+
+  /* Modify the header-top to push content left */
+  .header-top {
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+
+  /* Reduce the right margin on the title to bring nav closer */
+  .title-container {
+    margin-right: 10px;
+  }
+
+  .desktop-nav {
+    margin-left: 500px;
+    /* position: relative; */
+    left: 10px;
+  }
+
+  .desktop-actions {
+    margin-right: 60px;
+  }
+
+  .search-container {
+    right: 80px;
   }
 
   .search-bar-slide {
@@ -1652,39 +1742,36 @@ body:has(.article-view:not(.hidden)) .article-header {
   }
 
   .article-view .social-sharing {
-    gap: var(--spacing-4); /* More gap on tablet */
+    gap: var(--spacing-4);
+  }
+
+  .article-view .social-icon,
+  .article-view .social-icon svg,
+  .article-view .social-icon path {
+    width: clamp(18px, 2.5vw, 26px);
+    height: clamp(18px, 2.5vw, 26px);
   }
 
   .articles {
     margin-top: 0;
   }
 
-  .article-view .social-icon,
-  .article-view .social-icon svg,
-  .article-view .social-icon path {
-    width: clamp(18px, 2.5vw, 26px); /* Slightly larger on tablet */
-    height: clamp(18px, 2.5vw, 26px);
+  .carousel-card {
+    flex: 0 0 60%;
+    height: 240px;
+  }
+
+  .carousel-card-title {
+    font-size: var(--font-size-lg);
   }
 }
 
-.most-read-sidebar {
-  display: none !important;
-}
-
-/* ============================================================================ */
-/* Responsive Adjustments - Desktop (min-width: 1200px) */
-/* ============================================================================ */
+/* Desktop Adjustments (min-width: 1200px) */
 /* Desktop-specific adjustments for optimized layout and readability.
- * Applies at 1200px and above.
  */
-
-/* ============================================================================ */
-/* Search Section - Desktop (min-width: 1200px) */
-/* ============================================================================ */
-
 @media (min-width: 1200px) {
   .search-icon {
-    position: static; /* Remove fixed positioning */
+    position: static;
     width: var(--spacing-4);
     height: var(--spacing-4);
     margin-top: 90px;
@@ -1692,109 +1779,7 @@ body:has(.article-view:not(.hidden)) .article-header {
 
   .search-bar-slide {
     left: auto;
-    width: 1000px; /* Set specific width instead of full width */
-  }
-}
-/* ============================================================================ */
-/* Most Read Section - Desktop Sidebar */
-/* ============================================================================ */
-
-@media (min-width: 1200px) {
-  .most-read-grid {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-4);
-    align-items: flex-start;
-  }
-  .most-read-sidebar {
-    display: block !important;
-    margin-top: -10px; /* Add top margin to align with article start */
-  }
-
-  .most-read-sidebar .category-label {
-    margin-left: -20px !important; /* Move further left */
-    text-align: left !important;
-  }
-  .most-read-sidebar #most-read-title {
-    font-size: var(--font-size-base); /* Make the title font smaller */
-  }
-
-  /* Reduce all font sizes in the most read section */
-  .most-read-meta {
-    font-size: calc(var(--font-size-xs) * 0.9); /* Make meta text smaller */
-  }
-
-  .most-read-title {
-    font-size: calc(var(--font-size-sm) * 0.9); /* Make title text smaller */
-  }
-
-  .most-read-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: var(--spacing-3);
-    border-radius: var(--radius-lg);
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    cursor: pointer;
-    min-height: 70px;
-    width: 100%; /* Set fixed width */
-    /* Remove transition property to remove hover effect */
-  }
-
-  .most-read-card:hover {
-    background: var(--glass-bg); /* Remove hover effect */
-  }
-
-  .most-read-content {
-    flex: 1;
-    padding-right: var(--spacing-3);
-  }
-
-  .most-read-meta {
-    font-size: var(--font-size-xs);
-    color: var(--text-muted);
-    margin-bottom: var(--spacing-1);
-  }
-
-  .most-read-title {
-    font-size: var(--font-size-sm);
-    color: var(--text-primary);
-    line-height: var(--line-height-tight);
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .most-read-image-wrapper {
-    width: 60px;
-    height: 45px;
-    flex-shrink: 0;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    margin-left: auto; /* This pushes all images to the right edge */
-  }
-
-  .most-read-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-}
-
-@media (min-width: 1200px) {
-  .search-icon {
-    right: 40px;
-    width: 24px;
-    height: 24px;
-  }
-
-  .search-bar-slide {
+    width: 1000px;
     top: 18px;
     right: 40px;
   }
@@ -1804,51 +1789,48 @@ body:has(.article-view:not(.hidden)) .article-header {
   }
 
   .desktop-nav {
-    margin-top: -50px; /* Move higher, increased from 20px */
-    margin-left: -20px; /* Shift left slightly */
+    margin-top: -50px;
   }
 
   .desktop-nav-item {
-    font-size: calc(var(--font-size-base) * 0.9); /* Keep the smaller font */
+    font-size: calc(var(--font-size-base) * 0.9);
   }
 
   .article-view .social-sharing {
-    gap: var(--spacing-5); /* More gap on desktop */
+    gap: var(--spacing-5);
   }
 
   .article-view .social-icon,
   .article-view .social-icon svg,
   .article-view .social-icon path {
-    width: clamp(20px, 3vw, 28px); /* Larger on desktop */
+    width: clamp(20px, 3vw, 28px);
     height: clamp(20px, 3vw, 28px);
   }
-}
 
-.main-content-area {
-  padding-top: 0px; /* Extra space for reading pane details */
-}
+  .most-read-sidebar {
+    display: block !important;
+    margin-top: -10px;
+  }
 
-.most-read-sidebar {
-  display: block;
-}
-/* ============================================================================ */
-/* Overrides for Article Images */
-/* ============================================================================ */
-/* Ensure consistent image positioning across contexts.
- * Overrides to maintain uniformity.
- */
+  .most-read-mobile {
+    display: none;
+  }
 
-.article-image {
-  object-position: center top !important;
-}
-
-@media (min-width: 1200px) {
   .article-image-wrapper {
-    /* Reset mobile constraints for desktop */
     height: auto;
   }
 
   .side-by-side-container .article-card.small .article-image-wrapper {
-    height: 250px;
+    aspect-ratio: 4 / 3;
+    height: auto;
   }
+}
+
+/* ============================================================================ */
+/* Overrides for Article Images */
+/* ============================================================================ */
+/* Ensure consistent image positioning across contexts.
+ */
+.article-image {
+  object-position: center top !important;
 }

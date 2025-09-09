@@ -80,13 +80,14 @@ function addParallaxEffect(track) {
     isMouseDown = true;
     startX = e.pageX;
     scrollStart = track.scrollLeft;
-    track.style.cursor = "grabbing";
+    track.classList.add("carousel-grabbing");
     e.preventDefault();
   });
 
   track.addEventListener("mouseleave", () => {
     isMouseDown = false;
-    track.style.cursor = "grab";
+    track.classList.remove("carousel-grabbing");
+    track.classList.add("carousel-grab");
   });
 
   track.addEventListener("mouseup", () => {

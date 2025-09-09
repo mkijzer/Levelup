@@ -1,15 +1,17 @@
 /* ============================================================================ */
 /* layout.css - RESPONSIVE LAYOUT SYSTEM */
 /* ============================================================================ */
-/* Description: Mobile-first responsive layout with grid systems and spacing */
-/* Version: 4.1 - Fixed desktop layout for Most Read sidebar */
-/* ============================================================================ */
+/* Description: Mobile-first responsive layout with grid systems and spacing
+ * Version: 4.1 - Fixed desktop layout for Most Read sidebar
+ * Author: [Author Name]
+ * Last Updated: [Last Updated Date]
+ * ============================================================================ */
 
 /* ============================================================================ */
-/* GLOBAL LAYOUT - Base styles for all screen sizes */
+/* Global Layout - Base styles for all screen sizes */
 /* ============================================================================ */
-
-/* Remove all horizontal scrollbars */
+/* Defines foundational layout rules to prevent horizontal overflow and ensure consistency
+ */
 html {
   overflow-x: hidden;
   width: 100%;
@@ -21,16 +23,20 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  padding-top: 100px; /* Add space for fixed header */
+  padding-top: 160px; /* Increased from 100px to add more space */
   padding-bottom: var(--nav-height, 60px);
   width: 100%;
   max-width: 100vw;
 }
 
-/* Prevent any element from causing horizontal overflow */
 * {
   max-width: 100%;
   box-sizing: border-box;
+}
+
+.page-wrapper {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .category-page-view {
@@ -39,15 +45,11 @@ body {
   max-width: 100vw;
 }
 
-.page-wrapper {
-  overflow-x: hidden;
-  width: 100%;
-}
-
 /* ============================================================================ */
-/* HEADER LAYOUT - Sticky navigation and branding */
+/* Header Layout - Sticky navigation and branding */
 /* ============================================================================ */
-
+/* Styles for fixed header with logo and title, ensuring consistent positioning
+ */
 .sticky-wrapper-navcontainer {
   position: fixed;
   top: 0;
@@ -76,6 +78,7 @@ header {
   padding: var(--spacing-4) var(--spacing-page);
   gap: var(--spacing-sm);
   z-index: 1000;
+  background-color: var(--background);
 }
 
 .header-top {
@@ -110,9 +113,10 @@ header {
 }
 
 /* ============================================================================ */
-/* NAVIGATION LAYOUT - Bottom fixed navigation */
+/* Navigation Layout - Mobile-first navigation */
 /* ============================================================================ */
-
+/* Bottom-fixed navigation bar for mobile devices with evenly spaced items
+ */
 .nav-container {
   position: fixed;
   bottom: 0;
@@ -146,45 +150,44 @@ header {
 }
 
 /* ============================================================================ */
-/* MAIN CONTENT LAYOUT - Container and spacing */
+/* Main Content Layout - Container and spacing */
 /* ============================================================================ */
-
-.divider {
-  height: 1px;
-  background: linear-gradient(to right, #ff4500, #ff8c00, #ff69b4);
-  width: 100%;
-  margin-top: var(--spacing-4);
-  opacity: 0.3; /* Reduce from current value */
-}
-
-.articles {
-  padding: 0;
-  margin-top: -80px;
-  position: relative;
-}
-
-.category-grid .article-card {
-  background-color: inherit;
-}
-
+/* Core content area styles with padding and grid layouts
+ */
 .container {
   max-width: 100%;
   padding: var(--spacing-page);
 }
 
-.category-content {
-  margin-bottom: var(--spacing-10);
+.articles {
+  padding: 0;
+  margin-top: -150px;
+  position: relative;
 }
 
 .category-label {
-  margin-top: var(--spacing-10) !important;
+  margin-top: var(--spacing-4) !important;
   margin-bottom: var(--spacing-4) !important;
 }
 
-/* ============================================================================ */
-/* UTILITY CLASSES - Helper classes */
-/* ============================================================================ */
+.category-content {
+  margin-bottom: var(--spacing-4);
+}
 
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, #ff4500, #ff8c00, #ff69b4);
+  width: 100vw;
+
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  opacity: 0.3;
+}
+/* ============================================================================ */
+/* Utility Classes - Helper classes for accessibility and visibility */
+/* ============================================================================ */
+/* Utility classes for screen readers and device-specific visibility
+ */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -202,17 +205,17 @@ header {
 }
 
 /* ============================================================================ */
-/* MOBILE LAYOUT - Base mobile-first styles (up to 767px) */
+/* Mobile Layout - Base mobile-first styles (up to 767px) */
 /* ============================================================================ */
-
+/* Grid and container layouts optimized for mobile devices
+ */
 .bento-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: var(--spacing-8);
-  margin-bottom: var(--spacing-12);
+  margin-bottom: var(--spacing-4);
   gap: var(--spacing-page);
 }
-
 .bento-grid .article-card.huge {
   grid-column: 1 / -1;
   aspect-ratio: 16 / 9;
@@ -223,6 +226,12 @@ header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-page);
+  margin-bottom: 0;
+}
+
+.side-by-side-container .article-card.small .article-image-wrapper {
+  aspect-ratio: 4 / 3;
+  height: auto;
 }
 
 .article-four-container {
@@ -241,8 +250,9 @@ header {
 
 .separator-ad {
   grid-column: 1 / -1;
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
 }
-
 .category-grid {
   display: flex;
   flex-direction: column;
@@ -258,8 +268,10 @@ header {
 }
 
 /* ============================================================================ */
-/* TABLET LAYOUT - Medium screens (768px to 1199px) */
+/* Tablet Layout - Medium screens (768px to 1199px) */
 /* ============================================================================ */
+/* Adjustments for tablet layouts with grid-based article arrangements
+ */
 @media (min-width: 768px) and (max-width: 1199px) {
   .bento-grid {
     display: grid;
@@ -355,9 +367,10 @@ header {
 }
 
 /* ============================================================================ */
-/* DESKTOP LAYOUT - Large screens (1200px and up) */
+/* Desktop Layout - Large screens (1200px and up) */
 /* ============================================================================ */
-
+/* Optimized layouts for desktop with sidebar and wider containers
+ */
 @media (min-width: 1200px) {
   .container {
     max-width: 1200px;
@@ -421,17 +434,14 @@ header {
     align-items: center;
     gap: var(--spacing-6);
     margin-left: auto;
-    margin-right: 40px; /* Reduce margin to make space */
+    margin-right: 40px;
     margin-top: 0;
     transform: translateY(70px);
   }
 
-  /* Move search to desktop nav line */
-  @media (min-width: 1200px) {
-    .search-container {
-      order: 3; /* Place after nav items */
-      margin-left: var(--spacing-4);
-    }
+  .search-container {
+    order: 3;
+    margin-left: var(--spacing-4);
   }
 
   .desktop-categories {
@@ -448,19 +458,6 @@ header {
     align-items: center;
     gap: var(--spacing-6);
   }
-
-  @media (min-width: 1200px) {
-    .bento-grid
-      .side-by-side-container
-      .article-card.small
-      .article-image-wrapper {
-      height: 200px;
-    }
-  }
-
-  /* ========================================================================== */
-  /* DESKTOP BENTO GRID - Main article + Most Read sidebar + Articles below */
-  /* ========================================================================== */
 
   .bento-grid {
     display: grid;
@@ -484,7 +481,6 @@ header {
     display: block;
   }
 
-  /* Side-by-side articles - Only under main article (left column) */
   .side-by-side-container {
     grid-column: 1;
     grid-row: 2;
@@ -493,15 +489,15 @@ header {
     gap: 20px;
   }
 
-  .article-four-container,
-  .article-five-container,
-  .separator-ad {
-    display: none;
+  .side-by-side-container .article-card.small .article-image-wrapper {
+    height: 200px;
+    aspect-ratio: 1.2 / 1;
   }
 
-  /* ========================================================================== */
-  /* CATEGORY SECTIONS - Grid layouts for each category */
-  /* ========================================================================== */
+  .article-four-container,
+  .article-five-container {
+    display: none;
+  }
 
   .category-grid {
     display: grid;
@@ -526,9 +522,102 @@ header {
   }
 }
 
+/* ============================================================================ */
+/* Centered Title and Navigation Layout - Desktop Only */
+/* ============================================================================ */
 @media (min-width: 1200px) {
-  .side-by-side-container .article-card.small .article-image-wrapper {
-    height: 200px;
-    aspect-ratio: 1.2 / 1;
+  /* Center title container */
+  .header-top {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md) 0;
+  }
+
+  /* Position the nav properly */
+  .desktop-nav {
+    margin-top: 15px;
+    margin-left: 100px !important;
+    display: flex;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--radius-md);
+    padding: var(--spacing-2) var(--spacing-4);
+  }
+
+  /* Override any other positioning that might interfere */
+  .title-container {
+    margin-right: 0;
+  }
+
+  /* Ensure desktop nav items are visible on the background */
+  .desktop-nav-item {
+    position: relative;
+    z-index: 1250; /* Higher than the nav container */
+    color: white;
+  }
+
+  .desktop-nav-item:hover::after,
+  .desktop-nav-item.active::after {
+    width: 100%;
+  }
+
+  /* Ensure the gradients are visible */
+  .desktop-nav-item[href="#latest"]::after {
+    background: linear-gradient(to right, #87ceeb, #4169e1);
+  }
+
+  .desktop-nav-item[href="#health"]::after {
+    background: linear-gradient(to right, #ff6b6b, #ff0000);
+  }
+
+  .desktop-nav-item[href="#coins"]::after {
+    background: linear-gradient(to right, #ffd700, #ff8c00);
+  }
+
+  .desktop-nav-item[href="#hack"]::after {
+    background: linear-gradient(to right, #ff69b4, #ff1493);
+  }
+
+  .desktop-nav-item[href="#ai"]::after {
+    background: linear-gradient(to right, #9370db, #4b0082);
+  }
+
+  .random-btn::after {
+    background: linear-gradient(to right, #32cd32, #008000);
+  }
+
+  /* Make sticky header more opaque */
+  .sticky-wrapper-navcontainer {
+    background-color: rgba(0, 0, 0, 0.95); /* More opaque background */
+  }
+}
+
+@media (min-width: 1200px) {
+  .sticky-wrapper-navcontainer {
+    background-color: var(--background) !important;
+  }
+
+  .sticky-wrapper-navcontainer.hide-header {
+    transform: translateY(-150%);
+  }
+}
+
+/* ============================================================================ */
+/* Overrides for Article Images */
+/* ============================================================================ */
+/* Ensure consistent image positioning across contexts
+ */
+.article-image {
+  object-position: center top !important;
+}
+
+.main-content-area {
+  padding-top: 0px;
+}
+
+@media (min-width: 1200px) {
+  .quote.debug-quote + .divider {
+    display: none;
   }
 }

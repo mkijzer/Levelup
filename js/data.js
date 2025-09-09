@@ -58,6 +58,8 @@ import { populateMostRead } from "./mostRead.js";
 
 import { populateMobileCarousel } from "./mobileCarousel.js";
 
+import { initializeQuotes } from "./quotes.js";
+
 // ============================================================================
 // DOM Element Getters
 // ============================================================================
@@ -494,11 +496,17 @@ async function initializeApp() {
   try {
     console.log("Initializing application...");
 
-    // Initialize article data
     const dataLoaded = await initializeArticleData();
     if (!dataLoaded) {
-      throw new Error("Failed to load article data");
+      const errorDiv = document.createElement("div");
+      errorDiv.className = "error-message";
+      errorDiv.textContent =
+        "Failed to load articles. Please refresh the page.";
+      document.body.appendChild(errorDiv);
+      return;
     }
+
+    await initializeQuotes();
 
     // Setup all systems
     setupEventDelegation();

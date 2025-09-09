@@ -57,8 +57,7 @@ async function loadMoreCategoryArticles() {
 function showEndOfArticlesMessage(loadMoreButton) {
   loadMoreButton.textContent =
     "You've read the last article! Why not try to level up in another category?";
-  loadMoreButton.style.cursor = "default";
-  loadMoreButton.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
+  loadMoreButton.classList.add("load-more-disabled");
 
   loadMoreButton.removeEventListener("click", loadMoreCategoryArticles);
 }
@@ -69,9 +68,8 @@ function showEndOfArticlesMessage(loadMoreButton) {
 function resetLoadMoreButton(loadMoreButton) {
   if (loadMoreButton) {
     loadMoreButton.textContent = "Load More";
-    loadMoreButton.style.cursor = "pointer";
-    loadMoreButton.style.backgroundColor = "";
-    loadMoreButton.style.display = "block";
+    loadMoreButton.classList.remove("load-more-disabled");
+    loadMoreButton.classList.remove("hidden-element");
   }
 }
 

@@ -20,7 +20,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_DAY: 3,
-  LAUNCH_DATE: new Date("2025-09-02"),
+  LAUNCH_DATE: new Date("2025-09-01"),
   INITIAL_CATEGORY_ARTICLES: 15,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -211,10 +211,21 @@ async function populateCategoryGrids() {
     );
     console.log(`Populating grid for category: ${category}`);
 
+    // Get current latest article IDs to exclude them
+    const latestArticleIds = new Set(
+      articlesData
+        .slice(currentStartIndex, currentStartIndex + CONFIG.ARTICLES_PER_DAY)
+        .map((article) => article.id)
+    );
+
     const categoryArticles = articlesData
       .filter((article) => {
         const articleCategory = normalizeCategory(article.category || "");
-        return articleCategory === category && !usedArticleIds.has(article.id);
+        return (
+          articleCategory === category &&
+          !usedArticleIds.has(article.id) &&
+          !latestArticleIds.has(article.id)
+        );
       })
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, CONFIG.CATEGORY_GRID_SIZE);

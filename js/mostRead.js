@@ -21,8 +21,17 @@ export function populateMostRead() {
     return;
   }
 
-  // Get 5 random articles from published articles
-  const shuffled = [...articlesData].sort(() => Math.random() - 0.5);
+  // Filter out articles from last 3-4 days to avoid showing latest articles
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - 4); // 4 days ago
+
+  const olderArticles = articlesData.filter((article) => {
+    const articleDate = new Date(article.date);
+    return articleDate < cutoffDate;
+  });
+
+  // Get 5 random articles from older articles only
+  const shuffled = [...olderArticles].sort(() => Math.random() - 0.5);
   const selectedArticles = shuffled.slice(0, 5);
 
   const mostReadCards = mostReadGrid.querySelectorAll(".most-read-card");

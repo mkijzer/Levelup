@@ -101,6 +101,9 @@ function setupDesktopNavigation() {
 function handleNavigationClick(e) {
   e.preventDefault();
 
+  // Clear search state when navigating away
+  sessionStorage.removeItem("fromSearch");
+
   // For desktop nav, the currentTarget IS the link
   // For mobile nav, the link is inside the nav-item
   let link, href;
@@ -130,10 +133,30 @@ function handleNavigationClick(e) {
     return; // Let category modal handle this
   } else if (href === "#latest") {
     exitCategoryPage();
+    // Clear any search results and show bento grid
+    const searchResultsGrid = document.querySelector(".search-results-grid");
+    if (searchResultsGrid) {
+      searchResultsGrid.style.display = "none";
+    }
+    const bentoGrid = document.querySelector(".bento-grid");
+    if (bentoGrid) {
+      bentoGrid.style.display = "";
+      bentoGrid.classList.remove("hidden-element");
+    }
     loadCategory("latest");
   } else {
     const category = href.replace("#", "");
     exitCategoryPage();
+    // Clear any search results and show bento grid for other categories too
+    const searchResultsGrid = document.querySelector(".search-results-grid");
+    if (searchResultsGrid) {
+      searchResultsGrid.style.display = "none";
+    }
+    const bentoGrid = document.querySelector(".bento-grid");
+    if (bentoGrid) {
+      bentoGrid.style.display = "";
+      bentoGrid.classList.remove("hidden-element");
+    }
     loadCategory(category);
   }
 }
