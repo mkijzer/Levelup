@@ -19,9 +19,9 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 // ============================================================================
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
-  ARTICLES_PER_DAY: 3,
-  LAUNCH_DATE: new Date("2025-09-01"),
-  INITIAL_CATEGORY_ARTICLES: 15,
+  ARTICLES_PER_WEEK: 3,
+  LAUNCH_DATE: new Date("2025-09-07"),
+  INITIAL_CATEGORY_ARTICLES: 10,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
 };
@@ -51,8 +51,9 @@ function getArticlesByCategory(category) {
  * Gets today's latest articles based on daily rotation
  */
 function getLatestArticles() {
-  const endIndex = currentStartIndex + CONFIG.ARTICLES_PER_DAY;
-  return articlesData.slice(currentStartIndex, endIndex).reverse();
+  return articlesData
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 3);
 }
 
 /**
@@ -60,9 +61,7 @@ function getLatestArticles() {
  */
 function getCategoryArticlesExcludingLatest(category) {
   const latestArticleIds = new Set(
-    articlesData
-      .slice(currentStartIndex, currentStartIndex + CONFIG.ARTICLES_PER_DAY)
-      .map((article) => article.id)
+    getLatestArticles().map((article) => article.id)
   );
 
   return articlesData
@@ -213,9 +212,7 @@ async function populateCategoryGrids() {
 
     // Get current latest article IDs to exclude them
     const latestArticleIds = new Set(
-      articlesData
-        .slice(currentStartIndex, currentStartIndex + CONFIG.ARTICLES_PER_DAY)
-        .map((article) => article.id)
+      getLatestArticles().map((article) => article.id)
     );
 
     const categoryArticles = articlesData
@@ -245,35 +242,34 @@ async function populateCategoryGrids() {
 // ============================================================================
 
 /**
- * Calculates daily rotation index based on days since launch
- */
-function calculateDailyRotationIndex() {
-  const today = new Date();
-  const daysSinceLaunch = Math.floor(
-    (today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)
-  );
-
-  let startIndex = daysSinceLaunch * CONFIG.ARTICLES_PER_DAY;
-
-  // Add this check:
-  if (startIndex >= articlesData.length) {
-    startIndex = 0; // Reset to beginning
-  }
-
-  return startIndex;
-}
-
-/**
  * Assigns date to articles for display consistency
  */
 function assignCurrentDateToArticles() {
+  // Get today's date
   const today = new Date();
 
-  articlesData.forEach((article, index) => {
-    const dayIndex = Math.floor(index / CONFIG.ARTICLES_PER_DAY);
-    const articleDate = new Date(CONFIG.LAUNCH_DATE);
-    articleDate.setDate(articleDate.getDate() + dayIndex);
+  // Find the most recent Monday, Wednesday, or Friday
+  let currentPublishDate = new Date(today);
 
+  // Go backwards until we find Mon(1), Wed(3), or Fri(5)
+  while (![1, 3, 5].includes(currentPublishDate.getDay())) {
+    currentPublishDate.setDate(currentPublishDate.getDate() - 1);
+  }
+
+  // Assign dates working backwards from newest article
+  articlesData.forEach((article, index) => {
+    const reverseIndex = articlesData.length - 1 - index;
+    const articleDate = new Date(currentPublishDate);
+
+    // Calculate days back for this article
+    const weeksBack = Math.floor(reverseIndex / 3);
+    const positionInWeek = reverseIndex % 3;
+    let daysBack = weeksBack * 7;
+
+    if (positionInWeek === 1) daysBack += 2; // Wed to Mon
+    if (positionInWeek === 2) daysBack += 5; // Fri to Mon (previous week)
+
+    articleDate.setDate(currentPublishDate.getDate() - daysBack);
     article.date = articleDate.toISOString().split("T")[0];
   });
 }
@@ -301,8 +297,8 @@ async function initializeArticleData() {
       const today = new Date();
       const maxPublishedIndex =
         Math.floor((today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)) *
-          CONFIG.ARTICLES_PER_DAY +
-        CONFIG.ARTICLES_PER_DAY;
+          CONFIG.ARTICLES_PER_WEEK +
+        CONFIG.ARTICLES_PER_WEEK;
       articlesData = articlesData.slice(0, maxPublishedIndex);
       console.log(
         `Normal mode: Showing ${articlesData.length} published articles`
@@ -313,9 +309,7 @@ async function initializeArticleData() {
 
     console.log(`Loaded ${articlesData.length} articles`);
 
-    currentStartIndex = calculateDailyRotationIndex();
     assignCurrentDateToArticles();
-
     console.log("Categories found:", [
       ...new Set(articlesData.map((a) => a.category)),
     ]);
