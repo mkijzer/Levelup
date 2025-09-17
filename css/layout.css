@@ -621,3 +621,21 @@ header {
     display: none;
   }
 }
+
+@media (max-width: 767px) {
+  main::before {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(
+      transparent,
+      rgba(0, 0, 0, 0.5)
+    ); /* Darker overlay */
+    backdrop-filter: blur(1.5px);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
