@@ -87,6 +87,14 @@
   gap: 0.2rem;
 }
 
+.nav-item .search-container {
+  pointer-events: none;
+}
+
+.nav-item .search-icon {
+  pointer-events: all;
+}
+
 .nav-icon {
   width: 20px;
   height: 20px;
@@ -233,24 +241,18 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
  * Positioned fixed for accessibility across screen sizes.
  */
 .search-container {
-  position: fixed;
-  top: 18px;
-  right: 40px;
+  position: relative;
   z-index: var(--z-index-search);
 }
 
 .search-icon {
-  position: fixed;
-  right: var(--spacing-3);
-  top: 18px;
-  right: 18px;
-  width: var(--spacing-4);
-  height: var(--spacing-4);
+  position: relative;
+  width: 21px;
+  height: 21px;
   color: grey;
   cursor: pointer;
   stroke: var(--icon-grey);
   transition: stroke var(--transition-normal), opacity var(--transition-normal);
-  z-index: calc(var(--z-index-search) + 10);
 }
 
 .search-icon:hover,
