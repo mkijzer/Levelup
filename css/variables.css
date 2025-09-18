@@ -11,207 +11,273 @@
   /* ========================================================================== */
 
   /* Dark Mode (Default) */
-  --background: #0d1117;
-  --surface: rgb(42, 47, 49);
-  --text-primary: #e2e2e5;
-  --text-secondary: #a1a1aa;
-  --text-muted: rgba(255, 255, 255, 0.6);
-  --icon-grey: rgb(180, 180, 180);
-  --white: rgb(255, 255, 255);
-  --accent-color: rgb(255, 242, 0);
+  --background: hsl(220, 39%, 3%); /* Page background - #0d1117 */
+  --surface: hsl(200, 7%, 18%); /* Card backgrounds, panels - rgb(42, 47, 49) */
+  --text-primary: hsl(240, 5%, 88%); /* Main text, headlines - #e2e2e5 */
+  --text-secondary: hsl(
+    240,
+    4%,
+    65%
+  ); /* Secondary text, descriptions - #a1a1aa */
+  --text-muted: hsla(0, 0%, 100%, 0.6); /* Muted text, placeholders, metadata */
+  --icon-grey: hsl(
+    0,
+    0%,
+    71%
+  ); /* Icons, decorative elements - rgb(180, 180, 180) */
+  --white: hsl(0, 0%, 100%); /* Pure white for contrast */
+  --accent-color: hsl(
+    51,
+    100%,
+    50%
+  ); /* Brand color, CTAs, highlights - rgb(255, 242, 0) */
 
   /* Light Mode */
-  --light-background: rgb(220, 220, 220);
-  --light-surface: rgb(255, 255, 255);
-  --light-text-primary: rgb(33, 33, 33);
-  --light-text-secondary: rgba(33, 33, 33, 0.8);
-  --light-text-muted: rgba(33, 33, 33, 0.6);
+  --light-background: hsl(
+    0,
+    0%,
+    86%
+  ); /* Light page background - rgb(220, 220, 220) */
+  --light-surface: hsl(0, 0%, 100%); /* Light card backgrounds */
+  --light-text-primary: hsl(0, 0%, 13%); /* Light main text - rgb(33, 33, 33) */
+  --light-text-secondary: hsla(0, 0%, 13%, 0.8); /* Light secondary text */
+  --light-text-muted: hsla(0, 0%, 13%, 0.6); /* Light muted text */
 
   /* Glass Effect */
-  --glass-bg: rgba(42, 47, 49, 0.3);
-  --glass-bg-light: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-blur: 15px;
+  --glass-bg: hsla(200, 7%, 18%, 0.3); /* Translucent surface overlay */
+  --glass-bg-light: hsla(0, 0%, 100%, 0.7); /* Light mode glass overlay */
+  --glass-border: hsla(0, 0%, 100%, 0.2); /* Glass border effect */
+  --glass-blur: 15px; /* Backdrop blur amount */
 
   /* Status Colors */
-  --success: rgb(0, 255, 136);
-  --warning: rgb(255, 193, 7);
-  --error: rgb(220, 53, 69);
-  --info: rgb(13, 202, 240);
+  --success: hsl(142, 100%, 50%); /* Success states - rgb(0, 255, 136) */
+  --warning: hsl(45, 93%, 47%); /* Warning states - rgb(255, 193, 7) */
+  --error: hsl(354, 70%, 54%); /* Error states - rgb(220, 53, 69) */
+  --info: hsl(195, 93%, 50%); /* Info states - rgb(13, 202, 240) */
 
   /* ========================================================================== */
   /* Typography System */
   /* ========================================================================== */
 
   /* Font Families */
-  --font-primary: "Exo 2", sans-serif;
-  --font-display: "Orbitron", sans-serif;
-  --font-script: "Shadows Into Light", cursive;
+  --font-primary: "Exo 2", sans-serif; /* Body text, navigation, paragraphs */
+  --font-display: "Orbitron", sans-serif; /* Headlines, article titles, hero text */
+  --font-script: "Shadows Into Light", cursive; /* Decorative text, quotes, special elements */
 
-  /* Font Scales */
-  --font-size-xs: 0.75rem; /* 12px */
-  --font-size-sm: 0.875rem; /* 14px */
-  --font-size-base: 1rem; /* 16px */
-  --font-size-lg: 1.125rem; /* 18px */
-  --font-size-xl: 1.25rem; /* 20px */
-  --font-size-2xl: 1.5rem; /* 24px */
-  --font-size-3xl: 1.875rem; /* 30px */
-  --font-size-4xl: 2.25rem; /* 36px */
+  /* Base Font Scale */
+  --font-size-xs: 0.75rem; /* 12px - Small labels, timestamps, metadata */
+  --font-size-sm: 0.875rem; /* 14px - Navigation links, category tags, captions */
+  --font-size-base: 1rem; /* 16px - Body text, article content, default text */
+  --font-size-lg: 1.125rem; /* 18px - Card titles, section headings, prominent text */
+  --font-size-xl: 1.25rem; /* 20px - Article subtitles, large card titles */
+  --font-size-2xl: 1.5rem; /* 24px - Page headings, article titles */
+  --font-size-3xl: 1.875rem; /* 30px - Main headlines, hero titles */
+  --font-size-4xl: 2.25rem; /* 36px - Large hero text, landing page titles */
 
   /* Component-Specific Font Sizes */
-  --font-size-nav: 0.6rem;
-  --font-size-category-label: 0.8rem;
-  --font-size-card-meta: 0.75rem;
-  --font-size-huge-title: clamp(1rem, 2.5vw, 1.4rem);
-  --font-size-small-title: clamp(0.875rem, 2vw, 1.125rem);
+  --font-size-nav: 0.6rem; /* Navigation menu items */
+  --font-size-category-label: 0.8rem; /* Category labels and badges */
+  --font-size-card-meta: 0.75rem; /* Article card metadata */
+  --font-size-huge-title: clamp(
+    1rem,
+    2.5vw,
+    1.4rem
+  ); /* Responsive huge card titles */
+  --font-size-small-title: clamp(
+    0.875rem,
+    2vw,
+    1.125rem
+  ); /* Responsive small card titles */
 
   /* Line Heights */
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.6;
-  --line-height-loose: 2;
+  --line-height-tight: 1.2; /* Headlines, titles that need compact spacing */
+  --line-height-normal: 1.5; /* Body text, default readable spacing */
+  --line-height-relaxed: 1.6; /* Long-form content, articles */
+  --line-height-loose: 2; /* Special emphasis, quotes */
 
   /* Font Weights */
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
+  --font-weight-light: 300; /* Subtle text, descriptions */
+  --font-weight-normal: 400; /* Body text, default weight */
+  --font-weight-medium: 500; /* Navigation, UI elements */
+  --font-weight-semibold: 600; /* Section headings, emphasis */
+  --font-weight-bold: 700; /* Headlines, strong emphasis */
+  --font-weight-extrabold: 800; /* Hero text, major headlines */
 
   /* ========================================================================== */
-  /* Golden Ratio Spacing System */
+  /* 8-Point Grid Spacing System */
   /* ========================================================================== */
 
-  /* Golden ratio: 1.618 */
-  --golden-ratio: 1.618;
-  /* Base spacing scale (golden ratio with gentle reduction) */
-  --spacing-0: 0;
-  --spacing-1: 0.24rem; /* 3.8px - tiny increase */
-  --spacing-2: 0.39rem; /* 6.2px - golden ratio from spacing-1 */
-  --spacing-3: 0.63rem; /* 10.1px - golden ratio from spacing-2 */
-  --spacing-4: 1rem; /* 16px - golden ratio from spacing-3 */
-  --spacing-5: 1.02rem; /* 16.3px - golden ratio from spacing-4 */
-  --spacing-6: 1.65rem; /* 26.4px - golden ratio from spacing-5 */
-  --spacing-8: 1.95rem; /* 31.2px - golden ratio from spacing-6 */
-  --spacing-10: 2.67rem; /* 42.7px - golden ratio from spacing-8 */
-  --spacing-12: 2.92rem; /* 46.7px - golden ratio from spacing-10 */
-  --spacing-16: 3.89rem; /* 62.2px - golden ratio from spacing-12 */
-  /* Article-specific gaps */
-  --spacing-article-gap-mobile: 0.35rem; /* 5.6px - gentle reduction */
-  --spacing-article-gap-tablet: 0.55rem; /* 8.8px - gentle reduction */
-  --spacing-article-gap-desktop: 0.65rem; /* 10.4px - gentle reduction */
-  --spacing-side-cards: 0.22rem; /* 3.5px - minimal */
-  --spacing-category-section: 0.9rem; /* 14.4px - gentle reduction */
+  /* Base unit: 8px - Industry standard for scalability */
+  --spacing-base: 0.5rem; /* 8px base unit */
 
-  /* Page spacing */
-  --spacing-page: var(--spacing-6); /* Increase from spacing-4 to spacing-6 */
-  --spacing-section: var(--spacing-10); /* Keep existing section spacing */
-  /* ========================================================================== */
+  /* Core spacing scale - 8pt grid multiples */
+  --spacing-0: 0; /* 0px - No spacing */
+  --spacing-1: 0.25rem; /* 4px - Half base unit for fine details */
+  --spacing-2: var(--spacing-base); /* 8px - Base unit */
+  --spacing-3: 0.75rem; /* 12px - 1.5x base */
+  --spacing-4: 1rem; /* 16px - 2x base (rem default) */
+  --spacing-5: 1.25rem; /* 20px - 2.5x base */
+  --spacing-6: 1.5rem; /* 24px - 3x base */
+  --spacing-8: 2rem; /* 32px - 4x base */
+  --spacing-10: 2.5rem; /* 40px - 5x base */
+  --spacing-12: 3rem; /* 48px - 6x base */
+  --spacing-16: 4rem; /* 64px - 8x base */
+  --spacing-20: 5rem; /* 80px - 10x base */
+  --spacing-24: 6rem; /* 96px - 12x base */
+
+  /* Layout Spacing - Semantic names for easier use */
+  --spacing-page: var(--spacing-16); /* Between page sections - 64px */
+  --spacing-section: var(
+    --spacing-20
+  ); /* Between major content sections - 80px */
+  --spacing-component: var(--spacing-6); /* Between components/cards - 24px */
+  --spacing-element: var(--spacing-4); /* Between related elements - 16px */
+  --spacing-tight: var(--spacing-2); /* Within components - 8px */
+  --spacing-compact: var(--spacing-1); /* Between closely related items - 4px */
+
+  /* Article-specific gaps - Responsive design using 8pt system */
+  --spacing-article-gap-mobile: var(
+    --spacing-2
+  ); /* Mobile article spacing - 8px */
+  --spacing-article-gap-tablet: var(
+    --spacing-3
+  ); /* Tablet article spacing - 12px */
+  --spacing-article-gap-desktop: var(
+    --spacing-4
+  ); /* Desktop article spacing - 16px */
+  --spacing-side-cards: var(
+    --spacing-1
+  ); /* Minimal spacing for side cards - 4px */
+  --spacing-category-section: var(
+    --spacing-3
+  ); /* Category section spacing - 12px */ /* ========================================================================== */
   /* Layout Dimensions */
   /* ========================================================================== */
 
-  /* Container widths */
-  --container-sm: 640px;
-  --container-md: 768px;
-  --container-lg: 1024px;
-  --container-xl: 1200px;
-  --container-2xl: 1400px;
+  /* Container widths - Responsive breakpoints */
+  --container-sm: 640px; /* Small screens, mobile landscape */
+  --container-md: 768px; /* Tablets, medium screens */
+  --container-lg: 1024px; /* Desktop, large screens */
+  --container-xl: 1200px; /* Large desktop, main content max-width */
+  --container-2xl: 1400px; /* Extra large screens, wide layouts */
 
-  /* Component heights */
-  --nav-height: 60px;
-  --header-height: 80px;
-  --card-height-small: 200px;
-  --card-height-medium: 300px;
-  --card-height-large: 400px;
-
-  /* ========================================================================== */
-  /* Border Radius */
-  /* ========================================================================== */
-
-  --radius-none: 0;
-  --radius-xs: 0.125rem; /* 2px */
-  --radius-sm: 0.25rem; /* 4px */
-  --radius-md: 0.5rem; /* 8px */
-  --radius-lg: 0.75rem; /* 12px */
-  --radius-xl: 1rem; /* 16px */
-  --radius-full: 9999px;
+  /* Component heights - UI element dimensions */
+  --nav-height: 60px; /* Mobile navigation bar height */
+  --header-height: 80px; /* Site header height */
+  --card-height-small: 200px; /* Small article cards */
+  --card-height-medium: 300px; /* Medium article cards */
+  --card-height-large: 400px; /* Large hero cards */
 
   /* ========================================================================== */
-  /* Shadows */
+  /* Border Radius - Modern rounded corners */
   /* ========================================================================== */
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 0 16px rgba(255, 215, 0, 0.5);
+  --radius-none: 0; /* Sharp corners, no rounding */
+  --radius-xs: 0.125rem; /* 2px - Subtle rounding for small elements */
+  --radius-sm: 0.25rem; /* 4px - Tags, small buttons */
+  --radius-md: 0.5rem; /* 8px - Cards, form inputs */
+  --radius-lg: 0.75rem; /* 12px - Article cards, main UI elements */
+  --radius-xl: 1rem; /* 16px - Large containers, modals */
+  --radius-2xl: 1.5rem; /* 24px - Hero sections, feature cards */
+  --radius-full: 9999px; /* Perfect circles, pills */
 
   /* ========================================================================== */
-  /* Z-Index Scale */
+  /* Elevation System - Modern shadows for depth */
   /* ========================================================================== */
 
-  --z-index-base: 0;
-  --z-index-dropdown: 10;
-  --z-index-sticky: 20;
-  --z-index-overlay: 30;
-  --z-index-modal: 40;
-  --z-index-popover: 50;
-  --z-index-tooltip: 60;
-  --z-index-toast: 70;
-
-  /* Component z-indexes */
-  --z-index-nav: 1100;
-  --z-index-mobile-menu: 1200;
-  --z-index-hamburger: 1500;
-  --z-index-search: 1001;
+  --shadow-xs: 0 1px 2px 0 hsla(220, 43%, 11%, 0.03); /* Minimal shadow */
+  --shadow-sm: 0 1px 3px 0 hsla(220, 43%, 11%, 0.08),
+    /* Small elements */ 0 1px 2px -1px hsla(220, 43%, 11%, 0.08);
+  --shadow-md: 0 4px 6px -1px hsla(220, 43%, 11%, 0.08),
+    /* Cards, dropdowns */ 0 2px 4px -2px hsla(220, 43%, 11%, 0.08);
+  --shadow-lg: 0 10px 15px -3px hsla(220, 43%, 11%, 0.08),
+    /* Modals, overlays */ 0 4px 6px -4px hsla(220, 43%, 11%, 0.08);
+  --shadow-xl: 0 20px 25px -5px hsla(220, 43%, 11%, 0.08),
+    /* Large modals */ 0 8px 10px -6px hsla(220, 43%, 11%, 0.08);
+  --shadow-2xl: 0 25px 50px -12px hsla(220, 43%, 11%, 0.2); /* Dramatic elevation */
+  --shadow-glow: 0 0 0 1px var(--accent-color),
+    /* Brand accent glow */ 0 0 16px hsla(51, 100%, 50%, 0.5);
 
   /* ========================================================================== */
-  /* Animation & Transitions */
+  /* Z-Index Scale - Layered interface organization */
   /* ========================================================================== */
 
-  /* Timing functions */
-  --ease-linear: linear;
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --ease-out: cubic-bezier(0, 0, 0.2, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  /* Duration scale */
-  --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
-  --duration-slower: 900ms;
-
-  /* Semantic transitions */
-  --transition-fast: var(--duration-fast) var(--ease-out);
-  --transition-normal: var(--duration-normal) var(--ease-out);
-  --transition-slow: var(--duration-slow) var(--ease-out);
-  --transition-menu: var(--duration-slower) cubic-bezier(0.77, 0, 0.18, 1);
+  --z-hide: -1; /* Hidden behind content */
+  --z-auto: auto; /* Browser default stacking */
+  --z-base: 0; /* Base content layer */
+  --z-docked: 10; /* Docked elements, sticky content */
+  --z-dropdown: 1000; /* Dropdown menus */
+  --z-sticky: 1100; /* Sticky headers, navigation */
+  --z-banner: 1200; /* Notification banners */
+  --z-overlay: 1300; /* Modal overlays, backdrops */
+  --z-modal: 1400; /* Modal content */
+  --z-popover: 1500; /* Popovers, context menus */
+  --z-skip-link: 1600; /* Accessibility skip links */
+  --z-toast: 1700; /* Toast notifications */
+  --z-tooltip: 1800; /* Tooltips, highest priority UI */
 
   /* ========================================================================== */
-  /* Breakpoints */
+  /* Animation System - Smooth, purposeful motion */
   /* ========================================================================== */
 
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
+  /* Duration scale - Progressive timing */
+  --duration-75: 75ms; /* Micro interactions */
+  --duration-100: 100ms; /* Quick hover states */
+  --duration-150: 150ms; /* Fast transitions */
+  --duration-200: 200ms; /* Standard UI transitions */
+  --duration-300: 300ms; /* Moderate animations */
+  --duration-500: 500ms; /* Slower, more dramatic */
+  --duration-700: 700ms; /* Content transitions */
+  --duration-1000: 1000ms; /* Loading states, major changes */
 
-  /* Legacy breakpoints for backwards compatibility */
-  --breakpoint-tablet: 769px;
-  --breakpoint-desktop: 1025px;
+  /* Easing functions - Natural motion curves */
+  --ease-linear: linear; /* Constant speed */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1); /* Slow start */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1); /* Slow end */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1); /* Slow start and end */
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1); /* Bounce back */
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Spring effect */
+
+  /* Semantic transitions - Purpose-built animations */
+  --transition-fast: var(--duration-150) var(--ease-out); /* Quick feedback */
+  --transition-base: var(--duration-200) var(--ease-out); /* Standard transitions */
+  --transition-slow: var(--duration-300) var(--ease-out); /* Deliberate changes */
+  --transition-colors: color var(--duration-150) var(--ease-in-out),
+    background-color var(--duration-150) var(--ease-in-out),
+    border-color var(--duration-150) var(--ease-in-out); /* Color changes */
 
   /* ========================================================================== */
-  /* Category Colors (Optional - for future use) */
+  /* Breakpoints - Responsive design system */
   /* ========================================================================== */
 
-  --color-health: rgb(0, 255, 0);
-  --color-coins: rgb(255, 215, 0);
-  --color-hack: rgb(128, 0, 128);
-  --color-ai: rgb(255, 165, 0);
+  --breakpoint-sm: 640px; /* Small devices, large phones */
+  --breakpoint-md: 768px; /* Medium devices, tablets */
+  --breakpoint-lg: 1024px; /* Large devices, small desktops */
+  --breakpoint-xl: 1280px; /* Extra large devices */
+  --breakpoint-2xl: 1536px; /* Ultra wide screens */
+
+  /* ========================================================================== */
+  /* Accessibility & Modern Features */
+  /* ========================================================================== */
+
+  /* Focus states - Accessible interaction feedback */
+  --focus-ring: 0 0 0 2px var(--accent-color); /* Basic focus ring */
+  --focus-ring-offset: 0 0 0 2px var(--background),
+    /* Offset focus ring */ 0 0 0 4px var(--accent-color);
+
+  /* Reduced motion support */
+  --motion-reduce: no-preference; /* Motion preference detection */
+
+  /* Color scheme support */
+  color-scheme: dark light; /* Browser theme integration */
+
+  /* ========================================================================== */
+  /* Category Colors - Semantic brand colors */
+  /* ========================================================================== */
+
+  --color-health: hsl(120, 100%, 50%); /* Health articles - bright green */
+  --color-coins: hsl(51, 100%, 50%); /* Crypto/finance - gold yellow */
+  --color-hack: hsl(300, 100%, 25%); /* Tech/hacking - deep purple */
+  --color-ai: hsl(30, 100%, 50%); /* AI content - vibrant orange */
+  --color-random: hsl(330, 100%, 50%); /* Random content - hot pink */
 }
