@@ -566,17 +566,16 @@ function setupScrollBehavior() {
       header.classList.add("scrolling");
       if (navbar) navbar.classList.add("scrolling");
 
-      // Hide header when scrolling down
+      // Hide header when scrolling down, show only when scrolling up
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
         header.classList.add("hide-header");
-      } else if (currentScrollY < lastScrollY) {
+      }
+      // Only show when actively scrolling up
+      else if (currentScrollY < lastScrollY) {
         header.classList.remove("hide-header");
       }
 
       lastScrollY = currentScrollY;
-
-      // Show header when scrolling stops
-      showHeaderAfterDelay();
     });
 
     // Add touchend listener to show header when touch ends

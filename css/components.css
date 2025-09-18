@@ -264,7 +264,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .search-bar-slide {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.7);
@@ -278,7 +278,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px 10px 0 0;
+  border-radius: 0 0 10px 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   pointer-events: none;
   opacity: 0;
@@ -288,6 +288,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   transform: translateY(-65px) scale(1) !important;
   pointer-events: auto;
   opacity: 1;
+  bottom: env(safe-area-inset-bottom, 0);
 }
 
 .search-bar-slide #search-input {
@@ -356,6 +357,8 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   transform: translateY(0) scale(0.8);
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events: none;
+  opacity: 0;
+  /* visibility: hidden; */
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.2);

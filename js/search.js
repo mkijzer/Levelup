@@ -77,37 +77,34 @@ class SearchManager {
       }
     });
 
-    // Click outside to close
-    this.setupClickOutside();
-
     // Escape key to close
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isSearchActive) {
         this.closeSearch();
       }
     });
+
+    // Close search on nav hover and click
+    this.setupNavInteractions();
   }
 
-  setupClickOutside() {
-    const { searchBar, searchIcon } = this.elements;
+  setupNavInteractions() {
+    const navItems = document.querySelectorAll(".nav-item, .desktop-nav-item");
 
-    document.addEventListener("click", (e) => {
-      const searchResultsGrid = document.querySelector(".search-results-grid");
-      const clickedArticleCard = e.target.closest(".article-card");
+    navItems.forEach((item) => {
+      // Close on hover
+      item.addEventListener("mouseenter", () => {
+        if (isSearchActive) {
+          this.closeSearchOnly();
+        }
+      });
 
-      if (
-        isSearchActive &&
-        !searchBar.contains(e.target) &&
-        !searchIcon.contains(e.target) &&
-        !clickedArticleCard && // Don't close if clicking an article card
-        !(
-          searchResultsGrid &&
-          searchResultsGrid.style.display !== "none" &&
-          searchResultsGrid.contains(e.target)
-        )
-      ) {
-        this.closeSearchOnly();
-      }
+      // Close on click
+      item.addEventListener("click", () => {
+        if (isSearchActive) {
+          this.closeSearchOnly();
+        }
+      });
     });
   }
 
