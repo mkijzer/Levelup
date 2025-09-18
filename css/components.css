@@ -18,12 +18,12 @@
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
   font-family: var(--font-display);
-  letter-spacing: 0.2rem;
+  letter-spacing: 0rem;
   margin: 0;
-  margin-right: 2px;
+  margin-right: 0;
   display: inline-flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 8px;
   background: linear-gradient(45deg, #ffd700, #ff8c00);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
