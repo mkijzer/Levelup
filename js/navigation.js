@@ -1,134 +1,105 @@
 // ============================================================================
-// navigation.js - NAVIGATION MANAGEMENT
+// navigation.js - NAVIGATION & ROUTING
 // ============================================================================
-// Description: Handles all navigation logic, hash changes, and menu interactions
-// Version: 1.1 - Fixed modal conflicts
+// Description: Handles navigation logic and routing - NO modal responsibilities
+// Version: 2.0 - Clean separation of concerns
 // ============================================================================
 
 import { loadCategory, loadCategoryPage, loadRandomArticle } from "./data.js";
 
 // ============================================================================
-// State Management
+// Navigation State
 // ============================================================================
 let currentCategory = "latest";
 let isInCategoryPage = false;
 
 // ============================================================================
-// Navigation Setup Functions
+// Public State Functions
 // ============================================================================
+export function getCurrentCategory() {
+  return currentCategory;
+}
 
-/**
- * Sets up all navigation event listeners
- */
-function setupNavigation() {
+export function setCurrentCategory(category) {
+  currentCategory = category;
+}
+
+export function getIsInCategoryPage() {
+  return isInCategoryPage;
+}
+
+export function setIsInCategoryPage(state) {
+  isInCategoryPage = state;
+}
+
+// ============================================================================
+// Navigation Setup
+// ============================================================================
+export function setupNavigation() {
   // Hash change listener
   window.addEventListener("hashchange", handleHashChange);
 
-  // Mobile navigation
-  setupMobileNavigation();
+  // Mobile navigation (excluding category button - handled by modal.js)
+  document.querySelectorAll(".nav-item:not(.category)").forEach((navItem) => {
+    navItem.addEventListener("click", handleNavigationClick);
+  });
 
   // Desktop navigation
-  setupDesktopNavigation();
+  document.querySelectorAll(".desktop-nav-item").forEach((link) => {
+    link.addEventListener("click", handleNavigationClick);
+  });
 
-  console.log("Navigation: All event listeners setup complete");
+  console.log("Navigation: Setup complete");
 }
 
-/**
- * Handle hash changes in URL
- */
+// ============================================================================
+// Event Handlers
+// ============================================================================
 function handleHashChange() {
   const hash = window.location.hash.slice(1);
   const category = hash || "latest";
 
-  console.log(`[DEBUG] Hash changed to: ${category}`);
-
-  // Check if coming from search results
-  const fromSearch = sessionStorage.getItem("fromSearch") === "true";
-  if (fromSearch) {
-    console.log("[DEBUG] Skipping hash change due to active search context");
+  // Skip if search is active
+  if (sessionStorage.getItem("fromSearch") === "true") {
     return;
   }
 
-  // Check if an article view is active
+  // Skip if article view is open
   const articleView = document.querySelector(".article-view");
   if (articleView && !articleView.classList.contains("hidden")) {
-    console.log("[DEBUG] Skipping hash change due to active article view");
     return;
-  }
-
-  const mainArticleView = document.querySelector(".article-view");
-  if (mainArticleView && !mainArticleView.classList.contains("hidden")) {
-    mainArticleView.classList.add("hidden");
-  }
-
-  const categoryArticleView = document.querySelector(".category-article-view");
-  if (
-    categoryArticleView &&
-    !categoryArticleView.classList.contains("hidden")
-  ) {
-    categoryArticleView.classList.add("hidden");
   }
 
   exitCategoryPage();
   loadCategory(category);
 }
 
-/**
- * Setup mobile navigation events
- */
-function setupMobileNavigation() {
-  // FIXED: Exclude category nav item to avoid conflicts with modal.js
-  document.querySelectorAll(".nav-item:not(.category)").forEach((navItem) => {
-    navItem.addEventListener("click", handleNavigationClick);
-  });
-
-  console.log("Navigation: Mobile nav setup complete");
-}
-
-/**
- * Setup desktop navigation events
- */
-function setupDesktopNavigation() {
-  document.querySelectorAll(".desktop-nav-item").forEach((link) => {
-    link.addEventListener("click", handleNavigationClick);
-  });
-
-  console.log("Navigation: Desktop nav setup complete");
-}
-
-/**
- * Handle navigation link clicks
- */
 function handleNavigationClick(e) {
   e.preventDefault();
 
-  // For desktop nav, the currentTarget IS the link
-  // For mobile nav, the link is inside the nav-item
-  let link, href;
-
+  // Get href from clicked element
+  let href;
   if (e.currentTarget.classList.contains("desktop-nav-item")) {
-    link = e.currentTarget;
-    href = link.getAttribute("href");
+    href = e.currentTarget.getAttribute("href");
   } else {
-    link = e.currentTarget.querySelector("a");
-    if (!link) return; // Safety check
+    const link = e.currentTarget.querySelector("a");
+    if (!link) return;
     href = link.getAttribute("href");
   }
 
   const isMobileNav = e.currentTarget.closest(".mobile-nav");
 
-  console.log(`Navigation clicked: ${href}`);
-
+  // Route to appropriate handler
   if (href === "#settings") {
     return; // Let settings modal handle this
+  } else if (href === "#category") {
+    return; // Let modal.js handle this
   } else if (href === "#random") {
     exitCategoryPage();
     if (!isMobileNav) {
       updateDesktopNavigation("random");
     }
     loadRandomArticle();
-  } else if (href === "#category") {
-    return; // Let category modal handle this
   } else if (href === "#latest") {
     exitCategoryPage();
     loadCategory("latest");
@@ -139,30 +110,36 @@ function handleNavigationClick(e) {
   }
 }
 
-/**
- * Update desktop navigation active state
- */
-function updateDesktopNavigation(currentCategory) {
-  // Remove active class from all desktop nav items INCLUDING random
-  document
-    .querySelectorAll(".desktop-nav-item, .random-btn")
-    .forEach((item) => {
-      item.classList.remove("active");
-    });
+// ============================================================================
+// Category Management
+// ============================================================================
+export function switchToCategory(category) {
+  isInCategoryPage = false;
 
-  // Add active class to current category
-  const activeItem = document.querySelector(
-    `.desktop-nav-item[href="#${currentCategory}"]`
-  );
-  if (activeItem) {
-    activeItem.classList.add("active");
+  // Hide any open article views
+  const mainArticleView = document.querySelector(".article-view");
+  if (mainArticleView) {
+    mainArticleView.classList.add("hidden");
   }
+
+  const categoryArticleView = document.querySelector(".category-article-view");
+  if (categoryArticleView) {
+    categoryArticleView.classList.add("hidden");
+  }
+
+  // Show category page elements
+  const heroGrid = document.querySelector(".category-hero-grid");
+  const articlesList = document.querySelector(".category-articles-list");
+  const loadMoreBtn = document.querySelector(".load-more-button");
+
+  if (heroGrid) heroGrid.style.display = "";
+  if (articlesList) articlesList.style.display = "";
+  if (loadMoreBtn) loadMoreBtn.style.display = "";
+
+  loadCategoryPage(category);
 }
 
-/**
- * Exit category page view and return to main content
- */
-function exitCategoryPage() {
+export function exitCategoryPage() {
   const categoryPageView = document.getElementById("category-page-view");
   const mainContent = document.getElementById("main-content-area");
 
@@ -176,82 +153,17 @@ function exitCategoryPage() {
   isInCategoryPage = false;
 }
 
-/**
- * Public function to switch categories from any state
- */
-/**
- * Public function to switch categories from any state
- */
-function switchToCategory(category) {
-  isInCategoryPage = false;
+export function updateDesktopNavigation(currentCategory) {
+  // Remove active class from all items
+  document
+    .querySelectorAll(".desktop-nav-item, .random-btn")
+    .forEach((item) => {
+      item.classList.remove("active");
+    });
 
-  const mainArticleView = document.querySelector(".article-view");
-  if (mainArticleView) {
-    mainArticleView.classList.add("hidden");
+  // Add active class to current category
+  const activeItem = document.querySelector(`[href="#${currentCategory}"]`);
+  if (activeItem) {
+    activeItem.classList.add("active");
   }
-
-  const categoryArticleView = document.querySelector(".category-article-view");
-  if (categoryArticleView) {
-    categoryArticleView.classList.add("hidden");
-  }
-
-  const heroGrid = document.querySelector(".category-hero-grid");
-  const articlesList = document.querySelector(".category-articles-list");
-  const loadMoreBtn = document.querySelector(".load-more-button");
-
-  if (heroGrid) heroGrid.style.display = "";
-  if (articlesList) articlesList.style.display = "";
-  if (loadMoreBtn) loadMoreBtn.style.display = "";
-
-  loadCategoryPage(category);
-
-  // NEW: Import and reset modal after navigation
-  import("./modal.js").then((module) => {
-    module.resetModalAfterNavigation();
-  });
 }
-// ============================================================================
-// State Getters/Setters
-// ============================================================================
-
-/**
- * Get current category
- */
-function getCurrentCategory() {
-  return currentCategory;
-}
-
-/**
- * Set current category
- */
-function setCurrentCategory(category) {
-  currentCategory = category;
-}
-
-/**
- * Get category page state
- */
-function getIsInCategoryPage() {
-  return isInCategoryPage;
-}
-
-/**
- * Set category page state
- */
-function setIsInCategoryPage(state) {
-  isInCategoryPage = state;
-}
-
-// ============================================================================
-// Export Functions
-// ============================================================================
-export {
-  setupNavigation,
-  switchToCategory,
-  updateDesktopNavigation,
-  exitCategoryPage,
-  getCurrentCategory,
-  setCurrentCategory,
-  getIsInCategoryPage,
-  setIsInCategoryPage,
-};

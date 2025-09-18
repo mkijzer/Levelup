@@ -487,6 +487,10 @@ function addIcons() {
   });
 }
 
+setTimeout(() => {
+  import("./modal.js").then((module) => module.initializeModal());
+}, 100);
+
 // ============================================================================
 // Initialization
 // ============================================================================
@@ -601,3 +605,10 @@ function setupScrollBehavior() {
 document.addEventListener("DOMContentLoaded", initializeApp);
 // Export for backwards compatibility and external access
 export { switchToCategory, showArticleView };
+
+// Expose for modal
+window.loadCategory = loadCategory;
+window.loadCategoryPage = loadCategoryPage;
+window.switchToCategory = switchToCategory; // already imported from navigation.js
+
+// Now modal.js can call window.loadCategory(category) safely

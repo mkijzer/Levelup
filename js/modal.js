@@ -1,218 +1,123 @@
-// ============================================================================
-// modal.js - CATEGORY MODAL ONLY
-// ============================================================================
-// Description: Category modal management - settings handled separately
-// Version: 3.2 - Fixed all modal issues
-// ============================================================================
+let isModalVisible = false;
+let hideTimer = null;
 
 // ============================================================================
-// Configuration
-// ============================================================================
-const MODAL_HIDE_DELAY = 150; // ms
+function showModal() {
+  const modal = document.getElementById("category-modal");
+  if (!modal) return;
 
-// ============================================================================
-// Modal Manager Class - Category Only
-// ============================================================================
-class ModalManager {
-  constructor() {
-    this.elements = {};
-    this.isModalVisible = false;
-    this.hideTimer = null;
-    this.init();
-  }
+  clearTimeout(hideTimer);
+  modal.classList.add("active");
+  isModalVisible = true;
+}
 
-  init() {
-    this.elements = this.getElements();
+function hideModal() {
+  const modal = document.getElementById("category-modal");
+  if (!modal) return;
 
-    if (!this.validateElements()) {
-      console.warn("Modal: Required category elements not found");
-      return;
+  clearTimeout(hideTimer);
+  modal.classList.remove("active");
+  isModalVisible = false;
+}
+
+function scheduleHide(delay = 150) {
+  clearTimeout(hideTimer);
+  hideTimer = setTimeout(() => {
+    const modal = document.getElementById("category-modal");
+    const categoryButton = document.querySelector(".nav-item.category");
+    if (!modal || !categoryButton) return;
+
+    if (!modal.matches(":hover") && !categoryButton.matches(":hover")) {
+      hideModal();
     }
+  }, delay);
+}
 
-    this.setupEventListeners();
-    this.hideModal(); // Ensure modal starts hidden
-
-    console.log("Modal: Category modal initialized successfully");
-  }
-
-  getElements() {
-    const categoryLink =
-      document.querySelector('.nav-item a[href="#category"]') ||
-      document.querySelector('.nav-item.category a[href="#category"]');
-    return {
-      categoryItem: categoryLink?.closest(".nav-item"),
-      categoryModal: document.getElementById("category-modal"),
-      categoryLink: categoryLink,
-    };
-  }
-
-  validateElements() {
-    const { categoryItem, categoryModal } = this.elements;
-    return categoryItem && categoryModal;
-  }
-
-  setupEventListeners() {
-    const { categoryItem, categoryModal } = this.elements;
-
-    // FIXED: Simple toggle click handler with stopPropagation
-    categoryItem.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (this.isModalVisible) {
-        this.hideModal();
-      } else {
-        this.showModal();
-      }
-    });
-
-    // Hover events for desktop
-    categoryItem.addEventListener("mouseenter", () => {
-      this.showModal();
-    });
-
-    categoryItem.addEventListener("mouseleave", () => {
-      this.scheduleHide();
-    });
-
-    categoryModal.addEventListener("mouseenter", () => {
-      this.cancelScheduledHide();
-    });
-
-    categoryModal.addEventListener("mouseleave", () => {
-      this.scheduleHide();
-    });
-
-    // Click outside to close
-    document.addEventListener("click", (e) => {
-      if (
-        this.isModalVisible &&
-        !categoryModal.contains(e.target) &&
-        !categoryItem.contains(e.target)
-      ) {
-        this.hideModal();
-      }
-    });
-
-    // Escape key to close
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && this.isModalVisible) {
-        this.hideModal();
-      }
-    });
-
-    // Setup category link clicks
-    this.setupCategoryLinks();
-  }
-
-  setupCategoryLinks() {
-    const categoryItems = document.querySelectorAll(".modal-category-item");
-    categoryItems.forEach((item) => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const link = item.querySelector("a");
-        const href = link?.getAttribute("href");
-        if (href) {
-          const category = href.replace("#", "");
-
-          // FIXED: Immediately hide modal and reset state
-          this.forceHideModal();
-
-          // FIXED: Import from navigation.js instead of data.js
-          import("./navigation.js").then((module) => {
-            module.switchToCategory(category);
-          });
-        }
-      });
-    });
-  }
-
-  showModal() {
-    const { categoryModal } = this.elements;
-    this.cancelScheduledHide();
-
-    if (!this.isModalVisible) {
-      categoryModal.classList.add("active");
-      this.isModalVisible = true;
-    }
-  }
-
-  hideModal() {
-    const { categoryModal } = this.elements;
-    this.cancelScheduledHide();
-
-    if (this.isModalVisible) {
-      this.isModalVisible = false;
-      categoryModal.classList.remove("active");
-    }
-  }
-
-  // FIXED: Force hide modal without checking state
-  forceHideModal() {
-    const { categoryModal } = this.elements;
-    this.cancelScheduledHide();
-    this.isModalVisible = false;
-    if (categoryModal) {
-      categoryModal.classList.remove("active");
-    }
-  }
-
-  // FIXED: Public method to reset modal state
-  resetModal() {
-    this.forceHideModal();
-  }
-
-  scheduleHide() {
-    this.cancelScheduledHide();
-
-    this.hideTimer = setTimeout(() => {
-      if (!this.isHoveringModalArea()) {
-        this.hideModal();
-      }
-    }, MODAL_HIDE_DELAY);
-  }
-
-  cancelScheduledHide() {
-    if (this.hideTimer) {
-      clearTimeout(this.hideTimer);
-      this.hideTimer = null;
-    }
-  }
-
-  isHoveringModalArea() {
-    const { categoryItem, categoryModal } = this.elements;
-    return categoryItem.matches(":hover") || categoryModal.matches(":hover");
-  }
+function safeClosest(element, selector) {
+  if (!element || !element.closest) return null;
+  return element.closest(selector);
 }
 
 // ============================================================================
-// Initialization
+function handleDocumentClick(e) {
+  const target = e.target;
+
+  const categoryButton = safeClosest(target, ".nav-item.category");
+  if (categoryButton) {
+    e.preventDefault();
+    e.stopPropagation();
+    clearTimeout(hideTimer);
+    isModalVisible ? hideModal() : showModal();
+    return;
+  }
+
+  const modalItem = safeClosest(target, ".modal-category-item");
+  if (modalItem) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const link = modalItem.querySelector("a");
+    if (link) {
+      const category = link.getAttribute("href").replace("#", "");
+      hideModal();
+
+      // Call global function directly
+      if (window.loadCategory) {
+        window.loadCategory(category);
+      }
+    }
+    return;
+  }
+
+  const modal = document.getElementById("category-modal");
+  if (
+    isModalVisible &&
+    modal &&
+    !modal.contains(target) &&
+    !safeClosest(target, ".nav-item.category")
+  ) {
+    hideModal();
+  }
+}
+
+function handleDocumentMouseEnter(e) {
+  const target = e.target;
+  if (
+    safeClosest(target, ".nav-item.category") ||
+    safeClosest(target, "#category-modal")
+  ) {
+    clearTimeout(hideTimer);
+  }
+}
+
+function handleDocumentMouseLeave(e) {
+  const target = e.target;
+  if (
+    safeClosest(target, ".nav-item.category") ||
+    safeClosest(target, "#category-modal")
+  ) {
+    scheduleHide();
+  }
+}
+
+function handleKeydown(e) {
+  if (e.key === "Escape" && isModalVisible) hideModal();
+}
+
 // ============================================================================
-let modalManager = null;
+export function initializeModal() {
+  document.removeEventListener("click", handleDocumentClick);
+  document.removeEventListener("mouseenter", handleDocumentMouseEnter, true);
+  document.removeEventListener("mouseleave", handleDocumentMouseLeave, true);
+  document.removeEventListener("keydown", handleKeydown);
 
-function initializeModal() {
-  if (!modalManager) {
-    modalManager = new ModalManager();
-  }
-  return modalManager;
+  document.addEventListener("click", handleDocumentClick);
+  document.addEventListener("mouseenter", handleDocumentMouseEnter, true);
+  document.addEventListener("mouseleave", handleDocumentMouseLeave, true);
+  document.addEventListener("keydown", handleKeydown);
+
+  console.log("Modal: Event delegation initialized");
 }
 
-// FIXED: Reset modal after navigation
-function resetModalAfterNavigation() {
-  if (modalManager) {
-    modalManager.resetModal();
-  }
-}
-
-// Auto-initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", initializeModal);
-
-// FIXED: Export everything needed
-export {
-  initializeModal,
-  ModalManager,
-  modalManager,
-  resetModalAfterNavigation,
-};
+export { showModal, hideModal };
