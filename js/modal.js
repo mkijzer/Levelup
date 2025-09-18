@@ -2,7 +2,7 @@
 // modal.js - CATEGORY MODAL ONLY
 // ============================================================================
 // Description: Category modal management - settings handled separately
-// Version: 3.1 - Fixed CSS-driven animations
+// Version: 3.2 - Fixed all modal issues
 // ============================================================================
 
 // ============================================================================
@@ -36,12 +36,11 @@ class ModalManager {
   }
 
   getElements() {
-    const categoryLink = document.querySelector(
-      '.nav-item a[href="#category"]'
-    );
-
+    const categoryLink =
+      document.querySelector('.nav-item a[href="#category"]') ||
+      document.querySelector('.nav-item.category a[href="#category"]');
     return {
-      categoryItem: categoryLink?.parentElement?.parentElement,
+      categoryItem: categoryLink?.closest(".nav-item"),
       categoryModal: document.getElementById("category-modal"),
       categoryLink: categoryLink,
     };
@@ -51,13 +50,20 @@ class ModalManager {
     const { categoryItem, categoryModal } = this.elements;
     return categoryItem && categoryModal;
   }
+
   setupEventListeners() {
     const { categoryItem, categoryModal } = this.elements;
 
-    // Click to toggle modal
+    // FIXED: Simple toggle click handler with stopPropagation
     categoryItem.addEventListener("click", (e) => {
       e.preventDefault();
-      modalManager.showModal(); // or whatever the correct method name is
+      e.stopPropagation();
+
+      if (this.isModalVisible) {
+        this.hideModal();
+      } else {
+        this.showModal();
+      }
     });
 
     // Hover events for desktop
@@ -104,17 +110,18 @@ class ModalManager {
     categoryItems.forEach((item) => {
       item.addEventListener("click", (e) => {
         e.preventDefault();
+        e.stopPropagation();
+
         const link = item.querySelector("a");
         const href = link?.getAttribute("href");
         if (href) {
-          // Get category name from href (#health -> health)
           const category = href.replace("#", "");
 
-          // Hide modal first
-          this.hideModal();
+          // FIXED: Immediately hide modal and reset state
+          this.forceHideModal();
 
-          // Use the new switch function
-          import("./data.js").then((module) => {
+          // FIXED: Import from navigation.js instead of data.js
+          import("./navigation.js").then((module) => {
             module.switchToCategory(category);
           });
         }
@@ -133,24 +140,34 @@ class ModalManager {
   }
 
   hideModal() {
-    // Change this to add a delay before hiding
     const { categoryModal } = this.elements;
     this.cancelScheduledHide();
 
     if (this.isModalVisible) {
+      this.isModalVisible = false;
       categoryModal.classList.remove("active");
-      // Add delay to match CSS transition
-      setTimeout(() => {
-        this.isModalVisible = false;
-      }, 400); // Match CSS transition duration
     }
+  }
+
+  // FIXED: Force hide modal without checking state
+  forceHideModal() {
+    const { categoryModal } = this.elements;
+    this.cancelScheduledHide();
+    this.isModalVisible = false;
+    if (categoryModal) {
+      categoryModal.classList.remove("active");
+    }
+  }
+
+  // FIXED: Public method to reset modal state
+  resetModal() {
+    this.forceHideModal();
   }
 
   scheduleHide() {
     this.cancelScheduledHide();
 
     this.hideTimer = setTimeout(() => {
-      // Check if still not hovering over modal or trigger
       if (!this.isHoveringModalArea()) {
         this.hideModal();
       }
@@ -182,8 +199,20 @@ function initializeModal() {
   return modalManager;
 }
 
+// FIXED: Reset modal after navigation
+function resetModalAfterNavigation() {
+  if (modalManager) {
+    modalManager.resetModal();
+  }
+}
+
 // Auto-initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", initializeModal);
 
-// Export for external use
-export { initializeModal, ModalManager };
+// FIXED: Export everything needed
+export {
+  initializeModal,
+  ModalManager,
+  modalManager,
+  resetModalAfterNavigation,
+};

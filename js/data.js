@@ -2,7 +2,7 @@
 // data.js - MAIN COORDINATOR
 // ============================================================================
 // Description: Main coordinator for the application, handles initialization and coordination
-// Version: 4.0 - Cleaned up and split into modules
+// Version: 4.2 - Complete modal fix with proper initialization
 // ============================================================================
 
 import {
@@ -128,8 +128,6 @@ export async function loadCategory(category) {
 /**
  * Loads search results in main view
  */
-
-// In the loadSearchResults function in data.js
 export async function loadSearchResults(query) {
   // Force back to main view state first
   setIsInCategoryPage(false);
@@ -253,6 +251,7 @@ async function loadMoreSearchResults() {
     loadMoreButton.remove();
   }
 }
+
 /**
  * Loads category page with extended article list
  */
@@ -333,7 +332,8 @@ function updateCategoryTitle(category) {
  * Shows category page view and hides main content
  */
 function showCategoryPageView(elements, category) {
-  elements.mainContent.style.display = "none";
+  // FIXED: Don't hide main content (this was causing header to disappear)
+  // elements.mainContent.style.display = "none"; // REMOVED THIS LINE
   elements.categoryPageView.classList.remove("hidden");
 
   if (elements.categoryTitle) {
@@ -450,7 +450,9 @@ function addIcons() {
   );
   if (mobileCategory) {
     const navItem = mobileCategory.parentElement;
+    // FIXED: Preserve the category class when adding icons
     navItem.innerHTML = `${categorySvg}<a href="#category"></a>`;
+    navItem.classList.add("category"); // Re-add the category class
   }
 
   const mobileRandom = document.querySelector('.nav-item a[href="#random"]');
@@ -514,8 +516,12 @@ async function initializeApp() {
     setupNavigation();
     addIcons();
 
-    populateMostRead();
+    // FIXED: Reinitialize modal after icons are added to attach to new DOM elements
+    await import("./modal.js").then((module) => {
+      module.initializeModal();
+    });
 
+    populateMostRead();
     populateMobileCarousel();
 
     // Load initial category
@@ -533,8 +539,6 @@ async function initializeApp() {
 /**
  * Setup scroll behavior for header
  */
-// Find the setupScrollBehavior function and ensure it's applied to category page:
-
 function setupScrollBehavior() {
   try {
     let lastScrollY = window.scrollY;

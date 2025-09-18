@@ -2,7 +2,7 @@
 // navigation.js - NAVIGATION MANAGEMENT
 // ============================================================================
 // Description: Handles all navigation logic, hash changes, and menu interactions
-// Version: 1.0 - Split from data.js for better organization
+// Version: 1.1 - Fixed modal conflicts
 // ============================================================================
 
 import { loadCategory, loadCategoryPage, loadRandomArticle } from "./data.js";
@@ -77,7 +77,8 @@ function handleHashChange() {
  * Setup mobile navigation events
  */
 function setupMobileNavigation() {
-  document.querySelectorAll(".nav-item").forEach((navItem) => {
+  // FIXED: Exclude category nav item to avoid conflicts with modal.js
+  document.querySelectorAll(".nav-item:not(.category)").forEach((navItem) => {
     navItem.addEventListener("click", handleNavigationClick);
   });
 
@@ -100,9 +101,6 @@ function setupDesktopNavigation() {
  */
 function handleNavigationClick(e) {
   e.preventDefault();
-
-  // Clear search state when navigating away
-  sessionStorage.removeItem("fromSearch");
 
   // For desktop nav, the currentTarget IS the link
   // For mobile nav, the link is inside the nav-item
@@ -133,30 +131,10 @@ function handleNavigationClick(e) {
     return; // Let category modal handle this
   } else if (href === "#latest") {
     exitCategoryPage();
-    // Clear any search results and show bento grid
-    const searchResultsGrid = document.querySelector(".search-results-grid");
-    if (searchResultsGrid) {
-      searchResultsGrid.style.display = "none";
-    }
-    const bentoGrid = document.querySelector(".bento-grid");
-    if (bentoGrid) {
-      bentoGrid.style.display = "";
-      bentoGrid.classList.remove("hidden-element");
-    }
     loadCategory("latest");
   } else {
     const category = href.replace("#", "");
     exitCategoryPage();
-    // Clear any search results and show bento grid for other categories too
-    const searchResultsGrid = document.querySelector(".search-results-grid");
-    if (searchResultsGrid) {
-      searchResultsGrid.style.display = "none";
-    }
-    const bentoGrid = document.querySelector(".bento-grid");
-    if (bentoGrid) {
-      bentoGrid.style.display = "";
-      bentoGrid.classList.remove("hidden-element");
-    }
     loadCategory(category);
   }
 }
@@ -201,6 +179,9 @@ function exitCategoryPage() {
 /**
  * Public function to switch categories from any state
  */
+/**
+ * Public function to switch categories from any state
+ */
 function switchToCategory(category) {
   isInCategoryPage = false;
 
@@ -223,8 +204,12 @@ function switchToCategory(category) {
   if (loadMoreBtn) loadMoreBtn.style.display = "";
 
   loadCategoryPage(category);
-}
 
+  // NEW: Import and reset modal after navigation
+  import("./modal.js").then((module) => {
+    module.resetModalAfterNavigation();
+  });
+}
 // ============================================================================
 // State Getters/Setters
 // ============================================================================
