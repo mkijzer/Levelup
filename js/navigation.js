@@ -11,7 +11,7 @@ import { loadCategory, loadCategoryPage, loadRandomArticle } from "./data.js";
 // Navigation State
 // ============================================================================
 let currentCategory = "latest";
-let isInCategoryPage = false;
+let isInCategoryPage = true;
 
 // ============================================================================
 // Public State Functions
@@ -40,7 +40,7 @@ export function setupNavigation() {
   window.addEventListener("hashchange", handleHashChange);
 
   // Mobile navigation (excluding category button - handled by modal.js)
-  document.querySelectorAll(".nav-item:not(.category)").forEach((navItem) => {
+  document.querySelectorAll(".nav-item").forEach((navItem) => {
     navItem.addEventListener("click", handleNavigationClick);
   });
 
@@ -59,10 +59,8 @@ function handleHashChange() {
   const hash = window.location.hash.slice(1);
   const category = hash || "latest";
 
-  // Skip if search is active
-  if (sessionStorage.getItem("fromSearch") === "true") {
-    return;
-  }
+  // Clear search state when navigating
+  sessionStorage.removeItem("fromSearch");
 
   // Skip if article view is open
   const articleView = document.querySelector(".article-view");

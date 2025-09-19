@@ -4,13 +4,20 @@ let hideTimer = null;
 // ============================================================================
 function showModal() {
   const modal = document.getElementById("category-modal");
+  console.log("showModal called, modal element found:", !!modal);
   if (!modal) return;
 
   clearTimeout(hideTimer);
   modal.classList.add("active");
   isModalVisible = true;
+  console.log(
+    "Modal set to visible, class active:",
+    modal.classList.contains("active")
+  );
+  console.log("Modal display style:", window.getComputedStyle(modal).display);
+  modal.style.display = "flex !important"; // TEMPORARY DEBUG
+  console.log("Forced display style:", window.getComputedStyle(modal).display); // NEW LOG
 }
-
 function hideModal() {
   const modal = document.getElementById("category-modal");
   if (!modal) return;
@@ -46,6 +53,7 @@ function handleDocumentClick(e) {
   if (categoryButton) {
     e.preventDefault();
     e.stopPropagation();
+    console.log("Category button clicked, isModalVisible:", isModalVisible); // NEW LOG
     clearTimeout(hideTimer);
     isModalVisible ? hideModal() : showModal();
     return;
@@ -55,16 +63,23 @@ function handleDocumentClick(e) {
   if (modalItem) {
     e.preventDefault();
     e.stopPropagation();
+    console.log("Category item clicked:", modalItem);
 
     const link = modalItem.querySelector("a");
     if (link) {
       const category = link.getAttribute("href").replace("#", "");
+      console.log("Category to navigate:", category);
       hideModal();
 
-      // Call global function directly
-      if (window.loadCategory) {
-        window.loadCategory(category);
-      }
+      // Use dynamic import to call switchToCategory
+      import("./navigation.js")
+        .then((module) => {
+          console.log("Import successful, calling switchToCategory");
+          module.switchToCategory(category);
+        })
+        .catch((err) => console.error("Import failed:", err));
+    } else {
+      console.warn("No <a> tag found in modal item:", modalItem);
     }
     return;
   }

@@ -2,7 +2,7 @@
 // articleLoader.js - ARTICLE LOADING AND DISPLAY
 // ============================================================================
 // Description: Handles all article loading, card creation, and grid population
-// Version: 1.0 - Split from data.js for better organization
+// Version: 1.1 - Latest fix for "latest" articles
 // ============================================================================
 
 import {
@@ -20,7 +20,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_WEEK: 3,
-  LAUNCH_DATE: new Date("2025-09-16"),
+  LAUNCH_DATE: new Date("2025-09-09"),
   INITIAL_CATEGORY_ARTICLES: 10,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -30,39 +30,34 @@ const CONFIG = {
 // Application State
 // ============================================================================
 let articlesData = [];
-let currentStartIndex = 0;
 
 // ============================================================================
-// Data Management Functions
+// Helper Functions
 // ============================================================================
+
+function getLatestThreeArticles() {
+  return articlesData
+    .slice() // avoid mutating original array
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 3);
+}
 
 /**
- * Gets articles for a specific category with daily rotation logic
+ * Gets articles for a specific category
  */
 function getArticlesByCategory(category) {
   if (category === "latest") {
-    return getLatestArticles();
+    return getLatestThreeArticles();
   } else {
     return getCategoryArticlesExcludingLatest(category);
   }
 }
 
 /**
- * Gets today's latest articles based on daily rotation
- */
-function getLatestArticles() {
-  return articlesData
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 3);
-}
-
-/**
  * Gets category articles excluding today's latest
  */
 function getCategoryArticlesExcludingLatest(category) {
-  const latestArticleIds = new Set(
-    getLatestArticles().map((article) => article.id)
-  );
+  const latestArticleIds = new Set(getLatestThreeArticles().map((a) => a.id));
 
   return articlesData
     .filter((article) => {
@@ -74,7 +69,7 @@ function getCategoryArticlesExcludingLatest(category) {
 }
 
 /**
- * Gets all articles for a specific category (for category page)
+ * Gets all articles for a category (category page)
  */
 function getAllCategoryArticles(category) {
   return articlesData
@@ -83,11 +78,10 @@ function getAllCategoryArticles(category) {
 }
 
 /**
- * Searches articles by category and tags
+ * Searches articles
  */
 function searchArticles(query) {
   const normalizedQuery = query.toLowerCase().trim();
-
   if (!normalizedQuery) return [];
 
   return articlesData
@@ -99,19 +93,23 @@ function searchArticles(query) {
       const tagsMatch =
         Array.isArray(article.tags) &&
         article.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery));
-
       return titleMatch || categoryMatch || tagsMatch;
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 }
+
 // ============================================================================
-// Content Population Functions
+// Content Population
 // ============================================================================
 
-/**
- * Populates main bento grid layout with articles
- */
 async function populateMainLayout(articles, elements) {
+  // CRITICAL FIX: Ensure bento grid is visible before populating
+  if (elements.bentoGrid) {
+    elements.bentoGrid.style.display = "";
+    elements.bentoGrid.classList.remove("hidden");
+    elements.bentoGrid.classList.remove("hidden-element");
+  }
+
   // Preload first 3 images
   const preloadPromises = articles
     .slice(0, 3)
@@ -126,11 +124,10 @@ async function populateMainLayout(articles, elements) {
     elements.hugeCard.style.display = "block";
   }
 
-  // Populate side-by-side cards
+  // Side-by-side cards
   if (elements.sideBySideContainer) {
     const sideBySideCards =
       elements.sideBySideContainer.querySelectorAll(".article-card");
-
     for (let i = 0; i < sideBySideCards.length; i++) {
       if (articles[i + 1]) {
         await populateArticleCard(sideBySideCards[i], articles[i + 1]);
@@ -141,11 +138,10 @@ async function populateMainLayout(articles, elements) {
     }
   }
 
-  // Populate fourth article slot
+  // 4th article slot
   if (elements.articleFourContainer) {
     const articleFourCard =
       elements.articleFourContainer.querySelector(".article-card");
-
     if (articles[3] && articleFourCard) {
       await populateArticleCard(articleFourCard, articles[3]);
       articleFourCard.style.display = "block";
@@ -154,11 +150,10 @@ async function populateMainLayout(articles, elements) {
     }
   }
 
-  // Populate fifth article slot
+  // 5th article slot
   if (elements.articleFiveContainer) {
     const articleFiveCard =
       elements.articleFiveContainer.querySelector(".article-card");
-
     if (articles[4] && articleFiveCard) {
       await populateArticleCard(articleFiveCard, articles[4]);
       articleFiveCard.style.display = "block";
@@ -166,16 +161,14 @@ async function populateMainLayout(articles, elements) {
       articleFiveCard.style.display = "none";
     }
   }
+
+  await Promise.all(preloadPromises);
 }
 
-/**
- * Populates category page hero section
- */
 async function populateCategoryHero(articles, elements) {
   if (articles[0] && elements.heroCard) {
     await populateArticleCard(elements.heroCard, articles[0]);
   }
-
   for (let i = 0; i < elements.sideCards.length; i++) {
     if (articles[i + 1] && elements.sideCards[i]) {
       await populateArticleCard(elements.sideCards[i], articles[i + 1]);
@@ -183,36 +176,22 @@ async function populateCategoryHero(articles, elements) {
   }
 }
 
-/**
- * Populates category page article list
- */
 async function populateCategoryList(articles, listContainer) {
   listContainer.innerHTML = "";
-
   for (const article of articles) {
     const card = await createArticleCard(article, "small");
     listContainer.appendChild(card);
   }
 }
 
-/**
- * Populates category grids on main page
- */
 async function populateCategoryGrids() {
   const categoryGrids = document.querySelectorAll(".category-grid");
   const usedArticleIds = new Set();
-
-  console.log(`Found ${categoryGrids.length} category grids`);
+  const latestArticleIds = new Set(getLatestThreeArticles().map((a) => a.id));
 
   for (const grid of categoryGrids) {
     const category = normalizeCategory(
       grid.getAttribute("data-category") || ""
-    );
-    console.log(`Populating grid for category: ${category}`);
-
-    // Get current latest article IDs to exclude them
-    const latestArticleIds = new Set(
-      getLatestArticles().map((article) => article.id)
     );
 
     const categoryArticles = articlesData
@@ -227,8 +206,6 @@ async function populateCategoryGrids() {
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, CONFIG.CATEGORY_GRID_SIZE);
 
-    console.log(`Found ${categoryArticles.length} articles for ${category}`);
-
     for (const article of categoryArticles) {
       const card = await createArticleCard(article, "small");
       grid.appendChild(card);
@@ -238,82 +215,50 @@ async function populateCategoryGrids() {
 }
 
 // ============================================================================
-// Initialization Functions
+// Initialization
 // ============================================================================
 
-/**
- * Assigns date to articles for display consistency
- */
 function assignCurrentDateToArticles() {
-  // Get today's date
   const today = new Date();
-
-  // Find the most recent Monday, Wednesday, or Friday
   let currentPublishDate = new Date(today);
-
-  // Go backwards until we find Mon(1), Wed(3), or Fri(5)
   while (![1, 3, 5].includes(currentPublishDate.getDay())) {
     currentPublishDate.setDate(currentPublishDate.getDate() - 1);
   }
 
-  // Assign dates working backwards from newest article
   articlesData.forEach((article, index) => {
     const reverseIndex = articlesData.length - 1 - index;
     const articleDate = new Date(currentPublishDate);
-
-    // Calculate days back for this article
     const weeksBack = Math.floor(reverseIndex / 3);
     const positionInWeek = reverseIndex % 3;
     let daysBack = weeksBack * 7;
-
-    if (positionInWeek === 1) daysBack += 2; // Wed to Mon
-    if (positionInWeek === 2) daysBack += 5; // Fri to Mon (previous week)
-
+    if (positionInWeek === 1) daysBack += 2;
+    if (positionInWeek === 2) daysBack += 5;
     articleDate.setDate(currentPublishDate.getDate() - daysBack);
     article.date = articleDate.toISOString().split("T")[0];
   });
 }
 
-/**
- * Initialize articles data
- */
 async function initializeArticleData() {
   try {
-    console.log("Loading articles data...");
-
     const response = await fetch("data/articles.json");
-    if (!response.ok) {
+    if (!response.ok)
       throw new Error(`Failed to fetch articles: ${response.status}`);
-    }
 
     articlesData = await response.json();
 
-    // Check for admin mode
     const urlParams = new URLSearchParams(window.location.search);
     const isAdminMode = urlParams.get("admin") === "true";
 
     if (!isAdminMode) {
-      // Only keep published articles for normal users
       const today = new Date();
       const maxPublishedIndex =
         Math.floor((today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)) *
           CONFIG.ARTICLES_PER_WEEK +
         CONFIG.ARTICLES_PER_WEEK;
       articlesData = articlesData.slice(0, maxPublishedIndex);
-      console.log(
-        `Normal mode: Showing ${articlesData.length} published articles`
-      );
-    } else {
-      console.log(`Admin mode: Showing all ${articlesData.length} articles`);
     }
 
-    console.log(`Loaded ${articlesData.length} articles`);
-
     assignCurrentDateToArticles();
-    console.log("Categories found:", [
-      ...new Set(articlesData.map((a) => a.category)),
-    ]);
-
     return true;
   } catch (error) {
     console.error("Error loading articles:", error);
@@ -322,7 +267,7 @@ async function initializeArticleData() {
 }
 
 // ============================================================================
-// Export Functions
+// Exports
 // ============================================================================
 export {
   initializeArticleData,

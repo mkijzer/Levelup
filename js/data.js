@@ -106,6 +106,15 @@ function getCategoryPageElements() {
 export async function loadCategory(category) {
   setCurrentCategory(category);
   setIsInCategoryPage(false);
+
+  // Clear search state
+  sessionStorage.removeItem("fromSearch");
+
+  // Hide any open search results
+  const searchResults = document.querySelector(".search-results-grid");
+  if (searchResults) {
+    searchResults.style.display = "none";
+  }
   console.log(`Loading category: ${category}`);
 
   const elements = getLayoutElements();
@@ -293,10 +302,12 @@ export function loadRandomArticle() {
     return;
   }
 
+  // Clear any search state
+  sessionStorage.removeItem("fromSearch");
+
   const randomArticle = getRandomArticle();
   showArticleView(randomArticle.id);
 }
-
 // ============================================================================
 // UI State Management
 // ============================================================================
@@ -610,5 +621,6 @@ export { switchToCategory, showArticleView };
 window.loadCategory = loadCategory;
 window.loadCategoryPage = loadCategoryPage;
 window.switchToCategory = switchToCategory; // already imported from navigation.js
+window.switchToCategory = switchToCategory;
 
 // Now modal.js can call window.loadCategory(category) safely

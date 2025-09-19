@@ -362,7 +362,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   max-width: 350px;
   margin: var(--spacing-0) auto;
   height: 50px;
-  z-index: calc(var(--z-docked) - 1);
+  z-index: 101; /* Explicitly above .category-page-view (100) */
   transform: translateY(0) scale(0.8);
   transition: transform var(--duration-300) var(--ease-back);
   pointer-events: none;
