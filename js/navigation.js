@@ -2,7 +2,7 @@
 // navigation.js - NAVIGATION & ROUTING
 // ============================================================================
 // Description: Handles navigation logic and routing - NO modal responsibilities
-// Version: 2.0 - Clean separation of concerns
+// Version: 2.1 - Added mobile navigation active states
 // ============================================================================
 
 import { loadCategory, loadCategoryPage, loadRandomArticle } from "./data.js";
@@ -49,8 +49,14 @@ export function setupNavigation() {
     link.addEventListener("click", handleNavigationClick);
   });
 
+  // Set initial active state
+  updateMobileNavigation("latest");
+
   console.log("Navigation: Setup complete");
 }
+
+// Set initial active state for home/latest
+updateMobileNavigation("latest");
 
 // ============================================================================
 // Event Handlers
@@ -94,17 +100,73 @@ function handleNavigationClick(e) {
     return; // Let modal.js handle this
   } else if (href === "#random") {
     exitCategoryPage();
+    updateMobileNavigation("random");
+
+    // Add flash animation
+    const randomNavItem = document
+      .querySelector('.nav-item a[href="#random"]')
+      ?.closest(".nav-item");
+    if (randomNavItem) {
+      randomNavItem.setAttribute("data-random-clicked", "true");
+      setTimeout(() => {
+        randomNavItem.removeAttribute("data-random-clicked");
+      }, 600);
+    }
+
     if (!isMobileNav) {
       updateDesktopNavigation("random");
     }
     loadRandomArticle();
   } else if (href === "#latest") {
     exitCategoryPage();
+    updateMobileNavigation("latest");
     loadCategory("latest");
   } else {
     const category = href.replace("#", "");
     exitCategoryPage();
+    updateMobileNavigation(category);
     loadCategory(category);
+  }
+}
+
+// ============================================================================
+// Navigation Active States
+// ============================================================================
+
+/**
+ * Update mobile navigation active state
+ */
+export function updateMobileNavigation(currentCategory) {
+  // Remove active class from all mobile nav items
+  document.querySelectorAll(".nav-item").forEach((item) => {
+    item.classList.remove("active");
+  });
+
+  // Add active class to current category
+  if (currentCategory === "latest") {
+    const latestItem = document.querySelector('.nav-item a[href="#latest"]');
+    if (latestItem) latestItem.closest(".nav-item").classList.add("active");
+  } else if (currentCategory === "random") {
+    const randomItem = document.querySelector('.nav-item a[href="#random"]');
+    if (randomItem) randomItem.closest(".nav-item").classList.add("active");
+  } else if (["health", "coins", "hack", "ai"].includes(currentCategory)) {
+    const categoryItem = document.querySelector(".nav-item.category");
+    if (categoryItem) categoryItem.classList.add("active");
+  }
+}
+
+export function updateDesktopNavigation(currentCategory) {
+  // Remove active class from all items
+  document
+    .querySelectorAll(".desktop-nav-item, .random-btn")
+    .forEach((item) => {
+      item.classList.remove("active");
+    });
+
+  // Add active class to current category
+  const activeItem = document.querySelector(`[href="#${currentCategory}"]`);
+  if (activeItem) {
+    activeItem.classList.add("active");
   }
 }
 
@@ -134,6 +196,9 @@ export function switchToCategory(category) {
   if (articlesList) articlesList.style.display = "";
   if (loadMoreBtn) loadMoreBtn.style.display = "";
 
+  // Update mobile nav active state
+  updateMobileNavigation(category);
+
   loadCategoryPage(category);
 }
 
@@ -149,19 +214,4 @@ export function exitCategoryPage() {
   }
 
   isInCategoryPage = false;
-}
-
-export function updateDesktopNavigation(currentCategory) {
-  // Remove active class from all items
-  document
-    .querySelectorAll(".desktop-nav-item, .random-btn")
-    .forEach((item) => {
-      item.classList.remove("active");
-    });
-
-  // Add active class to current category
-  const activeItem = document.querySelector(`[href="#${currentCategory}"]`);
-  if (activeItem) {
-    activeItem.classList.add("active");
-  }
 }

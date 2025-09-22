@@ -108,17 +108,97 @@
   fill: hsl(210, 80%, 45%);
   transition: var(--transition-fast);
 }
+/* ============================================================================ */
+/* MOBILE NAVIGATION HOVER & ACTIVE STATES */
+/* ============================================================================ */
 
+/* Base state - all icons dimmed blue */
+.nav-icon {
+  fill: var(--blue-dimmed);
+  transition: var(--transition-fast);
+}
+
+/* Search icon - button with svg inside */
+.search-icon {
+  stroke: var(--blue-dimmed) !important;
+  transition: var(--transition-fast);
+}
+
+.search-icon svg {
+  stroke: var(--blue-dimmed);
+  transition: var(--transition-fast);
+}
+
+/* Hover and active states - bright blue */
 .nav-item:hover .nav-icon,
-.nav-item:focus .nav-icon,
-.nav-item:active .nav-icon {
-  fill: hsl(210, 100%, 60%);
-  filter: none;
+.nav-item:active .nav-icon,
+.nav-item.active .nav-icon {
+  fill: var(--blue-bright);
 }
 
-.nav-item.active .nav-icon {
-  fill: hsl(210, 100%, 60%);
+.nav-item:hover .search-icon,
+.nav-item:hover .search-icon svg,
+.search-icon:hover,
+.search-icon:hover svg,
+.search-icon.active,
+.search-icon.active svg {
+  stroke: var(--blue-bright) !important;
 }
+
+/* Settings icon */
+.nav-item.settings .nav-icon {
+  fill: var(--blue-dimmed) !important;
+}
+
+.nav-item.settings:hover .nav-icon {
+  fill: var(--blue-bright) !important;
+}
+
+/* Category modal items */
+.modal-category-item .modal-nav-icon {
+  stroke: var(--blue-dimmed);
+  fill: var(--blue-dimmed);
+  transition: var(--transition-fast);
+}
+
+.modal-category-item:hover .modal-nav-icon {
+  stroke: var(--blue-bright);
+  fill: var(--blue-bright);
+}
+
+.modal-category-item:hover a {
+  color: var(--blue-bright);
+}
+
+/* Text-based nav items (no icons) */
+.nav-item a {
+  color: var(--blue-dimmed);
+  transition: var(--transition-fast);
+}
+
+.nav-item:hover a,
+.nav-item.active a {
+  color: var(--blue-bright);
+}
+
+.modal-categories a {
+  color: var(--blue-dimmed);
+  transition: var(--transition-fast);
+}
+
+.modal-category-item:hover a {
+  color: var(--blue-bright);
+}
+
+/* Settings icon active state */
+.nav-item.settings.active .nav-icon,
+.nav-item.settings.active a {
+  fill: var(--blue-bright) !important;
+  color: var(--blue-bright) !important;
+}
+/* ============================================================================ */
+/* RANDOM ANIMATION HOVER & ACTIVE STATES */
+/* ============================================================================ */
 
 /* Random Button Animation */
 a[href="#random"]:hover .nav-icon path {
@@ -244,6 +324,39 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   left: var(--spacing-0);
 }
 
+/* Random button flash animation */
+.nav-item[data-random-clicked] a,
+.nav-item[data-random-clicked] .nav-icon {
+  animation: randomFlash 0.6s ease-out;
+}
+
+@keyframes randomFlash {
+  0% {
+    color: var(--blue-bright);
+    fill: var(--blue-bright);
+    transform: scale(1);
+  }
+  25% {
+    color: #00ffff;
+    fill: #00ffff;
+    transform: scale(1.1);
+  }
+  50% {
+    color: var(--blue-bright);
+    fill: var(--blue-bright);
+    transform: scale(1.05);
+  }
+  75% {
+    color: #00ffff;
+    fill: #00ffff;
+    transform: scale(1.02);
+  }
+  100% {
+    color: var(--blue-bright);
+    fill: var(--blue-bright);
+    transform: scale(1);
+  }
+}
 /* ============================================================================ */
 /* SEARCH COMPONENTS */
 /* ============================================================================ */
@@ -262,12 +375,14 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   color: hsl(210, 80%, 45%);
   cursor: pointer;
   stroke: hsl(210, 80%, 45%);
-  transition: stroke var(--transition-base), opacity var(--transition-base);
+  fill: hsl(210, 80%, 45%);
+  transition: stroke var(--transition-base), fill var(--transition-base);
 }
 
 .search-icon:hover,
 .search-icon.active {
-  stroke: hsl(210, 100%, 60%);
+  stroke: var(--accent-color);
+  fill: var(--accent-color);
 }
 
 .search-bar-slide {
@@ -344,6 +459,18 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   color: var(--text-muted);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-light);
+}
+
+/* Remove mobile tap highlights */
+.nav-item,
+.nav-item a,
+.nav-item button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* ============================================================================ */
@@ -429,30 +556,16 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   padding-right: var(--spacing-2);
 }
 
-.modal-nav-icon {
-  width: var(--spacing-4);
-  height: var(--spacing-4);
-  stroke: var(--icon-grey);
-  fill: currentColor;
-  transition: var(--transition-fast);
-}
-
-.modal-category-item:hover .modal-nav-icon,
-.modal-category-item:focus .modal-nav-icon,
-.modal-category-item:active .modal-nav-icon {
-  stroke: var(--white);
-}
-
 .modal-categories a {
   text-decoration: none;
-  color: inherit;
+  color: var(--blue-dimmed);
   transition: color var(--duration-300) var(--ease-out);
-  font-size: var(--font-size-nav);
+  font-size: var(--font-size-sm);
   pointer-events: none;
 }
 
 .modal-category-item:hover a {
-  color: var(--white);
+  color: var(--blue-bright);
 }
 
 /* Settings Modal - Right-slide settings panel */

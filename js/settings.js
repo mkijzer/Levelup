@@ -47,11 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function openSettings() {
     if (settingsModal) settingsModal.classList.add("active");
     if (settingsBackdrop) settingsBackdrop.classList.add("active");
+    if (settingsButton) settingsButton.classList.add("active");
   }
 
   function closeSettings() {
     if (settingsModal) settingsModal.classList.remove("active");
     if (settingsBackdrop) settingsBackdrop.classList.remove("active");
+    if (settingsButton) settingsButton.classList.remove("active");
   }
 
   function applyFontSize(size) {

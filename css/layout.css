@@ -137,11 +137,10 @@ header {
   flex-wrap: nowrap;
   padding: 0;
   margin: 0;
-  justify-content: space-evenly;
+  justify-content: space-between;
   font-size: var(--font-size-nav);
   align-items: center;
   width: 100%;
-  gap: clamp(var(--spacing-12), 8vw, var(--spacing-16)); /* Hardcoded clamp */
 }
 
 .categories li {
