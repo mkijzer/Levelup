@@ -154,7 +154,7 @@ html.light-mode .categories li a:hover::after {
 html.light-mode .glass,
 html.light-mode .article-card,
 html.light-mode .mobile-menu,
-html.light-mode .search-bar-slide,
+/* html.light-mode .search-bar-slide, */
 html.light-mode .main-article,
 html.light-mode .separator-quote,
 html.light-mode .ad-container,
@@ -326,7 +326,7 @@ body,
 .glass,
 .article-card,
 .nav-container,
-.search-bar-slide,
+/* .search-bar-slide, */
 .main-article,
 .separator-quote,
 .ad-container,
@@ -377,7 +377,7 @@ html.no-transition * {
   .glass,
   .article-card,
   .nav-container,
-  .search-bar-slide,
+  /* .search-bar-slide, */
   .theme-slider .slider .slider-button,
   .modal-content {
     transition: none;
