@@ -91,15 +91,14 @@ header {
 
 .logo-container {
   flex: 0 0 auto;
-  margin-right: var(--spacing-2);
+  /* margin-right: var(--spacing-2); */
 }
 
 .logo {
-  width: 35px; /* Hardcoded, consider var(--spacing-5) */
-  height: 35px; /* Hardcoded, consider var(--spacing-5) */
+  width: 40px; /* Hardcoded, consider var(--spacing-5) */
+  height: 40px; /* Hardcoded, consider var(--spacing-5) */
   object-fit: cover;
   border-radius: var(--radius-full);
-  transform: translateY(1px); /* Hardcoded, consider variable */
 }
 
 .title-container {
