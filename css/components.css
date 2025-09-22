@@ -88,6 +88,9 @@
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .nav-item .search-container {
@@ -102,18 +105,19 @@
 .nav-icon {
   width: var(--spacing-5);
   height: var(--spacing-5);
-  fill: var(--icon-grey);
+  fill: hsl(210, 80%, 45%);
   transition: var(--transition-fast);
 }
 
 .nav-item:hover .nav-icon,
 .nav-item:focus .nav-icon,
 .nav-item:active .nav-icon {
-  filter: brightness(0) invert(1);
+  fill: hsl(210, 100%, 60%);
+  filter: none;
 }
 
 .nav-item.active .nav-icon {
-  fill: var(--accent-color);
+  fill: hsl(210, 100%, 60%);
 }
 
 /* Random Button Animation */
@@ -255,15 +259,15 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   position: relative;
   width: 21px;
   height: 21px;
-  color: var(--icon-grey);
+  color: hsl(210, 80%, 45%);
   cursor: pointer;
-  stroke: var(--icon-grey);
+  stroke: hsl(210, 80%, 45%);
   transition: stroke var(--transition-base), opacity var(--transition-base);
 }
 
 .search-icon:hover,
 .search-icon.active {
-  stroke: var(--white);
+  stroke: hsl(210, 100%, 60%);
 }
 
 .search-bar-slide {
@@ -421,6 +425,8 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   align-items: center;
   gap: var(--spacing-1);
   cursor: pointer;
+  padding-left: var(--spacing-2);
+  padding-right: var(--spacing-2);
 }
 
 .modal-nav-icon {
@@ -1295,8 +1301,7 @@ body:has(.article-view:not(.hidden)) .article-header {
   width: 100%;
   padding: var(--spacing-8) var(--spacing-4);
   border-radius: var(--radius-xl);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-lg);
+
   text-align: center;
   position: relative;
   z-index: 1;
@@ -1320,6 +1325,43 @@ body:has(.article-view:not(.hidden)) .article-header {
   margin-top: var(--spacing-2);
 }
 
+/* ============================================================================ */
+/* QUOTE SCROLL ANIMATIONS */
+/* ============================================================================ */
+
+/* ============================================================================ */
+/* QUOTE SCROLL ANIMATIONS */
+/* ============================================================================ */
+
+/* ============================================================================ */
+/* QUOTE SCROLL ANIMATIONS */
+/* ============================================================================ */
+
+/* Initial state - hidden, small, and slightly blurred */
+.quote-container.quote-initial {
+  transform: scale(0.3) translateY(50px);
+  opacity: 0;
+  filter: blur(3px);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Animate in - grow, fade in, and unblur */
+.quote-container.animate-in {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  filter: blur(0px);
+}
+
+/* Animate out - shrink, fade out, and blur slightly */
+.quote-container.animate-out {
+  transform: scale(0.7) translateY(30px);
+  opacity: 0.3;
+  filter: blur(1px);
+  transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out,
+    filter 0.6s ease-in-out;
+}
 /* Advertisement Container */
 .ad-container {
   max-width: 600px;

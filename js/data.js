@@ -60,6 +60,8 @@ import { populateMobileCarousel } from "./mobileCarousel.js";
 
 import { initializeQuotes } from "./quotes.js";
 
+import { initializeScrollAnimations } from "./scroll-animations.js";
+
 // ============================================================================
 // DOM Element Getters
 // ============================================================================
@@ -529,6 +531,7 @@ async function initializeApp() {
     setupEventDelegation();
     await populateCategoryGrids();
     setupNavigation();
+    initializeScrollAnimations();
     addIcons();
 
     // FIXED: Reinitialize modal after icons are added to attach to new DOM elements
