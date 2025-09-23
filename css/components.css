@@ -1174,16 +1174,16 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 
 /* Inline Images */
-.main-article-body .inline-image {
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  margin: var(--spacing-element) auto;
-  display: block;
-  opacity: 1;
-  transition: opacity var(--transition-base);
+.article-body .inline-image {
+  width: 100% !important;
+  max-width: 400px !important;
+  height: 250px !important;
+  object-fit: cover !important;
+  border-radius: var(--radius-lg) !important;
+  margin: var(--spacing-4) auto !important;
+  display: block !important;
+  opacity: 1 !important;
+  transition: opacity var(--transition-normal);
 }
 
 .main-article-body .inline-image[src] {
