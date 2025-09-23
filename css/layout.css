@@ -29,6 +29,23 @@ body {
   max-width: 100vw;
 }
 
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: var(--z-docked);
+}
+
 * {
   max-width: 100%;
   box-sizing: border-box;

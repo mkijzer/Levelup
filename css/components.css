@@ -331,28 +331,28 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 }
 @keyframes randomFlash {
   0% {
-    color: var(--flash-primary);
-    fill: var(--flash-primary);
+    color: var(--random-flash-primary);
+    fill: var(--random-flash-primary);
     transform: scale(1);
   }
   25% {
-    color: var(--flash-secondary);
-    fill: var(--flash-secondary);
+    color: var(--random-flash-secondary);
+    fill: var(--random-flash-secondary);
     transform: scale(1.1);
   }
   50% {
-    color: var(--flash-primary);
-    fill: var(--flash-primary);
+    color: var(--random-flash-primary);
+    fill: var(--random-flash-primary);
     transform: scale(1.05);
   }
   75% {
-    color: var(--flash-secondary);
-    fill: var(--flash-secondary);
+    color: var(--random-flash-secondary);
+    fill: var(--random-flash-secondary);
     transform: scale(1.02);
   }
   100% {
-    color: var(--flash-primary);
-    fill: var(--flash-primary);
+    color: var(--random-flash-primary);
+    fill: var(--random-flash-primary);
     transform: scale(1);
   }
 }
@@ -574,7 +574,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   right: var(--spacing-0);
   width: 300px;
   height: 100vh;
-  z-index: calc(var(--z-docked) + 1);
+  z-index: 1100; /* Higher than category page's 1000 */
   transform: translateX(100%);
   transition: transform var(--duration-300) var(--ease-back);
   pointer-events: none;
@@ -628,14 +628,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .setting-item {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-4);
-  padding: var(--spacing-0);
-  background: none;
-  border: none;
-  backdrop-filter: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3);
 }
 
 .setting-item label {
@@ -645,27 +640,60 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   flex-shrink: 0;
 }
 
-.setting-item select {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-1) var(--spacing-2);
+.settings-title {
   color: var(--text-primary);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.font-size-selectbox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  min-width: 120px;
+  width: 100%;
+}
+
+.font-option {
+  padding: var(--spacing-2) var(--spacing-3);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--transition-fast);
-  min-width: 100px;
+  text-align: center;
 }
 
-.setting-item select:focus {
-  outline: none;
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: var(--focus-ring);
+.font-option:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
-.setting-item select:hover {
+.font-option.active {
   background: rgba(255, 255, 255, 0.2);
+  border-color: var(--blue-bright);
+  box-shadow: 0 0 0 1px var(--blue-bright);
+}
+
+.font-preview {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  display: block;
+}
+
+.font-preview.small {
+  font-size: var(--font-size-xs);
+}
+
+.font-preview.medium {
+  font-size: var(--font-size-sm);
+}
+
+.font-preview.large {
+  font-size: var(--font-size-base);
 }
 
 /* Theme Toggle Components */
@@ -1524,8 +1552,8 @@ body:has(.article-view:not(.hidden)) .article-header {
 .category-page-title {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-light);
-  font-size: var(--font-size-sm);
-  color: #b0b0b0;
+  font-size: var(--font-size-2xl);
+  color: var(--text-background); /* Uses semantic color */
   letter-spacing: 0.0625rem;
   margin: var(--spacing-16) var(--spacing-0) var(--spacing-4) var(--spacing-6);
   display: inline-block;
@@ -1650,8 +1678,8 @@ body:has(.article-view:not(.hidden)) .article-header {
   display: block;
   font-family: var(--font-primary);
   font-weight: var(--font-weight-light);
-  font-size: var(--font-size-sm);
-  color: #b0b0b0;
+  font-size: var(--font-size-2xl);
+  color: var(--text-background);
   letter-spacing: 0.0625rem;
   margin-top: var(--spacing-3) !important;
   margin-bottom: var(--spacing-2) !important;

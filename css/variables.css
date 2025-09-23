@@ -1,47 +1,58 @@
 /* ============================================================================ */
-/* variables.css - GOLDEN RATIO GAPS VERSION */
+/* variables.css - DESIGN SYSTEM TOKENS */
 /* ============================================================================ */
-/* Description: Centralized design tokens with golden ratio proportions */
-/* Version: 2.1 - Added golden ratio spacing system */
+/* Description: Centralized design tokens with consistent organization */
+/* Version: 3.0 - Reorganized and cleaned up variables */
+/* Author: Mike */
+/* Last Updated: September 23, 2025 */
 /* ============================================================================ */
 
 :root {
   /* ========================================================================== */
-  /* Colors - Theme System */
+  /* COLOR SYSTEM - Theme and semantic colors */
   /* ========================================================================== */
 
   /* Dark Mode (Default) */
-  --background: hsl(220, 39%, 3%); /* Page background - #0d1117 */
-  --surface: hsl(200, 7%, 18%); /* Card backgrounds, panels - rgb(42, 47, 49) */
-  --text-primary: hsl(240, 5%, 88%); /* Main text, headlines - #e2e2e5 */
-  --text-secondary: hsl(
-    240,
-    4%,
-    65%
-  ); /* Secondary text, descriptions - #a1a1aa */
-  --text-muted: hsla(0, 0%, 100%, 0.6); /* Muted text, placeholders, metadata */
-  --icon-grey: hsl(
-    0,
-    0%,
-    71%
-  ); /* Icons, decorative elements - rgb(180, 180, 180) */
+  --background: hsl(220, 39%, 3%); /* Page background */
+  --surface: hsl(200, 7%, 18%); /* Card backgrounds, panels */
+  --text-primary: hsl(240, 5%, 88%); /* Main text, headlines */
+  --text-secondary: hsl(240, 4%, 65%); /* Secondary text, descriptions */
+  --text-muted: hsla(0, 0%, 100%, 0.6); /* Muted text, placeholders */
+  --text-background: hsl(240, 4%, 45%); /* Background-like text - very subtle */
+  --icon-grey: hsl(0, 0%, 71%); /* Icons, decorative elements */
   --white: hsl(0, 0%, 100%); /* Pure white for contrast */
-  --accent-color: hsl(
-    51,
-    100%,
-    50%
-  ); /* Brand color, CTAs, highlights - rgb(255, 242, 0) */
+  --accent-color: hsl(51, 100%, 50%); /* Brand color, CTAs, highlights */
 
   /* Light Mode */
-  --light-background: hsl(
-    0,
-    0%,
-    86%
-  ); /* Light page background - rgb(220, 220, 220) */
+  --light-background: hsl(0, 0%, 86%); /* Light page background */
   --light-surface: hsl(0, 0%, 100%); /* Light card backgrounds */
-  --light-text-primary: hsl(0, 0%, 13%); /* Light main text - rgb(33, 33, 33) */
+  --light-text-primary: hsl(0, 0%, 13%); /* Light main text */
   --light-text-secondary: hsla(0, 0%, 13%, 0.8); /* Light secondary text */
   --light-text-muted: hsla(0, 0%, 13%, 0.6); /* Light muted text */
+
+  /* Navigation Colors */
+  --blue-dimmed: hsl(210, 50%, 35%); /* Navigation default state */
+  --blue-bright: hsl(210, 90%, 70%); /* Navigation hover/active state */
+
+  /* Animation Colors */
+  /* Animation Colors */
+  --flash-primary: #8a2be2; /* Purple - for tag explosions (pyramid climb) */
+  --flash-secondary: #ffff00; /* Yellow - for tag explosions (pyramid climb) */
+  --random-flash-primary: hsl(
+    210,
+    90%,
+    70%
+  ); /* Bright blue - random button base */
+  --random-flash-secondary: hsl(
+    210,
+    100%,
+    85%
+  ); /* Lighter blue - random button accent */
+
+  /* Component Colors */
+  --color-category-label: var(
+    --text-background
+  ); /* Category labels blend into background */
 
   /* Glass Effect */
   --glass-bg: hsla(200, 7%, 18%, 0.3); /* Translucent surface overlay */
@@ -50,33 +61,38 @@
   --glass-blur: 15px; /* Backdrop blur amount */
 
   /* Status Colors */
-  --success: hsl(142, 100%, 50%); /* Success states - rgb(0, 255, 136) */
-  --warning: hsl(45, 93%, 47%); /* Warning states - rgb(255, 193, 7) */
-  --error: hsl(354, 70%, 54%); /* Error states - rgb(220, 53, 69) */
-  --info: hsl(195, 93%, 50%); /* Info states - rgb(13, 202, 240) */
+  --success: hsl(142, 100%, 50%); /* Success states */
+  --warning: hsl(45, 93%, 47%); /* Warning states */
+  --error: hsl(354, 70%, 54%); /* Error states */
+  --info: hsl(195, 93%, 50%); /* Info states */
 
-  /* nav-bar colors */
-  /* nav-bar colors */
-  --blue-dimmed: hsl(210, 50%, 35%);
-  --blue-bright: hsl(210, 90%, 70%);
+  /* Category Colors */
+  --color-health: hsl(120, 100%, 50%); /* Health articles - bright green */
+  --color-coins: hsl(51, 100%, 50%); /* Crypto/finance - gold yellow */
+  --color-hack: hsl(300, 100%, 25%); /* Tech/hacking - deep purple */
+  --color-ai: hsl(30, 100%, 50%); /* AI content - vibrant orange */
+  --color-random: hsl(330, 100%, 50%); /* Random content - hot pink */
 
-  /* Animation Colors - Flash and explosion effects */
-  --flash-primary: #ffff00; /* Bright yellow - reaching the top of pyramid */
-  --flash-secondary: #8a2be2; /* Blue violet/purple - start of pyramid climb */
   /* ========================================================================== */
-  /* Typography System */
+  /* TYPOGRAPHY SYSTEM - Fonts, sizes, and spacing */
   /* ========================================================================== */
 
   /* Font Families */
   --font-primary: "Exo 2", sans-serif; /* Body text, navigation, paragraphs */
   --font-display: "Orbitron", sans-serif; /* Headlines, article titles, hero text */
-  --font-script: "Shadows Into Light", cursive; /* Decorative text, quotes, special elements */
+  --font-script: "Shadows Into Light", cursive; /* Decorative text, quotes */
+
+  /* Font Weights */
+  --font-weight-light: 300; /* Light text for subtle elements */
+  --font-weight-normal: 400; /* Body text, default weight */
+  --font-weight-semibold: 600; /* Section headings, emphasis */
+  --font-weight-black: 900; /* Headlines, strong emphasis */
 
   /* Base Font Scale */
   --font-size-xs: 0.75rem; /* 12px - Small labels, timestamps, metadata */
-  --font-size-sm: 0.875rem; /* 14px - Navigation links, category tags, captions */
-  --font-size-base: 1rem; /* 16px - Body text, article content, default text */
-  --font-size-lg: 1.125rem; /* 18px - Card titles, section headings, prominent text */
+  --font-size-sm: 0.875rem; /* 14px - Navigation links, category tags */
+  --font-size-base: 1rem; /* 16px - Body text, article content */
+  --font-size-lg: 1.125rem; /* 18px - Card titles, section headings */
   --font-size-xl: 1.25rem; /* 20px - Article subtitles, large card titles */
   --font-size-2xl: 1.5rem; /* 24px - Page headings, article titles */
   --font-size-3xl: 1.875rem; /* 30px - Main headlines, hero titles */
@@ -84,7 +100,7 @@
 
   /* Component-Specific Font Sizes */
   --font-size-nav: 0.6rem; /* Navigation menu items */
-  --font-size-category-label: 0.8rem; /* Category labels and badges */
+  --font-size-category-label: 1.25rem; /* Category labels and badges */
   --font-size-card-meta: 0.75rem; /* Article card metadata */
   --font-size-huge-title: clamp(
     1rem,
@@ -103,72 +119,55 @@
   --line-height-relaxed: 1.6; /* Long-form content, articles */
   --line-height-loose: 2; /* Special emphasis, quotes */
 
-  /* Font Weights */
-  /* Font Weights - Updated for Exo 2 compatibility */
-  --font-weight-light: 300; /* Lightest available for Exo 2 */
-  --font-weight-normal: 400; /* Body text, default weight */
-  --font-weight-semibold: 600; /* Section headings, emphasis */
-  --font-weight-black: 900; /* Headlines, strong emphasis */
-
   /* ========================================================================== */
-  /* 8-Point Grid Spacing System */
+  /* SPACING SYSTEM - 8-Point Grid */
   /* ========================================================================== */
 
   /* Base unit: 8px - Industry standard for scalability */
   --spacing-base: 0.5rem; /* 8px base unit */
 
-  /* Core spacing scale - 8pt grid multiples */
-  --spacing-0: 0; /* 0px - No spacing */
-  --spacing-1: 0.25rem; /* 4px - Half base unit for fine details */
+  /* Core spacing scale */
+  --spacing-0: 0; /* No spacing */
+  --spacing-1: 0.25rem; /* 4px - Fine details */
   --spacing-2: var(--spacing-base); /* 8px - Base unit */
-  --spacing-3: 0.75rem; /* 12px - 1.5x base */
-  --spacing-4: 1rem; /* 16px - 2x base (rem default) */
-  --spacing-5: 1.25rem; /* 20px - 2.5x base */
-  --spacing-6: 1.5rem; /* 24px - 3x base */
-  --spacing-8: 2rem; /* 32px - 4x base */
-  --spacing-10: 2.5rem; /* 40px - 5x base */
-  --spacing-12: 3rem; /* 48px - 6x base */
-  --spacing-16: 4rem; /* 64px - 8x base */
-  --spacing-20: 5rem; /* 80px - 10x base */
-  --spacing-24: 6rem; /* 96px - 12x base */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px - Default rem */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-16: 4rem; /* 64px */
+  --spacing-20: 5rem; /* 80px */
+  --spacing-24: 6rem; /* 96px */
 
-  /* Layout Spacing - Semantic names for easier use */
-  --spacing-page: var(--spacing-16); /* Between page sections - 64px */
-  --spacing-section: var(
-    --spacing-20
-  ); /* Between major content sections - 80px */
-  --spacing-component: var(--spacing-6); /* Between components/cards - 24px */
-  --spacing-element: var(--spacing-4); /* Between related elements - 16px */
-  --spacing-tight: var(--spacing-2); /* Within components - 8px */
-  --spacing-compact: var(--spacing-1); /* Between closely related items - 4px */
+  /* Semantic Spacing */
+  --spacing-page: var(--spacing-16); /* Between page sections */
+  --spacing-section: var(--spacing-20); /* Between major content sections */
+  --spacing-component: var(--spacing-6); /* Between components/cards */
+  --spacing-element: var(--spacing-4); /* Between related elements */
+  --spacing-tight: var(--spacing-2); /* Within components */
+  --spacing-compact: var(--spacing-1); /* Between closely related items */
 
-  /* Article-specific gaps - Responsive design using 8pt system */
-  --spacing-article-gap-mobile: var(
-    --spacing-2
-  ); /* Mobile article spacing - 8px */
-  --spacing-article-gap-tablet: var(
-    --spacing-3
-  ); /* Tablet article spacing - 12px */
-  --spacing-article-gap-desktop: var(
-    --spacing-4
-  ); /* Desktop article spacing - 16px */
-  --spacing-side-cards: var(
-    --spacing-1
-  ); /* Minimal spacing for side cards - 4px */
-  --spacing-category-section: var(
-    --spacing-3
-  ); /* Category section spacing - 12px */ /* ========================================================================== */
-  /* Layout Dimensions */
+  /* Article-specific gaps */
+  --spacing-article-gap-mobile: var(--spacing-2); /* Mobile article spacing */
+  --spacing-article-gap-tablet: var(--spacing-3); /* Tablet article spacing */
+  --spacing-article-gap-desktop: var(--spacing-4); /* Desktop article spacing */
+  --spacing-side-cards: var(--spacing-1); /* Minimal spacing for side cards */
+  --spacing-category-section: var(--spacing-3); /* Category section spacing */
+
+  /* ========================================================================== */
+  /* LAYOUT DIMENSIONS - Container and component sizes */
   /* ========================================================================== */
 
-  /* Container widths - Responsive breakpoints */
+  /* Container widths */
   --container-sm: 640px; /* Small screens, mobile landscape */
   --container-md: 768px; /* Tablets, medium screens */
   --container-lg: 1024px; /* Desktop, large screens */
   --container-xl: 1200px; /* Large desktop, main content max-width */
   --container-2xl: 1400px; /* Extra large screens, wide layouts */
 
-  /* Component heights - UI element dimensions */
+  /* Component heights */
   --nav-height: 60px; /* Mobile navigation bar height */
   --header-height: 80px; /* Site header height */
   --card-height-small: 200px; /* Small article cards */
@@ -176,11 +175,11 @@
   --card-height-large: 400px; /* Large hero cards */
 
   /* ========================================================================== */
-  /* Border Radius - Modern rounded corners */
+  /* BORDER RADIUS - Modern rounded corners */
   /* ========================================================================== */
 
-  --radius-none: 0; /* Sharp corners, no rounding */
-  --radius-xs: 0.125rem; /* 2px - Subtle rounding for small elements */
+  --radius-none: 0; /* Sharp corners */
+  --radius-xs: 0.125rem; /* 2px - Subtle rounding */
   --radius-sm: 0.25rem; /* 4px - Tags, small buttons */
   --radius-md: 0.5rem; /* 8px - Cards, form inputs */
   --radius-lg: 0.75rem; /* 12px - Article cards, main UI elements */
@@ -189,24 +188,24 @@
   --radius-full: 9999px; /* Perfect circles, pills */
 
   /* ========================================================================== */
-  /* Elevation System - Modern shadows for depth */
+  /* ELEVATION SYSTEM - Modern shadows for depth */
   /* ========================================================================== */
 
   --shadow-xs: 0 1px 2px 0 hsla(220, 43%, 11%, 0.03); /* Minimal shadow */
   --shadow-sm: 0 1px 3px 0 hsla(220, 43%, 11%, 0.08),
-    /* Small elements */ 0 1px 2px -1px hsla(220, 43%, 11%, 0.08);
+    0 1px 2px -1px hsla(220, 43%, 11%, 0.08); /* Small elements */
   --shadow-md: 0 4px 6px -1px hsla(220, 43%, 11%, 0.08),
-    /* Cards, dropdowns */ 0 2px 4px -2px hsla(220, 43%, 11%, 0.08);
+    0 2px 4px -2px hsla(220, 43%, 11%, 0.08); /* Cards, dropdowns */
   --shadow-lg: 0 10px 15px -3px hsla(220, 43%, 11%, 0.08),
-    /* Modals, overlays */ 0 4px 6px -4px hsla(220, 43%, 11%, 0.08);
+    0 4px 6px -4px hsla(220, 43%, 11%, 0.08); /* Modals, overlays */
   --shadow-xl: 0 20px 25px -5px hsla(220, 43%, 11%, 0.08),
-    /* Large modals */ 0 8px 10px -6px hsla(220, 43%, 11%, 0.08);
+    0 8px 10px -6px hsla(220, 43%, 11%, 0.08); /* Large modals */
   --shadow-2xl: 0 25px 50px -12px hsla(220, 43%, 11%, 0.2); /* Dramatic elevation */
   --shadow-glow: 0 0 0 1px var(--accent-color),
-    /* Brand accent glow */ 0 0 16px hsla(51, 100%, 50%, 0.5);
+    0 0 16px hsla(51, 100%, 50%, 0.5); /* Brand accent glow */
 
   /* ========================================================================== */
-  /* Z-Index Scale - Layered interface organization */
+  /* Z-INDEX SCALE - Layered interface organization */
   /* ========================================================================== */
 
   --z-hide: -1; /* Hidden behind content */
@@ -224,10 +223,10 @@
   --z-tooltip: 1800; /* Tooltips, highest priority UI */
 
   /* ========================================================================== */
-  /* Animation System - Smooth, purposeful motion */
+  /* ANIMATION SYSTEM - Smooth, purposeful motion */
   /* ========================================================================== */
 
-  /* Duration scale - Progressive timing */
+  /* Duration scale */
   --duration-75: 75ms; /* Micro interactions */
   --duration-100: 100ms; /* Quick hover states */
   --duration-150: 150ms; /* Fast transitions */
@@ -237,7 +236,7 @@
   --duration-700: 700ms; /* Content transitions */
   --duration-1000: 1000ms; /* Loading states, major changes */
 
-  /* Easing functions - Natural motion curves */
+  /* Easing functions */
   --ease-linear: linear; /* Constant speed */
   --ease-in: cubic-bezier(0.4, 0, 1, 1); /* Slow start */
   --ease-out: cubic-bezier(0, 0, 0.2, 1); /* Slow end */
@@ -245,7 +244,7 @@
   --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1); /* Bounce back */
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Spring effect */
 
-  /* Semantic transitions - Purpose-built animations */
+  /* Semantic transitions */
   --transition-fast: var(--duration-150) var(--ease-out); /* Quick feedback */
   --transition-base: var(--duration-200) var(--ease-out); /* Standard transitions */
   --transition-slow: var(--duration-300) var(--ease-out); /* Deliberate changes */
@@ -254,7 +253,7 @@
     border-color var(--duration-150) var(--ease-in-out); /* Color changes */
 
   /* ========================================================================== */
-  /* Breakpoints - Responsive design system */
+  /* RESPONSIVE BREAKPOINTS - Mobile-first design system */
   /* ========================================================================== */
 
   --breakpoint-sm: 640px; /* Small devices, large phones */
@@ -264,27 +263,17 @@
   --breakpoint-2xl: 1536px; /* Ultra wide screens */
 
   /* ========================================================================== */
-  /* Accessibility & Modern Features */
+  /* ACCESSIBILITY & MODERN FEATURES */
   /* ========================================================================== */
 
-  /* Focus states - Accessible interaction feedback */
+  /* Focus states */
   --focus-ring: 0 0 0 2px var(--accent-color); /* Basic focus ring */
   --focus-ring-offset: 0 0 0 2px var(--background),
-    /* Offset focus ring */ 0 0 0 4px var(--accent-color);
+    0 0 0 4px var(--accent-color); /* Offset focus ring */
 
-  /* Reduced motion support */
+  /* Motion preferences */
   --motion-reduce: no-preference; /* Motion preference detection */
 
   /* Color scheme support */
   color-scheme: dark light; /* Browser theme integration */
-
-  /* ========================================================================== */
-  /* Category Colors - Semantic brand colors */
-  /* ========================================================================== */
-
-  --color-health: hsl(120, 100%, 50%); /* Health articles - bright green */
-  --color-coins: hsl(51, 100%, 50%); /* Crypto/finance - gold yellow */
-  --color-hack: hsl(300, 100%, 25%); /* Tech/hacking - deep purple */
-  --color-ai: hsl(30, 100%, 50%); /* AI content - vibrant orange */
-  --color-random: hsl(330, 100%, 50%); /* Random content - hot pink */
 }

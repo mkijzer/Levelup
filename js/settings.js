@@ -2,7 +2,7 @@
 // settings.js - MINIMAL CSS-DRIVEN VERSION
 // ============================================================================
 // Description: Minimal JS - animations handled by CSS
-// Version: 1.1 - Fixed CSS-first approach with proper element selection
+// Version: 1.2 - Added selectbox support
 // ============================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const settingsButton = document.querySelector(".nav-item.settings");
@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const settingsBackdrop = document.getElementById("settings-backdrop");
   const closeButton = document.querySelector(".close-settings-btn");
 
-  // Font size and reading width selects
-  const fontSizeSelect = document.getElementById("font-size-select");
+  // Font size selectbox options
+  const fontOptions = document.querySelectorAll(".font-option");
   const readingWidthSelect = document.getElementById("reading-width-select");
 
   // Open settings
@@ -30,12 +30,17 @@ document.addEventListener("DOMContentLoaded", () => {
     settingsBackdrop.addEventListener("click", closeSettings);
   }
 
-  // Handle font size change
-  if (fontSizeSelect) {
-    fontSizeSelect.addEventListener("change", (e) => {
-      applyFontSize(e.target.value);
+  // Handle font size selectbox
+  fontOptions.forEach((option) => {
+    option.addEventListener("click", (e) => {
+      // Remove active from all options
+      fontOptions.forEach((opt) => opt.classList.remove("active"));
+      // Add active to clicked option
+      option.classList.add("active");
+      // Apply font size
+      applyFontSize(option.dataset.size);
     });
-  }
+  });
 
   // Handle reading width change
   if (readingWidthSelect) {

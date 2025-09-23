@@ -689,17 +689,23 @@
       <div class="modal-content">
         <div class="settings-content">
           <header class="settings-header">
-            <h2 id="settings-title" class="sr-only">Settings</h2>
+            <h2 class="settings-title">Settings</h2>
           </header>
 
           <div class="settings-items">
             <div class="setting-item">
-              <label for="font-size-select">Font Size</label>
-              <select id="font-size-select" aria-describedby="font-size-desc">
-                <option value="small">Small</option>
-                <option value="medium" selected>Medium</option>
-                <option value="large">Large</option>
-              </select>
+              <label>Text Size</label>
+              <div class="font-size-selectbox">
+                <div class="font-option" data-size="small">
+                  <span class="font-preview small">Level 1</span>
+                </div>
+                <div class="font-option active" data-size="medium">
+                  <span class="font-preview medium">Level 2</span>
+                </div>
+                <div class="font-option" data-size="large">
+                  <span class="font-preview large">Level 3</span>
+                </div>
+              </div>
             </div>
           </div>
           <button class="close-settings-btn" type="button">Close</button>
