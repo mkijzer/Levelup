@@ -59,6 +59,7 @@ p {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   margin-bottom: var(--spacing-md);
+  font-weight: 100;
 }
 
 /* Lists */

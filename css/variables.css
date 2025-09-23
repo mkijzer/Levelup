@@ -59,6 +59,10 @@
   /* nav-bar colors */
   --blue-dimmed: hsl(210, 50%, 35%);
   --blue-bright: hsl(210, 90%, 70%);
+
+  /* Animation Colors - Flash and explosion effects */
+  --flash-primary: #ffff00; /* Bright yellow - reaching the top of pyramid */
+  --flash-secondary: #8a2be2; /* Blue violet/purple - start of pyramid climb */
   /* ========================================================================== */
   /* Typography System */
   /* ========================================================================== */
@@ -100,12 +104,11 @@
   --line-height-loose: 2; /* Special emphasis, quotes */
 
   /* Font Weights */
-  --font-weight-light: 300; /* Subtle text, descriptions */
+  /* Font Weights - Updated for Exo 2 compatibility */
+  --font-weight-light: 300; /* Lightest available for Exo 2 */
   --font-weight-normal: 400; /* Body text, default weight */
-  --font-weight-medium: 500; /* Navigation, UI elements */
   --font-weight-semibold: 600; /* Section headings, emphasis */
-  --font-weight-bold: 700; /* Headlines, strong emphasis */
-  --font-weight-extrabold: 800; /* Hero text, major headlines */
+  --font-weight-black: 900; /* Headlines, strong emphasis */
 
   /* ========================================================================== */
   /* 8-Point Grid Spacing System */

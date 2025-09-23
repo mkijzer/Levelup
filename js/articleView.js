@@ -2,7 +2,7 @@
 // articleView.js - ARTICLE VIEW MANAGEMENT
 // ============================================================================
 // Description: Handles full article display, close/open logic, and related articles
-// Version: 1.0 - Split from data.js for better organization
+// Version: 1.1 - Added long date format for reading page
 // ============================================================================
 
 import {
@@ -25,13 +25,30 @@ import { xSvg, tiktokSvg, snapSvg, instagramSvg, youtubeSvg } from "./svg.js";
 let randomArticleHistory = [];
 
 // ============================================================================
+// Utility Functions
+// ============================================================================
+
+/**
+ * Formats a date string for reading page (always long format)
+ * @param {string} dateStr - The date string to format
+ * @returns {string} Formatted date with long month
+ */
+function formatDateReading(dateStr) {
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+// ============================================================================
 // Article Display Functions
 // ============================================================================
 
 /**
  * Shows individual article in full view
+ * @param {string} articleId - The ID of the article to display
  */
-// In the showArticleView function in articleView.js
 async function showArticleView(articleId) {
   console.log(`[DEBUG] Entering showArticleView with articleId: ${articleId}`);
 
@@ -50,23 +67,25 @@ async function showArticleView(articleId) {
   const currentCategory = getCurrentCategory();
   console.log("[DEBUG] Current category:", currentCategory);
 
-  // Simplified view switching - hide everything first
+  // Get DOM elements
   const mainContentArea = document.getElementById("main-content-area");
   const categoryPageView = document.getElementById("category-page-view");
   const articleView = document.querySelector(".article-view");
   const searchResultsGrid = document.querySelector(".search-results-grid");
 
-  // Make sure article view exists
+  // Validate article view exists
   if (!articleView) {
     console.error("[DEBUG] Article view element not found");
     return;
   }
 
   console.log("[DEBUG] Hiding other views");
+
   // Show main content area if we're in a category
   if (categoryPageView && !categoryPageView.classList.contains("hidden")) {
     categoryPageView.classList.add("hidden");
     console.log("[DEBUG] Hid category page view");
+
     if (mainContentArea) {
       mainContentArea.style.display = "";
       console.log("[DEBUG] Showed main content area");
@@ -93,7 +112,7 @@ async function showArticleView(articleId) {
       console.log("[DEBUG] Hid bento grid");
     }
 
-    // Hide search results only if explicitly told to (but remember we're from search)
+    // Hide search results (but remember we're from search)
     if (searchResultsGrid) {
       searchResultsGrid.style.display = "none";
       console.log("[DEBUG] Hid search results grid");
@@ -108,7 +127,7 @@ async function showArticleView(articleId) {
   populateRandomArticles(articleId);
   console.log("[DEBUG] Populated random articles");
 
-  // Make sure close button works
+  // Set up close button functionality
   const closeButton = articleView.querySelector(".close-article");
   if (closeButton) {
     closeButton.removeEventListener("click", closeArticleView);
@@ -116,16 +135,21 @@ async function showArticleView(articleId) {
     console.log("[DEBUG] Set up close button");
   }
 
+  // Scroll to top of page
   window.scrollTo(0, 0);
   console.log("[DEBUG] Scrolled to top");
 }
+
 /**
  * Show article view in category page
+ * @param {Object} article - The article object to display
+ * @param {string} articleId - The ID of the article
  */
 function showCategoryArticleView(article, articleId) {
   const categoryView = document.querySelector(".category-article-view");
 
   if (categoryView) {
+    // Hide category page elements
     const heroGrid = document.querySelector(".category-hero-grid");
     const articlesList = document.querySelector(".category-articles-list");
     const loadMoreBtn = document.querySelector(".load-more-button");
@@ -134,6 +158,7 @@ function showCategoryArticleView(article, articleId) {
     if (articlesList) articlesList.style.display = "none";
     if (loadMoreBtn) loadMoreBtn.style.display = "none";
 
+    // Show article view and populate content
     categoryView.classList.remove("hidden");
     populateArticleView(article, categoryView);
     populateRelatedCategoryArticles(categoryView, articleId);
@@ -143,6 +168,8 @@ function showCategoryArticleView(article, articleId) {
 
 /**
  * Show article view in main page
+ * @param {Object} article - The article object to display
+ * @param {string} articleId - The ID of the article
  */
 function showMainArticleView(article, articleId) {
   // Force main view state for random articles
@@ -158,6 +185,7 @@ function showMainArticleView(article, articleId) {
     console.log("Showed main content area");
   }
 
+  // Get main page elements
   const bentoGrid = document.querySelector(".bento-grid");
   const articleView = document.querySelector(".article-view");
   const latestLabel = document.querySelector(".category-label.latest-label");
@@ -167,13 +195,16 @@ function showMainArticleView(article, articleId) {
     return;
   }
 
+  // Hide bento grid and show article view
   bentoGrid.style.display = "none";
   articleView.classList.remove("hidden");
 
+  // Hide latest label
   if (latestLabel) {
     latestLabel.classList.add("hidden-element");
   }
 
+  // Populate article content
   populateArticleView(article, articleView);
   populateRandomArticles(articleId);
   setupCloseButton();
@@ -181,17 +212,22 @@ function showMainArticleView(article, articleId) {
 
 /**
  * Populates article view with content
+ * @param {Object} article - The article object containing all article data
+ * @param {HTMLElement} container - The container element to populate
  */
 function populateArticleView(article, container) {
   const mainArticle = container.querySelector(".main-article");
 
+  // Create article HTML structure with long date format for reading page
   mainArticle.innerHTML = `
    <article class="reading-layout">
      <header class="article-header">
        <span class="article-category">${
-         article.category?.charAt(0).toUpperCase() +
-           article.category?.slice(1) || "Uncategorized"
-       } | ${formatDate(article.date)} | ${calculateReadingTime(
+         article.category
+           ? article.category.charAt(0).toUpperCase() +
+             article.category.slice(1)
+           : "Uncategorized"
+       } | ${formatDateReading(article.date)} | ${calculateReadingTime(
     article.content
   )}</span>
        <h1 class="article-main-title">${
@@ -220,13 +256,14 @@ function populateArticleView(article, container) {
    </article>
  `;
 
-  // Process inline images
+  // Process inline images if available
   const articleBody = mainArticle.querySelector(".article-body");
   if (articleBody && article.inline_image) {
     const inlineImageHtml = `<img src="${article.inline_image}" alt="Inline image" class="inline-image" loading="lazy" />`;
 
     const paragraphs = articleBody.querySelectorAll("p");
     if (paragraphs.length > 2) {
+      // Insert inline image in the middle of the article
       const middleIndex = Math.floor(paragraphs.length / 2);
       paragraphs[middleIndex - 1].insertAdjacentHTML(
         "afterend",
@@ -235,7 +272,7 @@ function populateArticleView(article, container) {
     }
   }
 
-  // Add social icons
+  // Add social sharing icons
   const socialSharing = mainArticle.querySelector(".social-sharing");
   const socialLinks = [
     {
@@ -262,6 +299,7 @@ function populateArticleView(article, container) {
     },
   ];
 
+  // Create social media links
   socialLinks.forEach(({ social, href }) => {
     const link = document.createElement("a");
     link.href = href;
@@ -270,7 +308,7 @@ function populateArticleView(article, container) {
     socialSharing.appendChild(link);
   });
 
-  // Apply icons after adding links
+  // Apply social media icons
   const socialIcons = socialSharing.querySelectorAll(".social-icon");
   const socialSvgs = {
     x: xSvg,
@@ -287,7 +325,7 @@ function populateArticleView(article, container) {
     }
   });
 
-  // Populate tags separately
+  // Populate article tags
   if (article.tags) {
     const tagsContainer = mainArticle.querySelector(".article-tags");
     populateArticleTags(tagsContainer, article.tags);
@@ -296,10 +334,12 @@ function populateArticleView(article, container) {
 
 /**
  * Creates fallback content for articles without body text
+ * @param {Object} article - The article object
+ * @returns {string} HTML string with fallback content
  */
 function createFallbackContent(article) {
   return `
-   <p>Published on ${formatDate(article.date)} in ${article.category}</p>
+   <p>Published on ${formatDateReading(article.date)} in ${article.category}</p>
    <p>This is a featured article about ${article.title.toLowerCase()}. The full content would be displayed here in a real implementation.</p>
    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -308,6 +348,8 @@ function createFallbackContent(article) {
 
 /**
  * Populates article tags with click functionality
+ * @param {HTMLElement} tagsElement - The container element for tags
+ * @param {Array} tags - Array of tag strings
  */
 function populateArticleTags(tagsElement, tags) {
   tagsElement.innerHTML = "";
@@ -317,6 +359,7 @@ function populateArticleTags(tagsElement, tags) {
     tagElement.className = "tag";
     tagElement.textContent = tag;
 
+    // Add click event for tag search
     tagElement.addEventListener("click", () => {
       const hasResults = checkTagHasResults(tag);
       if (hasResults) {
@@ -334,7 +377,9 @@ function populateArticleTags(tagsElement, tags) {
 }
 
 /**
- * Check if tag has results
+ * Check if tag has results (excluding current article)
+ * @param {string} tag - The tag to check for results
+ * @returns {boolean} True if tag has other articles
  */
 function checkTagHasResults(tag) {
   const currentArticleTitle = document.querySelector(
@@ -354,6 +399,10 @@ function checkTagHasResults(tag) {
   return tagArticles.length > 0;
 }
 
+/**
+ * Shows no results message for tag search
+ * @param {string} tag - The tag that has no results
+ */
 function showNoTagResultsMessage(tag) {
   // Hide article view first
   const articleView = document.querySelector(".article-view");
@@ -361,12 +410,13 @@ function showNoTagResultsMessage(tag) {
     articleView.classList.add("hidden");
   }
 
-  // Create a proper no-results display
+  // Hide bento grid
   const bentoGrid = document.querySelector(".bento-grid");
   if (bentoGrid) {
     bentoGrid.style.display = "none";
   }
 
+  // Create or get search container
   let searchContainer = document.querySelector(".search-results-grid");
   if (!searchContainer) {
     searchContainer = document.createElement("div");
@@ -374,10 +424,11 @@ function showNoTagResultsMessage(tag) {
     bentoGrid.parentNode.insertBefore(searchContainer, bentoGrid.nextSibling);
   }
 
+  // Show no results message
   searchContainer.innerHTML = `<p class="no-results">No other articles found with the tag "${tag}".</p>`;
   searchContainer.style.display = "";
 
-  // Update title
+  // Update page title
   const categoryTitle = document.getElementById("category-title");
   if (categoryTitle) {
     categoryTitle.textContent = `TAG: ${tag.toUpperCase()}`;
@@ -387,8 +438,13 @@ function showNoTagResultsMessage(tag) {
   sessionStorage.setItem("fromSearch", "true");
   window.scrollTo(0, 0);
 }
+
+/**
+ * Searches articles by tag and displays results
+ * @param {string} tag - The tag to search for
+ */
 async function searchArticlesByTag(tag) {
-  // Get current article to exclude it
+  // Get current article to exclude it from results
   const currentArticleTitle = document.querySelector(
     ".main-article .article-main-title"
   );
@@ -404,7 +460,7 @@ async function searchArticlesByTag(tag) {
       article.id !== (currentArticle ? currentArticle.id : null)
   );
 
-  // Hide article view first
+  // Hide article view
   const articleView = document.querySelector(".article-view");
   if (articleView) {
     articleView.classList.add("hidden");
@@ -416,6 +472,7 @@ async function searchArticlesByTag(tag) {
     bentoGrid.style.display = "none";
   }
 
+  // Create or get search container
   let searchContainer = document.querySelector(".search-results-grid");
   if (!searchContainer) {
     searchContainer = document.createElement("div");
@@ -423,16 +480,17 @@ async function searchArticlesByTag(tag) {
     bentoGrid.parentNode.insertBefore(searchContainer, bentoGrid.nextSibling);
   }
 
+  // Clear previous results
   searchContainer.innerHTML = "";
   searchContainer.style.display = "";
 
-  // Update title
+  // Update page title
   const categoryTitle = document.getElementById("category-title");
   if (categoryTitle) {
     categoryTitle.textContent = `TAG: ${tag.toUpperCase()}`;
   }
 
-  // Create cards for tag results
+  // Create article cards for tag results
   for (const article of tagArticles) {
     const card = await createArticleCard(article, "small");
     card.setAttribute("data-from-search", "true");
@@ -446,6 +504,8 @@ async function searchArticlesByTag(tag) {
 
 /**
  * Populates related category articles
+ * @param {HTMLElement} container - The container element
+ * @param {string} currentArticleId - The current article ID to exclude
  */
 function populateRelatedCategoryArticles(container, currentArticleId) {
   const currentCategory = getCurrentCategory();
@@ -460,11 +520,13 @@ function populateRelatedCategoryArticles(container, currentArticleId) {
   const mainArticle = container.querySelector(".main-article");
   if (!mainArticle) return;
 
+  // Remove existing related articles
   const existingRelated = mainArticle.querySelector(".related-articles");
   if (existingRelated) {
     existingRelated.remove();
   }
 
+  // Create related articles container
   const relatedContainer = document.createElement("div");
   relatedContainer.className = "related-articles";
   relatedContainer.innerHTML = `
@@ -474,8 +536,8 @@ function populateRelatedCategoryArticles(container, currentArticleId) {
 
   mainArticle.appendChild(relatedContainer);
 
+  // Populate related articles grid
   const relatedGrid = relatedContainer.querySelector(".related-grid");
-
   otherCategoryArticles.forEach(async (article) => {
     const card = await createArticleCard(article, "small");
     relatedGrid.appendChild(card);
@@ -484,16 +546,20 @@ function populateRelatedCategoryArticles(container, currentArticleId) {
 
 /**
  * Populates random articles in sidebar
+ * @param {string} currentArticleId - The current article ID to exclude
  */
 function populateRandomArticles(currentArticleId) {
+  // Filter out current article
   const otherArticles = articlesData.filter(
     (article) => article.id !== currentArticleId
   );
 
+  // Get 2 random articles
   const randomArticles = otherArticles
     .sort(() => Math.random() - 0.5)
     .slice(0, 2);
 
+  // Populate random article cards
   const randomCards = document.querySelectorAll(
     ".random-articles .article-card"
   );
@@ -507,20 +573,25 @@ function populateRandomArticles(currentArticleId) {
 
 /**
  * Gets a random article that hasn't been shown recently
+ * @returns {Object} Random article object
  */
 function getRandomArticle() {
+  // Filter out recently shown articles
   let availableArticles = articlesData.filter(
     (article) => !randomArticleHistory.includes(article.id)
   );
 
+  // Reset history if all articles have been shown
   if (availableArticles.length === 0) {
     randomArticleHistory = [];
     availableArticles = [...articlesData];
   }
 
+  // Select random article
   const randomIndex = Math.floor(Math.random() * availableArticles.length);
   const randomArticle = availableArticles[randomIndex];
 
+  // Add to history
   randomArticleHistory.push(randomArticle.id);
   return randomArticle;
 }
@@ -532,12 +603,12 @@ function getRandomArticle() {
 /**
  * Closes article view and returns to previous context
  */
-// In the closeArticleView function in articleView.js
 function closeArticleView() {
   // Check if we came from search
   const fromSearch = sessionStorage.getItem("fromSearch") === "true";
   console.log("Closing article - fromSearch:", fromSearch);
 
+  // Get main page elements
   const bentoGrid = document.querySelector(".bento-grid");
   const articleView = document.querySelector(".article-view");
   const searchResultsGrid = document.querySelector(".search-results-grid");
@@ -548,23 +619,29 @@ function closeArticleView() {
     articleView.classList.add("hidden");
   }
 
-  // Return to appropriate view
+  // Return to appropriate view based on context
   if (fromSearch && searchResultsGrid) {
     // Return to search results
-    searchResultsGrid.style.display = "grid"; // Explicitly set to grid to match search results layout
+    searchResultsGrid.style.display = "grid";
     if (bentoGrid) bentoGrid.style.display = "none";
     if (categoryPageView) categoryPageView.classList.add("hidden");
     // Keep the fromSearch flag to maintain context
   } else {
-    // Return to latest view
+    // Return to latest/main view
     if (bentoGrid) bentoGrid.style.display = "";
     if (categoryPageView) categoryPageView.classList.add("hidden");
     // Clear search context only if not from search
     sessionStorage.removeItem("fromSearch");
   }
 
+  // Scroll to top
   window.scrollTo(0, 0);
 }
+
+/**
+ * Closes category article view
+ * @param {Object} lastSearch - The last search context
+ */
 function closeCategoryArticleView(lastSearch) {
   const categoryView = document.querySelector(".category-article-view");
   const categorySearchResults = document.querySelector(
@@ -574,19 +651,19 @@ function closeCategoryArticleView(lastSearch) {
   if (categoryView) {
     categoryView.classList.add("hidden");
 
-    // If we were in a category search, show those results again
+    // Return to appropriate category context
     if (lastSearch && lastSearch.inCategory) {
+      // Return to category search results
       const heroGrid = document.querySelector(".category-hero-grid");
       const articlesList = document.querySelector(".category-articles-list");
       const loadMoreBtn = document.querySelector(".load-more-button");
 
       if (categorySearchResults) categorySearchResults.style.display = "";
-
       if (heroGrid) heroGrid.style.display = "none";
       if (articlesList) articlesList.style.display = "none";
       if (loadMoreBtn) loadMoreBtn.style.display = "none";
     } else {
-      // Normal category view
+      // Return to normal category view
       const heroGrid = document.querySelector(".category-hero-grid");
       const articlesList = document.querySelector(".category-articles-list");
       const loadMoreBtn = document.querySelector(".load-more-button");
@@ -598,23 +675,29 @@ function closeCategoryArticleView(lastSearch) {
   }
 }
 
+/**
+ * Closes main article view
+ * @param {Object} lastSearch - The last search context
+ */
 function closeMainArticleView(lastSearch) {
   const bentoGrid = document.querySelector(".bento-grid");
   const articleView = document.querySelector(".article-view");
   const searchResultsGrid = document.querySelector(".search-results-grid");
   const latestLabel = document.querySelector(".category-label.latest-label");
 
-  // If we have search results and were in a search before
+  // Return to appropriate main context
   if (searchResultsGrid && lastSearch && !lastSearch.inCategory) {
+    // Return to search results
     bentoGrid.style.display = "none";
     searchResultsGrid.style.display = "";
     if (latestLabel) latestLabel.style.display = "none";
   } else {
-    // Normal main view
+    // Return to normal main view
     bentoGrid.style.display = "";
     if (latestLabel) latestLabel.style.display = "block";
   }
 
+  // Hide article view
   if (articleView) {
     articleView.classList.add("hidden");
   }
@@ -630,8 +713,10 @@ function closeMainArticleView(lastSearch) {
 function setupCloseButton() {
   const closeButton = document.querySelector(".article-view .close-article");
   if (closeButton) {
+    // Remove existing event listeners by cloning the button
     closeButton.replaceWith(closeButton.cloneNode(true));
 
+    // Add new event listener
     const newCloseButton = document.querySelector(
       ".article-view .close-article"
     );
@@ -647,8 +732,10 @@ function setupCategoryCloseButton() {
     ".category-article-view .close-article"
   );
   if (closeButton) {
+    // Remove existing event listeners by cloning the button
     closeButton.replaceWith(closeButton.cloneNode(true));
 
+    // Add new event listener
     const newCloseButton = document.querySelector(
       ".category-article-view .close-article"
     );

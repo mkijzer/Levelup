@@ -119,6 +119,34 @@ function handleKeydown(e) {
   if (e.key === "Escape" && isModalVisible) hideModal();
 }
 
+// Auto-close category modal on scroll
+function setupScrollClose() {
+  let isScrolling = false;
+
+  const handleScroll = () => {
+    if (isModalVisible) {
+      hideModal();
+    }
+  };
+
+  const handleTouchMove = () => {
+    if (isModalVisible) {
+      hideModal();
+    }
+  };
+
+  // Remove existing listeners to prevent duplicates
+  window.removeEventListener("scroll", handleScroll);
+  document.removeEventListener("touchmove", handleTouchMove);
+
+  // Add scroll listeners
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  document.addEventListener("touchmove", handleTouchMove, { passive: true });
+}
+
+// Initialize scroll close functionality
+setupScrollClose();
+
 // ============================================================================
 export function initializeModal() {
   document.removeEventListener("click", handleDocumentClick);

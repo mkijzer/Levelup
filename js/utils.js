@@ -22,6 +22,19 @@ export function normalizeCategory(category) {
  */
 export function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString("en-US", {
+    month: "short", // Changed from "long" to "short"
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+/**
+ * Formats a date string for reading page (always long format)
+ * @param {string} dateStr - The date string to format
+ * @returns {string} Formatted date with long month
+ */
+export function formatDateReading(dateStr) {
+  return new Date(dateStr).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
