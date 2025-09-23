@@ -2,7 +2,7 @@
 // articleView.js - ARTICLE VIEW MANAGEMENT
 // ============================================================================
 // Description: Handles full article display, close/open logic, and related articles
-// Version: 1.1 - Added long date format for reading page
+// Version: 1.2 - Cleaned up debug logs and added font size application
 // ============================================================================
 
 import {
@@ -50,22 +50,18 @@ function formatDateReading(dateStr) {
  * @param {string} articleId - The ID of the article to display
  */
 async function showArticleView(articleId) {
-  console.log(`[DEBUG] Entering showArticleView with articleId: ${articleId}`);
-
   // Get the article data
   const article = articlesData.find((a) => a.id === articleId);
   if (!article) {
-    console.error(`[DEBUG] Article not found: ${articleId}`);
+    console.error(`Article not found: ${articleId}`);
     return;
   }
 
   // Check if we're coming from search results
   const fromSearch = sessionStorage.getItem("fromSearch") === "true";
-  console.log("[DEBUG] fromSearch flag:", fromSearch);
 
   // Keep track of current category
   const currentCategory = getCurrentCategory();
-  console.log("[DEBUG] Current category:", currentCategory);
 
   // Get DOM elements
   const mainContentArea = document.getElementById("main-content-area");
@@ -75,20 +71,16 @@ async function showArticleView(articleId) {
 
   // Validate article view exists
   if (!articleView) {
-    console.error("[DEBUG] Article view element not found");
+    console.error("Article view element not found");
     return;
   }
-
-  console.log("[DEBUG] Hiding other views");
 
   // Show main content area if we're in a category
   if (categoryPageView && !categoryPageView.classList.contains("hidden")) {
     categoryPageView.classList.add("hidden");
-    console.log("[DEBUG] Hid category page view");
 
     if (mainContentArea) {
       mainContentArea.style.display = "";
-      console.log("[DEBUG] Showed main content area");
 
       // Update category title if we're in a category context
       const currentCategory = getCurrentCategory();
@@ -109,35 +101,33 @@ async function showArticleView(articleId) {
 
     if (bentoGrid) {
       bentoGrid.classList.add("hidden-element");
-      console.log("[DEBUG] Hid bento grid");
     }
 
     // Hide search results (but remember we're from search)
     if (searchResultsGrid) {
       searchResultsGrid.style.display = "none";
-      console.log("[DEBUG] Hid search results grid");
     }
   }
 
   // Show and populate article view
-  console.log("[DEBUG] Showing article view");
   articleView.classList.remove("hidden");
   populateArticleView(article, articleView);
-  console.log("[DEBUG] Populated article view");
   populateRandomArticles(articleId);
-  console.log("[DEBUG] Populated random articles");
+
+  // Apply saved font size settings
+  if (window.applySavedFontSize) {
+    window.applySavedFontSize();
+  }
 
   // Set up close button functionality
   const closeButton = articleView.querySelector(".close-article");
   if (closeButton) {
     closeButton.removeEventListener("click", closeArticleView);
     closeButton.addEventListener("click", closeArticleView);
-    console.log("[DEBUG] Set up close button");
   }
 
   // Scroll to top of page
   window.scrollTo(0, 0);
-  console.log("[DEBUG] Scrolled to top");
 }
 
 /**
@@ -163,6 +153,11 @@ function showCategoryArticleView(article, articleId) {
     populateArticleView(article, categoryView);
     populateRelatedCategoryArticles(categoryView, articleId);
     setupCategoryCloseButton();
+
+    // Apply saved font size settings
+    if (window.applySavedFontSize) {
+      window.applySavedFontSize();
+    }
   }
 }
 
@@ -176,13 +171,11 @@ function showMainArticleView(article, articleId) {
   const categoryPageView = document.getElementById("category-page-view");
   if (categoryPageView) {
     categoryPageView.classList.add("hidden");
-    console.log("Hidden category page view");
   }
 
   const mainContent = document.getElementById("main-content-area");
   if (mainContent) {
     mainContent.style.display = "";
-    console.log("Showed main content area");
   }
 
   // Get main page elements
@@ -208,6 +201,11 @@ function showMainArticleView(article, articleId) {
   populateArticleView(article, articleView);
   populateRandomArticles(articleId);
   setupCloseButton();
+
+  // Apply saved font size settings
+  if (window.applySavedFontSize) {
+    window.applySavedFontSize();
+  }
 }
 
 /**
@@ -606,7 +604,6 @@ function getRandomArticle() {
 function closeArticleView() {
   // Check if we came from search
   const fromSearch = sessionStorage.getItem("fromSearch") === "true";
-  console.log("Closing article - fromSearch:", fromSearch);
 
   // Get main page elements
   const bentoGrid = document.querySelector(".bento-grid");
