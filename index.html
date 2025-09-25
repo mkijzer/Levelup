@@ -28,6 +28,11 @@
     <link rel="stylesheet" href="css/utils.css" />
     <link rel="stylesheet" href="css/themes.css" />
 
+    <!-- Resource hints -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="preload" href="data/articles.json" as="fetch" crossorigin />
+    <link rel="preload" href="css/variables.css" as="style" />
+
     <!-- ===================================================== -->
     <!-- Fonts -->
     <!-- ===================================================== -->
@@ -47,6 +52,10 @@
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo:wght@100;200;300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -688,10 +697,6 @@
     >
       <div class="modal-content">
         <div class="settings-content">
-          <header class="settings-header">
-            <h2 class="settings-title">Settings</h2>
-          </header>
-
           <div class="settings-items">
             <div class="setting-item">
               <label>Text Size</label>
@@ -708,7 +713,11 @@
               </div>
             </div>
           </div>
-          <button class="close-settings-btn" type="button">Close</button>
+          <button class="settings-close on" id="close-settings">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
     </div>

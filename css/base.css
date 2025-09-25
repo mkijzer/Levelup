@@ -2,8 +2,8 @@
 /* base.css */
 /* ============================================================================ */
 /* Description: Base styles for typography, resets, global elements, and utility classes. */
-/* Version: 1.0 */
-/* Author: [Your Name] */
+/* Version: 2.1 */
+/* Author: Mike */
 /* ============================================================================ */
 
 /* ============================================================================ */
@@ -28,9 +28,10 @@ body {
   font-family: var(--font-primary);
   background: var(--background);
   color: var(--white);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
-  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-body);
+  margin-bottom: var(--spacing-4);
 }
 
 /* ============================================================================ */
@@ -39,27 +40,64 @@ body {
 
 /* Headings */
 h1,
-h2 {
-  font-weight: bold;
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 h1 {
-  font-size: var(--font-size-h1);
-  line-height: var(--line-height-h1);
-  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-3xl);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-display);
+  margin-top: var(--spacing-8);
+  margin-bottom: var(--spacing-2);
 }
 
 h2 {
-  font-size: var(--font-size-h2);
-  line-height: var(--line-height-h2);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+  margin-top: var(--spacing-8);
+  margin-bottom: var(--spacing-2);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-tight);
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-2);
+}
+
+h4 {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-tight);
+  margin-top: var(--spacing-6);
+  margin-bottom: var(--spacing-2);
+}
+
+h5 {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-2);
+}
+
+h6 {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-1);
 }
 
 /* Paragraphs */
 p {
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
-  margin-bottom: var(--spacing-md);
-  font-weight: 100;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  letter-spacing: var(--letter-spacing-body);
+  margin-bottom: var(--spacing-6);
 }
 
 /* Lists */
@@ -71,13 +109,43 @@ ul {
 a {
   text-decoration: none;
   color: inherit;
-  transition: color 0.3s ease;
+  transition: var(--transition-colors);
 }
 
-/* Reduce boldness of bold text */
-.article-body strong,
-.article-body b {
-  font-weight: 500; /* Change from 700/bold to 600 */
+/* Article links */
+.article-body a {
+  color: var(--accent-dimmed);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: color var(--duration-200) var(--ease-out);
+}
+
+.article-body a:hover {
+  color: var(--accent-bright);
+}
+.article-body a:visited {
+  color: var(--accent-dimmed);
+  opacity: 0.6;
+}
+
+/* Bold text */
+.article-body strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Article paragraphs with improved spacing */
+.article-body p {
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-6);
+}
+
+/* Text width variants */
+.article-body.width-narrow {
+  max-width: 55ch;
+}
+
+.article-body.width-wide {
+  max-width: 80ch;
 }
 
 /* ============================================================================ */
@@ -95,7 +163,7 @@ input {
 
 button {
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-base);
 }
 
 /* ============================================================================ */
@@ -104,31 +172,75 @@ button {
 
 /* Main content container */
 .container {
-  max-width: 1200px;
+  max-width: var(--container-xl);
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-4);
 }
 
 /* ============================================================================ */
-/* Custom Typography Classes */
+/* Typography Classes with Letter Spacing */
 /* ============================================================================ */
 
-/* Huge card title */
+/* Display text - largest sizes */
+.text-display {
+  letter-spacing: var(--letter-spacing-display);
+  line-height: var(--line-height-tight);
+}
+
+/* Headings */
+.text-heading {
+  letter-spacing: var(--letter-spacing-heading);
+  line-height: var(--line-height-tight);
+}
+
+/* Body text */
+.text-body {
+  letter-spacing: var(--letter-spacing-body);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Small text */
+.text-small {
+  letter-spacing: var(--letter-spacing-small);
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-sm);
+}
+
+/* Tiny text */
+.text-tiny {
+  letter-spacing: var(--letter-spacing-tiny);
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-xs);
+}
+
+/* All caps text */
+.text-caps {
+  letter-spacing: var(--letter-spacing-caps);
+  text-transform: uppercase;
+  line-height: var(--line-height-tight);
+}
+
+/* Card titles with appropriate spacing */
 .card-title-huge {
   font-size: var(--font-size-huge-title);
+  letter-spacing: var(--letter-spacing-heading);
+  line-height: var(--line-height-tight);
 }
 
-/* Small card title */
 .card-title-small {
   font-size: var(--font-size-small-title);
+  letter-spacing: var(--letter-spacing-heading);
+  line-height: var(--line-height-tight);
 }
 
-/* Huge card author */
 .card-author-huge {
-  font-size: var(--font-size-huge-author);
+  font-size: var(--font-size-lg);
+  letter-spacing: var(--letter-spacing-small);
+  line-height: var(--line-height-normal);
 }
 
-/* Small card author */
 .card-author-small {
-  font-size: var(--font-size-small-author);
+  font-size: var(--font-size-xs);
+  letter-spacing: var(--letter-spacing-tiny);
+  line-height: var(--line-height-normal);
 }

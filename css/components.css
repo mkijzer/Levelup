@@ -27,6 +27,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-align: left; /* Add this line */
 }
 
 .main-title > :not(.subtitle) {
@@ -61,7 +62,6 @@
       0 0 var(--spacing-4) rgba(255, 215, 0, 0.7);
   }
 }
-
 /* ============================================================================ */
 /* NAVIGATION COMPONENTS */
 /* ============================================================================ */
@@ -101,39 +101,37 @@
   pointer-events: all;
 }
 
-/* Navigation Icons */
-.nav-icon {
-  width: var(--spacing-5);
-  height: var(--spacing-5);
-  fill: hsl(210, 80%, 45%);
-  transition: var(--transition-fast);
-}
 /* ============================================================================ */
 /* MOBILE NAVIGATION HOVER & ACTIVE STATES */
 /* ============================================================================ */
 
-/* Base state - all icons dimmed blue */
-.nav-icon {
-  fill: var(--blue-dimmed);
+/* Base state - all icons dimmed */
+.nav-icon,
+.nav-icon path,
+.nav-icon svg {
+  width: var(--spacing-5);
+  height: var(--spacing-5);
+  fill: var(--accent-dimmed);
+  stroke: var(--accent-dimmed);
   transition: var(--transition-fast);
 }
 
-/* Search icon - button with svg inside */
-.search-icon {
-  stroke: var(--blue-dimmed) !important;
-  transition: var(--transition-fast);
-}
-
-.search-icon svg {
-  stroke: var(--blue-dimmed);
-  transition: var(--transition-fast);
-}
-
-/* Hover and active states - bright blue */
+/* Hover and active states - bright */
 .nav-item:hover .nav-icon,
+.nav-item:hover .nav-icon path,
+.nav-item:hover .nav-icon svg,
 .nav-item:active .nav-icon,
-.nav-item.active .nav-icon {
-  fill: var(--blue-bright);
+.nav-item:active .nav-icon path,
+.nav-item.active .nav-icon,
+.nav-item.active .nav-icon path {
+  fill: var(--accent-bright);
+  stroke: var(--accent-bright);
+}
+
+/* Search icon */
+.search-icon svg {
+  stroke: var(--accent-dimmed);
+  transition: var(--transition-fast);
 }
 
 .nav-item:hover .search-icon,
@@ -142,60 +140,61 @@
 .search-icon:hover svg,
 .search-icon.active,
 .search-icon.active svg {
-  stroke: var(--blue-bright) !important;
+  stroke: var(--accent-bright) !important;
 }
 
 /* Settings icon */
 .nav-item.settings .nav-icon {
-  fill: var(--blue-dimmed) !important;
+  fill: var(--accent-dimmed) !important;
 }
 
 .nav-item.settings:hover .nav-icon {
-  fill: var(--blue-bright) !important;
-}
-
-/* Category modal items */
-.modal-category-item .modal-nav-icon {
-  stroke: var(--blue-dimmed);
-  fill: var(--blue-dimmed);
-  transition: var(--transition-fast);
-}
-
-.modal-category-item:hover .modal-nav-icon {
-  stroke: var(--blue-bright);
-  fill: var(--blue-bright);
-}
-
-.modal-category-item:hover a {
-  color: var(--blue-bright);
-}
-
-/* Text-based nav items (no icons) */
-.nav-item a {
-  color: var(--blue-dimmed);
-  transition: var(--transition-fast);
-}
-
-.nav-item:hover a,
-.nav-item.active a {
-  color: var(--blue-bright);
-}
-
-.modal-categories a {
-  color: var(--blue-dimmed);
-  transition: var(--transition-fast);
-}
-
-.modal-category-item:hover a {
-  color: var(--blue-bright);
+  fill: var(--accent-bright) !important;
 }
 
 /* Settings icon active state */
 .nav-item.settings.active .nav-icon,
 .nav-item.settings.active a {
-  fill: var(--blue-bright) !important;
-  color: var(--blue-bright) !important;
+  fill: var(--accent-bright) !important;
+  color: var(--accent-bright) !important;
 }
+
+/* Category modal items */
+.modal-category-item .modal-nav-icon {
+  stroke: var(--accent-dimmed);
+  fill: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+.modal-category-item:hover .modal-nav-icon {
+  stroke: var(--accent-bright);
+  fill: var(--accent-bright);
+}
+
+.modal-category-item:hover a {
+  color: var(--accent-bright);
+}
+
+/* Text-based nav items (no icons) */
+.nav-item a {
+  color: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+.nav-item:hover a,
+.nav-item.active a {
+  color: var(--accent-bright);
+}
+
+.modal-categories a {
+  color: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+.modal-category-item:hover a {
+  color: var(--accent-bright);
+}
+
 /* ============================================================================ */
 /* RANDOM ANIMATION HOVER & ACTIVE STATES */
 /* ============================================================================ */
@@ -371,17 +370,17 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   position: relative;
   width: 21px;
   height: 21px;
-  color: hsl(210, 80%, 45%);
+  color: var(--accent-dimmed) !important;
   cursor: pointer;
-  stroke: hsl(210, 80%, 45%);
-  fill: hsl(210, 80%, 45%);
+  stroke: var(--accent-dimmed) !important;
+  fill: var(--accent-dimmed);
   transition: stroke var(--transition-base), fill var(--transition-base);
 }
 
 .search-icon:hover,
 .search-icon.active {
-  stroke: var(--accent-color);
-  fill: var(--accent-color);
+  stroke: var(--accent-color) !important;
+  fill: var(--accent-color) !important;
 }
 
 .search-bar-slide {
@@ -557,14 +556,14 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 .modal-categories a {
   text-decoration: none;
-  color: var(--blue-dimmed);
+  color: var(--accent-dimmed);
   transition: color var(--duration-300) var(--ease-out);
   font-size: var(--font-size-sm);
   pointer-events: none;
 }
 
 .modal-category-item:hover a {
-  color: var(--blue-bright);
+  color: var(--accent-bright);
 }
 
 /* Settings Modal - Right-slide settings panel */
@@ -574,9 +573,9 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   right: var(--spacing-0);
   width: 300px;
   height: 100vh;
-  z-index: 1100; /* Higher than category page's 1000 */
+  z-index: 1100;
   transform: translateX(100%);
-  transition: transform var(--duration-300) var(--ease-back);
+  transition: transform var(--duration-500) cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }
 
@@ -619,11 +618,12 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   height: 100%;
 }
 
-.settings-items {
+.setting-item {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-6);
-  margin-top: var(--spacing-8);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
 }
 
 .setting-item {
@@ -633,17 +633,17 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   gap: var(--spacing-3);
 }
 
-.setting-item label {
+/* .setting-item label {
   color: var(--text-primary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   flex-shrink: 0;
-}
+} */
 
 .settings-title {
   color: var(--text-primary);
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-light);
   margin: 0;
   padding-bottom: var(--spacing-4);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -652,32 +652,31 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 .font-size-selectbox {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
-  min-width: 120px;
-  width: 100%;
+  gap: var(--spacing-1);
+  font-weight: var(--font-weight-light);
+  width: 50%;
 }
 
 .font-option {
-  padding: var(--spacing-2) var(--spacing-3);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: var(--spacing-1);
+  background: hsla(0, 0%, 100%, 0.01); /* Transparent glass effect */
+  border: 0.5px solid hsla(0, 0%, 100%, 0.05);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--transition-fast);
   text-align: center;
+  backdrop-filter: none !important; /* Remove blur completely */
+  color: var(--text-secondary);
 }
 
 .font-option:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: hsla(200, 7%, 18%, 0.2);
 }
 
 .font-option.active {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: var(--blue-bright);
-  box-shadow: 0 0 0 1px var(--blue-bright);
+  background: hsla(200, 7%, 18%, 0.15);
+  border-color: var(--glass-border);
 }
-
 .font-preview {
   color: var(--text-primary);
   font-family: var(--font-display);
@@ -720,25 +719,131 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   position: absolute;
   top: var(--spacing-2);
   right: var(--spacing-2);
-  width: var(--spacing-5);
-  height: var(--spacing-5);
+  width: var(--spacing-6);
+  height: var(--spacing-6);
   background: transparent;
   border: none;
-  color: var(--white);
-  font-size: var(--font-size-base);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity var(--transition-base);
   z-index: 3;
-  opacity: 0.8;
+  padding: 0;
+}
+
+.settings-close span {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  background: var(--accent-bright);
+  border-radius: 1px;
+  transition: all var(--duration-300) var(--ease-in-out);
+}
+
+.settings-close span:nth-child(1) {
+  animation: span-first-off var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close span:nth-child(2) {
+  animation: span-second-off var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close span:nth-child(3) {
+  animation: span-third-off var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close.on span:nth-child(1) {
+  animation: span-first-on var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close.on span:nth-child(2) {
+  animation: span-second-on var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close.on span:nth-child(3) {
+  animation: span-third-on var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+@keyframes span-first-on {
+  0% {
+    transform: translate(-50%, -300%);
+  }
+  30% {
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+@keyframes span-first-off {
+  0% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  30% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -300%);
+  }
+}
+
+@keyframes span-second-on {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-150%, -50%) scale(0);
+  }
+}
+
+@keyframes span-second-off {
+  0% {
+    transform: translate(-150%, -50%) scale(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes span-third-on {
+  0% {
+    transform: translate(-50%, 200%);
+  }
+  30% {
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+@keyframes span-third-off {
+  0% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  30% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, 200%);
+  }
 }
 
 .settings-close:hover {
   opacity: 1;
 }
-
 /* Theme Slider Component */
 .theme-slider {
   display: flex;
@@ -1212,15 +1317,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   font-size: var(--font-size-lg) !important;
 }
 
-/* Width Variants */
-.article-body.width-narrow {
-  max-width: 55ch;
-}
-
-.article-body.width-wide {
-  max-width: 80ch;
-}
-
 /* ============================================================================ */
 /* ARTICLE HEADER AND METADATA */
 /* ============================================================================ */
@@ -1321,7 +1417,8 @@ body:has(.article-view:not(.hidden)) .article-header {
 }
 
 .tag:hover {
-  box-shadow: 0 0 16px var(--blue-bright), var(--shadow-lg);
+  border: 0.5px solid var(--accent-bright);
+  box-shadow: 0 0 4px var(--accent-bright);
 }
 
 .tag.clicked {
@@ -2081,4 +2178,149 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* Article Image Position Override */
 .article-image {
   object-position: center top !important;
+}
+
+.retro-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Remove the existing positioning properties and keep these: */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(10, 10, 20, 0.8);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.neon-grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+      90deg,
+      rgba(255, 0, 255, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(180deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: gridMove 4s linear infinite;
+  z-index: 0;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(20px, 20px);
+  }
+}
+
+.loader-grid {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  z-index: 2;
+  position: relative;
+}
+
+.loader-pixel {
+  width: 6px;
+  background: linear-gradient(180deg, #ff0080 0%, #8000ff 50%, #0080ff 100%);
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 10px rgba(255, 0, 128, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  animation: synthLevelUp 2s ease-in-out infinite;
+  position: relative;
+}
+
+.loader-pixel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 2px 2px 0 0;
+}
+.loader-pixel:nth-child(1) {
+  height: 8px;
+  animation-delay: 0s;
+}
+
+.loader-pixel:nth-child(2) {
+  height: 12px;
+  animation-delay: 0.2s;
+}
+
+.loader-pixel:nth-child(3) {
+  height: 16px;
+  animation-delay: 0.4s;
+}
+
+.loader-pixel:nth-child(4) {
+  height: 20px;
+  animation-delay: 0.6s;
+}
+
+.loader-pixel:nth-child(5) {
+  height: 24px;
+  animation-delay: 0.8s;
+}
+
+@keyframes synthLevelUp {
+  0%,
+  60%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+    box-shadow: 0 0 10px rgba(255, 0, 128, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  30% {
+    transform: scaleY(1.3) scaleX(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(255, 0, 255, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-bright),
+    transparent
+  );
+  animation: scanMove 3s linear infinite;
+  z-index: 3;
+}
+
+@keyframes scanMove {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(80px);
+    opacity: 0;
+  }
+}
+
+.loader-text {
+  display: none;
 }

@@ -90,7 +90,7 @@ body::after {
 header {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-start; /* Already correct */
   padding: var(--spacing-4) var(--spacing-component);
   gap: var(--spacing-tight);
   z-index: var(--z-base);
@@ -104,11 +104,13 @@ header {
   gap: var(--spacing-2);
   width: 100%;
   position: relative;
+  justify-content: flex-start; /* Add this line */
 }
 
 .logo-container {
   flex: 0 0 auto;
-  /* margin-right: var(--spacing-2); */
+  margin-right: var(--spacing-0);
+  transform: translateY(1px);
 }
 
 .logo {
@@ -409,17 +411,25 @@ header {
     padding-bottom: 0;
   }
 
-  /* header {
-    padding: var(--spacing-8) var(--spacing-component);
-    border: 1 pix solid orange;
-  } */
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-4) var(--spacing-page); /* Change from var(--spacing-component) to var(--spacing-page) */
+    gap: var(--spacing-tight);
+    z-index: var(--z-base);
+    background-color: var(--background);
+  }
 
   .header-top {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    gap: var(--spacing-2);
     width: 100%;
     position: relative;
+    justify-content: flex-start;
+    padding-left: 0; /* Add this to remove any extra left padding */
   }
 
   .header-top > .title-container {

@@ -2,13 +2,13 @@
 // settings.js - MINIMAL CSS-DRIVEN VERSION
 // ============================================================================
 // Description: Minimal JS - animations handled by CSS with persistent settings
-// Version: 1.3 - Added persistent font size storage and global application
+// Version: 1.4 - Fixed close button functionality
 // ============================================================================
 document.addEventListener("DOMContentLoaded", () => {
   const settingsButton = document.querySelector(".nav-item.settings");
   const settingsModal = document.getElementById("settings-modal");
   const settingsBackdrop = document.getElementById("settings-backdrop");
-  const closeButton = document.querySelector(".close-settings-btn");
+  const closeBtn = document.getElementById("close-settings");
 
   // Font size selectbox options
   const fontOptions = document.querySelectorAll(".font-option");
@@ -24,13 +24,16 @@ document.addEventListener("DOMContentLoaded", () => {
       openSettings();
     });
   }
+  // Close button with animation
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function () {
+      this.classList.toggle("on");
 
-  // Close settings
-  if (closeButton) {
-    closeButton.addEventListener("click", closeSettings);
-  }
-  if (settingsBackdrop) {
-    settingsBackdrop.addEventListener("click", closeSettings);
+      // Delay close to show animation
+      setTimeout(() => {
+        closeSettings();
+      }, 300);
+    });
   }
 
   // Handle font size selectbox

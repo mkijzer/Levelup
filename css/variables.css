@@ -31,10 +31,11 @@
   --light-text-muted: hsla(0, 0%, 13%, 0.6); /* Light muted text */
 
   /* Navigation Colors */
-  --blue-dimmed: hsl(210, 50%, 35%); /* Navigation default state */
-  --blue-bright: hsl(210, 90%, 70%); /* Navigation hover/active state */
+  /* Navigation Colors */
+  /* Navigation Colors */
+  --accent-dimmed: hsl(51, 100%, 35%); /* Change the value, keep the name */
+  --accent-bright: hsl(51, 100%, 50%); /* Change the value, keep the name */
 
-  /* Animation Colors */
   /* Animation Colors */
   --flash-primary: #8a2be2; /* Purple - for tag explosions (pyramid climb) */
   --flash-secondary: #ffff00; /* Yellow - for tag explosions (pyramid climb) */
@@ -78,13 +79,14 @@
   /* ========================================================================== */
 
   /* Font Families */
-  --font-primary: "Exo 2", sans-serif; /* Body text, navigation, paragraphs */
+  --font-primary: "Exo", sans-serif;
   --font-display: "Orbitron", sans-serif; /* Headlines, article titles, hero text */
   --font-script: "Shadows Into Light", cursive; /* Decorative text, quotes */
 
   /* Font Weights */
   --font-weight-light: 300; /* Light text for subtle elements */
   --font-weight-normal: 400; /* Body text, default weight */
+  --font-weight-medium: 500; /* Medium weight for headings */
   --font-weight-semibold: 600; /* Section headings, emphasis */
   --font-weight-black: 900; /* Headlines, strong emphasis */
 
@@ -118,6 +120,32 @@
   --line-height-normal: 1.5; /* Body text, default readable spacing */
   --line-height-relaxed: 1.6; /* Long-form content, articles */
   --line-height-loose: 2; /* Special emphasis, quotes */
+
+  /* ========================================================================== */
+  /* LETTER SPACING SYSTEM - Consistent character spacing */
+  /* ========================================================================== */
+
+  /* Letter spacing scale */
+  --letter-spacing-tightest: -0.05em; /* Extra tight for large display text */
+  --letter-spacing-tight: -0.025em; /* Tight for headings */
+  --letter-spacing-normal: 0; /* Default, no adjustment */
+  --letter-spacing-wide: 0.025em; /* Slightly open for small text */
+  --letter-spacing-wider: 0.05em; /* Open for very small text */
+  --letter-spacing-widest: 0.1em; /* Very open for all-caps text */
+
+  /* Semantic spacing tokens */
+  --letter-spacing-display: var(
+    --letter-spacing-tightest
+  ); /* Hero titles, large display */
+  --letter-spacing-heading: var(
+    --letter-spacing-tight
+  ); /* H1, H2, H3 headings */
+  --letter-spacing-body: var(--letter-spacing-normal); /* Body text, articles */
+  --letter-spacing-small: var(--letter-spacing-wide); /* Small text, captions */
+  --letter-spacing-tiny: var(
+    --letter-spacing-wider
+  ); /* Very small text, metadata */
+  --letter-spacing-caps: var(--letter-spacing-widest); /* ALL CAPS text */
 
   /* ========================================================================== */
   /* SPACING SYSTEM - 8-Point Grid */

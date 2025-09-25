@@ -91,3 +91,20 @@ export function extractAltFromFilename(imagePath) {
   // Take everything after first underscore, replace _ with spaces
   return parts.slice(1).join(" ");
 }
+
+// Add after existing preloadImage function
+export function createImageLoader() {
+  return new Promise((resolve) => {
+    const loaderHTML = `
+      <div class="retro-loader">
+        <div class="loader-grid">
+          <div class="loader-pixel"></div>
+          <div class="loader-pixel"></div>
+          <div class="loader-pixel"></div>
+        </div>
+        <div class="loader-text">LOADING...</div>
+      </div>
+    `;
+    resolve(loaderHTML);
+  });
+}
