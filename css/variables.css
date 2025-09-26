@@ -13,7 +13,7 @@
   /* ========================================================================== */
 
   /* Dark Mode (Default) */
-  --background: hsl(220, 39%, 10%); /* Page background */
+  --background: hsl(220, 39%, 6%); /* Page background */
   --background-quote: hsl(220, 39%, 1%);
   --surface: hsl(200, 7%, 18%); /* Card backgrounds, panels */
   --text-primary: hsl(240, 5%, 92%); /* Slightly brighter for body text */

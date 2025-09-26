@@ -1391,12 +1391,17 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* Article Tags Container */
 .article-tags {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
   gap: var(--spacing-2);
-  margin: var(--spacing-2) var(--spacing-0) var(--spacing-4) var(--spacing-0);
-  margin-bottom: var(--spacing-6);
-  justify-content: center;
+  margin: var(--spacing-2) var(--spacing-0) var(--spacing-6) var(--spacing-0);
   padding: var(--spacing-0);
+}
+
+.tag-row {
+  display: flex;
+  gap: var(--spacing-2);
+  justify-content: center;
 }
 
 /* Individual Tags */
