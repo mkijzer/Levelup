@@ -1533,6 +1533,7 @@ body:has(.article-view:not(.hidden)) .article-header {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: var(--background-quote);
 }
 
 /* Quote Background Image */
@@ -1562,7 +1563,7 @@ body:has(.article-view:not(.hidden)) .article-header {
 /* Quote Text */
 .quote-text {
   font-size: var(--font-size-lg);
-  color: var(--text-primary);
+  color: var(--white);
   padding-top: var(--spacing-4);
   margin: var(--spacing-0);
   line-height: var(--line-height-normal);
@@ -1908,6 +1909,7 @@ body:has(.article-view:not(.hidden)) .article-header {
 }
 
 .carousel-card-meta {
+  display: none;
   font-size: var(--font-size-xs);
   opacity: 0.8;
   margin-bottom: var(--spacing-1);
