@@ -16,8 +16,8 @@
   --background: hsl(220, 39%, 10%); /* Page background */
   --background-quote: hsl(220, 39%, 1%);
   --surface: hsl(200, 7%, 18%); /* Card backgrounds, panels */
-  --text-primary: hsl(240, 5%, 88%); /* Main text, headlines */
-  --text-secondary: hsl(240, 4%, 65%); /* Secondary text, descriptions */
+  --text-primary: hsl(240, 5%, 92%); /* Slightly brighter for body text */
+  --text-secondary: hsl(240, 4%, 75%); /* Less bright for headings */
   --text-muted: hsla(0, 0%, 100%, 0.6); /* Muted text, placeholders */
   --text-background: hsl(240, 4%, 45%); /* Background-like text - very subtle */
   --icon-grey: hsl(0, 0%, 71%); /* Icons, decorative elements */

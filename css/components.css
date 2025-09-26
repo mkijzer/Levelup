@@ -1888,7 +1888,7 @@ body:has(.article-view:not(.hidden)) .article-header {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform var(--duration-300) var(--ease-out);
+  transition: transform 0.3s ease-out, filter 0.3s ease-out;
 }
 
 /* Carousel Card Content */
@@ -1905,7 +1905,7 @@ body:has(.article-view:not(.hidden)) .article-header {
   );
   color: var(--white);
   transform: translateY(0);
-  transition: transform var(--duration-200) var(--ease-out);
+  transition: transform var(--duration-300) var(--ease-out);
 }
 
 .carousel-card-meta {

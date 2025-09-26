@@ -61,7 +61,6 @@ function createCarouselCard(article) {
 /**
  * Adds parallax scrolling effect + better desktop support
  */
-
 function addParallaxEffect(track) {
   let isScrolling = false;
 
@@ -108,29 +107,40 @@ function addParallaxEffect(track) {
     if (!isScrolling) {
       requestAnimationFrame(() => {
         const cards = track.querySelectorAll(".carousel-card");
+        const trackRect = track.getBoundingClientRect();
+        const trackCenter = trackRect.left + trackRect.width / 2;
 
         cards.forEach((card) => {
           const cardRect = card.getBoundingClientRect();
-          const trackRect = track.getBoundingClientRect();
           const cardCenter = cardRect.left + cardRect.width / 2;
-          const trackCenter = trackRect.left + trackRect.width / 2;
           const distance = Math.abs(cardCenter - trackCenter);
           const maxDistance = trackRect.width / 2;
 
-          // Better balance - visible effect but smoother edges
+          // Position: 0 = center, 1 = off-screen
+          const position = Math.min(distance / maxDistance, 1);
+
+          // Parallax movement
           let parallaxAmount = 0;
           if (distance < maxDistance * 0.9) {
-            // Stop at 90% instead of 80%
             const normalizedDistance = distance / (maxDistance * 0.9);
-            parallaxAmount = normalizedDistance * 16; // Middle ground: 16 instead of 12 or 20
+            parallaxAmount = normalizedDistance * 16;
           }
+
+          // Scale: 1.05 at center, 0.95 at edges
+          const scale = 1.05 - position * 0.1;
+
+          // Brightness: 1 at center, 0.6 at edges (darker when not visible)
+          const brightness = 1 - position * 0.4;
 
           const image = card.querySelector(".carousel-card-image");
           const content = card.querySelector(".carousel-card-content");
 
           if (image && content) {
-            image.style.transform = `translateX(${parallaxAmount * 0.8}px)`; // 0.4 instead of 0.3
-            content.style.transform = `translateY(${parallaxAmount * 0.5}px)`; // 0.25 instead of 0.2
+            image.style.transform = `translateX(${
+              parallaxAmount * 0.8
+            }px) scale(${scale})`;
+            image.style.filter = `brightness(${brightness})`;
+            content.style.transform = `translateY(${parallaxAmount * 0.5}px)`;
           }
         });
 
@@ -140,7 +150,6 @@ function addParallaxEffect(track) {
     isScrolling = true;
   });
 
-  // Set initial cursor
   track.style.cursor = "grab";
 }
 
