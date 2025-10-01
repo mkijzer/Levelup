@@ -12,7 +12,6 @@ import { getIsInCategoryPage } from "./navigation.js";
 // Configuration
 // ============================================================================
 const SEARCH_DEBOUNCE_DELAY = 300; // ms
-const FOCUS_DELAY = 400; // ms
 
 // ============================================================================
 // State
@@ -56,10 +55,14 @@ class SearchManager {
     return searchIcon && searchBar && searchInput;
   }
 
+  get isSearchActive() {
+    return isSearchActive;
+  }
+
   setupEventListeners() {
     const { searchIcon, searchBar, searchInput } = this.elements;
 
-    // Search icon click
+    // Search icon click - toggle search
     searchIcon.addEventListener("click", (e) => {
       e.stopPropagation();
       this.toggleSearch();
@@ -84,27 +87,68 @@ class SearchManager {
       }
     });
 
-    // Close search on nav hover and click
+    // Close on scroll
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (isSearchActive) {
+          this.closeSearch();
+        }
+      },
+      { passive: true }
+    );
+
+    // Setup all interaction handlers
+    this.setupClickOutside();
     this.setupNavInteractions();
   }
 
+  setupClickOutside() {
+    // Use capture phase to catch events before navigation handlers
+    document.addEventListener(
+      "click",
+      (e) => {
+        const { searchBar, searchIcon } = this.elements;
+
+        if (!isSearchActive) return;
+
+        // Check if clicked on search elements
+        if (searchBar.contains(e.target) || searchIcon.contains(e.target)) {
+          return; // Don't close
+        }
+
+        // Check if clicked on navigation elements
+        const navElement = e.target.closest(
+          ".nav-item, .modal-category-item, .desktop-nav-item, .mobile-nav, .desktop-nav, .nav-container"
+        );
+
+        if (navElement) {
+          this.closeSearch();
+          return;
+        }
+
+        // Close on any other click outside
+        this.closeSearch();
+      },
+      true
+    ); // Use capture phase
+  }
+
   setupNavInteractions() {
-    const navItems = document.querySelectorAll(".nav-item, .desktop-nav-item");
-
+    // Additional specific nav handlers with higher priority
+    const navItems = document.querySelectorAll(
+      ".nav-item, .desktop-nav-item, .modal-category-item"
+    );
     navItems.forEach((item) => {
-      // Close on hover
-      item.addEventListener("mouseenter", () => {
-        if (isSearchActive) {
-          this.closeSearchOnly();
-        }
-      });
-
-      // Close on click
-      item.addEventListener("click", () => {
-        if (isSearchActive) {
-          this.closeSearchOnly();
-        }
-      });
+      item.addEventListener(
+        "click",
+        () => {
+          if (isSearchActive) {
+            this.closeSearch();
+          }
+        },
+        true
+      ); // Use capture phase
     });
   }
 
@@ -123,12 +167,16 @@ class SearchManager {
     searchBar.classList.add("active");
     isSearchActive = true;
 
-    // Focus input after animation
-    setTimeout(() => {
-      if (isSearchActive) {
-        searchInput.focus();
-      }
-    }, FOCUS_DELAY);
+    // Close settings modal if open
+    const settingsModal = document.getElementById("settings-modal");
+    if (settingsModal && settingsModal.classList.contains("active")) {
+      settingsModal.classList.remove("active");
+      const settingsBackdrop = document.getElementById("settings-backdrop");
+      if (settingsBackdrop) settingsBackdrop.classList.remove("active");
+    }
+
+    // Focus input immediately
+    searchInput.focus();
   }
 
   closeSearch() {
@@ -137,6 +185,7 @@ class SearchManager {
     searchBar.classList.remove("active");
     searchIcon.classList.remove("expanding");
     searchInput.value = "";
+    searchInput.blur(); // Remove focus
     isSearchActive = false;
 
     // Clear any pending search
@@ -159,6 +208,7 @@ class SearchManager {
     searchBar.classList.remove("active");
     searchIcon.classList.remove("expanding");
     searchInput.value = "";
+    searchInput.blur(); // Remove focus
     isSearchActive = false;
 
     // Clear any pending search
@@ -168,7 +218,6 @@ class SearchManager {
     }
   }
 
-  // Add this new method right after closeSearch
   clearSearch() {
     if (this.elements.searchInput) {
       this.elements.searchInput.value = "";
@@ -262,7 +311,6 @@ class SearchManager {
     this.performSearch(query);
   }
 
-  // In the performSearch method of SearchManager in search.js
   performSearch(query) {
     const trimmedQuery = query.trim();
     const context = this.getCurrentContext();
@@ -299,6 +347,8 @@ let searchManager = null;
 function initializeSearch() {
   if (!searchManager) {
     searchManager = new SearchManager();
+    // Make it globally available
+    window.searchManager = searchManager;
   }
 }
 
@@ -306,4 +356,4 @@ function initializeSearch() {
 document.addEventListener("DOMContentLoaded", initializeSearch);
 
 // Export for manual initialization if needed
-export { initializeSearch, searchManager };
+export { initializeSearch, searchManager, isSearchActive };

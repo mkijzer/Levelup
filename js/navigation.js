@@ -81,6 +81,11 @@ function handleHashChange() {
 function handleNavigationClick(e) {
   e.preventDefault();
 
+  // Close search if active - check global state
+  if (window.searchManager && window.searchManager.isSearchActive) {
+    window.searchManager.closeSearch();
+  }
+
   // Get href from clicked element
   let href;
   if (e.currentTarget.classList.contains("desktop-nav-item")) {
@@ -90,7 +95,6 @@ function handleNavigationClick(e) {
     if (!link) return;
     href = link.getAttribute("href");
   }
-
   const isMobileNav = e.currentTarget.closest(".mobile-nav");
 
   // Route to appropriate handler
