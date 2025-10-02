@@ -1146,4 +1146,13 @@ body:has(.article-view:not(.hidden)) .article-header {
   .category-hero-grid .article-card.huge .article-content {
     bottom: var(--spacing-4); /* Adjust to show more of the title */
   }
+
+  /* Only target the 3 main hero images */
+  .bento-grid .article-card .article-image {
+    transition: transform 0.1s ease-out;
+  }
+
+  .bento-grid .article-card:hover .article-image {
+    transform: scale(1.05);
+  }
 }

@@ -58,6 +58,7 @@
 
   /* Glass Effect */
   --glass-bg: hsla(200, 7%, 18%, 0.3); /* Translucent surface overlay */
+  --glass-bg-desktop: hsla(200, 7%, 18%, 0.09);
   --glass-bg-light: hsla(0, 0%, 100%, 0.7); /* Light mode glass overlay */
   --glass-border: hsla(0, 0%, 100%, 0.2); /* Glass border effect */
   --glass-blur: 15px; /* Backdrop blur amount */
