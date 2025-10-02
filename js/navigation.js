@@ -128,8 +128,13 @@ function handleNavigationClick(e) {
   } else {
     const category = href.replace("#", "");
     exitCategoryPage();
-    updateMobileNavigation(category);
-    loadCategory(category);
+
+    // Use category page view for desktop, main layout for mobile
+    if (window.innerWidth >= 768) {
+      loadCategoryPage(category);
+    } else {
+      loadCategory(category);
+    }
   }
 }
 

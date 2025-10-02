@@ -1,0 +1,60 @@
+/* ============================================================================ */
+/* components-brand.css - BRAND IDENTITY COMPONENTS */
+/* ============================================================================ */
+/* Description: Defines brand-specific styles for titles, logos, and animations. */
+/* Ensures consistent branding across the application. */
+/* Version: 4.1 */
+/* Author: Mike */
+/* Last Updated: September 2025 */
+/* ============================================================================ */
+
+/* Main Brand Title - Primary brand header with gradient text effect and flexible layout */
+.main-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-display);
+  letter-spacing: var(--spacing-0);
+  margin: var(--spacing-0);
+  margin-right: var(--spacing-0);
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  background: linear-gradient(45deg, var(--accent-color), #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: left;
+}
+
+.main-title > :not(.subtitle) {
+  background: linear-gradient(45deg, var(--accent-color), #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Brand Subtitle - Decorative script text with custom styling */
+.subtitle {
+  font-family: var(--font-script);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  background: none !important;
+  -webkit-text-fill-color: #f34343 !important;
+  color: #f34343;
+  text-shadow: var(--shadow-xs);
+  position: relative;
+  margin: var(--spacing-0);
+  display: inline;
+}
+
+/* Brand Animation Effects */
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 var(--spacing-1) rgba(255, 215, 0, 0.7),
+      0 0 var(--spacing-2) rgba(255, 215, 0, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 var(--spacing-2) rgba(255, 215, 0, 0.9),
+      0 0 var(--spacing-4) rgba(255, 215, 0, 0.7);
+  }
+}

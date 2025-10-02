@@ -167,6 +167,12 @@ header {
   text-align: center;
 }
 
+/* Search Container */
+.search-container {
+  position: relative;
+  z-index: var(--z-dropdown);
+}
+
 /* ============================================================================ */
 /* Main Content Layout - Container and spacing */
 /* ============================================================================ */
@@ -377,7 +383,6 @@ header {
     flex: 1;
   }
 }
-
 /* ============================================================================ */
 /* Desktop Layout - Large screens (1200px and up) */
 /* ============================================================================ */
@@ -386,7 +391,7 @@ header {
   .container {
     max-width: var(--container-xl);
     margin: 0 auto;
-    padding: var(--spacing-4);
+    padding: var(--spacing-3); /* Reduced padding */
   }
 
   .desktop-only {
@@ -399,6 +404,7 @@ header {
 
   body {
     padding-bottom: 0;
+    padding-top: var(--spacing-32); /* Reduced padding-top */
   }
 
   /* Header layout for desktop - Title left, Nav right */
@@ -462,11 +468,6 @@ header {
     align-items: center;
   }
 
-  .search-icon {
-    cursor: pointer;
-    margin-left: var(--spacing-4);
-  }
-
   .desktop-categories {
     display: flex;
     align-items: center;
@@ -515,13 +516,6 @@ header {
     aspect-ratio: unset;
   }
 
-  .most-read-sidebar {
-    grid-column: 2;
-    grid-row: 1;
-    display: block;
-    margin-left: var(--spacing-12);
-  }
-
   .side-by-side-container {
     grid-column: 1;
     grid-row: 2;
@@ -562,50 +556,39 @@ header {
     flex: 1;
   }
 
-  /* Desktop nav item styling */
-  .desktop-nav-item {
-    position: relative;
-    z-index: var(--z-popover);
-    color: var(--white);
-    /* display: none; */
+  .most-read-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    align-items: flex-start;
   }
 
-  /* Hide specific SVG icons temporarily */
-  .desktop-nav-item[href="#health"] svg,
-  .desktop-nav-item[href="#coins"] svg,
-  .desktop-nav-item[href="#hack"] svg,
-  .desktop-nav-item[href="#ai"] svg {
-    display: none;
+  /* Make category labels visible on desktop */
+  section[aria-labelledby="health-title"],
+  section[aria-labelledby="coins-title"],
+  section[aria-labelledby="hack-title"],
+  section[aria-labelledby="ai-title"] {
+    display: block;
+    margin-top: var(--spacing-12);
+    margin-bottom: var(--spacing-6);
   }
 
-  .desktop-nav-item:hover::after,
-  .desktop-nav-item.active::after {
-    width: 100%;
+  .category-label {
+    display: block;
+    margin-bottom: var(--spacing-4);
   }
 
-  /* Category gradient effects for desktop nav */
-  .desktop-nav-item[href="#latest"]::after {
-    background: linear-gradient(to right, #87ceeb, #4169e1);
+  .category-label h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
-  .desktop-nav-item[href="#health"]::after {
-    background: linear-gradient(to right, #ff6b6b, #ff0000);
-  }
-
-  .desktop-nav-item[href="#coins"]::after {
-    background: linear-gradient(to right, #ffd700, #ff8c00);
-  }
-
-  .desktop-nav-item[href="#hack"]::after {
-    background: linear-gradient(to right, #ff69b4, #ff1493);
-  }
-
-  .desktop-nav-item[href="#ai"]::after {
-    background: linear-gradient(to right, #9370db, #4b0082);
-  }
-
-  .random-btn::after {
-    background: linear-gradient(to right, #32cd32, #008000);
+  /* Space between category sections */
+  .category-content {
+    margin-bottom: var(--spacing-8);
   }
 
   .sticky-wrapper-navcontainer {
@@ -618,77 +601,5 @@ header {
 
   .quote.debug-quote + .divider {
     display: none;
-  }
-}
-
-/* Desktop search icon in navbar */
-.desktop-search-spacer {
-  width: var(--spacing-12); /* Triple spacing */
-}
-
-.desktop-search-icon {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.desktop-search-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke: var(--accent-dimmed);
-  transition: stroke var(--transition-base);
-}
-
-.desktop-search-icon:hover svg {
-  stroke: var(--accent-color);
-}
-
-.desktop-search-icon.active svg {
-  stroke: var(--accent-bright);
-}
-
-/* ============================================================================ */
-/* Article Image Positioning */
-/* ============================================================================ */
-.article-image {
-  object-position: center top !important;
-}
-
-.main-content-area {
-  padding-top: 0;
-}
-
-/* Mobile-specific footer gradient */
-@media (max-width: 767px) {
-  main::before {
-    content: "";
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
-    backdrop-filter: blur(1.5px);
-    pointer-events: none;
-    z-index: var(--z-auto);
-  }
-}
-
-/* ============================================================================ */
-/* Accessibility & Reduced Motion */
-/* ============================================================================ */
-@media (prefers-reduced-motion: reduce) {
-  .sticky-wrapper-navcontainer {
-    transition: none;
-  }
-
-  .nav-container {
-    transform: none;
   }
 }

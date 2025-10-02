@@ -1,0 +1,440 @@
+/* ============================================================================ */
+/* components-nav.css - NAVIGATION COMPONENTS */
+/* ============================================================================ */
+/* Description: Defines navigation-related styles for mobile and desktop layouts. */
+/* Ensures modularity and responsive navigation. */
+/* Version: 4.1 */
+/* Author: Mike */
+/* Last Updated: September 2025 */
+/* ============================================================================ */
+
+/* Mobile Navigation Container - Bottom-fixed navigation with glass morphism effect */
+.nav-container {
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+  padding: var(--spacing-3) var(--spacing-10);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  margin: var(--spacing-0) auto var(--spacing-3) auto;
+  max-width: 470px;
+}
+
+.nav-container.scrolling {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Navigation Items */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.nav-item .search-container {
+  pointer-events: none;
+}
+
+.nav-item .search-icon {
+  pointer-events: all;
+}
+
+/* ============================================================================ */
+/* MOBILE NAVIGATION HOVER & ACTIVE STATES */
+/* ============================================================================ */
+
+/* Base state - all icons dimmed */
+.nav-icon,
+.nav-icon path,
+.nav-icon svg {
+  width: var(--spacing-5);
+  height: var(--spacing-5);
+  fill: var(--accent-dimmed);
+  stroke: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+/* Hover and active states - bright */
+.nav-item:hover .nav-icon,
+.nav-item:hover .nav-icon path,
+.nav-item:hover .nav-icon svg,
+.nav-item:active .nav-icon,
+.nav-item:active .nav-icon path,
+.nav-item.active .nav-icon,
+.nav-item.active .nav-icon path {
+  fill: var(--accent-bright);
+  stroke: var(--accent-bright);
+}
+
+/* Search icon */
+.search-icon svg {
+  stroke: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+.nav-item:hover .search-icon,
+.nav-item:hover .search-icon svg,
+.search-icon:hover,
+.search-icon:hover svg,
+.search-icon.active,
+.search-icon.active svg {
+  stroke: var(--accent-bright) !important;
+}
+
+/* Settings icon */
+.nav-item.settings .nav-icon {
+  fill: var(--accent-dimmed) !important;
+}
+
+.nav-item.settings:hover .nav-icon {
+  fill: var(--accent-bright) !important;
+}
+
+/* Settings icon active state */
+.nav-item.settings.active .nav-icon,
+.nav-item.settings.active a {
+  fill: var(--accent-bright) !important;
+  color: var(--accent-bright) !important;
+}
+
+/* Category modal items */
+.modal-category-item .modal-nav-icon {
+  stroke: var(--accent-dimmed);
+  fill: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+.modal-category-item:hover .modal-nav-icon {
+  stroke: var(--accent-bright);
+  fill: var(--accent-bright);
+}
+
+.modal-category-item:hover a {
+  color: var(--accent-bright);
+}
+
+/* Text-based nav items (no icons) */
+.nav-item a {
+  color: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+.nav-item:hover a,
+.nav-item.active a {
+  color: var(--accent-bright);
+}
+
+.modal-categories a {
+  color: var(--accent-dimmed);
+  transition: var(--transition-fast);
+}
+
+.modal-category-item:hover a {
+  color: var(--accent-bright);
+}
+
+/* ============================================================================ */
+/* RANDOM ANIMATION HOVER & ACTIVE STATES */
+/* ============================================================================ */
+
+/* Random Button Animation */
+a[href="#random"]:hover .nav-icon path {
+  animation: smooth-wave var(--duration-1000) var(--ease-in-out) infinite;
+}
+
+a[href="#random"]:hover .nav-icon path:nth-child(2) {
+  animation-delay: var(--duration-200);
+}
+
+a[href="#random"]:hover .nav-icon path:nth-child(3) {
+  animation-delay: var(--duration-300);
+}
+
+a[href="#random"]:hover .nav-icon path:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+@keyframes smooth-wave {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-1px) rotate(0.5deg);
+  }
+}
+
+/* Desktop Navigation - Horizontal navigation for larger screens */
+.desktop-nav-item {
+  position: relative;
+  padding: var(--spacing-2) var(--spacing-4);
+  transition: color var(--transition-base);
+}
+
+.desktop-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: var(--spacing-0);
+  height: 0.5px;
+  transition: all var(--duration-300) var(--ease-out);
+  transform: translateX(-50%);
+}
+
+/* Hide specific SVG icons temporarily */
+.desktop-nav-item[href="#health"] svg,
+.desktop-nav-item[href="#coins"] svg,
+.desktop-nav-item[href="#hack"] svg,
+.desktop-nav-item[href="#ai"] svg {
+  display: none;
+}
+
+.desktop-nav-item:hover::after,
+.desktop-nav-item.active::after,
+.desktop-actions .random-btn:hover::after,
+.desktop-actions .random-btn.active::after {
+  width: 100%;
+}
+
+.desktop-nav:hover .desktop-nav-item.active::after,
+.desktop-categories:hover .desktop-nav-item.active::after,
+.desktop-actions:hover .desktop-nav-item.active::after,
+.desktop-actions:hover .random-btn.active::after {
+  width: var(--spacing-0);
+}
+
+.desktop-categories:hover .desktop-nav-item:hover::after,
+.desktop-actions:hover .random-btn:hover::after {
+  width: 100%;
+}
+
+/* Category-Specific Underlines */
+.desktop-nav-item[href="#latest"]::after {
+  background: linear-gradient(to right, #87ceeb, #4169e1);
+}
+
+.desktop-nav-item[href="#health"]::after {
+  background: linear-gradient(to right, var(--color-health), #ff0000);
+}
+
+.desktop-nav-item[href="#coins"]::after {
+  background: linear-gradient(to right, var(--color-coins), #ff8c00);
+}
+
+.desktop-nav-item[href="#hack"]::after {
+  background: linear-gradient(to right, var(--color-hack), #ff1493);
+}
+
+.desktop-nav-item[href="#ai"]::after {
+  background: linear-gradient(to right, var(--color-ai), #4b0082);
+}
+
+.random-btn::after {
+  background: linear-gradient(to right, var(--color-random), #008000);
+}
+
+/* Navigation Icons in Desktop */
+.desktop-nav-item svg {
+  width: 19px;
+  height: 19px;
+  margin-right: var(--spacing-2);
+  fill: var(--icon-grey);
+  stroke: var(--icon-grey);
+  transition: var(--transition-fast);
+  vertical-align: center;
+}
+
+.desktop-nav-item:hover svg,
+.desktop-nav-item.active svg {
+  fill: var(--white);
+  stroke: var(--white);
+}
+
+/* Category Links */
+.categories li a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: var(--spacing-0);
+  height: 1px;
+  background: transparent;
+  transition: width var(--transition-base), left var(--transition-base);
+}
+
+.categories li a.active::after,
+.categories li a:hover::after {
+  width: 100%;
+  left: var(--spacing-0);
+}
+
+/* Random button flash animation */
+.nav-item[data-random-clicked] a,
+.nav-item[data-random-clicked] .nav-icon {
+  animation: randomFlash 0.6s ease-out;
+}
+
+@keyframes randomFlash {
+  0% {
+    color: var(--random-flash-primary);
+    fill: var(--random-flash-primary);
+    transform: scale(1);
+  }
+  25% {
+    color: var(--random-flash-secondary);
+    fill: var(--random-flash-secondary);
+    transform: scale(1.1);
+  }
+  50% {
+    color: var(--random-flash-primary);
+    fill: var(--random-flash-primary);
+    transform: scale(1.05);
+  }
+  75% {
+    color: var(--random-flash-secondary);
+    fill: var(--random-flash-secondary);
+    transform: scale(1.02);
+  }
+  100% {
+    color: var(--random-flash-primary);
+    fill: var(--random-flash-primary);
+    transform: scale(1);
+  }
+}
+
+/* ============================================================================ */
+/* MODAL COMPONENTS */
+/* ============================================================================ */
+
+/* Category Modal - Bottom slide-up modal for category selection */
+.category-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  height: 50px;
+  z-index: 101;
+  transform: translateY(-15px);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.4s ease-out;
+  pointer-events: none;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--spacing-0)
+    var(--spacing-0);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-3) var(--spacing-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-modal.active {
+  transform: translateY(-60px);
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.category-modal .modal-content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: none;
+  border-radius: var(--radius-lg) var(--radius-lg) var(--spacing-0)
+    var(--spacing-0);
+  box-shadow: var(--shadow-md);
+  border-top: 1px solid var(--glass-border);
+  padding: var(--spacing-2) var(--spacing-0);
+  min-height: 50px;
+  margin: var(--spacing-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal Categories List */
+.modal-categories {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: var(--spacing-0);
+  margin: var(--spacing-0);
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  align-items: center;
+  width: 100%;
+  gap: var(--spacing-12);
+}
+
+.modal-category-item {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1);
+  cursor: pointer;
+  padding-left: var(--spacing-2);
+  padding-right: var(--spacing-2);
+}
+
+.modal-categories a {
+  text-decoration: none;
+  color: var(--accent-dimmed);
+  transition: color var(--duration-300) var(--ease-out);
+  font-size: var(--font-size-sm);
+  pointer-events: none;
+}
+
+/* Settings Modal - Right-slide settings panel */
+.settings-modal {
+  position: fixed;
+  top: var(--spacing-0);
+  right: var(--spacing-0);
+  width: 300px;
+  height: 100vh;
+  z-index: 1100;
+  transform: translateX(100%);
+  transition: transform var(--duration-500) cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.settings-modal.active {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.settings-modal .modal-content {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(var(--glass-blur));
+  border: none;
+  border-radius: var(--radius-lg) var(--radius-lg) var(--spacing-0)
+    var(--spacing-0);
+  box-shadow: var(--shadow-md);
+  border-top: 1px solid var(--glass-border);
+  padding: var(--spacing-3) var(--spacing-0);
+  margin: var(--spacing-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.settings-modal .modal-content::before {
+  display: none;
+}

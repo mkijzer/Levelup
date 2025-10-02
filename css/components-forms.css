@@ -1,0 +1,453 @@
+/* ============================================================================ */
+/* components-forms.css - FORM AND SEARCH COMPONENTS */
+/* ============================================================================ */
+/* Description: Defines form elements, search functionality, and theme toggles. */
+/* Ensures interactive and accessible input styles. */
+/* Version: 4.1 */
+/* Author: Mike */
+/* Last Updated: September 2025 */
+/* ============================================================================ */
+
+/* Search Icon */
+.search-icon {
+  position: relative;
+  width: 21px;
+  height: 21px;
+  color: var(--accent-dimmed) !important;
+  cursor: pointer;
+  stroke: var(--accent-dimmed) !important;
+  fill: var(--accent-dimmed);
+  transition: stroke var(--transition-base), fill var(--transition-base);
+}
+
+.search-icon:hover,
+.search-icon.active {
+  stroke: var(--accent-color) !important;
+  fill: var(--accent-color) !important;
+}
+
+.search-bar-slide {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 60px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  padding: var(--spacing-3) var(--spacing-4);
+  transform: translateY(-100%);
+  transition: transform 0.4s ease-in-out;
+  z-index: 1500;
+  opacity: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar-slide.active {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Search Input Wrapper */
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: var(--spacing-0) var(--spacing-20) var(--spacing-0) var(--spacing-20);
+  opacity: 0;
+  transition: opacity var(--transition-base) var(--duration-200);
+}
+
+.search-bar-slide.active .search-input-wrapper {
+  opacity: 1;
+}
+
+.search-icon-small {
+  width: var(--spacing-2);
+  height: var(--spacing-2);
+  stroke: var(--icon-grey);
+  margin-right: var(--spacing-1);
+  flex-shrink: 0;
+}
+
+#search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  outline: none;
+  min-width: var(--spacing-0);
+  width: 100%;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+}
+
+#search-input::placeholder {
+  color: var(--text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+}
+
+/* Remove mobile tap highlights */
+.nav-item,
+.nav-item a,
+.nav-item button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ============================================================================ */
+/* SETTINGS MODAL COMPONENTS */
+/* ============================================================================ */
+
+/* Settings Content */
+.settings-content {
+  padding: var(--spacing-8) var(--spacing-6);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+}
+
+.settings-title {
+  color: var(--text-primary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-light);
+  margin: 0;
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.font-size-selectbox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  font-weight: var(--font-weight-light);
+  width: 50%;
+}
+
+.font-option {
+  padding: var(--spacing-1);
+  background: hsla(0, 0%, 100%, 0.01);
+  border: 0.5px solid hsla(0, 0%, 100%, 0.05);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: center;
+  backdrop-filter: none !important;
+  color: var(--text-secondary);
+}
+
+.font-option:hover {
+  background: hsla(200, 7%, 18%, 0.2);
+}
+
+.font-option.active {
+  background: hsla(200, 7%, 18%, 0.15);
+  border-color: var(--glass-border);
+}
+
+.font-preview {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  display: block;
+}
+
+.font-preview.small {
+  font-size: var(--font-size-xs);
+}
+
+.font-preview.medium {
+  font-size: var(--font-size-sm);
+}
+
+.font-preview.large {
+  font-size: var(--font-size-base);
+}
+
+/* Theme Toggle Components */
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+}
+
+.theme-label {
+  color: var(--white);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.theme-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-1);
+}
+
+.settings-close {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  width: var(--spacing-6);
+  height: var(--spacing-6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+  padding: 0;
+}
+
+.settings-close span {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  background: var(--accent-bright);
+  border-radius: 1px;
+  transition: all var(--duration-300) var(--ease-in-out);
+}
+
+.settings-close span:nth-child(1) {
+  animation: span-first-off var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close span:nth-child(2) {
+  animation: span-second-off var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close span:nth-child(3) {
+  animation: span-third-off var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close.on span:nth-child(1) {
+  animation: span-first-on var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close.on span:nth-child(2) {
+  animation: span-second-on var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+.settings-close.on span:nth-child(3) {
+  animation: span-third-on var(--duration-500) var(--ease-in-out);
+  animation-fill-mode: forwards;
+}
+
+@keyframes span-first-on {
+  0% {
+    transform: translate(-50%, -300%);
+  }
+  30% {
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+@keyframes span-first-off {
+  0% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  30% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -300%);
+  }
+}
+
+@keyframes span-second-on {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-150%, -50%) scale(0);
+  }
+}
+
+@keyframes span-second-off {
+  0% {
+    transform: translate(-150%, -50%) scale(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes span-third-on {
+  0% {
+    transform: translate(-50%, 200%);
+  }
+  30% {
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+@keyframes span-third-off {
+  0% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  30% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, 200%);
+  }
+}
+
+.settings-close:hover {
+  opacity: 1;
+}
+
+/* Theme Slider Component */
+.theme-slider {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: var(--spacing-16);
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.theme-slider input {
+  opacity: 0;
+  width: var(--spacing-0);
+  height: var(--spacing-0);
+}
+
+.theme-slider .slider {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--transition-base);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.theme-slider .slider::before,
+.theme-slider .slider::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  transition: color var(--transition-base);
+  z-index: 1;
+}
+
+.theme-slider .slider::before {
+  content: "☀️";
+  left: var(--spacing-2);
+}
+
+.theme-slider .slider::after {
+  content: "🌙";
+  right: var(--spacing-2);
+}
+
+.theme-slider .slider .slider-button {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: var(--white);
+  border-radius: var(--radius-full);
+  top: 2px;
+  left: 2px;
+  transition: transform var(--transition-base);
+  z-index: 2;
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-slider input:checked ~ .slider {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.theme-slider input:checked ~ .slider .slider-button {
+  transform: translateX(28px);
+}
+
+/* Settings Backdrop */
+.settings-backdrop {
+  position: fixed;
+  top: var(--spacing-0);
+  left: var(--spacing-0);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: calc(var(--z-docked) - 2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+  visibility: hidden;
+}
+
+.settings-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.close-settings-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  margin-top: auto;
+  margin-bottom: var(--spacing-8);
+}
+
+.close-settings-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

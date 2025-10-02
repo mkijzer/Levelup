@@ -559,6 +559,11 @@ async function initializeApp() {
  */
 function setupScrollBehavior() {
   try {
+    // Only apply scroll behavior on mobile and tablet, not desktop
+    if (window.innerWidth >= 1200) {
+      return;
+    }
+
     let lastScrollY = window.scrollY;
     let scrollTimeout;
     let touchTimeout;

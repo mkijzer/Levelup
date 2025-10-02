@@ -13,7 +13,11 @@
 @import url("layout.css");
 
 /* Component styles (buttons, cards, nav, etc.) */
-@import url("components.css");
+@import url("components-brand.css");
+@import url("components-nav.css");
+@import url("components-forms.css");
+@import url("components-cards.css");
+@import url("components-social.css");
 
 /* Theme-specific styles (light/dark mode) */
 @import url("themes.css");

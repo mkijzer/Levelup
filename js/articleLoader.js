@@ -59,13 +59,14 @@ function getArticlesByCategory(category) {
 function getCategoryArticlesExcludingLatest(category) {
   const latestArticleIds = new Set(getLatestThreeArticles().map((a) => a.id));
 
-  return articlesData
-    .filter((article) => {
-      const articleCategory = normalizeCategory(article.category || "");
-      return articleCategory === category && !latestArticleIds.has(article.id);
-    })
-    .slice(0, CONFIG.CATEGORY_GRID_SIZE)
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+  return articlesData.filter((article) => {
+    const articleCategory = normalizeCategory(article.category || "");
+    return articleCategory === category && !latestArticleIds.has(article.id);
+  });
+  sort((a, b) => new Date(b.date) - new Date(a.date)).slice(
+    0,
+    CONFIG.CATEGORY_GRID_SIZE
+  );
 }
 
 /**
@@ -74,6 +75,7 @@ function getCategoryArticlesExcludingLatest(category) {
 function getAllCategoryArticles(category) {
   return articlesData
     .filter((article) => normalizeCategory(article.category || "") === category)
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, CONFIG.INITIAL_CATEGORY_ARTICLES);
 }
 
