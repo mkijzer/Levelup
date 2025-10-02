@@ -1,12 +1,5 @@
-// ============================================================================
-// mostRead.js - ANIMATED MOST READ SECTION
-// ============================================================================
-
 import { articlesData } from "./articleLoader.js";
 import { formatDate, calculateReadingTime } from "./utils.js";
-
-let rotationTimer;
-let currentPositions = [1, 2, 3, 4, 5];
 
 export function populateMostRead() {
   const mostReadGrid = document.querySelector(".most-read-grid");
@@ -19,11 +12,8 @@ export function populateMostRead() {
   selectedArticles.forEach((article, index) => {
     if (mostReadCards[index]) {
       populateMostReadCard(mostReadCards[index], article);
-      mostReadCards[index].classList.add(`position-${currentPositions[index]}`);
     }
   });
-
-  startRotation();
 }
 
 function populateMostReadCard(card, article) {
@@ -48,29 +38,35 @@ function populateMostReadCard(card, article) {
   card.setAttribute("data-article-id", article.id);
 }
 
-function startRotation() {
-  if (rotationTimer) clearInterval(rotationTimer);
-
-  rotationTimer = setInterval(() => {
-    const cards = document.querySelectorAll(".most-read-card");
-
-    // Remove all position classes
-    cards.forEach((card) => {
-      for (let i = 1; i <= 5; i++) {
-        card.classList.remove(`position-${i}`);
-      }
-    });
-
-    // Rotate positions array
-    currentPositions.unshift(currentPositions.pop());
-
-    // Apply new position classes
-    cards.forEach((card, index) => {
-      card.classList.add(`position-${currentPositions[index]}`);
-    });
-  }, 3000);
-}
-
 export function refreshMostRead() {
   populateMostRead();
 }
+
+// Animation control functionality
+export function initAnimationControls() {
+  const toggleButton = document.getElementById("most-read-toggle");
+  const grid = document.querySelector(".most-read-grid");
+  const playIcon = toggleButton?.querySelector(".play-icon");
+  const pauseIcon = toggleButton?.querySelector(".pause-icon");
+
+  let isPaused = false;
+
+  toggleButton?.addEventListener("click", () => {
+    isPaused = !isPaused;
+
+    if (isPaused) {
+      grid.classList.add("paused");
+      playIcon.classList.remove("hidden");
+      pauseIcon.classList.add("hidden");
+      toggleButton.setAttribute("aria-label", "Play animation");
+    } else {
+      grid.classList.remove("paused");
+      playIcon.classList.add("hidden");
+      pauseIcon.classList.remove("hidden");
+      toggleButton.setAttribute("aria-label", "Pause animation");
+    }
+  });
+}
+
+// Initialize controls after populating
+initAnimationControls();

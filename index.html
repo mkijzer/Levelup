@@ -248,7 +248,24 @@
                 aria-labelledby="most-read-title"
               >
                 <header class="category-label">
-                  <h2 id="most-read-title">Most Read</h2>
+                  <div class="most-read-header">
+                    <h2 id="most-read-title">Most Read</h2>
+                    <button
+                      class="animation-control"
+                      id="most-read-toggle"
+                      aria-label="Pause animation"
+                    >
+                      <div class="play-icon hidden">
+                        <div class="triangle"></div>
+                      </div>
+                      <div class="pause-icon">
+                        <div class="pause-lines">
+                          <div class="pause-line"></div>
+                          <div class="pause-line"></div>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
                 </header>
                 <div class="most-read-grid">
                   <article
@@ -811,5 +828,6 @@
     <script type="module" src="js/articleCards.js"></script>
     <script type="module" src="js/settings.js"></script>
     <script type="module" src="js/mostRead.js"></script>
+    <script type="module" src="js/parallax.js"></script>
   </body>
 </html>

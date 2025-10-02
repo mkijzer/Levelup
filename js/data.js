@@ -62,6 +62,8 @@ import { initializeQuotes } from "./quotes.js";
 
 import { initializeScrollAnimations } from "./scroll-animations.js";
 
+import { initParallaxHover } from "./parallax.js";
+
 // ============================================================================
 // DOM Element Getters
 // ============================================================================
@@ -632,3 +634,6 @@ window.switchToCategory = switchToCategory; // already imported from navigation.
 window.switchToCategory = switchToCategory;
 
 // Now modal.js can call window.loadCategory(category) safely
+
+// Initialize after articles are loaded
+initParallaxHover();
