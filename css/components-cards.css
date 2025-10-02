@@ -938,9 +938,21 @@ body:has(.article-view:not(.hidden)) .article-header {
   text-align: left;
 }
 
+.most-read-grid {
+  position: relative;
+  overflow: hidden;
+  height: 350px;
+}
+
 /* Most Read Card */
 .most-read-card {
   display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all 1s ease-in-out;
+  transform-origin: center;
   flex-direction: row;
   align-items: center;
   padding: var(--spacing-3);
@@ -951,6 +963,42 @@ body:has(.article-view:not(.hidden)) .article-header {
   cursor: pointer;
   min-height: 70px;
   width: 100%;
+}
+
+/* Position and blur states */
+.most-read-card.position-1 {
+  transform: translateY(0px);
+  filter: blur(0px);
+  opacity: 1;
+  z-index: 5;
+}
+
+.most-read-card.position-2 {
+  transform: translateY(70px);
+  filter: blur(1px);
+  opacity: 0.8;
+  z-index: 4;
+}
+
+.most-read-card.position-3 {
+  transform: translateY(140px);
+  filter: blur(2px);
+  opacity: 0.6;
+  z-index: 3;
+}
+
+.most-read-card.position-4 {
+  transform: translateY(210px);
+  filter: blur(3px);
+  opacity: 0.4;
+  z-index: 2;
+}
+
+.most-read-card.position-5 {
+  transform: translateY(280px);
+  filter: blur(4px);
+  opacity: 0.2;
+  z-index: 1;
 }
 
 .most-read-card:hover {
