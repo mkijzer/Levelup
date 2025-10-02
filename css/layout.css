@@ -494,6 +494,10 @@ header {
     width: var(--spacing-2);
   }
 
+  main {
+    margin-top: var(--spacing-24);
+  }
+
   /* Desktop grid layouts */
   .bento-grid {
     display: grid;
@@ -515,6 +519,7 @@ header {
     grid-column: 2;
     grid-row: 1;
     display: block;
+    margin-left: var(--spacing-12);
   }
 
   .side-by-side-container {
@@ -562,6 +567,15 @@ header {
     position: relative;
     z-index: var(--z-popover);
     color: var(--white);
+    /* display: none; */
+  }
+
+  /* Hide specific SVG icons temporarily */
+  .desktop-nav-item[href="#health"] svg,
+  .desktop-nav-item[href="#coins"] svg,
+  .desktop-nav-item[href="#hack"] svg,
+  .desktop-nav-item[href="#ai"] svg {
+    display: none;
   }
 
   .desktop-nav-item:hover::after,
@@ -605,6 +619,38 @@ header {
   .quote.debug-quote + .divider {
     display: none;
   }
+}
+
+/* Desktop search icon in navbar */
+.desktop-search-spacer {
+  width: var(--spacing-12); /* Triple spacing */
+}
+
+.desktop-search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desktop-search-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--accent-dimmed);
+  transition: stroke var(--transition-base);
+}
+
+.desktop-search-icon:hover svg {
+  stroke: var(--accent-color);
+}
+
+.desktop-search-icon.active svg {
+  stroke: var(--accent-bright);
 }
 
 /* ============================================================================ */

@@ -339,6 +339,18 @@ class SearchManager {
   }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const desktopSearchIcon = document.querySelector(".desktop-search-icon");
+  const searchBar = document.querySelector(".search-bar-slide");
+
+  if (desktopSearchIcon && searchBar) {
+    desktopSearchIcon.addEventListener("click", function () {
+      searchBar.classList.toggle("active");
+      desktopSearchIcon.classList.toggle("active");
+    });
+  }
+});
+
 // ============================================================================
 // Initialization
 // ============================================================================
