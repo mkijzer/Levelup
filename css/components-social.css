@@ -305,11 +305,6 @@
   }
 
   /* Desktop nav item styling */
-  .desktop-nav-item {
-    position: relative;
-    z-index: var(--z-popover);
-    color: var(--white);
-  }
 
   /* Desktop search icon in navbar */
   .desktop-search-spacer {
@@ -334,21 +329,12 @@
     stroke: var(--accent-dimmed);
     transition: stroke var(--transition-base);
   }
-
   .desktop-search-icon:hover svg {
-    stroke: var(--accent-color);
+    stroke: var(--accent-bright);
   }
 
   .desktop-search-icon.active svg {
     stroke: var(--accent-bright);
-  }
-
-  .main-title {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-  }
-
-  .desktop-nav {
-    margin-top: -50px;
   }
 
   .desktop-nav-item {

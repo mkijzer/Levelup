@@ -152,12 +152,23 @@ function setupScrollHandler() {
     }
   }
 
-  // Remove any existing listener first
-  if (activeScrollListener && activeScrollTarget) {
-    activeScrollTarget.removeEventListener("scroll", activeScrollListener);
-    activeScrollListener = null;
-    activeScrollTarget = null;
+  // CRITICAL: Remove ALL possible existing listeners first
+  if (activeScrollListener) {
+    // Remove from the tracked target
+    if (activeScrollTarget) {
+      activeScrollTarget.removeEventListener("scroll", activeScrollListener);
+    }
+    // Also remove from both possible targets to be absolutely sure
+    window.removeEventListener("scroll", activeScrollListener);
+    const categoryView = document.querySelector(".category-page-view");
+    if (categoryView) {
+      categoryView.removeEventListener("scroll", activeScrollListener);
+    }
   }
+
+  // Reset tracking variables
+  activeScrollListener = handleScroll;
+  activeScrollTarget = null;
 
   // Check if we're on a category page
   const categoryView = document.querySelector(".category-page-view");
@@ -167,13 +178,11 @@ function setupScrollHandler() {
   if (isOnCategoryPage) {
     // Only listen to category page scroll
     categoryView.addEventListener("scroll", handleScroll, { passive: true });
-    activeScrollListener = handleScroll;
     activeScrollTarget = categoryView;
     console.log("Scroll listener attached to category page");
   } else {
     // Only listen to window scroll
     window.addEventListener("scroll", handleScroll, { passive: true });
-    activeScrollListener = handleScroll;
     activeScrollTarget = window;
     console.log("Scroll listener attached to window");
   }
@@ -183,12 +192,18 @@ function setupScrollHandler() {
  * Cleanup function - call when page changes
  */
 export function cleanupScrollAnimations() {
-  // Remove active scroll listener
-  if (activeScrollListener && activeScrollTarget) {
-    activeScrollTarget.removeEventListener("scroll", activeScrollListener);
-    activeScrollListener = null;
-    activeScrollTarget = null;
+  // Remove active scroll listener from all possible targets
+  if (activeScrollListener) {
+    window.removeEventListener("scroll", activeScrollListener);
+    const categoryView = document.querySelector(".category-page-view");
+    if (categoryView) {
+      categoryView.removeEventListener("scroll", activeScrollListener);
+    }
   }
+
+  // Reset tracking variables
+  activeScrollListener = null;
+  activeScrollTarget = null;
 
   // Remove animation classes from all quote containers
   const quoteContainers = document.querySelectorAll(".quote-container");

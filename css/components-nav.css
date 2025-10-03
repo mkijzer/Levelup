@@ -2,11 +2,17 @@
 /* components-nav.css - NAVIGATION COMPONENTS */
 /* ============================================================================ */
 /* Description: Defines navigation-related styles for mobile and desktop layouts. */
-/* Ensures modularity and responsive navigation. */
-/* Version: 4.1 */
+/* Ensures modularity and responsive navigation with hover/active states, animations, */
+/* and modal interactions. All styles use CSS variables for consistency. */
+/* Version: 4.2 - Reorganized for logical flow with enhanced comments */
 /* Author: Mike */
-/* Last Updated: September 2025 */
+/* Last Updated: October 2025 */
 /* ============================================================================ */
+
+/* ============================================================================ */
+/* MOBILE NAVIGATION */
+/* ============================================================================ */
+/* Core mobile bottom navigation with glassmorphism effects, items, and interactions. */
 
 /* Mobile Navigation Container - Bottom-fixed navigation with glass morphism effect */
 .nav-container {
@@ -20,11 +26,12 @@
   max-width: 470px;
 }
 
+/* Scrolling state variation for lighter glass effect */
 .nav-container.scrolling {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Navigation Items */
+/* Navigation Items - Flex layout for icons and labels */
 .nav-item {
   display: flex;
   flex-direction: column;
@@ -35,6 +42,7 @@
   min-height: 44px;
 }
 
+/* Pointer events for search sub-elements */
 .nav-item .search-container {
   pointer-events: none;
 }
@@ -46,6 +54,7 @@
 /* ============================================================================ */
 /* MOBILE NAVIGATION HOVER & ACTIVE STATES */
 /* ============================================================================ */
+/* Handles dimmed-to-bright transitions for icons, text, and specific elements. */
 
 /* Base state - all icons dimmed */
 .nav-icon,
@@ -70,7 +79,7 @@
   stroke: var(--accent-bright);
 }
 
-/* Search icon */
+/* Search icon - Specific stroke-based interactions */
 .search-icon svg {
   stroke: var(--accent-dimmed);
   transition: var(--transition-fast);
@@ -85,7 +94,7 @@
   stroke: var(--accent-bright) !important;
 }
 
-/* Settings icon */
+/* Settings icon - Override for settings-specific states */
 .nav-item.settings .nav-icon {
   fill: var(--accent-dimmed) !important;
 }
@@ -101,7 +110,7 @@
   color: var(--accent-bright) !important;
 }
 
-/* Category modal items */
+/* Category modal items - Icon and link states */
 .modal-category-item .modal-nav-icon {
   stroke: var(--accent-dimmed);
   fill: var(--accent-dimmed);
@@ -138,10 +147,10 @@
 }
 
 /* ============================================================================ */
-/* RANDOM ANIMATION HOVER & ACTIVE STATES */
+/* MOBILE RANDOM ANIMATION */
 /* ============================================================================ */
+/* Wave animation for random button hover effect. */
 
-/* Random Button Animation */
 a[href="#random"]:hover .nav-icon path {
   animation: smooth-wave var(--duration-1000) var(--ease-in-out) infinite;
 }
@@ -168,13 +177,48 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   }
 }
 
-/* Desktop Navigation - Horizontal navigation for larger screens */
+/* ============================================================================ */
+/* DESKTOP NAVIGATION */
+/* ============================================================================ */
+/* Horizontal desktop nav with underlines, icons, and flash animations. */
+
+/* Desktop Navigation - Base state (all items dimmed yellow) */
 .desktop-nav-item {
   position: relative;
   padding: var(--spacing-2) var(--spacing-4);
   transition: color var(--transition-base);
+  color: var(--accent-dimmed);
+  font-size: calc(var(--font-size-base) * 0.9);
 }
 
+/* Desktop Navigation - Hover state (bright yellow) */
+.desktop-nav-item:hover {
+  color: var(--accent-bright);
+}
+
+/* Desktop Navigation - Active state (bright yellow) */
+.desktop-nav-item.active {
+  color: var(--accent-bright);
+}
+
+/* Desktop Navigation SVG Icons */
+.desktop-nav-item svg {
+  width: 19px;
+  height: 19px;
+  margin-right: var(--spacing-2);
+  fill: var(--accent-dimmed) !important;
+  stroke: var(--accent-dimmed) !important;
+  transition: var(--transition-fast);
+  vertical-align: center;
+}
+
+.desktop-nav-item:hover svg,
+.desktop-nav-item.active svg {
+  fill: var(--accent-bright) !important;
+  stroke: var(--accent-bright) !important;
+}
+
+/* Desktop Navigation Underlines */
 .desktop-nav-item::after {
   content: "";
   position: absolute;
@@ -194,68 +238,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   display: none;
 }
 
-.desktop-nav-item:hover::after,
-.desktop-nav-item.active::after,
-.desktop-actions .random-btn:hover::after,
-.desktop-actions .random-btn.active::after {
-  width: 100%;
-}
-
-.desktop-nav:hover .desktop-nav-item.active::after,
-.desktop-categories:hover .desktop-nav-item.active::after,
-.desktop-actions:hover .desktop-nav-item.active::after,
-.desktop-actions:hover .random-btn.active::after {
-  width: var(--spacing-0);
-}
-
-.desktop-categories:hover .desktop-nav-item:hover::after,
-.desktop-actions:hover .random-btn:hover::after {
-  width: 100%;
-}
-
-/* Category-Specific Underlines */
-.desktop-nav-item[href="#latest"]::after {
-  background: linear-gradient(to right, #87ceeb, #4169e1);
-}
-
-.desktop-nav-item[href="#health"]::after {
-  background: linear-gradient(to right, var(--color-health), #ff0000);
-}
-
-.desktop-nav-item[href="#coins"]::after {
-  background: linear-gradient(to right, var(--color-coins), #ff8c00);
-}
-
-.desktop-nav-item[href="#hack"]::after {
-  background: linear-gradient(to right, var(--color-hack), #ff1493);
-}
-
-.desktop-nav-item[href="#ai"]::after {
-  background: linear-gradient(to right, var(--color-ai), #4b0082);
-}
-
-.random-btn::after {
-  background: linear-gradient(to right, var(--color-random), #008000);
-}
-
-/* Navigation Icons in Desktop */
-.desktop-nav-item svg {
-  width: 19px;
-  height: 19px;
-  margin-right: var(--spacing-2);
-  fill: var(--icon-grey);
-  stroke: var(--icon-grey);
-  transition: var(--transition-fast);
-  vertical-align: center;
-}
-
-.desktop-nav-item:hover svg,
-.desktop-nav-item.active svg {
-  fill: var(--white);
-  stroke: var(--white);
-}
-
-/* Category Links */
+/* Category Links - Underline effects for mobile categories */
 .categories li a::after {
   content: "";
   position: absolute;
@@ -307,9 +290,42 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   }
 }
 
+/* Desktop search icon in navbar */
+.desktop-search-spacer {
+  width: var(--spacing-12);
+}
+
+.desktop-search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desktop-search-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--accent-dimmed);
+  transition: stroke var(--transition-base);
+}
+
+.desktop-search-icon:hover svg {
+  stroke: var(--accent-bright);
+}
+
+.desktop-search-icon.active svg {
+  stroke: var(--accent-bright);
+}
+
 /* ============================================================================ */
 /* MODAL COMPONENTS */
 /* ============================================================================ */
+/* Slide-up category modal and right-slide settings panel with glass effects. */
 
 /* Category Modal - Bottom slide-up modal for category selection */
 .category-modal {

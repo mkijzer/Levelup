@@ -1,7 +1,10 @@
-// Parallax hover effect for article images
 export function initParallaxHover() {
+  // Only run on desktop
+  if (window.innerWidth < 1200) return;
+
+  // Target all article cards except carousel and most-read
   const articleCards = document.querySelectorAll(
-    ".article-card:not(.most-read-card)"
+    ".article-card:not(.carousel-card):not(.most-read-card)"
   );
 
   articleCards.forEach((card) => {
@@ -13,18 +16,14 @@ export function initParallaxHover() {
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-
-      // Calculate offset (opposite direction, scaled down)
-      const moveX = (centerX - mouseX) * 0.02;
-      const moveY = (centerY - mouseY) * 0.02;
+      const moveX = (centerX - e.clientX) * 0.02;
+      const moveY = (centerY - e.clientY) * 0.02;
 
       image.style.transform = `translate(${moveX}px, ${moveY}px)`;
     });
 
     card.addEventListener("mouseleave", () => {
-      image.style.transform = "translate(0px, 0px) scale(1)";
+      image.style.transform = "translate(0px, 0px)";
     });
   });
 }

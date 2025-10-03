@@ -2,7 +2,7 @@
 // data.js - MAIN COORDINATOR
 // ============================================================================
 // Description: Main coordinator for the application, handles initialization and coordination
-// Version: 4.2 - Complete modal fix with proper initialization
+// Version: 4.3 - Added parallax reinitialization for all content updates
 // ============================================================================
 
 import {
@@ -137,6 +137,11 @@ export async function loadCategory(category) {
   window.scrollTo(0, 0);
   updateDesktopNavigation(category);
 
+  // Reinitialize parallax for new content on desktop
+  if (window.innerWidth >= 1200) {
+    initParallaxHover();
+  }
+
   // Reinitialize scroll animations for main view
   import("./scroll-animations.js").then((module) => {
     module.cleanupScrollAnimations();
@@ -226,6 +231,11 @@ export async function loadSearchResults(query) {
       loadMoreButton.addEventListener("click", loadMoreSearchResults);
       searchContainer.after(loadMoreButton);
     }
+
+    // Reinitialize parallax for search results on desktop
+    if (window.innerWidth >= 1200) {
+      initParallaxHover();
+    }
   }
 }
 
@@ -269,6 +279,11 @@ async function loadMoreSearchResults() {
   if (endIndex >= allResultIds.length) {
     loadMoreButton.remove();
   }
+
+  // Reinitialize parallax for new search results on desktop
+  if (window.innerWidth >= 1200) {
+    initParallaxHover();
+  }
 }
 
 /**
@@ -302,6 +317,11 @@ export async function loadCategoryPage(category) {
     categoryPageView.scrollTop = 0;
   }
 
+  // Reinitialize parallax for category page on desktop
+  if (window.innerWidth >= 1200) {
+    initParallaxHover();
+  }
+
   // Add scroll animations for category page - delay to ensure DOM is ready
   setTimeout(() => {
     import("./scroll-animations.js").then((module) => {
@@ -325,6 +345,12 @@ export function loadRandomArticle() {
 
   const randomArticle = getRandomArticle();
   showArticleView(randomArticle.id);
+
+  // Add scroll animations reinitialization (same as loadCategory)
+  import("./scroll-animations.js").then((module) => {
+    module.cleanupScrollAnimations();
+    module.initializeScrollAnimations();
+  });
 }
 
 // ============================================================================
@@ -547,6 +573,12 @@ async function initializeApp() {
     // Setup all systems
     setupEventDelegation();
     await populateCategoryGrids();
+
+    // Initialize parallax after category grids are populated on desktop
+    if (window.innerWidth >= 1200) {
+      initParallaxHover();
+    }
+
     setupNavigation();
     initializeScrollAnimations();
     addIcons();
@@ -649,6 +681,3 @@ window.switchToCategory = switchToCategory; // already imported from navigation.
 window.switchToCategory = switchToCategory;
 
 // Now modal.js can call window.loadCategory(category) safely
-
-// Initialize after articles are loaded
-initParallaxHover();

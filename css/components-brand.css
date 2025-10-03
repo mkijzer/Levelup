@@ -10,7 +10,7 @@
 
 /* Main Brand Title - Primary brand header with gradient text effect and flexible layout */
 .main-title {
-  font-size: var(--font-size-3xl);
+  font-size: clamp(1.5rem, 4vw, 4rem) !important;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-display);
   letter-spacing: var(--spacing-0);
@@ -36,7 +36,7 @@
 /* Brand Subtitle - Decorative script text with custom styling */
 .subtitle {
   font-family: var(--font-script);
-  font-size: var(--font-size-sm);
+  font-size: clamp(0.8rem, 2vw, 1.5rem) !important;
   font-style: italic;
   background: none !important;
   -webkit-text-fill-color: #f34343 !important;
