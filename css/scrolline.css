@@ -8,35 +8,25 @@
   height: 100vh;
   z-index: 1000;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 69, 0, 0),
-    rgba(255, 140, 0, 0),
-    rgba(255, 105, 180, 0)
-  );
+  background: linear-gradient(to bottom, #ff4500, #ff8c00, #ff69b4);
   opacity: 0; /* Invisible at start */
-  transition: opacity 0.5s ease, filter 0.5s ease, background 0.5s ease; /* Smooth transition */
-  filter: blur(2px); /* Blurred initially */
-  z-index: 1001; /* Ensure line is in front of light */
-}
-.scroll-line.visible {
-  opacity: 0.4; /* Gradual visibility */
-  filter: blur(0px); /* Sharpens smoothly */
-  background: linear-gradient(
+  transition: opacity 0.3s ease;
+  mask: linear-gradient(
     to bottom,
-    rgba(255, 69, 0, 0),
-    rgba(255, 140, 0, 0.2),
-    rgba(255, 105, 180, 0.4)
-  );
+    transparent 0%,
+    black calc(var(--light-position) - 5%),
+    black calc(var(--light-position) + 5%),
+    transparent 100%
+  ); /* Fade out top of light, in at bottom */
+  z-index: 1001; /* Line in front of light */
 }
 .scroll-line::before {
   content: "";
   position: absolute;
-  top: var(--light-position, 50%);
+  top: var(--thumb-position, 0px);
   left: -25px;
   width: 50px;
-  height: 100px;
-  transform: translateY(-50px);
+  height: var(--thumb-height, 100px);
   background: radial-gradient(
     ellipse 20px 40px at center,
     rgba(255, 255, 255, 0.6) 0%,
@@ -46,12 +36,7 @@
     transparent 600%
   );
   filter: brightness(1.2);
-  opacity: 1; /* Fully visible and bright from start */
   z-index: 1000; /* Light behind line */
-  /* No transition to keep light constant */
-}
-.scroll-line.visible::before {
-  opacity: 1; /* Maintain full visibility */
 }
 /* Desktop only */
 @media (max-width: 1199px) {

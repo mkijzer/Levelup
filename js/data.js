@@ -136,6 +136,12 @@ export async function loadCategory(category) {
   await populateMainLayout(articles, elements);
   window.scrollTo(0, 0);
   updateDesktopNavigation(category);
+
+  // Reinitialize scroll animations for main view
+  import("./scroll-animations.js").then((module) => {
+    module.cleanupScrollAnimations();
+    module.initializeScrollAnimations();
+  });
 }
 
 /**
@@ -295,6 +301,14 @@ export async function loadCategoryPage(category) {
   if (categoryPageView) {
     categoryPageView.scrollTop = 0;
   }
+
+  // Add scroll animations for category page - delay to ensure DOM is ready
+  setTimeout(() => {
+    import("./scroll-animations.js").then((module) => {
+      module.cleanupScrollAnimations();
+      module.initializeScrollAnimations();
+    });
+  }, 100);
 }
 
 /**
@@ -312,6 +326,7 @@ export function loadRandomArticle() {
   const randomArticle = getRandomArticle();
   showArticleView(randomArticle.id);
 }
+
 // ============================================================================
 // UI State Management
 // ============================================================================

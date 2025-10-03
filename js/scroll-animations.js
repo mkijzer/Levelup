@@ -4,13 +4,17 @@
  * ============================================================================
  * Description: Handles scroll-triggered animations using Intersection Observer API
  * Features: Quote grow animation, scroll line, smooth transitions, performance optimized
- * Version: 1.1
+ * Version: 1.3 - Fixed single scroll listener with proper cleanup
  * Author: Mike
  * ============================================================================
  */
 
 // Scroll line element
 let scrollLine = null;
+
+// Track active listeners for proper cleanup
+let activeScrollListener = null;
+let activeScrollTarget = null;
 
 /**
  * Initialize all scroll animations
@@ -82,48 +86,65 @@ function initScrollLine() {
 /**
  * Update scroll line position and fade effect
  */
-function updateScrollLine(scrollPercentage) {
+function updateScrollLine(
+  scrollPercentage,
+  scrollY,
+  totalHeight,
+  viewportHeight
+) {
   if (!scrollLine) return;
 
-  // Calculate light position (starts at center, moves with scroll)
-  const centerOffset = 0.5;
-  const lightPosition = (centerOffset + (scrollPercentage - 0.5) * 0.8) * 100;
+  const thumbHeight = (viewportHeight / totalHeight) * viewportHeight;
+  const thumbPosition =
+    (scrollY * (viewportHeight - thumbHeight)) / (totalHeight - viewportHeight);
 
-  // Smooth fade in on scroll
-  if (scrollPercentage > 0) {
-    scrollLine.classList.add("visible");
-    const opacity = Math.min(0.4, scrollPercentage * 0.8); // Gradual increase
-    scrollLine.style.opacity = opacity;
-    scrollLine.style.filter = `blur(${Math.max(
-      0,
-      2 - scrollPercentage * 4
-    )}px)`;
-  } else {
-    scrollLine.classList.remove("visible");
-    scrollLine.style.opacity = 0;
-    scrollLine.style.filter = "blur(2px)";
-  }
+  scrollLine.style.setProperty("--thumb-height", `${thumbHeight}px`);
+  scrollLine.style.setProperty("--thumb-position", `${thumbPosition}px`);
 
-  // Update light position
-  scrollLine.style.setProperty("--light-position", `${lightPosition}%`);
+  // Exponential curve based on thumb size
+  const thumbFactor = thumbHeight / viewportHeight; // 0.1 to 1.0
+  const curve = 1 + thumbFactor * 2; // 1.1 to 3.0
+  const scrollProgress = scrollY / (totalHeight - viewportHeight);
+  const opacity = Math.min(0.4, Math.pow(scrollProgress, 1 / curve) * 0.4);
+
+  scrollLine.style.opacity = opacity;
 }
 
 /**
- * Setup scroll event handler
+ * Setup scroll event handler - only one listener at a time
  */
 function setupScrollHandler() {
   let ticking = false;
 
-  function handleScroll() {
+  function handleScroll(event) {
     if (!ticking) {
       requestAnimationFrame(() => {
-        // Calculate scroll percentage
-        const scrollPercentage =
-          window.scrollY /
-          (document.documentElement.scrollHeight - window.innerHeight);
+        // Determine scroll values based on scroll source
+        let scrollY, totalHeight, viewportHeight;
 
-        // Update scroll line
-        updateScrollLine(scrollPercentage);
+        if (event.target === window || event.target === document) {
+          // Window scroll (normal pages)
+          scrollY = window.scrollY;
+          totalHeight = document.documentElement.scrollHeight;
+          viewportHeight = window.innerHeight;
+        } else {
+          // Category page container scroll
+          const container = event.target;
+          scrollY = container.scrollTop;
+          totalHeight = container.scrollHeight;
+          viewportHeight = container.clientHeight;
+        }
+
+        // Calculate scroll percentage
+        const scrollPercentage = scrollY / (totalHeight - viewportHeight);
+
+        // Update scroll line with correct values
+        updateScrollLine(
+          scrollPercentage,
+          scrollY,
+          totalHeight,
+          viewportHeight
+        );
 
         ticking = false;
       });
@@ -131,14 +152,44 @@ function setupScrollHandler() {
     }
   }
 
-  // Add scroll event listener
-  window.addEventListener("scroll", handleScroll, { passive: true });
+  // Remove any existing listener first
+  if (activeScrollListener && activeScrollTarget) {
+    activeScrollTarget.removeEventListener("scroll", activeScrollListener);
+    activeScrollListener = null;
+    activeScrollTarget = null;
+  }
+
+  // Check if we're on a category page
+  const categoryView = document.querySelector(".category-page-view");
+  const isOnCategoryPage =
+    categoryView && !categoryView.classList.contains("hidden");
+
+  if (isOnCategoryPage) {
+    // Only listen to category page scroll
+    categoryView.addEventListener("scroll", handleScroll, { passive: true });
+    activeScrollListener = handleScroll;
+    activeScrollTarget = categoryView;
+    console.log("Scroll listener attached to category page");
+  } else {
+    // Only listen to window scroll
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    activeScrollListener = handleScroll;
+    activeScrollTarget = window;
+    console.log("Scroll listener attached to window");
+  }
 }
 
 /**
  * Cleanup function - call when page changes
  */
 export function cleanupScrollAnimations() {
+  // Remove active scroll listener
+  if (activeScrollListener && activeScrollTarget) {
+    activeScrollTarget.removeEventListener("scroll", activeScrollListener);
+    activeScrollListener = null;
+    activeScrollTarget = null;
+  }
+
   // Remove animation classes from all quote containers
   const quoteContainers = document.querySelectorAll(".quote-container");
   quoteContainers.forEach((container) => {
