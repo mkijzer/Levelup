@@ -352,45 +352,68 @@ function createFallbackContent(article) {
 function populateArticleTags(tagsElement, tags) {
   tagsElement.innerHTML = "";
 
-  // Sort tags by length (longest to shortest)
-  const sortedTags = [...tags].sort((a, b) => b.length - a.length);
+  // Check if we're on desktop
+  const isDesktop = window.innerWidth >= 1200;
 
-  // Create pyramid structure: bottom (3), middle (2), top (1)
-  const rows = [
-    { tags: sortedTags.slice(5, 6), className: "tag-row-top" },
-    { tags: sortedTags.slice(3, 5), className: "tag-row-middle" },
-    { tags: sortedTags.slice(0, 3), className: "tag-row-bottom" },
-  ];
+  if (isDesktop) {
+    // Desktop: display tags in a single row
+    tags.forEach((tag) => {
+      const tagElement = document.createElement("span");
+      tagElement.className = "tag";
+      tagElement.textContent = tag;
 
-  // Create each row
-  rows.forEach(({ tags: rowTags, className }) => {
-    if (rowTags.length > 0) {
-      const rowContainer = document.createElement("div");
-      rowContainer.className = `tag-row ${className}`;
-
-      rowTags.forEach((tag) => {
-        const tagElement = document.createElement("span");
-        tagElement.className = "tag";
-        tagElement.textContent = tag;
-
-        tagElement.addEventListener("click", () => {
-          const hasResults = checkTagHasResults(tag);
-          if (hasResults) {
-            tagElement.classList.add("clicked");
-            setTimeout(() => {
-              searchArticlesByTag(tag);
-            }, 250);
-          } else {
-            showNoTagResultsMessage(tag);
-          }
-        });
-
-        rowContainer.appendChild(tagElement);
+      tagElement.addEventListener("click", () => {
+        const hasResults = checkTagHasResults(tag);
+        if (hasResults) {
+          tagElement.classList.add("clicked");
+          setTimeout(() => {
+            searchArticlesByTag(tag);
+          }, 250);
+        } else {
+          showNoTagResultsMessage(tag);
+        }
       });
 
-      tagsElement.appendChild(rowContainer);
-    }
-  });
+      tagsElement.appendChild(tagElement);
+    });
+  } else {
+    // Mobile: keep triangle pattern
+    const sortedTags = [...tags].sort((a, b) => b.length - a.length);
+    const rows = [
+      { tags: sortedTags.slice(5, 6), className: "tag-row-top" },
+      { tags: sortedTags.slice(3, 5), className: "tag-row-middle" },
+      { tags: sortedTags.slice(0, 3), className: "tag-row-bottom" },
+    ];
+
+    rows.forEach(({ tags: rowTags, className }) => {
+      if (rowTags.length > 0) {
+        const rowContainer = document.createElement("div");
+        rowContainer.className = `tag-row ${className}`;
+
+        rowTags.forEach((tag) => {
+          const tagElement = document.createElement("span");
+          tagElement.className = "tag";
+          tagElement.textContent = tag;
+
+          tagElement.addEventListener("click", () => {
+            const hasResults = checkTagHasResults(tag);
+            if (hasResults) {
+              tagElement.classList.add("clicked");
+              setTimeout(() => {
+                searchArticlesByTag(tag);
+              }, 250);
+            } else {
+              showNoTagResultsMessage(tag);
+            }
+          });
+
+          rowContainer.appendChild(tagElement);
+        });
+
+        tagsElement.appendChild(rowContainer);
+      }
+    });
+  }
 }
 /**
  * Check if tag has results (excluding current article)

@@ -13,15 +13,23 @@
 @import url("layout.css");
 
 /* Component styles (buttons, cards, nav, etc.) */
-@import url("components-brand.css");
-@import url("components-nav.css");
-@import url("components-forms.css");
-@import url("components-cards.css");
-@import url("components-social.css");
+@import url("base.css");
+@import url("brand.css");
+@import url("cards.css");
+@import url("errors.css");
+@import url("forms.css");
+@import url("layout.css");
+@import url("loaders.css");
+@import url("nav.css");
+@import url("reset.css");
+@import url("responsive.css");
 @import url("scrolline.css");
-
+@import url("social.css");
+@import url("style.css");
 /* Theme-specific styles (light/dark mode) */
 @import url("themes.css");
+@import url("utils.css");
+@import url("variables.css");
 
 /* Custom font */
 @font-face {

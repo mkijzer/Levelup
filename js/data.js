@@ -637,18 +637,23 @@ function setupScrollBehavior() {
       if (!header) return;
 
       const currentScrollY = window.scrollY;
+      const scrollDifference = Math.abs(currentScrollY - lastScrollY);
 
       // Add scrolling class (lighter glass)
       header.classList.add("scrolling");
       if (navbar) navbar.classList.add("scrolling");
 
-      // Hide header when scrolling down, show only when scrolling up
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        header.classList.add("hide-header");
-      }
-      // Only show when actively scrolling up
-      else if (currentScrollY < lastScrollY) {
-        header.classList.remove("hide-header");
+      // Only hide/show if scroll difference is significant (adds margin)
+      if (scrollDifference > 15) {
+        // Add scroll margin
+        // Hide header when scrolling down, show only when scrolling up
+        if (currentScrollY > lastScrollY && currentScrollY > 50) {
+          header.classList.add("hide-header");
+        }
+        // Only show when actively scrolling up
+        else if (currentScrollY < lastScrollY) {
+          header.classList.remove("hide-header");
+        }
       }
 
       lastScrollY = currentScrollY;

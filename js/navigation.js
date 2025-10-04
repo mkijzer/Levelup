@@ -58,6 +58,16 @@ export function setupNavigation() {
 // Set initial active state for home/latest
 updateMobileNavigation("latest");
 
+// Setup category "More" links
+document.querySelectorAll(".category-more-link").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const category = e.currentTarget.getAttribute("href").replace("#", "");
+    loadCategoryPage(category); // Use category page instead of grid
+    updateDesktopNavigation(category);
+  });
+});
+
 // ============================================================================
 // Event Handlers
 // ============================================================================
@@ -132,6 +142,8 @@ function handleNavigationClick(e) {
     // Use category page view for desktop, main layout for mobile
     if (window.innerWidth >= 768) {
       loadCategoryPage(category);
+      // ADD THIS LINE:
+      updateDesktopNavigation(category);
     } else {
       loadCategory(category);
     }

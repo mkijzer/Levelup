@@ -8,9 +8,31 @@
 /* Last Updated: September 2025 */
 /* ============================================================================ */
 
+.logo-container {
+  flex: 0 0 auto;
+  margin-right: var(--spacing-0);
+  transform: translateY(1px);
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: var(--radius-full);
+}
+
+.title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
 /* Main Brand Title - Primary brand header with gradient text effect and flexible layout */
 .main-title {
-  font-size: clamp(1.5rem, 4vw, 4rem) !important;
+  font-size: clamp(1.5rem, 4vw, 3rem) !important;
   font-weight: var(--font-weight-bold);
   font-family: var(--font-display);
   letter-spacing: var(--spacing-0);

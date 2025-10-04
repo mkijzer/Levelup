@@ -218,18 +218,6 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   stroke: var(--accent-bright) !important;
 }
 
-/* Desktop Navigation Underlines */
-.desktop-nav-item::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  width: var(--spacing-0);
-  height: 0.5px;
-  transition: all var(--duration-300) var(--ease-out);
-  transform: translateX(-50%);
-}
-
 /* Hide specific SVG icons temporarily */
 .desktop-nav-item[href="#health"] svg,
 .desktop-nav-item[href="#coins"] svg,
@@ -292,7 +280,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 
 /* Desktop search icon in navbar */
 .desktop-search-spacer {
-  width: var(--spacing-12);
+  width: var(--spacing-);
 }
 
 .desktop-search-icon {
@@ -300,6 +288,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   border: none;
   cursor: pointer;
   padding: 0;
+  margin-right: 34px;
   width: 24px;
   height: 24px;
   display: flex;

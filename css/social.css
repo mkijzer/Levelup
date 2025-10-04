@@ -1,0 +1,73 @@
+/* ============================================================================ */
+/* social.css - SOCIAL SHARING AND FOOTER COMPONENTS */
+/* ============================================================================ */
+
+/* Social Sharing */
+.social-sharing {
+  display: flex;
+  gap: var(--spacing-4);
+  margin: var(--spacing-0);
+  opacity: 1 !important;
+  min-height: var(--spacing-5);
+}
+
+.social-btn {
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.social-icon-placeholder {
+  display: block;
+}
+
+/* Article View Social Icons */
+.article-view .social-icon,
+.article-view .social-icon svg,
+.article-view .social-icon path {
+  width: clamp(16px, 2vw, 24px);
+  height: clamp(16px, 2vw, 24px);
+}
+
+/* Footer Social Icons */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+}
+
+.social-icon,
+.social-icon svg,
+.social-icon path {
+  fill: hsl(51, 100%, 35%) !important;
+  width: var(--spacing-5);
+  height: var(--spacing-5);
+  transition: color var(--transition-fast), fill var(--transition-fast);
+}
+
+.social-icon:hover,
+.social-icon:hover svg,
+.social-icon:hover path {
+  color: var(--accent-bright) !important;
+  fill: var(--accent-bright) !important;
+}
+
+/* Footer */
+.footer {
+  width: 100%;
+  background-color: var(--glass-bg, rgba(0, 0, 0, 0.7));
+  padding: var(--spacing-6) var(--spacing-0);
+  text-align: center;
+  height: auto;
+  z-index: 30;
+}
