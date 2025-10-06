@@ -138,11 +138,10 @@ function createCardHTML(type) {
 
 function populateCardContent(card, article) {
   const img = card.querySelector(".article-image");
-
-  // Skip if already populated
   const title = card.querySelector(".article-title");
   const meta = card.querySelector(".article-meta");
 
+  // Setup image
   if (img) {
     img.dataset.src = article.image || "assets/images/fallback_image.png";
     img.dataset.populated = "true";
@@ -150,17 +149,45 @@ function populateCardContent(card, article) {
       extractAltFromFilename(article.image) || article.title || "Article Image";
   }
 
+  // Setup text content with skeleton loading
   if (title) {
-    title.textContent = article.title || "Untitled Article";
+    showSkeletonText(title, "title", card.classList.contains("small"));
+    setTimeout(() => {
+      title.textContent = article.title || "Untitled Article";
+      title.classList.remove("skeleton", "skeleton-title");
+    }, 300);
   }
 
   if (meta) {
-    const readingTime = calculateReadingTime(article.content);
-    meta.textContent = `${formatDate(article.date)} | ${
-      article.category
-    } | ${readingTime}`;
+    showSkeletonText(meta, "meta", card.classList.contains("small"));
+    setTimeout(() => {
+      const readingTime = calculateReadingTime(article.content);
+      meta.textContent = `${formatDate(article.date)} | ${
+        article.category
+      } | ${readingTime}`;
+      meta.classList.remove("skeleton", "skeleton-meta");
+    }, 500);
   }
 }
+
+function showSkeletonText(element, type, isSmall = false) {
+  // Clear text content
+  element.textContent = '';
+  
+  // Remove any existing skeleton
+  element.classList.remove('skeleton', 'skeleton-title', 'skeleton-meta', 'small');
+  
+  // Add skeleton classes
+  element.classList.add('skeleton', `skeleton-${type}`);
+  if (isSmall) {
+    element.classList.add('small');
+  }
+  
+  // Ensure skeleton is visible
+  element.style.minHeight = type === 'title' ? '1.2em' : '0.8em';
+  element.style.display = 'block';
+}
+
 function setupLazyLoading(card) {
   const img = card.querySelector(".article-image");
   const imageWrapper = card.querySelector(".article-image-wrapper");
@@ -170,16 +197,12 @@ function setupLazyLoading(card) {
     card.classList.add("loading");
     const loaderDiv = document.createElement("div");
     loaderDiv.innerHTML = `
-      <div class="retro-loader">
-        <div class="neon-grid-bg"></div>
-        <div class="loader-grid">
-          <div class="loader-pixel"></div>
-          <div class="loader-pixel"></div>
-          <div class="loader-pixel"></div>
-          <div class="loader-pixel"></div>
-          <div class="loader-pixel"></div>
-        </div>
-        <div class="scan-line"></div>
+      <div class="pyramid-loader">
+        <div class="pyramid-dot"></div>
+        <div class="pyramid-line pyramid-line-1"></div>
+        <div class="pyramid-line pyramid-line-2"></div>
+        <div class="pyramid-line pyramid-line-3"></div>
+        <div class="pyramid-line pyramid-line-4"></div>
       </div>
     `;
     imageWrapper.appendChild(loaderDiv); // Changed from card to imageWrapper

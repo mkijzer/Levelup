@@ -92,17 +92,15 @@ export function extractAltFromFilename(imagePath) {
   return parts.slice(1).join(" ");
 }
 
-// Add after existing preloadImage function
 export function createImageLoader() {
   return new Promise((resolve) => {
     const loaderHTML = `
-      <div class="retro-loader">
-        <div class="loader-grid">
-          <div class="loader-pixel"></div>
-          <div class="loader-pixel"></div>
-          <div class="loader-pixel"></div>
-        </div>
-        <div class="loader-text">LOADING...</div>
+<div class="pyramid-loader">
+        <div class="pyramid-dot"></div>
+        <div class="pyramid-line pyramid-line-1"></div>
+        <div class="pyramid-line pyramid-line-2"></div>
+        <div class="pyramid-line pyramid-line-3"></div>
+        <div class="pyramid-line pyramid-line-4"></div>
       </div>
     `;
     resolve(loaderHTML);
