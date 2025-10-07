@@ -106,3 +106,16 @@ export function createImageLoader() {
     resolve(loaderHTML);
   });
 }
+
+/**
+ * Detect low-end Android devices
+ */
+export function isLowEndAndroid() {
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const cores = navigator.hardwareConcurrency || 4;
+  const memory = navigator.deviceMemory || 4;
+
+  // Low-end: Android with ≤4 cores or ≤3GB RAM
+  return isAndroid && !isIOS && (cores <= 4 || memory <= 3);
+}

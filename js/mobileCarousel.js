@@ -62,6 +62,15 @@ function createCarouselCard(article) {
  * Adds parallax scrolling effect + better desktop support
  */
 function addParallaxEffect(track) {
+  // Detect device performance
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isLowEndDevice =
+    navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+
+  // Reduce intensity on low-end Android
+  const shouldReduceEffects = !isIOS && isLowEndDevice;
+  const parallaxMultiplier = shouldReduceEffects ? 0.5 : 1; // Half intensity on low-end
+
   let isScrolling = false;
 
   // Mouse wheel support for desktop
@@ -70,7 +79,7 @@ function addParallaxEffect(track) {
     track.scrollLeft += e.deltaY;
   });
 
-  // Mouse drag support for desktop dev tools
+  // Mouse drag support for desktop
   let isMouseDown = false;
   let startX = 0;
   let scrollStart = 0;
@@ -79,14 +88,13 @@ function addParallaxEffect(track) {
     isMouseDown = true;
     startX = e.pageX;
     scrollStart = track.scrollLeft;
-    track.classList.add("carousel-grabbing");
+    track.style.cursor = "grabbing";
     e.preventDefault();
   });
 
   track.addEventListener("mouseleave", () => {
     isMouseDown = false;
-    track.classList.remove("carousel-grabbing");
-    track.classList.add("carousel-grab");
+    track.style.cursor = "grab";
   });
 
   track.addEventListener("mouseup", () => {
@@ -102,9 +110,13 @@ function addParallaxEffect(track) {
     track.scrollLeft = scrollStart - walk;
   });
 
-  // Parallax effect on scroll
-  track.addEventListener("scroll", () => {
-    if (!isScrolling) {
+  // Optimized parallax effect on scroll
+  track.addEventListener(
+    "scroll",
+    () => {
+      if (isScrolling) return;
+
+      isScrolling = true;
       requestAnimationFrame(() => {
         const cards = track.querySelectorAll(".carousel-card");
         const trackRect = track.getBoundingClientRect();
@@ -115,44 +127,46 @@ function addParallaxEffect(track) {
           const cardCenter = cardRect.left + cardRect.width / 2;
           const distance = Math.abs(cardCenter - trackCenter);
           const maxDistance = trackRect.width / 2;
-
-          // Position: 0 = center, 1 = off-screen
           const position = Math.min(distance / maxDistance, 1);
 
-          // Parallax movement
+          // Reduced parallax calculations
           let parallaxAmount = 0;
           if (distance < maxDistance * 0.9) {
             const normalizedDistance = distance / (maxDistance * 0.9);
-            parallaxAmount = normalizedDistance * 16;
+            parallaxAmount = normalizedDistance * 16 * parallaxMultiplier;
           }
 
-          // Scale: 1.05 at center, 0.95 at edges
-          const scale = 1.05 - position * 0.1;
-
-          // Brightness: 1 at center, 0.6 at edges (darker when not visible)
-          const brightness = 1 - position * 0.4;
-
+          // Simplified effects - skip scale/brightness on low-end
           const image = card.querySelector(".carousel-card-image");
           const content = card.querySelector(".carousel-card-content");
 
           if (image && content) {
-            image.style.transform = `translateX(${
-              parallaxAmount * 0.8
-            }px) scale(${scale})`;
-            image.style.filter = `brightness(${brightness})`;
-            content.style.transform = `translateY(${parallaxAmount * 0.5}px)`;
+            if (shouldReduceEffects) {
+              // Low-end: only basic parallax, no scale/brightness
+              image.style.transform = `translateX(${parallaxAmount * 0.8}px)`;
+              content.style.transform = `translateY(${parallaxAmount * 0.5}px)`;
+            } else {
+              // High-end: full effects
+              const scale = 1.05 - position * 0.1;
+              const brightness = 1 - position * 0.4;
+
+              image.style.transform = `translateX(${
+                parallaxAmount * 0.8
+              }px) scale(${scale})`;
+              image.style.filter = `brightness(${brightness})`;
+              content.style.transform = `translateY(${parallaxAmount * 0.5}px)`;
+            }
           }
         });
 
         isScrolling = false;
       });
-    }
-    isScrolling = true;
-  });
+    },
+    { passive: true }
+  );
 
   track.style.cursor = "grab";
 }
-
 /**
  * Refresh carousel content
  */
