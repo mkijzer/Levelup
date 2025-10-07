@@ -632,10 +632,10 @@ body:has(.article-view:not(.hidden)) .article-header {
   background: var(--background);
   z-index: 100;
   overflow-y: auto;
-  padding-top: var(--spacing-4);
-  padding-bottom: 120px;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 80px;
+  padding-bottom: 100px;
 }
-
 /* Category Page Title */
 .category-page-title {
   font-family: var(--font-primary);

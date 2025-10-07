@@ -388,8 +388,9 @@ function updateCategoryTitle(category) {
  * Shows category page view and hides main content
  */
 function showCategoryPageView(elements, category) {
-  // FIXED: Don't hide main content (this was causing header to disappear)
-  // elements.mainContent.style.display = "none"; // REMOVED THIS LINE
+  // Disable body scroll when category page is active
+  document.body.style.overflow = "hidden";
+
   elements.categoryPageView.classList.remove("hidden");
 
   if (elements.categoryTitle) {
@@ -630,13 +631,20 @@ function setupScrollBehavior() {
         }
       }, 500);
     };
-
-    window.addEventListener("scroll", () => {
+    // Create shared scroll handler for both window and category page
+    const handleScrollEvent = () => {
       const header = document.querySelector(".sticky-wrapper-navcontainer");
       const navbar = document.querySelector(".nav-container");
       if (!header) return;
 
-      const currentScrollY = window.scrollY;
+      // Determine which scroll source to use
+      const categoryView = document.querySelector(".category-page-view");
+      const isOnCategoryPage =
+        categoryView && !categoryView.classList.contains("hidden");
+
+      const currentScrollY = isOnCategoryPage
+        ? categoryView.scrollTop
+        : window.scrollY;
       const scrollDifference = Math.abs(currentScrollY - lastScrollY);
 
       // Add scrolling class (lighter glass)
@@ -645,7 +653,6 @@ function setupScrollBehavior() {
 
       // Only hide/show if scroll difference is significant (adds margin)
       if (scrollDifference > 15) {
-        // Add scroll margin
         // Hide header when scrolling down, show only when scrolling up
         if (currentScrollY > lastScrollY && currentScrollY > 50) {
           header.classList.add("hide-header");
@@ -657,7 +664,16 @@ function setupScrollBehavior() {
       }
 
       lastScrollY = currentScrollY;
-    });
+    };
+
+    // Listen to window scroll
+    window.addEventListener("scroll", handleScrollEvent);
+
+    // Listen to category page scroll
+    const categoryView = document.querySelector(".category-page-view");
+    if (categoryView) {
+      categoryView.addEventListener("scroll", handleScrollEvent);
+    }
 
     // Add touchend listener to show header when touch ends
     window.addEventListener("touchend", () => {

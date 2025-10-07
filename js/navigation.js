@@ -229,6 +229,10 @@ export function exitCategoryPage() {
 
   if (categoryPageView && !categoryPageView.classList.contains("hidden")) {
     categoryPageView.classList.add("hidden");
+
+    // Re-enable body scroll
+    document.body.style.overflow = "";
+
     if (mainContent) {
       mainContent.style.display = "";
     }
