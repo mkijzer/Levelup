@@ -108,6 +108,13 @@ body::after {
   transform: translateY(0);
 }
 
+/* Low-end Android: remove glass, add subtle shadow */
+body.low-end-android .sticky-wrapper-navcontainer {
+  backdrop-filter: none;
+  background-color: hsla(0, 0%, 0%, 0.85);
+  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.12);
+}
+
 .sticky-wrapper-navcontainer.hide-header {
   transform: translateY(-100%);
 }

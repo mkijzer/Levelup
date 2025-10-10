@@ -58,13 +58,23 @@ document.addEventListener("DOMContentLoaded", () => {
   function openSettings() {
     if (settingsModal) settingsModal.classList.add("active");
     if (settingsBackdrop) settingsBackdrop.classList.add("active");
-    if (settingsButton) settingsButton.classList.add("active");
+
+    // Remove nav glass when settings opens
+    const nav = document.querySelector(".nav-container");
+    if (nav) {
+      nav.classList.add("modal-open");
+    }
   }
 
   function closeSettings() {
     if (settingsModal) settingsModal.classList.remove("active");
     if (settingsBackdrop) settingsBackdrop.classList.remove("active");
-    if (settingsButton) settingsButton.classList.remove("active");
+
+    // Restore nav glass when settings closes
+    const nav = document.querySelector(".nav-container");
+    if (nav) {
+      nav.classList.remove("modal-open");
+    }
   }
 
   function applyFontSize(size) {

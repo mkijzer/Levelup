@@ -10,14 +10,14 @@ function showModal() {
   clearTimeout(hideTimer);
   modal.classList.add("active");
   isModalVisible = true;
-  console.log(
-    "Modal set to visible, class active:",
-    modal.classList.contains("active")
-  );
-  console.log("Modal display style:", window.getComputedStyle(modal).display);
-  modal.style.display = "flex !important"; // TEMPORARY DEBUG
-  console.log("Forced display style:", window.getComputedStyle(modal).display); // NEW LOG
+
+  // Remove nav glass when modal opens (Android optimization)
+  const nav = document.querySelector(".nav-container");
+  if (nav) {
+    nav.classList.add("modal-open");
+  }
 }
+
 function hideModal() {
   const modal = document.getElementById("category-modal");
   if (!modal) return;
@@ -25,6 +25,12 @@ function hideModal() {
   clearTimeout(hideTimer);
   modal.classList.remove("active");
   isModalVisible = false;
+
+  // Restore nav glass when modal closes
+  const nav = document.querySelector(".nav-container");
+  if (nav) {
+    nav.classList.remove("modal-open");
+  }
 }
 
 function scheduleHide(delay = 150) {

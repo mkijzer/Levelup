@@ -64,6 +64,8 @@ import { initializeScrollAnimations } from "./scroll-animations.js";
 
 import { initParallaxHover } from "./parallax.js";
 
+import { isLowEndAndroid } from "./utils.js";
+
 // ============================================================================
 // DOM Element Getters
 // ============================================================================
@@ -571,6 +573,11 @@ setTimeout(() => {
 async function initializeApp() {
   try {
     console.log("Initializing application...");
+
+    // Detect and mark low-end Android devices
+    if (isLowEndAndroid()) {
+      document.body.classList.add("low-end-android");
+    }
 
     const dataLoaded = await initializeArticleData();
     if (!dataLoaded) {

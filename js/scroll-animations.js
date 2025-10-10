@@ -9,6 +9,8 @@
  * ============================================================================
  */
 
+import { isLowEndAndroid } from "./utils.js";
+
 // Scroll line element
 let scrollLine = null;
 
@@ -66,6 +68,11 @@ function setupQuoteAnimations() {
     // Set initial hidden state
     container.classList.add("quote-initial");
 
+    // Add low-end class for reduced effects
+    if (isLowEndAndroid()) {
+      container.classList.add("quote-low-end");
+    }
+
     // Start observing
     observer.observe(container);
   });
@@ -115,11 +122,14 @@ function updateScrollLine(
  */
 function setupScrollHandler() {
   let ticking = false;
+  let lastUpdate = 0;
 
   function handleScroll(event) {
-    if (!ticking) {
+    const now = Date.now();
+    if (!ticking && now - lastUpdate > 16) {
+      // Max 60fps
+      lastUpdate = now;
       requestAnimationFrame(() => {
-        // Determine scroll values based on scroll source
         let scrollY, totalHeight, viewportHeight;
 
         if (event.target === window || event.target === document) {

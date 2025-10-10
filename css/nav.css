@@ -26,11 +26,22 @@
   max-width: 470px;
 }
 
+/* Low-end Android: no blur */
+body.low-end-android .nav-container {
+  background-color: var(--fake-glass-bg);
+  backdrop-filter: none;
+  border-top: 1px solid var(--fake-glass-border);
+}
+
 /* Scrolling state variation for lighter glass effect */
 .nav-container.scrolling {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+/* Remove glass when modal open (Android optimization) */
+.nav-container.modal-open {
+  backdrop-filter: none;
+}
 /* Navigation Items - Flex layout for icons and labels */
 .nav-item {
   display: flex;

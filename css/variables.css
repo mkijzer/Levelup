@@ -63,6 +63,10 @@
   --glass-border: hsla(0, 0%, 100%, 0.2); /* Glass border effect */
   --glass-blur: 15px; /* Backdrop blur amount */
 
+  /* Fake glass (no blur, just visual) */
+  --fake-glass-bg: hsla(0, 0%, 0%, 0.75);
+  --fake-glass-border: hsla(0, 0%, 100%, 0.25);
+
   /* Status Colors */
   --success: hsl(142, 100%, 50%); /* Success states */
   --warning: hsl(45, 93%, 47%); /* Warning states */
