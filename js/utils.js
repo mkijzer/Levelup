@@ -49,6 +49,7 @@ export function formatDateReading(dateStr) {
 export function preloadImage(url) {
   return new Promise((resolve) => {
     const img = new Image();
+    img.decoding = "async";
     img.src = url;
     img.onload = () => resolve(url);
     img.onerror = () => resolve("assets/images/fallback_image.png");

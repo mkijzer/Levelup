@@ -26,6 +26,7 @@ function getImageObserver() {
             const img = entry.target;
             const card = img.closest(".article-card");
 
+            img.decoding = "async";
             img.src = img.dataset.src;
             img.addEventListener(
               "load",
@@ -37,6 +38,7 @@ function getImageObserver() {
             img.addEventListener(
               "error",
               () => {
+                img.decoding = "async";
                 img.src = "assets/images/fallback_image.png";
                 if (card) card.classList.remove("loading");
               },
@@ -172,20 +174,25 @@ function populateCardContent(card, article) {
 
 function showSkeletonText(element, type, isSmall = false) {
   // Clear text content
-  element.textContent = '';
-  
+  element.textContent = "";
+
   // Remove any existing skeleton
-  element.classList.remove('skeleton', 'skeleton-title', 'skeleton-meta', 'small');
-  
+  element.classList.remove(
+    "skeleton",
+    "skeleton-title",
+    "skeleton-meta",
+    "small"
+  );
+
   // Add skeleton classes
-  element.classList.add('skeleton', `skeleton-${type}`);
+  element.classList.add("skeleton", `skeleton-${type}`);
   if (isSmall) {
-    element.classList.add('small');
+    element.classList.add("small");
   }
-  
+
   // Ensure skeleton is visible
-  element.style.minHeight = type === 'title' ? '1.2em' : '0.8em';
-  element.style.display = 'block';
+  element.style.minHeight = type === "title" ? "1.2em" : "0.8em";
+  element.style.display = "block";
 }
 
 function setupLazyLoading(card) {
@@ -211,12 +218,14 @@ function setupLazyLoading(card) {
     const image = new Image();
 
     image.onload = () => {
+      img.decoding = "async";
       img.src = img.dataset.src;
       card.classList.remove("loading");
       loaderDiv.remove();
     };
 
     image.onerror = () => {
+      img.decoding = "async";
       img.src = "assets/images/fallback_image.png";
       card.classList.remove("loading");
       loaderDiv.remove();

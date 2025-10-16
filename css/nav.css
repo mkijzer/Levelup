@@ -42,6 +42,7 @@ body.low-end-android .nav-container {
 .nav-container.modal-open {
   backdrop-filter: none;
 }
+
 /* Navigation Items - Flex layout for icons and labels */
 .nav-item {
   display: flex;
