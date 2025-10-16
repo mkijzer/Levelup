@@ -87,16 +87,13 @@
           <!-- Site Branding -->
           <div class="title-container">
             <div class="logo-container">
-              <img
-                src="assets/images/logo.png"
-                alt="LevelUpOrDieTrying Logo"
-                class="logo"
-                decoding="async"
-              />
+              <img src="assets/images/logo.png" alt="Logo" class="logo" />
             </div>
-            <h1 class="main-title">
-              Level Up <span class="subtitle">Or Die Trying</span>
-            </h1>
+            <div class="title-and-tagline">
+              <h1 class="main-title">
+                Level Up <span class="subtitle">Or Die Trying</span>
+              </h1>
+            </div>
           </div>
 
           <!-- Primary Navigation - Desktop -->
@@ -812,9 +809,94 @@
     <!-- ===================================================== -->
     <!-- Site Footer -->
     <!-- ===================================================== -->
+    <!-- In index.html - Update the footer section -->
+    <!-- Replace footer section in index.html -->
+    <!-- Updated footer with reordered mobile layout -->
+    <!-- Updated footer with logo between socials and brand -->
     <footer class="footer" role="contentinfo">
       <div class="footer-content">
-        <nav aria-label="Social media links">
+        <!-- Desktop/Tablet Layout -->
+        <div class="footer-desktop">
+          <div class="footer-brand-horizontal">
+            <img src="assets/images/logo.png" alt="Logo" class="footer-logo" />
+            <p class="footer-tagline-horizontal">
+              Life's a Game. Master Health, Wealth and Tech to Win!
+            </p>
+          </div>
+        </div>
+
+        <!-- Mobile Layout -->
+        <div class="footer-mobile">
+          <p class="footer-tagline-mobile">
+            Life's a Game. Master Health, Wealth and Tech to Win!
+          </p>
+
+          <!-- Social Icons above Logo -->
+          <nav aria-label="Social media links">
+            <ul class="social-icons">
+              <li>
+                <a
+                  href="#"
+                  class="social-icon"
+                  data-social="x"
+                  aria-label="Follow us on X"
+                  >${xSvg}</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="social-icon"
+                  data-social="tiktok"
+                  aria-label="Follow us on TikTok"
+                  >${tiktokSvg}</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="social-icon"
+                  data-social="snap"
+                  aria-label="Follow us on Snapchat"
+                  >${snapSvg}</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="social-icon"
+                  data-social="instagram"
+                  aria-label="Follow us on Instagram"
+                  >${instagramSvg}</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="social-icon"
+                  data-social="youtube"
+                  aria-label="Follow us on YouTube"
+                  >${youtubeSvg}</a
+                >
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Logo between socials and brand -->
+          <img
+            src="assets/images/logo.png"
+            alt="Logo"
+            class="footer-logo-mobile"
+          />
+
+          <!-- Brand title after logo -->
+          <h2 class="footer-title-mobile">
+            Level Up <span class="footer-subtitle-mobile">Or Die Trying</span>
+          </h2>
+        </div>
+
+        <!-- Social Icons for Desktop/Tablet -->
+        <nav aria-label="Social media links" class="desktop-social">
           <ul class="social-icons">
             <li>
               <a

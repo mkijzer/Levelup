@@ -80,3 +80,216 @@
       0 0 var(--spacing-4) rgba(255, 215, 0, 0.7);
   }
 }
+/* Footer CSS with enhanced spacing and typography */
+
+/* Header Brand Updates (keep existing) */
+.title-and-tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-1);
+}
+
+.brand-intro {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin: 0;
+  letter-spacing: var(--letter-spacing-body);
+  line-height: var(--line-height-normal);
+}
+
+/* ============================================================================ */
+/* Footer Component */
+/* ============================================================================ */
+
+.footer {
+  background: var(--surface);
+  position: relative;
+  margin-top: var(--spacing-16);
+  padding-top: 0;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+  padding-bottom: var(--spacing-16);
+}
+
+/* Add gradient border at top of footer */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, #ff4500, #ff8c00, #ff69b4);
+  opacity: 0.3;
+}
+
+/* ============================================================================ */
+/* Mobile Footer (Default) */
+/* ============================================================================ */
+
+.footer-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.footer-tagline-mobile {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-display);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-6) 0;
+  letter-spacing: var(--letter-spacing-heading);
+  text-align: center;
+  max-width: 80%;
+}
+
+.footer-mobile .social-icons {
+  margin: 0 0 var(--spacing-8) 0;
+}
+
+.footer-logo-mobile {
+  width: var(--spacing-10);
+  height: var(--spacing-10);
+  object-fit: cover;
+  border-radius: var(--radius-full);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.footer-title-mobile {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-display);
+  letter-spacing: var(--letter-spacing-heading);
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  background: linear-gradient(45deg, var(--accent-color), #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-subtitle-mobile {
+  font-family: var(--font-script);
+  font-size: calc(var(--font-size-2xl) * 0.6);
+  font-style: italic;
+  background: none !important;
+  -webkit-text-fill-color: #f34343 !important;
+  color: #f34343;
+}
+
+/* Desktop Footer (Hidden on Mobile) */
+.footer-desktop {
+  display: none;
+}
+
+/* Hide desktop social on mobile */
+.desktop-social {
+  display: none;
+}
+
+/* Social Icons Updates */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-8);
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+.social-icon,
+.social-icon svg,
+.social-icon path {
+  fill: var(--accent-bright) !important;
+  width: var(--spacing-5) !important;
+  height: var(--spacing-5) !important;
+  transition: fill var(--transition-fast);
+}
+
+.social-icon:hover,
+.social-icon:hover svg,
+.social-icon:hover path {
+  fill: var(--white) !important;
+}
+
+/* ============================================================================ */
+/* Tablet and Desktop Layout */
+/* ============================================================================ */
+
+@media (min-width: 768px) {
+  .footer {
+    margin-top: var(--spacing-4);
+    padding: var(--spacing-6) var(--spacing-4);
+  }
+
+  /* Hide mobile layout */
+  .footer-mobile {
+    display: none;
+  }
+
+  /* Show desktop layout */
+  .footer-desktop {
+    display: block;
+    margin-bottom: var(--spacing-6);
+  }
+
+  /* Show desktop social */
+  .desktop-social {
+    display: block;
+  }
+
+  .footer-brand-horizontal {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    justify-content: center;
+  }
+
+  .footer-logo {
+    width: var(--spacing-8);
+    height: var(--spacing-8);
+    object-fit: cover;
+    border-radius: var(--radius-full);
+    transform: translateY(-3px);
+  }
+
+  .footer-tagline-horizontal {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-display);
+    color: var(--text-secondary);
+    margin: 0;
+    letter-spacing: var(--letter-spacing-body);
+  }
+
+  .social-icons {
+    gap: var(--spacing-8);
+  }
+
+  .social-icon,
+  .social-icon svg,
+  .social-icon path {
+    fill: var(--accent-bright) !important;
+  }
+}
+
+/* Desktop Larger Sizes */
+@media (min-width: 1200px) {
+  .footer-logo {
+    width: var(--spacing-10);
+    height: var(--spacing-10);
+  }
+
+  .footer-tagline-horizontal {
+    font-size: var(--font-size-lg);
+  }
+
+  .footer-desktop {
+    margin-bottom: var(--spacing-8);
+  }
+}
