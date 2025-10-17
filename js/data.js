@@ -471,6 +471,13 @@ function handleArticleCardClick(e) {
     // Directly call showArticleView with no other state changes
     showArticleView(articleId);
 
+    // Add history entry for browser back button
+    history.pushState(
+      { articleId: articleId, category: getCurrentCategory() },
+      "",
+      `#${getCurrentCategory()}/${articleId}`
+    );
+
     // Close search if open
     const searchBar = document.querySelector(".search-bar-slide");
     const searchIcon = document.querySelector(".search-icon");

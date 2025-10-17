@@ -1,12 +1,37 @@
 {
   "name": "levelupordietrying",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Lifestyle magazine with articles on health, wealth, tech, and more",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "live-server --port=3000 --open=/",
+    "build": "npm run generate-sitemap && npm run build:css && npm run build:js",
+    "build:css": "npm run minify:css",
+    "build:js": "npm run minify:js",
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "minify:css": "clean-css -o dist/css/styles.min.css css/*.css",
+    "minify:js": "terser js/*.js -o dist/js/scripts.min.js --source-map",
+    "optimize:images": "imagemin assets/images/**/* --out-dir=dist/assets/images",
+    "serve": "live-server --port=3000",
+    "start": "npm run dev",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean && mkdir -p dist/css dist/js dist/assets/images",
+    "predeploy": "npm run generate-sitemap"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "keywords": [
+    "lifestyle",
+    "magazine",
+    "health",
+    "wealth",
+    "tech",
+    "productivity"
+  ],
+  "author": "LevelUpOrDieTrying",
+  "license": "MIT",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "imagemin-cli": "^7.0.0",
+    "live-server": "^1.2.2",
+    "terser": "^5.24.0"
+  }
 }

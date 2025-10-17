@@ -1,102 +1,125 @@
 // ============================================================================
 // navigation.js - NAVIGATION & ROUTING
 // ============================================================================
-// Description: Handles navigation logic and routing - NO modal responsibilities
-// Version: 2.1 - Added mobile navigation active states
+// Version: 2.5 - FIXED HISTORY + RANDOM + ACTIVE NAV
 // ============================================================================
 
 import { loadCategory, loadCategoryPage, loadRandomArticle } from "./data.js";
+import { getRandomArticle, showArticleView } from "./articleView.js";
 
-// ============================================================================
-// Navigation State
-// ============================================================================
 let currentCategory = "latest";
 let isInCategoryPage = true;
 
-// ============================================================================
-// Public State Functions
-// ============================================================================
 export function getCurrentCategory() {
   return currentCategory;
 }
-
 export function setCurrentCategory(category) {
   currentCategory = category;
 }
-
 export function getIsInCategoryPage() {
   return isInCategoryPage;
 }
-
 export function setIsInCategoryPage(state) {
   isInCategoryPage = state;
 }
 
-// ============================================================================
-// Navigation Setup
-// ============================================================================
-export function setupNavigation() {
-  // Hash change listener
-  window.addEventListener("hashchange", handleHashChange);
+export function setActiveNav(category) {
+  document.querySelectorAll(".nav-item, .desktop-nav-item").forEach((item) => {
+    item.classList.remove("active");
+  });
 
-  // Mobile navigation (excluding category button - handled by modal.js)
+  if (category === "latest") {
+    document
+      .querySelector('.nav-item a[href="#latest"]')
+      ?.closest(".nav-item")
+      ?.classList.add("active");
+    document
+      .querySelector('.desktop-nav-item[href="#latest"]')
+      ?.classList.add("active");
+  } else if (category === "random") {
+    document
+      .querySelector('.nav-item a[href="#random"]')
+      ?.closest(".nav-item")
+      ?.classList.add("active");
+    document
+      .querySelector('.desktop-nav-item[href="#random"]')
+      ?.classList.add("active");
+  } else {
+    document.querySelector(".nav-item.category")?.classList.add("active");
+    document
+      .querySelector(`.desktop-nav-item[href="#${category}"]`)
+      ?.classList.add("active");
+  }
+}
+
+export function setupNavigation() {
+  window.addEventListener("hashchange", handleHashChange);
+  window.addEventListener("popstate", handlePopState);
+
   document.querySelectorAll(".nav-item").forEach((navItem) => {
     navItem.addEventListener("click", handleNavigationClick);
   });
 
-  // Desktop navigation
   document.querySelectorAll(".desktop-nav-item").forEach((link) => {
     link.addEventListener("click", handleNavigationClick);
   });
 
-  // Set initial active state
-  updateMobileNavigation("latest");
-
-  console.log("Navigation: Setup complete");
+  setActiveNav("latest");
 }
 
-// Set initial active state for home/latest
-updateMobileNavigation("latest");
+function handlePopState(event) {
+  const state = event.state;
+  
+  // FIXED: Handle article cards (no history state)
+  const hash = window.location.hash.slice(1);
+  if (hash.includes('/')) {
+    const articleId = hash.split('/')[1];
+    if (articleId) {
+      showArticleView(articleId);
+      return;
+    }
+  }
 
-// Setup category "More" links
-document.querySelectorAll(".category-more-link").forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const category = e.currentTarget.getAttribute("href").replace("#", "");
-    loadCategoryPage(category); // Use category page instead of grid
-    updateDesktopNavigation(category);
-  });
-});
+  if (state && state.articleId) {
+    showArticleView(state.articleId);
+    setActiveNav(state.category || "latest");
+    return;
+  }
 
-// ============================================================================
-// Event Handlers
-// ============================================================================
+  if (state && state.category) {
+    exitCategoryPage();
+    loadCategory(state.category);
+    setActiveNav(state.category);
+    return;
+  }
+
+  // Fallback to latest
+  exitCategoryPage();
+  loadCategory("latest");
+  setActiveNav("latest");
+}
+
 function handleHashChange() {
   const hash = window.location.hash.slice(1);
   const category = hash || "latest";
 
-  // Clear search state when navigating
   sessionStorage.removeItem("fromSearch");
 
-  // Skip if article view is open
   const articleView = document.querySelector(".article-view");
-  if (articleView && !articleView.classList.contains("hidden")) {
-    return;
-  }
+  if (articleView && !articleView.classList.contains("hidden")) return;
 
   exitCategoryPage();
   loadCategory(category);
+  setActiveNav(category);
 }
 
 function handleNavigationClick(e) {
   e.preventDefault();
 
-  // Close search if active - check global state
-  if (window.searchManager && window.searchManager.isSearchActive) {
+  if (window.searchManager?.isSearchActive) {
     window.searchManager.closeSearch();
   }
 
-  // Get href from clicked element
   let href;
   if (e.currentTarget.classList.contains("desktop-nav-item")) {
     href = e.currentTarget.getAttribute("href");
@@ -105,121 +128,70 @@ function handleNavigationClick(e) {
     if (!link) return;
     href = link.getAttribute("href");
   }
-  const isMobileNav = e.currentTarget.closest(".mobile-nav");
 
-  // Route to appropriate handler
-  if (href === "#settings") {
-    return; // Let settings modal handle this
-  } else if (href === "#category") {
-    return; // Let modal.js handle this
-  } else if (href === "#random") {
+  const category = href.replace("#", "");
+
+  if (href === "#settings" || href === "#category") return;
+
+  setActiveNav(category);
+
+  if (category === "random") {
+    setCurrentCategory("random"); // FIXED: Set FIRST
     exitCategoryPage();
-    updateMobileNavigation("random");
+    const randomArticle = getRandomArticle();
+    showArticleView(randomArticle.id); // FIXED: Call FIRST
+    history.pushState(
+      { category: "random", articleId: randomArticle.id },
+      "",
+      `#random/${randomArticle.id}`
+    );
 
-    // Add flash animation
     const randomNavItem = document
       .querySelector('.nav-item a[href="#random"]')
       ?.closest(".nav-item");
     if (randomNavItem) {
       randomNavItem.setAttribute("data-random-clicked", "true");
-      setTimeout(() => {
-        randomNavItem.removeAttribute("data-random-clicked");
-      }, 600);
+      setTimeout(
+        () => randomNavItem.removeAttribute("data-random-clicked"),
+        600
+      );
     }
-
-    if (!isMobileNav) {
-      updateDesktopNavigation("random");
-    }
-    loadRandomArticle();
-  } else if (href === "#latest") {
+  } else if (category === "latest") {
     exitCategoryPage();
-    updateMobileNavigation("latest");
+    history.pushState({ category: "latest" }, "", "#latest");
     loadCategory("latest");
   } else {
-    const category = href.replace("#", "");
     exitCategoryPage();
-
-    // Use category page view for desktop, main layout for mobile
+    history.pushState({ category: category }, "", `#${category}`);
     if (window.innerWidth >= 768) {
       loadCategoryPage(category);
-      // ADD THIS LINE:
-      updateDesktopNavigation(category);
     } else {
       loadCategory(category);
     }
   }
 }
 
-// ============================================================================
-// Navigation Active States
-// ============================================================================
-
-/**
- * Update mobile navigation active state
- */
-export function updateMobileNavigation(currentCategory) {
-  // Remove active class from all mobile nav items
-  document.querySelectorAll(".nav-item").forEach((item) => {
-    item.classList.remove("active");
-  });
-
-  // Add active class to current category
-  if (currentCategory === "latest") {
-    const latestItem = document.querySelector('.nav-item a[href="#latest"]');
-    if (latestItem) latestItem.closest(".nav-item").classList.add("active");
-  } else if (currentCategory === "random") {
-    const randomItem = document.querySelector('.nav-item a[href="#random"]');
-    if (randomItem) randomItem.closest(".nav-item").classList.add("active");
-  } else if (["health", "coins", "hack", "ai"].includes(currentCategory)) {
-    const categoryItem = document.querySelector(".nav-item.category");
-    if (categoryItem) categoryItem.classList.add("active");
-  }
+export function updateMobileNavigation(category) {
+  setActiveNav(category);
+}
+export function updateDesktopNavigation(category) {
+  setActiveNav(category);
 }
 
-export function updateDesktopNavigation(currentCategory) {
-  // Remove active class from all items
-  document
-    .querySelectorAll(".desktop-nav-item, .random-btn")
-    .forEach((item) => {
-      item.classList.remove("active");
-    });
-
-  // Add active class to current category
-  const activeItem = document.querySelector(`[href="#${currentCategory}"]`);
-  if (activeItem) {
-    activeItem.classList.add("active");
-  }
-}
-
-// ============================================================================
-// Category Management
-// ============================================================================
 export function switchToCategory(category) {
   isInCategoryPage = false;
+  document.querySelector(".article-view")?.classList.add("hidden");
+  document.querySelector(".category-article-view")?.classList.add("hidden");
 
-  // Hide any open article views
-  const mainArticleView = document.querySelector(".article-view");
-  if (mainArticleView) {
-    mainArticleView.classList.add("hidden");
-  }
+  document
+    .querySelector(".category-hero-grid")
+    ?.style.setProperty("display", "");
+  document
+    .querySelector(".category-articles-list")
+    ?.style.setProperty("display", "");
+  document.querySelector(".load-more-button")?.style.setProperty("display", "");
 
-  const categoryArticleView = document.querySelector(".category-article-view");
-  if (categoryArticleView) {
-    categoryArticleView.classList.add("hidden");
-  }
-
-  // Show category page elements
-  const heroGrid = document.querySelector(".category-hero-grid");
-  const articlesList = document.querySelector(".category-articles-list");
-  const loadMoreBtn = document.querySelector(".load-more-button");
-
-  if (heroGrid) heroGrid.style.display = "";
-  if (articlesList) articlesList.style.display = "";
-  if (loadMoreBtn) loadMoreBtn.style.display = "";
-
-  // Update mobile nav active state
-  updateMobileNavigation(category);
-
+  setActiveNav(category);
   loadCategoryPage(category);
 }
 
@@ -229,14 +201,8 @@ export function exitCategoryPage() {
 
   if (categoryPageView && !categoryPageView.classList.contains("hidden")) {
     categoryPageView.classList.add("hidden");
-
-    // Re-enable body scroll
     document.body.style.overflow = "";
-
-    if (mainContent) {
-      mainContent.style.display = "";
-    }
+    mainContent?.style.setProperty("display", "");
   }
-
   isInCategoryPage = false;
 }

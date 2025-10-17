@@ -1,8 +1,7 @@
 // ============================================================================
 // articleView.js - ARTICLE VIEW MANAGEMENT
 // ============================================================================
-// Description: Handles full article display, close/open logic, and related articles
-// Version: 1.2 - Cleaned up debug logs and added font size application
+// Version: 1.3 - FIXED active nav for ALL articles
 // ============================================================================
 
 import {
@@ -16,6 +15,7 @@ import {
   getCurrentCategory,
   getIsInCategoryPage,
   setIsInCategoryPage,
+  setActiveNav,
 } from "./navigation.js";
 import { xSvg, tiktokSvg, snapSvg, instagramSvg, youtubeSvg } from "./svg.js";
 
@@ -50,86 +50,56 @@ function formatDateReading(dateStr) {
  * @param {string} articleId - The ID of the article to display
  */
 async function showArticleView(articleId) {
-  // Get the article data
   const article = articlesData.find((a) => a.id === articleId);
   if (!article) {
     console.error(`Article not found: ${articleId}`);
     return;
   }
 
-  // Check if we're coming from search results
   const fromSearch = sessionStorage.getItem("fromSearch") === "true";
-
-  // Keep track of current category
   const currentCategory = getCurrentCategory();
 
-  // Get DOM elements
   const mainContentArea = document.getElementById("main-content-area");
   const categoryPageView = document.getElementById("category-page-view");
   const articleView = document.querySelector(".article-view");
   const searchResultsGrid = document.querySelector(".search-results-grid");
 
-  // Validate article view exists
   if (!articleView) {
     console.error("Article view element not found");
     return;
   }
 
-  // Show main content area if we're in a category
+  // FIXED: ALWAYS show main content area
   if (categoryPageView && !categoryPageView.classList.contains("hidden")) {
     categoryPageView.classList.add("hidden");
-
-    if (mainContentArea) {
-      mainContentArea.style.display = "";
-
-      // Update category title if we're in a category context
-      const currentCategory = getCurrentCategory();
-      if (currentCategory !== "latest") {
-        const categoryTitle = document.getElementById("category-title");
-        if (categoryTitle) {
-          const displayCategory =
-            currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
-          categoryTitle.textContent = displayCategory;
-        }
-      }
-    }
+    if (mainContentArea) mainContentArea.style.display = "";
   }
 
-  // Inside main content, hide bento grid but show article view
   if (mainContentArea) {
     const bentoGrid = mainContentArea.querySelector(".bento-grid");
-
-    if (bentoGrid) {
-      bentoGrid.classList.add("hidden-element");
-    }
-
-    // Hide search results (but remember we're from search)
-    if (searchResultsGrid) {
-      searchResultsGrid.style.display = "none";
-    }
+    if (bentoGrid) bentoGrid.classList.add("hidden-element");
+    if (searchResultsGrid) searchResultsGrid.style.display = "none";
   }
 
-  // Show and populate article view
   articleView.classList.remove("hidden");
   populateArticleView(article, articleView);
   populateRandomArticles(articleId);
 
-  // Apply saved font size settings
   if (window.applySavedFontSize) {
     window.applySavedFontSize();
   }
 
-  // Set up close button functionality
   const closeButton = articleView.querySelector(".close-article");
   if (closeButton) {
     closeButton.removeEventListener("click", closeArticleView);
     closeButton.addEventListener("click", closeArticleView);
   }
 
-  // Scroll to top of page
   window.scrollTo(0, 0);
-}
 
+  // FIXED: ALWAYS set nav active at END
+  setActiveNav(currentCategory);
+}
 /**
  * Show article view in category page
  * @param {Object} article - The article object to display
@@ -665,15 +635,36 @@ function closeArticleView() {
     if (categoryPageView) categoryPageView.classList.add("hidden");
     // Keep the fromSearch flag to maintain context
   } else {
-    // Return to latest/main view
-    if (bentoGrid) bentoGrid.style.display = "";
-    if (categoryPageView) categoryPageView.classList.add("hidden");
+    // Check if we should return to category page or main view
+    const isInCategory = getIsInCategoryPage();
+
+    if (
+      isInCategory &&
+      categoryPageView &&
+      !categoryPageView.classList.contains("hidden")
+    ) {
+      // Return to category page view
+      const heroGrid = document.querySelector(".category-hero-grid");
+      const articlesList = document.querySelector(".category-articles-list");
+      const loadMoreBtn = document.querySelector(".load-more-button");
+
+      if (heroGrid) heroGrid.style.display = "";
+      if (articlesList) articlesList.style.display = "";
+      if (loadMoreBtn) loadMoreBtn.style.display = "";
+      if (bentoGrid) bentoGrid.style.display = "none";
+    } else {
+      // Return to latest/main view
+      if (bentoGrid) bentoGrid.style.display = "";
+      if (categoryPageView) categoryPageView.classList.add("hidden");
+    }
+
     // Clear search context only if not from search
     sessionStorage.removeItem("fromSearch");
   }
 
   // Scroll to top
   window.scrollTo(0, 0);
+  history.back(); // FIXED: Back button works
 }
 
 /**

@@ -1,9 +1,25 @@
 const CACHE_NAME = "levelup-v1";
 const STATIC_ASSETS = [
   "/",
-  "/css/style.css",
-  "/js/main.js",
-  "/data/articles.json",
+  "css/reset.css",
+  "css/variables.css",
+  "css/base.css",
+  "css/layout.css",
+  "css/components.css",
+  "css/utils.css",
+  "css/themes.css",
+  "js/svg.js",
+  "js/modal.js",
+  "js/data.js",
+  "js/theme.js",
+  "js/search.js",
+  "js/quotes.js",
+  "js/utils.js",
+  "js/articleCards.js",
+  "js/settings.js",
+  "articles.json",
+  "quotes.json",
+  "assets/images/logo.png",
 ];
 
 self.addEventListener("install", (event) => {

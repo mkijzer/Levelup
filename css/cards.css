@@ -628,6 +628,21 @@ body:has(.article-view:not(.hidden)) .article-header {
   color: var(--text-primary);
 }
 
+.minimal-ad {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: var(--spacing-4);
+}
+
+.minimal-text {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: var(--font-weight-light);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
 /* ============================================================================ */
 /* CATEGORY PAGE COMPONENTS */
 /* ============================================================================ */
