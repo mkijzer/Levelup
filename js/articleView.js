@@ -318,8 +318,19 @@ function populateArticleView(article, container) {
 
   // Add social sharing icons
   // Add social sharing with proper URLs
+  // Add social sharing with proper URLs
   const socialSharing = mainArticle.querySelector(".social-sharing");
-  const currentUrl = encodeURIComponent(window.location.href);
+
+  // Debug URL creation
+  console.log("window.location.href:", window.location.href);
+  console.log("window.location.origin:", window.location.origin);
+  console.log("article.id:", article.id);
+
+  const currentUrl = encodeURIComponent(
+    `${window.location.origin}${window.location.pathname}#latest/${article.id}`
+  );
+  console.log("Generated URL:", currentUrl);
+
   const articleTitle = encodeURIComponent(article.title);
   const articleDescription = encodeURIComponent(article.hook || article.title);
 
