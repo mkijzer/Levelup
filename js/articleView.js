@@ -17,30 +17,81 @@ import {
   setIsInCategoryPage,
   setActiveNav,
 } from "./navigation.js";
-import { xSvg, tiktokSvg, snapSvg, instagramSvg, youtubeSvg } from "./svg.js";
+import { xSvg, tiktokSvg, instagramSvg, youtubeSvg } from "./svg.js";
 
 /**
  * Updates page title and meta description for SEO
+ */
+/**
+ * Updates page title, meta description, and Open Graph tags for SEO
+ */
+/**
+ * Updates page title, meta description, and Open Graph tags for SEO
  */
 function updatePageMeta(article) {
   // Update page title
   document.title = `${article.title} | LevelUpOrDieTrying`;
 
-  // Update or create meta description
-  let metaDescription = document.querySelector('meta[name="description"]');
-  if (!metaDescription) {
-    metaDescription = document.createElement("meta");
-    metaDescription.name = "description";
-    document.head.appendChild(metaDescription);
-  }
+  // Current page URL
+  const currentUrl = window.location.href;
+  const siteUrl = window.location.origin;
 
-  // Use hook as description or fallback to truncated content
-  const description =
-    article.hook ||
-    article.content?.replace(/<[^>]*>/g, "").substring(0, 155) + "..." ||
-    "Read this article on LevelUpOrDieTrying";
+  // Update or create meta tags
+  const metaTags = [
+    {
+      name: "description",
+      content:
+        article.hook ||
+        article.content?.replace(/<[^>]*>/g, "").substring(0, 155) + "..." ||
+        "Read this article on LevelUpOrDieTrying",
+    },
 
-  metaDescription.content = description;
+    // Open Graph tags
+    { property: "og:title", content: article.title },
+    {
+      property: "og:description",
+      content: article.hook || "Read this article on LevelUpOrDieTrying",
+    },
+    {
+      property: "og:image",
+      content: `${siteUrl}/${
+        article.image || "assets/images/fallback_image.png"
+      }`,
+    },
+    { property: "og:url", content: currentUrl },
+    { property: "og:type", content: "article" },
+    { property: "og:site_name", content: "LevelUpOrDieTrying" },
+
+    // X (formerly Twitter) Cards - platform still uses "twitter:" prefix
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: article.title },
+    {
+      name: "twitter:description",
+      content: article.hook || "Read this article on LevelUpOrDieTrying",
+    },
+    {
+      name: "twitter:image",
+      content: `${siteUrl}/${
+        article.image || "assets/images/fallback_image.png"
+      }`,
+    },
+  ];
+
+  metaTags.forEach(({ name, property, content }) => {
+    const selector = name
+      ? `meta[name="${name}"]`
+      : `meta[property="${property}"]`;
+    let metaTag = document.querySelector(selector);
+
+    if (!metaTag) {
+      metaTag = document.createElement("meta");
+      if (name) metaTag.name = name;
+      if (property) metaTag.property = property;
+      document.head.appendChild(metaTag);
+    }
+
+    metaTag.content = content;
+  });
 }
 
 // ============================================================================
@@ -266,32 +317,34 @@ function populateArticleView(article, container) {
   }
 
   // Add social sharing icons
+  // Add social sharing with proper URLs
   const socialSharing = mainArticle.querySelector(".social-sharing");
+  const currentUrl = encodeURIComponent(window.location.href);
+  const articleTitle = encodeURIComponent(article.title);
+  const articleDescription = encodeURIComponent(article.hook || article.title);
+
   const socialLinks = [
     {
       social: "x",
-      href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        article.title
-      )}&url=${encodeURIComponent(window.location.href)}`,
-    },
-    {
-      social: "tiktok",
-      href: `https://www.tiktok.com/`,
-    },
-    {
-      social: "snap",
-      href: `https://www.snapchat.com/`,
+      href: `https://twitter.com/intent/tweet?text=${articleTitle}&url=${currentUrl}`,
+      target: "_blank",
     },
     {
       social: "instagram",
-      href: `https://www.instagram.com/`,
+      href: `https://www.instagram.com/`, // Instagram doesn't support URL sharing
+      target: "_blank",
+    },
+    {
+      social: "tiktok",
+      href: `https://www.tiktok.com/`, // TikTok doesn't support URL sharing
+      target: "_blank",
     },
     {
       social: "youtube",
-      href: `https://www.youtube.com/`,
+      href: `https://www.youtube.com/`, // YouTube doesn't support URL sharing
+      target: "_blank",
     },
   ];
-
   // Create social media links
   socialLinks.forEach(({ social, href }) => {
     const link = document.createElement("a");
@@ -306,7 +359,6 @@ function populateArticleView(article, container) {
   const socialSvgs = {
     x: xSvg,
     tiktok: tiktokSvg,
-    snap: snapSvg,
     instagram: instagramSvg,
     youtube: youtubeSvg,
   };
