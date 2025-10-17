@@ -19,6 +19,30 @@ import {
 } from "./navigation.js";
 import { xSvg, tiktokSvg, snapSvg, instagramSvg, youtubeSvg } from "./svg.js";
 
+/**
+ * Updates page title and meta description for SEO
+ */
+function updatePageMeta(article) {
+  // Update page title
+  document.title = `${article.title} | LevelUpOrDieTrying`;
+
+  // Update or create meta description
+  let metaDescription = document.querySelector('meta[name="description"]');
+  if (!metaDescription) {
+    metaDescription = document.createElement("meta");
+    metaDescription.name = "description";
+    document.head.appendChild(metaDescription);
+  }
+
+  // Use hook as description or fallback to truncated content
+  const description =
+    article.hook ||
+    article.content?.replace(/<[^>]*>/g, "").substring(0, 155) + "..." ||
+    "Read this article on LevelUpOrDieTrying";
+
+  metaDescription.content = description;
+}
+
 // ============================================================================
 // State Management
 // ============================================================================
@@ -83,6 +107,7 @@ async function showArticleView(articleId) {
 
   articleView.classList.remove("hidden");
   populateArticleView(article, articleView);
+  updatePageMeta(article);
   populateRandomArticles(articleId);
 
   if (window.applySavedFontSize) {
