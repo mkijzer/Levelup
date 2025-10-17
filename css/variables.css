@@ -13,6 +13,17 @@
   /* ========================================================================== */
 
   /* Dark Mode (Default) */
+  /* Critical colors with HEX fallbacks for Android compatibility */
+  --accent-color: #ffd700;
+  --accent-color: hsl(51, 100%, 50%); /* Brand color, CTAs, highlights */
+
+  --accent-dimmed: #b8860b;
+  --accent-dimmed: hsl(51, 100%, 35%); /* Dimmed accent for navigation */
+
+  --accent-bright: #ffd700;
+  --accent-bright: hsl(51, 100%, 50%); /* Bright accent for active states */
+
+  /* All other colors use HSL only */
   --background: hsl(220, 39%, 6%); /* Page background */
   --background-quote: hsl(220, 39%, 1%);
   --surface: hsl(200, 7%, 18%); /* Card backgrounds, panels */
@@ -22,7 +33,6 @@
   --text-background: hsl(240, 4%, 45%); /* Background-like text - very subtle */
   --icon-grey: hsl(0, 0%, 71%); /* Icons, decorative elements */
   --white: hsl(0, 0%, 100%); /* Pure white for contrast */
-  --accent-color: hsl(51, 100%, 50%); /* Brand color, CTAs, highlights */
 
   /* Light Mode */
   --light-background: hsl(0, 0%, 86%); /* Light page background */
@@ -30,12 +40,6 @@
   --light-text-primary: hsl(0, 0%, 13%); /* Light main text */
   --light-text-secondary: hsla(0, 0%, 13%, 0.8); /* Light secondary text */
   --light-text-muted: hsla(0, 0%, 13%, 0.6); /* Light muted text */
-
-  /* Navigation Colors */
-  /* Navigation Colors */
-  /* Navigation Colors */
-  --accent-dimmed: hsl(51, 100%, 35%); /* Change the value, keep the name */
-  --accent-bright: hsl(51, 100%, 50%); /* Change the value, keep the name */
 
   /* Animation Colors */
   --flash-primary: #8a2be2; /* Purple - for tag explosions (pyramid climb) */

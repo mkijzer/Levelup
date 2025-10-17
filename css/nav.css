@@ -16,6 +16,7 @@
 
 /* Mobile Navigation Container - Bottom-fixed navigation with glass morphism effect */
 .nav-container {
+  position: fixed;
   background-color: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   border-top: 1px solid var(--glass-border);
@@ -23,7 +24,16 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   margin: var(--spacing-0) auto var(--spacing-3) auto;
+  height: 50px;
+  width: 100%;
   max-width: 470px;
+  bottom: env(safe-area-inset-bottom, 0);
+
+  left: 0;
+  right: 0;
+  z-index: var(--z-toast);
+  touch-action: pan-y; /* Only allow vertical scrolling */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Low-end Android: no blur */
