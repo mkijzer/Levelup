@@ -87,17 +87,6 @@ class SearchManager {
       }
     });
 
-    // Close on scroll
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (isSearchActive) {
-          this.closeSearch();
-        }
-      },
-      { passive: true }
-    );
-
     // Setup all interaction handlers
     this.setupClickOutside();
     this.setupNavInteractions();

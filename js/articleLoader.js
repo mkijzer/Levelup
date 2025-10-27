@@ -20,7 +20,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_WEEK: 3,
-  LAUNCH_DATE: new Date("2025-10-10"),
+  LAUNCH_DATE: new Date("2025-10-16"),
   INITIAL_CATEGORY_ARTICLES: 10,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -59,16 +59,14 @@ function getArticlesByCategory(category) {
 function getCategoryArticlesExcludingLatest(category) {
   const latestArticleIds = new Set(getLatestThreeArticles().map((a) => a.id));
 
-  return articlesData.filter((article) => {
-    const articleCategory = normalizeCategory(article.category || "");
-    return articleCategory === category && !latestArticleIds.has(article.id);
-  });
-  sort((a, b) => new Date(b.date) - new Date(a.date)).slice(
-    0,
-    CONFIG.CATEGORY_GRID_SIZE
-  );
+  return articlesData
+    .filter((article) => {
+      const articleCategory = normalizeCategory(article.category || "");
+      return articleCategory === category && !latestArticleIds.has(article.id);
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, CONFIG.CATEGORY_GRID_SIZE);
 }
-
 /**
  * Gets all articles for a category (category page)
  */

@@ -55,11 +55,28 @@ async function loadMoreCategoryArticles() {
  * Shows end of articles message on load more button
  */
 function showEndOfArticlesMessage(loadMoreButton) {
-  loadMoreButton.textContent =
-    "You've read the last article! Why not try to level up in another category?";
+  loadMoreButton.textContent = "Category Cleared - New Content Coming Soon";
   loadMoreButton.classList.add("load-more-disabled");
 
   loadMoreButton.removeEventListener("click", loadMoreCategoryArticles);
+
+  // Add home button if it doesn't exist
+  if (!document.querySelector(".end-category-home-btn")) {
+    const homeButton = document.createElement("button");
+    homeButton.className = "end-category-home-btn";
+    homeButton.setAttribute("aria-label", "Return to home");
+    homeButton.textContent = "Home";
+    homeButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Use the window function to properly navigate home
+      if (window.loadCategory) {
+        window.loadCategory("latest");
+      } else {
+        window.location.hash = "#latest";
+      }
+    });
+    loadMoreButton.after(homeButton);
+  }
 }
 
 /**

@@ -6,6 +6,7 @@
 
 import { loadCategory, loadCategoryPage, loadRandomArticle } from "./data.js";
 import { getRandomArticle, showArticleView } from "./articleView.js";
+import { SEO } from "./seo.js";
 
 let currentCategory = "latest";
 let isInCategoryPage = true;
@@ -69,11 +70,11 @@ export function setupNavigation() {
 
 function handlePopState(event) {
   const state = event.state;
-  
+
   // FIXED: Handle article cards (no history state)
   const hash = window.location.hash.slice(1);
-  if (hash.includes('/')) {
-    const articleId = hash.split('/')[1];
+  if (hash.includes("/")) {
+    const articleId = hash.split("/")[1];
     if (articleId) {
       showArticleView(articleId);
       return;
@@ -193,6 +194,15 @@ export function switchToCategory(category) {
 
   setActiveNav(category);
   loadCategoryPage(category);
+
+  // Update SEO meta tags for category page
+  SEO.updateMeta({
+    title: `${
+      category.charAt(0).toUpperCase() + category.slice(1)
+    } Articles - LevelUpOrDieTrying`,
+    description: `Latest ${category} articles and insights from LevelUpOrDieTrying`,
+    type: "website",
+  });
 }
 
 export function exitCategoryPage() {

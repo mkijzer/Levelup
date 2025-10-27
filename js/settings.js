@@ -36,23 +36,77 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Handle font size selectbox
-  fontOptions.forEach((option) => {
-    option.addEventListener("click", (e) => {
-      // Remove active from all options
-      fontOptions.forEach((opt) => opt.classList.remove("active"));
-      // Add active to clicked option
-      option.classList.add("active");
-      // Apply font size
-      applyFontSize(option.dataset.size);
+  const fontSizeSlider = document.getElementById("font-size-slider");
+  const previewText = document.querySelector(".preview-text");
+
+  // Load saved settings
+  loadSavedFontSize();
+
+  if (fontSizeSlider) {
+    fontSizeSlider.addEventListener("input", (e) => {
+      const sizes = ["small", "medium", "large"];
+      const size = sizes[e.target.value];
+
+      // Update preview
+      if (previewText) {
+        previewText.style.fontSize =
+          size === "small"
+            ? "var(--font-size-sm)"
+            : size === "large"
+            ? "var(--font-size-lg)"
+            : "var(--font-size-base)";
+      }
+
+      applyFontSize(size);
+    });
+  }
+
+  // Add click handlers for A buttons
+  const labelButtons = document.querySelectorAll(".label-btn");
+  labelButtons.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const sizeValue = parseInt(btn.dataset.size);
+      const sizes = ["small", "medium", "large"];
+      const size = sizes[sizeValue];
+
+      // Update slider position
+      if (fontSizeSlider) {
+        fontSizeSlider.value = sizeValue;
+      }
+
+      // Update preview
+      if (previewText) {
+        previewText.style.fontSize =
+          size === "small"
+            ? "var(--font-size-sm)"
+            : size === "large"
+            ? "var(--font-size-lg)"
+            : "var(--font-size-base)";
+      }
+
+      applyFontSize(size);
     });
   });
 
-  // Handle reading width change
-  if (readingWidthSelect) {
-    readingWidthSelect.addEventListener("change", (e) => {
-      applyReadingWidth(e.target.value);
-    });
+  function loadSavedFontSize() {
+    const savedSize = localStorage.getItem("fontSizePreference") || "medium";
+    const sizeMap = { small: 0, medium: 1, large: 2 };
+
+    if (fontSizeSlider) {
+      fontSizeSlider.value = sizeMap[savedSize];
+    }
+
+    if (previewText) {
+      previewText.style.fontSize =
+        savedSize === "small"
+          ? "var(--font-size-sm)"
+          : savedSize === "large"
+          ? "var(--font-size-lg)"
+          : "var(--font-size-base)";
+    }
+
+    applyFontSize(savedSize);
   }
 
   function openSettings() {
@@ -63,6 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const nav = document.querySelector(".nav-container");
     if (nav) {
       nav.classList.add("modal-open");
+    }
+
+    // Force close button to cross state
+    if (closeBtn) {
+      closeBtn.classList.add("on");
     }
   }
 

@@ -12,6 +12,8 @@ import {
   extractAltFromFilename,
 } from "./utils.js";
 
+import { SEO } from "./seo.js";
+
 // ============================================================================
 // Shared Observer for Performance
 // ============================================================================

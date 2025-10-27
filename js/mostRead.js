@@ -5,8 +5,39 @@ export function populateMostRead() {
   const mostReadGrid = document.querySelector(".most-read-grid");
   if (!mostReadGrid || articlesData.length === 0) return;
 
-  const shuffled = [...articlesData].sort(() => Math.random() - 0.5);
-  const selectedArticles = shuffled.slice(0, 5);
+  // Get today's date as a string (YYYY-MM-DD)
+  const today = new Date().toISOString().split("T")[0];
+
+  // Check if we have cached articles for today
+  const cachedData = localStorage.getItem("mostReadCache");
+  let selectedArticles;
+
+  if (cachedData) {
+    const cache = JSON.parse(cachedData);
+
+    // If cache is from today, use cached article IDs
+    if (cache.date === today) {
+      selectedArticles = cache.articleIds
+        .map((id) => articlesData.find((article) => article.id === id))
+        .filter(Boolean); // Remove any articles that no longer exist
+    }
+  }
+
+  // If no valid cache, generate new selection
+  if (!selectedArticles || selectedArticles.length < 5) {
+    const shuffled = [...articlesData].sort(() => Math.random() - 0.5);
+    selectedArticles = shuffled.slice(0, 5);
+
+    // Cache the selection for today
+    localStorage.setItem(
+      "mostReadCache",
+      JSON.stringify({
+        date: today,
+        articleIds: selectedArticles.map((article) => article.id),
+      })
+    );
+  }
+
   const mostReadCards = mostReadGrid.querySelectorAll(".most-read-card");
 
   selectedArticles.forEach((article, index) => {

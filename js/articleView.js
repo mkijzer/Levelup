@@ -18,6 +18,7 @@ import {
   setActiveNav,
 } from "./navigation.js";
 import { xSvg, tiktokSvg, instagramSvg, youtubeSvg } from "./svg.js";
+import { SEO } from "./seo.js";
 
 /**
  * Updates page title and meta description for SEO
@@ -126,6 +127,13 @@ function formatDateReading(dateStr) {
  */
 async function showArticleView(articleId) {
   const article = articlesData.find((a) => a.id === articleId);
+
+  SEO.updateMeta({
+    title: `${article.title} - LevelUpOrDieTrying`,
+    description: article.hook || article.content.substring(0, 155),
+    image: article.image,
+    type: "article",
+  });
   if (!article) {
     console.error(`Article not found: ${articleId}`);
     return;

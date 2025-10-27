@@ -211,6 +211,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
 /* Desktop Navigation - Base state (all items dimmed yellow) */
 .desktop-nav-item {
   position: relative;
+
   padding: var(--spacing-2) var(--spacing-4);
   transition: color var(--transition-base);
   color: var(--accent-dimmed);
@@ -236,6 +237,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   stroke: var(--accent-dimmed) !important;
   transition: var(--transition-fast);
   vertical-align: center;
+  transform: translateY(4px);
 }
 
 .desktop-nav-item:hover svg,
@@ -406,7 +408,7 @@ a[href="#random"]:hover .nav-icon path:nth-child(4) {
   font-size: var(--font-size-lg);
   align-items: center;
   width: 100%;
-  gap: var(--spacing-12);
+  gap: var(--spacing-6);
 }
 
 .modal-category-item {

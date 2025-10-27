@@ -745,6 +745,30 @@ body:has(.article-view:not(.hidden)) .article-header {
   pointer-events: none;
 }
 
+/* End of Category Home Button */
+.end-category-home-btn {
+  display: block;
+  margin: var(--spacing-4) auto 0;
+  padding: var(--spacing-2) var(--spacing-4);
+  background: transparent;
+  border: none;
+  color: var(--accent-dimmed); /* Start with light yellow (like navbar) */
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  text-align: center;
+}
+
+.end-category-home-btn:hover {
+  color: var(--accent-color); /* Middle brightness on hover */
+}
+
+.end-category-home-btn:active {
+  color: hsl(51, 100%, 65%); /* Brightest on click */
+  transform: scale(0.98);
+}
+
 /* ============================================================================ */
 /* RANDOM ARTICLES COMPONENTS */
 /* ============================================================================ */
@@ -1218,6 +1242,37 @@ body:has(.article-view:not(.hidden)) .article-header {
   object-fit: cover;
   object-position: center;
 }
+
+/* ============================================================================ */
+/* TABLET Adjustments (min-width: 768px) */
+/* ============================================================================ */
+/* Tablet fix - override desktop 3-column grid to 2-column */
+/* Tablet fix - show top of images instead of bottom */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .category-grid .article-card.glass.small {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .category-grid .article-card.glass.small .article-image-wrapper {
+    height: 55%;
+    order: 1;
+  }
+
+  .category-grid .article-card.glass.small .article-image {
+    object-position: top center;
+  }
+
+  .category-grid .article-card.glass.small .article-content {
+    height: 30%;
+    order: 2;
+    padding: var(--spacing-2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
 /* ============================================================================ */
 /* Desktop Adjustments (min-width: 1200px) */
 /* ============================================================================ */
@@ -1352,7 +1407,7 @@ body:has(.article-view:not(.hidden)) .article-header {
 
   /* Category Page Desktop */
   .category-page-view {
-    padding-top: var(--spacing-40); /* Reduced gap from header */
+    padding-top: var(--spacing-40) !important; /* Reduced gap from header */
   }
 
   .category-page-title {

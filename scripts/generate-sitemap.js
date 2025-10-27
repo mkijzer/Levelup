@@ -49,7 +49,7 @@ function getPublishedArticles(articles, config) {
 }
 
 // Generate sitemap XML
-function generateSitemap(publishedArticles, domain = "https://yourdomain.com") {
+function generateSitemap(publishedArticles, domain = "https://levelupordiertrying.com") {
   const today = new Date().toISOString().split("T")[0];
 
   // Main page

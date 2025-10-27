@@ -179,7 +179,12 @@ export async function loadSearchResults(query) {
     mainContent.style.display = "";
   }
 
-  // Hide bento grid
+  // Hide bento grid (with null check for safety)
+  if (!elements.bentoGrid?.parentNode) {
+    console.error("Cannot create search container - bento grid parent not found");
+    return;
+  }
+
   elements.bentoGrid.style.display = "none";
 
   // Get or create search results container
@@ -197,6 +202,12 @@ export async function loadSearchResults(query) {
   searchContainer.innerHTML = "";
   // Make sure it's visible
   searchContainer.style.display = "";
+
+  // Scroll to top to show search results
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
 
   updateCategoryTitle(`SEARCH: ${query.toUpperCase()}`);
 
@@ -313,12 +324,10 @@ export async function loadCategoryPage(category) {
 
   setupCategoryPageInteractions();
 
-  // Scroll the category page view to top
   const categoryPageView = document.getElementById("category-page-view");
   if (categoryPageView) {
     categoryPageView.scrollTop = 0;
 
-    // Prevent scroll events from bubbling to body
     categoryPageView.addEventListener(
       "wheel",
       (e) => {
@@ -336,9 +345,12 @@ export async function loadCategoryPage(category) {
     );
   }
 
-  // Rest of the function...
+  updateDesktopNavigation(category);
 
-  // Add scroll animations for category page - delay to ensure DOM is ready
+  if (window.innerWidth >= 1200) {
+    initParallaxHover();
+  }
+
   setTimeout(() => {
     import("./scroll-animations.js").then((module) => {
       module.cleanupScrollAnimations();
@@ -346,7 +358,6 @@ export async function loadCategoryPage(category) {
     });
   }, 100);
 }
-
 /**
  * Loads a random article
  */
@@ -404,14 +415,20 @@ function updateCategoryTitle(category) {
  * Shows category page view and hides main content
  */
 function showCategoryPageView(elements, category) {
+  // Defensive check for required elements
+  if (!elements?.categoryPageView) {
+    console.error("Category page view element not found");
+    return;
+  }
+
   // Disable body scroll when category page is active
   document.body.style.overflow = "hidden";
 
   elements.categoryPageView.classList.remove("hidden");
 
   if (elements.categoryTitle) {
-    elements.categoryTitle.textContent =
-      category.charAt(0).toUpperCase() + category.slice(1);
+    const capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1);
+    elements.categoryTitle.textContent = `[${capitalizedCategory}]`;
   }
 }
 // ============================================================================
@@ -422,18 +439,32 @@ function showCategoryPageView(elements, category) {
  * Sets up event delegation for article card clicks
  */
 function setupEventDelegation() {
-  // Remove any existing event listeners first
+  // Get DOM elements with defensive checks
   const container = document.querySelector(".container");
   const categoryPageView = document.getElementById("category-page-view");
 
+  // Add listeners only if elements exist
   if (container) {
     container.addEventListener("click", handleArticleCardClick);
+  } else {
+    console.warn("Container element not found for event delegation");
   }
 
   if (categoryPageView) {
     categoryPageView.addEventListener("click", handleArticleCardClick);
+  } else {
+    console.warn("Category page view not found for event delegation");
   }
 }
+
+// Setup category "More" links
+document.querySelectorAll(".category-more-link").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const category = link.getAttribute("href").replace("#", "");
+    loadCategoryPage(category);
+  });
+});
 
 function handleArticleCardClick(e) {
   const card = e.target.closest(".article-card");
@@ -478,15 +509,15 @@ function handleArticleCardClick(e) {
       `#${getCurrentCategory()}/${articleId}`
     );
 
-    // Close search if open
+    // Close search if open (with defensive checks)
     const searchBar = document.querySelector(".search-bar-slide");
     const searchIcon = document.querySelector(".search-icon");
     const searchInput = document.getElementById("search-input");
 
-    if (searchBar && searchBar.classList.contains("active")) {
+    if (searchBar?.classList.contains("active")) {
       searchBar.classList.remove("active");
-      searchIcon.classList.remove("expanding");
-      searchInput.value = "";
+      searchIcon?.classList.remove("expanding");
+      if (searchInput) searchInput.value = "";
     }
   } else {
     console.log("[DEBUG] No valid article card clicked");
@@ -498,57 +529,51 @@ function handleArticleCardClick(e) {
 // ============================================================================
 
 function addIcons() {
-  // Desktop nav icons
-  const latest = document.querySelector('.desktop-nav-item[href="#latest"]');
-  if (latest) latest.innerHTML = `${latestSvg} Home`;
+  // Desktop nav icons - using modern optional chaining
+  const desktopNavItems = {
+    latest: document.querySelector('.desktop-nav-item[href="#latest"]'),
+    health: document.querySelector('.desktop-nav-item[href="#health"]'),
+    coins: document.querySelector('.desktop-nav-item[href="#coins"]'),
+    hack: document.querySelector('.desktop-nav-item[href="#hack"]'),
+    ai: document.querySelector('.desktop-nav-item[href="#ai"]'),
+    random: document.querySelector('.desktop-nav-item[href="#random"]'),
+  };
 
-  const health = document.querySelector('.desktop-nav-item[href="#health"]');
-  if (health) health.innerHTML = `${healthSvg} Health`;
+  // Safely set desktop nav icons
+  if (desktopNavItems.latest) desktopNavItems.latest.innerHTML = `${latestSvg} Home`;
+  if (desktopNavItems.health) desktopNavItems.health.innerHTML = `${healthSvg} Health`;
+  if (desktopNavItems.coins) desktopNavItems.coins.innerHTML = `${coinsSvg} Coins`;
+  if (desktopNavItems.hack) desktopNavItems.hack.innerHTML = `${hackSvg} Hack`;
+  if (desktopNavItems.ai) desktopNavItems.ai.innerHTML = `${aiSvg} AI`;
+  if (desktopNavItems.random) desktopNavItems.random.innerHTML = `${randomSvg} Random`;
 
-  const coins = document.querySelector('.desktop-nav-item[href="#coins"]');
-  if (coins) coins.innerHTML = `${coinsSvg} Coins`;
-
-  const hack = document.querySelector('.desktop-nav-item[href="#hack"]');
-  if (hack) hack.innerHTML = `${hackSvg} Hack`;
-
-  const ai = document.querySelector('.desktop-nav-item[href="#ai"]');
-  if (ai) ai.innerHTML = `${aiSvg} AI`;
-
-  const random = document.querySelector('.desktop-nav-item[href="#random"]');
-  if (random) random.innerHTML = `${randomSvg} Random`;
-
-  // Mobile icons
+  // Mobile icons - with defensive checks
   const mobileLatest = document.querySelector('.nav-item a[href="#latest"]');
-  if (mobileLatest) {
+  if (mobileLatest?.parentElement) {
     const navItem = mobileLatest.parentElement;
     navItem.innerHTML = `${latestSvg}<a href="#latest"></a>`;
   }
 
-  const mobileCategory = document.querySelector(
-    '.nav-item a[href="#category"]'
-  );
-  if (mobileCategory) {
+  const mobileCategory = document.querySelector('.nav-item a[href="#category"]');
+  if (mobileCategory?.parentElement) {
     const navItem = mobileCategory.parentElement;
-    // FIXED: Preserve the category class when adding icons
     navItem.innerHTML = `${categorySvg}<a href="#category"></a>`;
-    navItem.classList.add("category"); // Re-add the category class
+    navItem.classList.add("category"); // Preserve the category class
   }
 
   const mobileRandom = document.querySelector('.nav-item a[href="#random"]');
-  if (mobileRandom) {
+  if (mobileRandom?.parentElement) {
     const navItem = mobileRandom.parentElement;
     navItem.innerHTML = `${randomSvg}<a href="#random"></a>`;
   }
 
-  const mobileSettings = document.querySelector(
-    '.nav-item a[href="#settings"]'
-  );
-  if (mobileSettings) {
+  const mobileSettings = document.querySelector('.nav-item a[href="#settings"]');
+  if (mobileSettings?.parentElement) {
     const navItem = mobileSettings.parentElement;
     navItem.innerHTML = `${settingsSvg}<a href="#settings"></a>`;
   }
 
-  // Social icons in footer
+  // Social icons in footer - defensive iteration
   const socialIcons = document.querySelectorAll(".social-icon");
   const socialSvgs = {
     x: xSvg,
@@ -559,8 +584,8 @@ function addIcons() {
   };
 
   socialIcons.forEach((icon) => {
-    const social = icon.getAttribute("data-social");
-    if (socialSvgs[social]) {
+    const social = icon?.getAttribute("data-social");
+    if (social && socialSvgs[social]) {
       icon.innerHTML = socialSvgs[social];
     }
   });
@@ -647,32 +672,35 @@ function setupScrollBehavior() {
       window.removeEventListener("scroll", oldHandler);
       window.removeEventListener("touchend", oldHandler);
       const categoryView = document.querySelector(".category-page-view");
-      if (categoryView) {
-        categoryView.removeEventListener("scroll", oldHandler);
-      }
+      categoryView?.removeEventListener("scroll", oldHandler);
     }
 
     let lastScrollY = window.scrollY;
     let scrollTimeout;
     let touchTimeout;
 
-    // Create handler
+    // Create handler with defensive checks
     const handleScrollEvent = () => {
       const header = document.querySelector(".sticky-wrapper-navcontainer");
       const navbar = document.querySelector(".nav-container");
-      if (!header) return;
+
+      // Exit early if header doesn't exist
+      if (!header) {
+        console.warn("Header element not found for scroll behavior");
+        return;
+      }
 
       const categoryView = document.querySelector(".category-page-view");
       const isOnCategoryPage =
         categoryView && !categoryView.classList.contains("hidden");
 
       const currentScrollY = isOnCategoryPage
-        ? categoryView.scrollTop
+        ? (categoryView?.scrollTop ?? 0)
         : window.scrollY;
       const scrollDifference = Math.abs(currentScrollY - lastScrollY);
 
       header.classList.add("scrolling");
-      if (navbar) navbar.classList.add("scrolling");
+      navbar?.classList.add("scrolling");
 
       if (scrollDifference > 15) {
         if (currentScrollY > lastScrollY && currentScrollY > 50) {
@@ -692,17 +720,13 @@ function setupScrollBehavior() {
     window.addEventListener("scroll", handleScrollEvent);
 
     const categoryView = document.querySelector(".category-page-view");
-    if (categoryView) {
-      categoryView.addEventListener("scroll", handleScrollEvent);
-    }
+    categoryView?.addEventListener("scroll", handleScrollEvent);
 
     window.addEventListener("touchend", () => {
       clearTimeout(touchTimeout);
       touchTimeout = setTimeout(() => {
         const header = document.querySelector(".sticky-wrapper-navcontainer");
-        if (header) {
-          header.classList.remove("hide-header");
-        }
+        header?.classList.remove("hide-header");
       }, 500);
     });
   } catch (error) {
