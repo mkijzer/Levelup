@@ -1330,9 +1330,9 @@ body:has(.article-view:not(.hidden)) .article-header {
   /* Main Article Image */
   .main-article-image {
     width: 100%;
-    height: 300px;
+    height: 400px; /* Increased from 300px for more square ratio */
     object-fit: cover;
-    object-position: center top;
+    object-position: center center; /* Center instead of top */
     border-radius: var(--radius-xl);
     margin: var(--spacing-0);
     margin-top: var(--spacing-2) !important;
@@ -1370,9 +1370,9 @@ body:has(.article-view:not(.hidden)) .article-header {
   /* Inline Images */
   .article-body .inline-image {
     width: 100%;
-    height: 300px;
+    height: 400px; /* Increased from 300px for more square ratio */
     object-fit: cover;
-    object-position: center top;
+    object-position: center center; /* Center instead of top */
     border-radius: var(--radius-xl);
     margin: var(--spacing-0);
     margin-top: var(--spacing-2) !important;
@@ -1410,39 +1410,49 @@ body:has(.article-view:not(.hidden)) .article-header {
     padding-top: var(--spacing-40) !important; /* Reduced gap from header */
   }
 
+  .category-page-view .container {
+    max-width: 1000px; /* Constrain width */
+    margin: 0 auto; /* Center content */
+  }
+
   .category-page-title {
     margin-top: var(--spacing-4);
     margin-bottom: var(--spacing-4);
   }
 
-  /* Adjusted image sizes */
+  /* Adjusted image sizes - smaller and more compact */
   .category-articles-list .article-card .article-image-wrapper {
-    aspect-ratio: 4 / 3; /* Taller images */
-    margin-top: var(--spacing-20);
-    height: 600px; /* Larger height */
+    aspect-ratio: 4 / 3; /* More square, shows more of the image */
+    margin-top: var(--spacing-4);
+    height: 400px; /* Adjusted for 4:3 ratio */
+  }
+
+  .category-hero-grid {
+    max-width: 100%; /* Keep hero grid full width within container */
   }
 
   .category-hero-grid .article-card.huge .article-image-wrapper {
-    height: 700px; /* Larger hero image */
+    height: 600px; /* More square for hero image */
+    aspect-ratio: 4 / 3; /* Enforce square-ish ratio */
   }
 
   .category-side-cards .article-card .article-image-wrapper {
-    margin-top: var(--spacing-20);
-    height: 400px; /* Larger side card images */
+    margin-top: var(--spacing-4);
+    height: 300px; /* Keep side cards as is */
   }
 
-  /* Adjusted titles */
+  /* Adjusted titles - smaller */
   .category-articles-list .article-card .article-title {
-    font-size: var(--font-size-2xl); /* Bigger title */
+    font-size: var(--font-size-xl); /* Reduced from 2xl */
     line-height: var(--line-height-tight);
   }
 
   .category-hero-grid .article-card .article-title {
-    font-size: clamp(1.8rem, 3vw, 4rem); /* Larger hero title */
+    font-size: clamp(1.5rem, 2.5vw, 3rem); /* Reduced from 4rem max */
   }
 
   .category-side-cards .article-card .article-title {
-    font-size: var(--font-size-xl); /* Larger side card titles */
+    font-size: var(--font-size-lg); /* Reduced from xl */
   }
 
   .category-hero-grid .article-card.huge .article-content {

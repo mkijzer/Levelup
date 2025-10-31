@@ -20,7 +20,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_WEEK: 3,
-  LAUNCH_DATE: new Date("2025-10-16"),
+  LAUNCH_DATE: new Date("2025-10-05"),
   INITIAL_CATEGORY_ARTICLES: 10,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -67,6 +67,7 @@ function getCategoryArticlesExcludingLatest(category) {
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, CONFIG.CATEGORY_GRID_SIZE);
 }
+
 /**
  * Gets all articles for a category (category page)
  */
@@ -251,11 +252,24 @@ async function initializeArticleData() {
 
     if (!isAdminMode) {
       const today = new Date();
-      const maxPublishedIndex =
-        Math.floor((today - CONFIG.LAUNCH_DATE) / (1000 * 60 * 60 * 24)) *
-          CONFIG.ARTICLES_PER_WEEK +
-        CONFIG.ARTICLES_PER_WEEK;
-      articlesData = articlesData.slice(0, maxPublishedIndex);
+      const launchDate = new Date(CONFIG.LAUNCH_DATE);
+
+      // Publishing days: Monday (1), Wednesday (3), Friday (5)
+      const publishDays = [1, 3, 5];
+
+      // Count how many publish days have passed since launch
+      let publishedCount = 0;
+      let currentDate = new Date(launchDate);
+
+      while (currentDate <= today) {
+        const dayOfWeek = currentDate.getDay();
+        if (publishDays.includes(dayOfWeek)) {
+          publishedCount++;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      articlesData = articlesData.slice(0, publishedCount);
     }
 
     assignCurrentDateToArticles();

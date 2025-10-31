@@ -38,14 +38,25 @@ function extractConfigFromArticleLoader() {
 // Calculate which articles should be published based on articleLoader logic
 function getPublishedArticles(articles, config) {
   const today = new Date();
-  const daysSinceLaunch = Math.floor(
-    (today - config.launchDate) / (1000 * 60 * 60 * 24)
-  );
-  const maxPublishedIndex =
-    daysSinceLaunch * config.articlesPerWeek + config.articlesPerWeek;
+  const launchDate = new Date(config.launchDate);
+
+  // Publishing days: Monday (1), Wednesday (3), Friday (5)
+  const publishDays = [1, 3, 5];
+
+  // Count how many publish days have passed since launch
+  let publishedCount = 0;
+  let currentDate = new Date(launchDate);
+
+  while (currentDate <= today) {
+    const dayOfWeek = currentDate.getDay();
+    if (publishDays.includes(dayOfWeek)) {
+      publishedCount++;
+    }
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
 
   // Only include articles that should be published by now
-  return articles.slice(0, Math.max(0, maxPublishedIndex));
+  return articles.slice(0, Math.max(0, publishedCount));
 }
 
 // Generate sitemap XML
