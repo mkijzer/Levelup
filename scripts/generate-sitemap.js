@@ -1,8 +1,8 @@
 // ============================================================================
 // scripts/generate-sitemap.js - AUTOMATED SITEMAP GENERATOR
 // ============================================================================
-// Description: Generates sitemap.xml using the same logic as articleLoader.js
-// Reads launch date and articles per day from articleLoader to stay in sync
+// Description: Generates simple sitemap.xml for SPA (Single Page Application)
+// Only includes homepage to avoid Google Search Console hash URL errors
 // ============================================================================
 
 const fs = require("fs");
@@ -59,11 +59,15 @@ function getPublishedArticles(articles, config) {
   return articles.slice(0, Math.max(0, publishedCount));
 }
 
-// Generate sitemap XML
-function generateSitemap(publishedArticles, domain = "https://levelupordiertrying.com") {
+// Generate simple sitemap XML (homepage only for SPA)
+function generateSitemap(
+  publishedArticles,
+  domain = "https://levelupordiertrying.com"
+) {
   const today = new Date().toISOString().split("T")[0];
 
-  // Main page
+  // Simple sitemap - only homepage for SPA
+  // Google will crawl the homepage and discover all content through JavaScript
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -71,23 +75,7 @@ function generateSitemap(publishedArticles, domain = "https://levelupordiertryin
     <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-  </url>`;
-
-  // Add each published article
-  publishedArticles.forEach((article) => {
-    const articleUrl = article.slug ? `#${article.slug}` : `#${article.id}`;
-    const lastmod = article.date || today;
-
-    sitemap += `
-  <url>
-    <loc>${domain}/${articleUrl}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>`;
-  });
-
-  sitemap += `
+  </url>
 </urlset>`;
 
   return sitemap;
@@ -96,7 +84,7 @@ function generateSitemap(publishedArticles, domain = "https://levelupordiertryin
 // Main function
 async function main() {
   try {
-    console.log("🔧 Generating sitemap...");
+    console.log("🔧 Generating simple sitemap for SPA...");
 
     // Read articles.json
     const articlesPath = path.join(__dirname, "../data/articles.json");
@@ -112,16 +100,19 @@ async function main() {
     const publishedArticles = getPublishedArticles(articles, config);
     console.log(`✅ ${publishedArticles.length} articles are published`);
 
-    // Generate sitemap
+    // Generate simple sitemap (homepage only)
     const sitemap = generateSitemap(publishedArticles);
 
     // Write sitemap.xml
     const sitemapPath = path.join(__dirname, "../sitemap.xml");
     fs.writeFileSync(sitemapPath, sitemap);
 
-    console.log(`🎉 Sitemap generated successfully!`);
+    console.log(`🎉 Simple sitemap generated successfully!`);
     console.log(`📍 Location: ${sitemapPath}`);
-    console.log(`🔗 Articles included: ${publishedArticles.length}`);
+    console.log(`📝 Contains: Homepage only (SPA-friendly)`);
+    console.log(
+      `🔍 Google will crawl homepage and discover ${publishedArticles.length} articles through JavaScript`
+    );
   } catch (error) {
     console.error("❌ Error generating sitemap:", error.message);
     process.exit(1);

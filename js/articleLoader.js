@@ -20,7 +20,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 const CONFIG = {
   CATEGORIES: ["health", "coins", "hack", "ai"],
   ARTICLES_PER_WEEK: 3,
-  LAUNCH_DATE: new Date("2025-10-05"),
+  LAUNCH_DATE: new Date("2025-10-25"),
   INITIAL_CATEGORY_ARTICLES: 10,
   LOAD_MORE_BATCH_SIZE: 6,
   CATEGORY_GRID_SIZE: 6,
@@ -246,6 +246,15 @@ async function initializeArticleData() {
       throw new Error(`Failed to fetch articles: ${response.status}`);
 
     articlesData = await response.json();
+
+    // Auto-generate sitemap when articles are loaded
+    import("./js/sitemapGenerator.js")
+      .then((module) => {
+        module.checkAndGenerateSitemap();
+      })
+      .catch(() => {
+        // Sitemap generator not available - silent fail
+      });
 
     const urlParams = new URLSearchParams(window.location.search);
     const isAdminMode = urlParams.get("admin") === "true";

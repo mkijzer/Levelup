@@ -64,6 +64,8 @@ import { initializeScrollAnimations } from "./scroll-animations.js";
 
 import { initParallaxHover } from "./parallax.js";
 
+import { initCookieConsent } from "./cookieConsent.js";
+
 import { isLowEndAndroid } from "./utils.js";
 
 // ============================================================================
@@ -181,7 +183,9 @@ export async function loadSearchResults(query) {
 
   // Hide bento grid (with null check for safety)
   if (!elements.bentoGrid?.parentNode) {
-    console.error("Cannot create search container - bento grid parent not found");
+    console.error(
+      "Cannot create search container - bento grid parent not found"
+    );
     return;
   }
 
@@ -427,7 +431,8 @@ function showCategoryPageView(elements, category) {
   elements.categoryPageView.classList.remove("hidden");
 
   if (elements.categoryTitle) {
-    const capitalizedCategory = category.charAt(0).toUpperCase() + category.slice(1);
+    const capitalizedCategory =
+      category.charAt(0).toUpperCase() + category.slice(1);
     elements.categoryTitle.textContent = `[${capitalizedCategory}]`;
   }
 }
@@ -540,12 +545,16 @@ function addIcons() {
   };
 
   // Safely set desktop nav icons
-  if (desktopNavItems.latest) desktopNavItems.latest.innerHTML = `${latestSvg} Home`;
-  if (desktopNavItems.health) desktopNavItems.health.innerHTML = `${healthSvg} Health`;
-  if (desktopNavItems.coins) desktopNavItems.coins.innerHTML = `${coinsSvg} Coins`;
+  if (desktopNavItems.latest)
+    desktopNavItems.latest.innerHTML = `${latestSvg} Home`;
+  if (desktopNavItems.health)
+    desktopNavItems.health.innerHTML = `${healthSvg} Health`;
+  if (desktopNavItems.coins)
+    desktopNavItems.coins.innerHTML = `${coinsSvg} Coins`;
   if (desktopNavItems.hack) desktopNavItems.hack.innerHTML = `${hackSvg} Hack`;
   if (desktopNavItems.ai) desktopNavItems.ai.innerHTML = `${aiSvg} AI`;
-  if (desktopNavItems.random) desktopNavItems.random.innerHTML = `${randomSvg} Random`;
+  if (desktopNavItems.random)
+    desktopNavItems.random.innerHTML = `${randomSvg} Random`;
 
   // Mobile icons - with defensive checks
   const mobileLatest = document.querySelector('.nav-item a[href="#latest"]');
@@ -554,7 +563,9 @@ function addIcons() {
     navItem.innerHTML = `${latestSvg}<a href="#latest"></a>`;
   }
 
-  const mobileCategory = document.querySelector('.nav-item a[href="#category"]');
+  const mobileCategory = document.querySelector(
+    '.nav-item a[href="#category"]'
+  );
   if (mobileCategory?.parentElement) {
     const navItem = mobileCategory.parentElement;
     navItem.innerHTML = `${categorySvg}<a href="#category"></a>`;
@@ -567,7 +578,9 @@ function addIcons() {
     navItem.innerHTML = `${randomSvg}<a href="#random"></a>`;
   }
 
-  const mobileSettings = document.querySelector('.nav-item a[href="#settings"]');
+  const mobileSettings = document.querySelector(
+    '.nav-item a[href="#settings"]'
+  );
   if (mobileSettings?.parentElement) {
     const navItem = mobileSettings.parentElement;
     navItem.innerHTML = `${settingsSvg}<a href="#settings"></a>`;
@@ -605,6 +618,9 @@ setTimeout(() => {
 async function initializeApp() {
   try {
     console.log("Initializing application...");
+
+    // Initialize cookie consent
+    initCookieConsent();
 
     // Detect and mark low-end Android devices
     if (isLowEndAndroid()) {
@@ -695,7 +711,7 @@ function setupScrollBehavior() {
         categoryView && !categoryView.classList.contains("hidden");
 
       const currentScrollY = isOnCategoryPage
-        ? (categoryView?.scrollTop ?? 0)
+        ? categoryView?.scrollTop ?? 0
         : window.scrollY;
       const scrollDifference = Math.abs(currentScrollY - lastScrollY);
 

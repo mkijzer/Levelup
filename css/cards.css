@@ -152,6 +152,7 @@
   color: var(--white);
   text-shadow: 0 2px var(--spacing-2) rgba(0, 0, 0, 0.8);
   margin: var(--spacing-0);
+  margin-bottom: var(--spacing-8);
   line-height: var(--line-height-tight);
   font-weight: var(--font-weight-bold);
   pointer-events: auto;
@@ -1147,6 +1148,34 @@ body:has(.article-view:not(.hidden)) .article-header {
   outline-offset: -1.5px;
 }
 
+/* Custom tooltip for animation control */
+.animation-control {
+  position: relative;
+}
+
+.animation-control::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.animation-control:hover::after {
+  opacity: 1;
+}
+
 /* Triangle (Play) */
 .triangle {
   width: 0;
@@ -1460,7 +1489,7 @@ body:has(.article-view:not(.hidden)) .article-header {
   }
 
   /* Parallax hover effect for bento grid images */
-  .bento-grid .article-card .article-image {
+  /* .bento-grid .article-card .article-image {
     transform-origin: center;
   }
 
@@ -1471,7 +1500,7 @@ body:has(.article-view:not(.hidden)) .article-header {
   .bento-grid .article-card:hover .article-image {
     filter: brightness(1.01) saturate(1.05);
     transition: filter 0.2s ease-out;
-  }
+  } */
 
   .article-tags {
     display: flex;

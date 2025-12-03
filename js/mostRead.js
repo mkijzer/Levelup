@@ -72,7 +72,6 @@ function populateMostReadCard(card, article) {
 export function refreshMostRead() {
   populateMostRead();
 }
-
 // Animation control functionality
 export function initAnimationControls() {
   const toggleButton = document.getElementById("most-read-toggle");
@@ -90,11 +89,13 @@ export function initAnimationControls() {
       playIcon.classList.remove("hidden");
       pauseIcon.classList.add("hidden");
       toggleButton.setAttribute("aria-label", "Play animation");
+      toggleButton.setAttribute("data-tooltip", "Play animation");
     } else {
       grid.classList.remove("paused");
       playIcon.classList.add("hidden");
       pauseIcon.classList.remove("hidden");
       toggleButton.setAttribute("aria-label", "Pause animation");
+      toggleButton.setAttribute("data-tooltip", "Pause animation");
     }
   });
 }

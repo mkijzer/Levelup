@@ -17,6 +17,21 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Google Analytics -->
+    <!-- <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FBTQXJCLGX"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-FBTQXJCLGX");
+    </script> -->
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="LevelUpOrDieTrying" />
@@ -28,7 +43,10 @@
       property="og:description"
       content="Stop playing Life on easy mode. Master Health, build Wealth, dominate Tech. Get the game-changing insights that work."
     />
-    <meta property="og:image" content="https://levelupordiertrying.com/assets/images/logo.png" />
+    <meta
+      property="og:image"
+      content="https://levelupordiertrying.com/assets/images/logo.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:url" content="https://levelupordiertrying.com" />
@@ -44,7 +62,10 @@
       name="twitter:description"
       content="Life's a game - master Health, Wealth & Tech to win! Game-changing insights to Level Up your Life."
     />
-    <meta name="twitter:image" content="https://levelupordiertrying.com/assets/images/logo.png" />
+    <meta
+      name="twitter:image"
+      content="https://levelupordiertrying.com/assets/images/logo.png"
+    />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -107,6 +128,7 @@
     <!-- ===================================================== -->
 
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/cookie.css" />
 
     <!-- Resource hints -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -196,7 +218,7 @@
               <li><a href="#health" class="desktop-nav-item">[Health]</a></li>
               <li><a href="#coins" class="desktop-nav-item">[Coins]</a></li>
               <li><a href="#hack" class="desktop-nav-item">[Hack]</a></li>
-              <li><a href="#ai" class="desktop-nav-item">[AI]</a></li>
+              <li><a href="#ai" class="desktop-nav-item">[Tech]</a></li>
             </ul>
             <div class="desktop-actions">
               <a href="#random" class="desktop-nav-item random-btn">Random</a>
@@ -333,11 +355,12 @@
               >
                 <header class="category-label">
                   <div class="most-read-header">
-                    <h2 id="most-read-title">[Most Read]</h2>
+                    <h2 id="most-read-title">[Recommended]</h2>
                     <button
                       class="animation-control"
                       id="most-read-toggle"
                       aria-label="Pause animation"
+                      data-tooltip="Pause animation"
                     >
                       <div class="play-icon hidden">
                         <div class="triangle"></div>
@@ -655,7 +678,7 @@
           <!-- AI Articles Section -->
           <section aria-labelledby="ai-title">
             <header class="category-label">
-              <h2 id="ai-title">[AI]</h2>
+              <h2 id="ai-title">[Tech]</h2>
               <a href="#ai" class="category-more-link desktop-only">More</a>
             </header>
             <div class="category-content">
@@ -663,7 +686,7 @@
                 class="category-grid"
                 data-category="ai"
                 role="feed"
-                aria-label="Artificial intelligence articles"
+                aria-label="Tech articles"
               >
                 <!-- Articles populated dynamically -->
               </div>
@@ -844,7 +867,7 @@
             <a href="#hack">Hack</a>
           </li>
           <li class="modal-category-item">
-            <a href="#ai">AI</a>
+            <a href="#ai">Tech</a>
           </li>
         </ul>
       </div>
@@ -915,12 +938,34 @@
     ></div>
 
     <!-- ===================================================== -->
+    <!-- Cookie Consent Modal -->
+    <!-- ===================================================== -->
+    <div class="cookie-consent-modal" id="cookie-consent" aria-hidden="true">
+      <div class="cookie-content glass">
+        <div class="cookie-header">
+          <h3 class="cookie-title">🍪 Cookie Quest</h3>
+        </div>
+
+        <div class="cookie-body">
+          <p class="cookie-text">
+            We use cookies to track your progress and improve your experience.
+            Accept to help us level up the site.
+          </p>
+        </div>
+
+        <div class="cookie-actions">
+          <button class="cookie-btn cookie-decline" id="cookie-decline">
+            Decline
+          </button>
+          <button class="cookie-btn cookie-accept" id="cookie-accept">
+            Accept
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ===================================================== -->
     <!-- Site Footer -->
     <!-- ===================================================== -->
-    <!-- In index.html - Update the footer section -->
-    <!-- Replace footer section in index.html -->
-    <!-- Updated footer with reordered mobile layout -->
-    <!-- Updated footer with logo between socials and brand -->
     <footer class="footer" role="contentinfo">
       <div class="footer-content">
         <!-- Desktop/Tablet Layout -->
@@ -935,11 +980,7 @@
 
         <!-- Mobile Layout -->
         <div class="footer-mobile">
-          <p class="footer-tagline-mobile">
-            Life's a Game. Master Health, Wealth and Tech to Win!
-          </p>
-
-          <!-- Social Icons above Logo -->
+          <!-- Social Icons at top -->
           <nav aria-label="Social media links">
             <ul class="social-icons">
               <li>
@@ -990,20 +1031,30 @@
             </ul>
           </nav>
 
-          <!-- Logo between socials and brand -->
-          <img
-            src="assets/images/logo.png"
-            alt="Logo"
-            class="footer-logo-mobile"
-          />
+          <!-- Logo + First line of text -->
+          <div class="footer-brand-line">
+            <img
+              src="assets/images/logo.png"
+              alt="Logo"
+              class="footer-logo-mobile"
+            />
+            <span class="footer-text-line1">Life's a Game.</span>
+          </div>
 
-          <!-- Brand title after logo -->
-          <h2 class="footer-title-mobile">
-            Level Up <span class="footer-subtitle-mobile">Or Die Trying</span>
-          </h2>
+          <!-- Second line of text -->
+          <p class="footer-text-line2">
+            Master Health, Wealth and Tech to Win!
+          </p>
+
+          <!-- Legal links at bottom -->
+          <nav class="footer-legal" aria-label="Legal and company information">
+            <a href="/privacy-policy" class="legal-link">Privacy Policy</a>
+            <a href="/terms" class="legal-link">Terms of Service</a>
+            <a href="/contact" class="legal-link">Contact</a>
+          </nav>
         </div>
 
-        <!-- Social Icons for Desktop/Tablet -->
+        <!-- Desktop Social -->
         <nav aria-label="Social media links" class="desktop-social">
           <ul class="social-icons">
             <li>

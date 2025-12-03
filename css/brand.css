@@ -67,7 +67,7 @@
 /* Brand Subtitle - Decorative script text with custom styling */
 .subtitle {
   font-family: var(--font-script);
-  font-size: clamp(0.8rem, 2vw, 1.5rem) !important;
+  font-size: clamp(1rem, 2vw, 1.5rem) !important;
   font-style: italic;
   background: none !important;
   -webkit-text-fill-color: #f34343 !important;
@@ -157,15 +157,48 @@
 }
 
 .footer-mobile .social-icons {
-  margin: 0 0 var(--spacing-8) 0;
+  margin: 0 0 var(--spacing-4) 0;
 }
 
+.footer-brand-line {
+  display: flex;
+  align-items: baseline; /* Changed from center to baseline */
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
+}
+
+.legal-link {
+  font-size: calc(var(--font-size-xs) * 0.9); /* Smaller */
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  padding: var(--spacing-1);
+  opacity: 0.8; /* More muted */
+}
+
+.legal-link:hover {
+  color: var(--text-secondary);
+  opacity: 1;
+}
 .footer-logo-mobile {
-  width: var(--spacing-10);
-  height: var(--spacing-10);
+  width: var(--spacing-6);
+  height: var(--spacing-6);
   object-fit: cover;
   border-radius: var(--radius-full);
-  margin: 0 0 var(--spacing-3) 0;
+}
+
+.footer-text-line1 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.footer-text-line2 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-4) 0;
+  text-align: center;
 }
 
 .footer-title-mobile {
@@ -284,6 +317,38 @@
   .social-icon svg,
   .social-icon path {
     fill: var(--accent-bright) !important;
+  }
+}
+
+/* Footer Legal Links */
+.footer-legal {
+  margin-top: var(--spacing-4);
+  display: flex;
+  gap: var(--spacing-6);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.legal-link {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  padding: var(--spacing-1);
+}
+
+.legal-link:hover {
+  color: var(--text-secondary);
+}
+
+/* Desktop adjustments */
+@media (min-width: 768px) {
+  .footer-legal {
+    margin-top: var(--spacing-5);
+  }
+
+  .legal-link {
+    font-size: var(--font-size-sm);
   }
 }
 
