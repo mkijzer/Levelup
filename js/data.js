@@ -5,6 +5,10 @@
 // Version: 4.3 - Added parallax reinitialization for all content updates
 // ============================================================================
 
+// Category mapping - "ai" internally represents "Tech" content
+// Changed display name from "AI" to "Tech" for broader content scope
+// Keep internal references as "ai" for consistency with existing data
+
 import {
   initializeArticleData,
   getArticlesByCategory,
@@ -67,6 +71,8 @@ import { initParallaxHover } from "./parallax.js";
 import { initCookieConsent } from "./cookieConsent.js";
 
 import { isLowEndAndroid } from "./utils.js";
+
+import { setupLegalNavigation } from "./legal.js";
 
 // ============================================================================
 // DOM Element Getters
@@ -552,7 +558,7 @@ function addIcons() {
   if (desktopNavItems.coins)
     desktopNavItems.coins.innerHTML = `${coinsSvg} Coins`;
   if (desktopNavItems.hack) desktopNavItems.hack.innerHTML = `${hackSvg} Hack`;
-  if (desktopNavItems.ai) desktopNavItems.ai.innerHTML = `${aiSvg} AI`;
+  if (desktopNavItems.ai) desktopNavItems.ai.innerHTML = `${aiSvg} Tech`;
   if (desktopNavItems.random)
     desktopNavItems.random.innerHTML = `${randomSvg} Random`;
 
@@ -619,6 +625,8 @@ async function initializeApp() {
   try {
     console.log("Initializing application...");
 
+    setupLegalNavigation();
+
     // Initialize cookie consent
     initCookieConsent();
 
@@ -671,6 +679,8 @@ async function initializeApp() {
   // Header hide/show on scroll
   setupScrollBehavior();
 }
+
+setupLegalNavigation();
 
 /**
  * Setup scroll behavior for header

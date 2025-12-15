@@ -129,6 +129,7 @@
 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/cookie.css" />
+    <link rel="stylesheet" href="css/legal.css" />
 
     <!-- Resource hints -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -798,6 +799,17 @@
     </div>
 
     <!-- ===================================================== -->
+    <!-- Legal Page View -->
+    <!-- ===================================================== -->
+
+    <!-- Legal Page View -->
+    <div id="legal-page-view" class="legal-page-view hidden" role="main">
+      <div class="container">
+        <!-- Legal content will be populated here -->
+      </div>
+    </div>
+
+    <!-- ===================================================== -->
     <!-- Mobile Navigation -->
     <!-- ===================================================== -->
     <nav class="nav-container" role="navigation" aria-label="Mobile navigation">
@@ -964,149 +976,30 @@
       </div>
     </div>
     <!-- ===================================================== -->
-    <!-- Site Footer -->
+    <!-- Footer -->
     <!-- ===================================================== -->
-    <footer class="footer" role="contentinfo">
-      <div class="footer-content">
-        <!-- Desktop/Tablet Layout -->
-        <div class="footer-desktop">
-          <div class="footer-brand-horizontal">
-            <img src="assets/images/logo.png" alt="Logo" class="footer-logo" />
-            <p class="footer-tagline-horizontal">
-              Life's a Game. Master Health, Wealth and Tech to Win!
-            </p>
-          </div>
+    <footer class="footer">
+      <div class="footer-brand">
+        <div class="footer-brand-line">
+          <img src="assets/images/logo.png" alt="Logo" class="footer-logo" />
+          <span class="footer-text"
+            >Life's a Game. Master Health, Wealth and Tech to Win!</span
+          >
         </div>
-
-        <!-- Mobile Layout -->
-        <div class="footer-mobile">
-          <!-- Social Icons at top -->
-          <nav aria-label="Social media links">
-            <ul class="social-icons">
-              <li>
-                <a
-                  href="#"
-                  class="social-icon"
-                  data-social="x"
-                  aria-label="Follow us on X"
-                  >${xSvg}</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="social-icon"
-                  data-social="tiktok"
-                  aria-label="Follow us on TikTok"
-                  >${tiktokSvg}</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="social-icon"
-                  data-social="snap"
-                  aria-label="Follow us on Snapchat"
-                  >${snapSvg}</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="social-icon"
-                  data-social="instagram"
-                  aria-label="Follow us on Instagram"
-                  >${instagramSvg}</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="social-icon"
-                  data-social="youtube"
-                  aria-label="Follow us on YouTube"
-                  >${youtubeSvg}</a
-                >
-              </li>
-            </ul>
-          </nav>
-
-          <!-- Logo + First line of text -->
-          <div class="footer-brand-line">
-            <img
-              src="assets/images/logo.png"
-              alt="Logo"
-              class="footer-logo-mobile"
-            />
-            <span class="footer-text-line1">Life's a Game.</span>
-          </div>
-
-          <!-- Second line of text -->
-          <p class="footer-text-line2">
-            Master Health, Wealth and Tech to Win!
-          </p>
-
-          <!-- Legal links at bottom -->
-          <nav class="footer-legal" aria-label="Legal and company information">
-            <a href="/privacy-policy" class="legal-link">Privacy Policy</a>
-            <a href="/terms" class="legal-link">Terms of Service</a>
-            <a href="/contact" class="legal-link">Contact</a>
-          </nav>
+        <div class="social-icons">
+          <!-- <a href="#" class="social-icon" data-social="x"></a> -->
+          <a href="#" class="social-icon" data-social="tiktok"></a>
+          <a href="#" class="social-icon" data-social="snap"></a>
+          <a href="#" class="social-icon" data-social="instagram"></a>
+          <a href="#" class="social-icon" data-social="youtube"></a>
         </div>
-
-        <!-- Desktop Social -->
-        <nav aria-label="Social media links" class="desktop-social">
-          <ul class="social-icons">
-            <li>
-              <a
-                href="#"
-                class="social-icon"
-                data-social="x"
-                aria-label="Follow us on X"
-                >${xSvg}</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="social-icon"
-                data-social="tiktok"
-                aria-label="Follow us on TikTok"
-                >${tiktokSvg}</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="social-icon"
-                data-social="snap"
-                aria-label="Follow us on Snapchat"
-                >${snapSvg}</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="social-icon"
-                data-social="instagram"
-                aria-label="Follow us on Instagram"
-                >${instagramSvg}</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="social-icon"
-                data-social="youtube"
-                aria-label="Follow us on YouTube"
-                >${youtubeSvg}</a
-              >
-            </li>
-          </ul>
-        </nav>
+      </div>
+      <div class="footer-legal">
+        <a href="#privacy-policy" class="legal-link">Privacy Policy</a>
+        <a href="#terms-of-service" class="legal-link">Terms of Service</a>
+        <a href="#contact" class="legal-link">Contact</a>
       </div>
     </footer>
-
     <!-- ===================================================== -->
     <!-- JavaScript Modules -->
     <!-- ===================================================== -->
@@ -1121,6 +1014,8 @@
     <script type="module" src="js/settings.js"></script>
     <script type="module" src="js/mostRead.js"></script>
     <script type="module" src="js/parallax.js"></script>
+    <script type="module" src="js/legal.js"></script>
+
     <script type="module" src="js/navigation.js"></script>
   </body>
 </html>

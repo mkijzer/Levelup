@@ -5,6 +5,10 @@
 // Version: 1.1 - Latest fix for "latest" articles
 // ============================================================================
 
+// Category mapping - "ai" internally represents "Tech" content
+// Changed display name from "AI" to "Tech" for broader content scope
+// Keep internal references as "ai" for consistency with existing data
+
 import {
   normalizeCategory,
   formatDate,
@@ -18,7 +22,7 @@ import { createArticleCard, populateArticleCard } from "./articleCards.js";
 // Configuration
 // ============================================================================
 const CONFIG = {
-  CATEGORIES: ["health", "coins", "hack", "ai"],
+  CATEGORIES: ["health", "coins", "hack", "ai"], // ai = Tech category
   ARTICLES_PER_WEEK: 3,
   LAUNCH_DATE: new Date("2025-10-25"),
   INITIAL_CATEGORY_ARTICLES: 10,

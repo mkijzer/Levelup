@@ -1,0 +1,67 @@
+{
+  "privacy-policy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "December 3, 2025",
+    "sections": [
+      {
+        "heading": "What Information We Collect",
+        "content": "We collect minimal information to provide and improve our service:",
+        "list": [
+          "<strong>Analytics Data:</strong> We use Google Analytics to understand how visitors use our site (page views, time spent, general location)",
+          "<strong>Cookies:</strong> We store your cookie consent preference and basic site functionality",
+          "<strong>No Personal Data:</strong> We don't collect names, emails, or personal information unless you explicitly contact us"
+        ]
+      },
+      {
+        "heading": "How We Use Your Information",
+        "content": "We use collected information only to:",
+        "list": [
+          "Understand site usage and improve content",
+          "Remember your cookie preferences",
+          "Provide basic site functionality"
+        ],
+        "additionalContent": "We never sell, rent, or share your data with third parties for marketing purposes."
+      },
+      {
+        "heading": "Cookies and Tracking",
+        "content": "We use cookies for:",
+        "list": [
+          "<strong>Essential Cookies:</strong> Remember your consent preferences and site settings",
+          "<strong>Analytics Cookies:</strong> Google Analytics (only with your consent)"
+        ],
+        "additionalContent": "You can decline non-essential cookies anytime. We'll ask again after 7 days if you decline."
+      },
+      {
+        "heading": "Your Rights",
+        "content": "You have the right to:",
+        "list": [
+          "Opt out of analytics tracking (decline cookies)",
+          "Request information about any data we may have.",
+          "Request data deletion",
+          "Contact us about privacy concerns"
+        ]
+      },
+      {
+        "heading": "External Services",
+        "content": "We use:",
+        "list": [
+          "<strong>Google Analytics:</strong> Web analytics service (<a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>)"
+        ],
+        "additionalContent": "These services have their own privacy policies and data practices."
+      },
+      {
+        "heading": "Data Security",
+        "content": "We implement appropriate security measures to protect information. However, no internet transmission is 100% secure. We don't store sensitive personal information."
+      },
+      {
+        "heading": "Contact Us",
+        "content": "Questions about this Privacy Policy? Contact us at:",
+        "additionalContent": "<strong>Email:</strong> info@levelupordiertrying.com"
+      },
+      {
+        "heading": "Policy Updates",
+        "content": "We may update this policy occasionally. Changes will be posted on this page with an updated date. Continued use of our site means acceptance of any changes."
+      }
+    ]
+  }
+}

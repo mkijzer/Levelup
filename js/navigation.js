@@ -7,6 +7,7 @@
 import { loadCategory, loadCategoryPage, loadRandomArticle } from "./data.js";
 import { getRandomArticle, showArticleView } from "./articleView.js";
 import { SEO } from "./seo.js";
+import { showPrivacyPolicy, setupLegalNavigation } from "./legal.js";
 
 let currentCategory = "latest";
 let isInCategoryPage = true;
@@ -157,6 +158,8 @@ function handleNavigationClick(e) {
         600
       );
     }
+  } else if (category === "privacy-policy") {
+    showPrivacyPolicy();
   } else if (category === "latest") {
     exitCategoryPage();
     history.pushState({ category: "latest" }, "", "#latest");
