@@ -9,6 +9,26 @@ import { getRandomArticle, showArticleView } from "./articleView.js";
 import { SEO } from "./seo.js";
 import { showPrivacyPolicy, setupLegalNavigation } from "./legal.js";
 
+/**
+ * Get article ID from URL (supports both new ?article= and old #category/id)
+ * @returns {string|null} Article ID or null
+ */
+function getArticleIdFromURL() {
+  // Try new query format first (?article=022)
+  const params = new URLSearchParams(window.location.search);
+  let articleId = params.get("article");
+
+  // Fallback to old hash format (#latest/022)
+  if (!articleId && window.location.hash) {
+    const hash = window.location.hash.slice(1);
+    if (hash.includes("/")) {
+      articleId = hash.split("/")[1];
+    }
+  }
+
+  return articleId;
+}
+
 let currentCategory = "latest";
 let isInCategoryPage = true;
 
@@ -58,6 +78,15 @@ export function setupNavigation() {
   window.addEventListener("hashchange", handleHashChange);
   window.addEventListener("popstate", handlePopState);
 
+  // Check for article parameter on initial page load
+  const articleId = getArticleIdFromURL();
+  if (articleId) {
+    // Import and show article view
+    import("./articleView.js").then((module) => {
+      module.showArticleView(articleId);
+    });
+  }
+
   document.querySelectorAll(".nav-item").forEach((navItem) => {
     navItem.addEventListener("click", handleNavigationClick);
   });
@@ -72,14 +101,11 @@ export function setupNavigation() {
 function handlePopState(event) {
   const state = event.state;
 
-  // FIXED: Handle article cards (no history state)
-  const hash = window.location.hash.slice(1);
-  if (hash.includes("/")) {
-    const articleId = hash.split("/")[1];
-    if (articleId) {
-      showArticleView(articleId);
-      return;
-    }
+  // Handle article URLs (both new ?article= and old #category/id)
+  const articleId = getArticleIdFromURL();
+  if (articleId) {
+    showArticleView(articleId);
+    return;
   }
 
   if (state && state.articleId) {

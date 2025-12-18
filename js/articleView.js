@@ -128,12 +128,27 @@ function formatDateReading(dateStr) {
 async function showArticleView(articleId) {
   const article = articlesData.find((a) => a.id === articleId);
 
+  // Create absolute URL for the image
+  const imageUrl = article.image.startsWith("http")
+    ? article.image
+    : `${window.location.origin}/${article.image}`;
+
+  console.log("Article found:", article?.title);
+  console.log("Article image:", article?.image);
+  console.log("Absolute image URL:", imageUrl);
+
   SEO.updateMeta({
     title: `${article.title} - LevelUpOrDieTrying`,
     description: article.hook || article.content.substring(0, 155),
-    image: article.image,
+    image: imageUrl,
     type: "article",
   });
+
+  console.log("SEO meta updated");
+  console.log(
+    "OG Image meta:",
+    document.querySelector('meta[property="og:image"]')?.content
+  );
   if (!article) {
     console.error(`Article not found: ${articleId}`);
     return;
@@ -291,7 +306,7 @@ function populateArticleView(article, container) {
      </header>
 
     <img 
-  src="${article.image || "assets/images/fallback_image.png"}" 
+ src="${article.image || "assets/images/placeholder.jpg"}"
   alt="${
     extractAltFromFilename(article.image) || article.title || "Article image"
   }"
@@ -335,7 +350,7 @@ function populateArticleView(article, container) {
   console.log("article.id:", article.id);
 
   const currentUrl = encodeURIComponent(
-    `${window.location.origin}${window.location.pathname}#latest/${article.id}`
+    `${window.location.origin}${window.location.pathname}?article=${article.id}`
   );
   console.log("Generated URL:", currentUrl);
 

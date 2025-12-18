@@ -5,7 +5,6 @@
 /* Version: 1.0 */
 /* Author: Mike */
 /* ============================================================================ */
-
 .cookie-consent-modal {
   position: fixed;
   top: 50%;
@@ -15,8 +14,7 @@
   opacity: 0;
   transition: all 0.3s ease-out;
   pointer-events: none;
-  width: 90%;
-  max-width: 500px;
+  width: clamp(300px, 90vw, 500px);
 }
 
 .cookie-consent-modal.show {
@@ -25,59 +23,46 @@
   pointer-events: auto;
 }
 
-/* Cookie Content */
 .cookie-content {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
-  padding: var(--spacing-4);
+  padding: clamp(var(--spacing-4), 3vw, var(--spacing-6));
   box-shadow: var(--shadow-lg);
-  text-align: center;
-}
-
-/* Cookie Header */
-.cookie-header {
-  margin-bottom: var(--spacing-3);
 }
 
 .cookie-title {
-  font-size: var(--font-size-lg);
+  font-size: clamp(var(--font-size-base), 2vw, var(--font-size-lg));
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
-  margin: 0;
+  margin: 0 0 var(--spacing-3) 0;
   text-align: center;
 }
 
-/* Cookie Body */
-.cookie-body {
-  margin-bottom: var(--spacing-4);
-}
-
 .cookie-text {
-  font-size: var(--font-size-base);
+  font-size: clamp(var(--font-size-sm), 1.5vw, var(--font-size-base));
   color: var(--text-secondary);
-  line-height: var(--line-height-normal);
+  line-height: var(--line-height-relaxed);
   margin: 0 0 var(--spacing-4) 0;
+  text-align: center;
 }
 
-/* Cookie Actions */
 .cookie-actions {
   display: flex;
   gap: var(--spacing-3);
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .cookie-btn {
   padding: var(--spacing-2) var(--spacing-4);
   border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
+  font-size: clamp(var(--font-size-xs), 1.5vw, var(--font-size-sm));
   font-weight: var(--font-weight-medium);
   border: 1px solid var(--glass-border);
   cursor: pointer;
   transition: all var(--transition-fast);
-  min-width: 120px;
+  min-width: clamp(80px, 20vw, 100px);
 }
 
 .cookie-accept {
@@ -89,7 +74,7 @@
 .cookie-accept:hover {
   background: var(--accent-bright);
   border-color: var(--accent-bright);
-  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
 }
 
 .cookie-decline {
@@ -102,20 +87,4 @@
   background: var(--glass-bg);
   color: var(--text-primary);
   border-color: var(--text-muted);
-}
-
-/* Desktop adjustments */
-/* Desktop adjustments */
-@media (min-width: 768px) {
-  .cookie-consent-modal {
-    max-width: 600px;
-  }
-
-  .cookie-text {
-    font-size: var(--font-size-lg);
-  }
-
-  .cookie-text br {
-    display: block;
-  }
 }

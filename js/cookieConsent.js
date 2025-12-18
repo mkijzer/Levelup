@@ -1,17 +1,47 @@
-/* ============================================================================ */
-/* cookieConsent.js - COOKIE CONSENT MANAGEMENT */
-/* ============================================================================ */
-/* Description: Handles cookie consent and Google Analytics loading */
-/* Version: 1.0 */
-/* Author: Mike */
-/* ============================================================================ */
+// ============================================================================
+// cookieConsent.js - COOKIE CONSENT MANAGEMENT
+// ============================================================================
+// Description: Handles cookie consent and Google Analytics loading
+// Version: 1.1 - Added dynamic modal creation
+// Author: Mike
+// ============================================================================
 
 const COOKIE_CONSENT_KEY = "levelup-cookie-consent";
+
+/**
+ * Create cookie consent modal HTML
+ */
+function createCookieModal() {
+  const modalHTML = `
+    <div id="cookie-consent" class="cookie-consent-modal" aria-hidden="true">
+      <div class="cookie-content">
+        <div class="cookie-header">
+          <h2 class="cookie-title">🍪 We Use Cookies</h2>
+        </div>
+        <div class="cookie-body">
+          <p class="cookie-text">
+            We use cookies to improve your experience and analyze site usage. 
+            By continuing, you agree to our use of cookies.
+          </p>
+        </div>
+        <div class="cookie-actions">
+          <button id="cookie-accept" class="cookie-btn cookie-accept">Accept</button>
+          <button id="cookie-decline" class="cookie-btn cookie-decline">Decline</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
+}
 
 /**
  * Initialize cookie consent system
  */
 export function initCookieConsent() {
+  // Create the modal HTML first
+  createCookieModal();
+
   // Check if user has already made a choice
   const existingConsent = getCookieConsent();
 
@@ -146,4 +176,27 @@ function loadGoogleAnalytics() {
   gtag("config", "G-FBTQXJCLGX");
 
   console.log("Google Analytics loaded and configured");
+
+  // /**
+  //  * Debug function - Force show cookie modal (for testing only)
+  //  */
+  // window.showCookieModalDebug = function () {
+  //   // Remove existing modal if present
+  //   const existingModal = document.getElementById("cookie-consent");
+  //   if (existingModal) {
+  //     existingModal.remove();
+  //   }
+
+  //   // Create new modal
+  //   createCookieModal();
+  //   setupEventListeners();
+
+  //   // Show immediately
+  //   setTimeout(() => {
+  //     showCookieModal();
+  //   }, 100);
+  // };
+
+  // // AUTO-SHOW FOR TESTING (remove this line when done)
+  // setTimeout(() => window.showCookieModalDebug(), 1000);
 }
