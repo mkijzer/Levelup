@@ -1519,10 +1519,12 @@ body:has(.article-view:not(.hidden)) .article-header {
   .desktop-carousel {
     display: flex;
     flex-direction: row;
-    overflow-x: auto;
+    overflow: hidden;
     scroll-snap-type: x mandatory;
     gap: var(--spacing-2);
     padding: 0 var(--spacing-4);
+    width: calc(4 * 280px + 3 * 8px + 32px);
+    scroll-behavior: smooth;
   }
 
   .desktop-carousel .article-card.small .card-inner {
@@ -1531,7 +1533,7 @@ body:has(.article-view:not(.hidden)) .article-header {
 
   .category-grid.desktop-carousel .article-card.small {
     height: 400px;
-    flex: 0 0 300px;
+    flex: 0 0 280px;
   }
 
   .desktop-carousel .article-card.small .article-image {
@@ -1540,7 +1542,6 @@ body:has(.article-view:not(.hidden)) .article-header {
   }
 
   .category-grid.desktop-carousel .article-card.small .article-image-wrapper {
-    /* display: none; */
     position: relative;
     width: 100%;
     aspect-ratio: 3 / 4;
@@ -1549,7 +1550,7 @@ body:has(.article-view:not(.hidden)) .article-header {
   }
   .category-grid.desktop-carousel .article-card.small .article-content {
     position: absolute;
-    bottom: 10px;
+    bottom: 30px;
     left: 0;
     right: 0;
     width: 100%;
@@ -1571,5 +1572,79 @@ body:has(.article-view:not(.hidden)) .article-header {
       rgba(0, 0, 0, 1) 60%,
       rgba(0, 0, 0, 0.3) 100%
     );
+  }
+
+  .carousel-nav:hover {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .carousel-container {
+    position: relative;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-prev {
+    left: 1px;
+  }
+
+  .carousel-next {
+    right: 1px;
+  }
+
+  .carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  /* CSS-only carousel with scroll snap */
+  .desktop-carousel {
+    scroll-snap-type: x mandatory;
+  }
+
+  .desktop-carousel .article-card {
+    scroll-snap-align: start;
+  }
+
+  /* Hide buttons at start/end using CSS */
+  .carousel-container {
+    position: relative;
+  }
+
+  .carousel-prev {
+    left: 10px;
+  }
+
+  .carousel-next {
+    right: 10px;
+  }
+
+  /* Hide prev button when at start */
+  .desktop-carousel:not([data-scrolled]) ~ .carousel-prev {
+    display: none;
+  }
+
+  /* Hide next button when at end */
+  .desktop-carousel[data-at-end] ~ .carousel-next {
+    display: none;
   }
 }
